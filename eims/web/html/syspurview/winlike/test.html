@@ -1,0 +1,53 @@
+<SCRIPT>WinLIKEerrorpage='winlike/winman/hlp-error.html';</SCRIPT>
+<SCRIPT SRC="winlike/winman/wininit.js"></SCRIPT>
+<SCRIPT SRC="winlike/winman/winman.js"></SCRIPT>
+<SCRIPT SRC="winlike/winedit/winedit.js"></SCRIPT>
+
+<SCRIPT>
+  // this is the default setting for all windows
+  _Mn=false;
+
+  WinLIKE.definewindows=mydefs;
+  function mydefs() {
+		
+	  var j=new WinLIKE.window('Explosive',150,120,300,300,2);
+		j.Adr="samples/skins/zero.html";
+		j.Ski="explosive";
+		j.HD=false;
+		WinLIKE.addwindow(j);
+
+}
+
+function cwin()
+{
+	var j=new WinLIKE.window('角色管理 -> 角色列表',350,320,300,300,15);
+		j.Adr = "http://localhost:8080/syspurview/role.do";
+		j.Ski="Vista-Fix";
+		j.Nam='mbq';
+	WinLIKE.createwindow(j);
+	var num = WinLIKE.searchwindow('mbqffff');
+	alert(num);
+	if (!num) return;
+	alert(WinLIKE.windows[num].Nam);
+	//WinLIKE.window[num].draw();
+}
+</SCRIPT>
+
+
+<BODY onResize=WinLIKE.resizewindows() onload=WinLIKE.init() onDragStart="self.event.returnValue=false;">
+<IMG ID=ih_ SRC="skins/trans.gif" style="z-Index:4000;position:absolute;left:0;top:0;width:100%;height:100%">
+<IMG ID=ig_ SRC="winlike/winman/load.gif" STYLE="position:absolute;left:35%;top:40%;z-Index:4001">
+
+	<!-- Insert your page-content here! -->
+
+
+	<DIV STYLE="position:absolute;left:110;top:15">
+		<FONT FACE="Verdana, Arial, Helvetica" SIZE=2>
+		As this sample page demonstrates, WinLIKE windows can have different skins. You can even build your own skins.
+		See <A HREF="58_develop_onevent_winlist.html">58_develop_onevent_winlist.html</A> for a <B>Windows Vista</B> skin.
+		<BR><BR>
+		Download other free skins from <A HREF="http://www.winlike.net" TARGET=_blank>www.winlike.net</A><BR>
+		or buy 100 great skins from <A HREF="http://www.nofearsoftware.com" TARGET=_blank>www.nofearsoftware.com</A> for only 30 US$
+		</FONT>
+		<input type="button" value="创建新窗口" onclick="cwin()" />
+	</DIV>

@@ -1,0 +1,12 @@
+@charset "utf-8";
+
+/*-------------类1------------------*/
+.form1 input,select,textarea{font-size:14px; color:#666; padding:3px 2px;}
+.form1 .title{ height:26px; padding-top:4px; padding-left:10px; font-size:12px;}
+.form1 .title b{font-size:18px;}
+.form1 .title a{ color:#06F; font-size:12px;}
+.form1 li{ line-height:26px; padding:15px 15px 0px 15px; font-size:14px; clear:both;}
+.form1 ul li span{ width:120px; text-align:right; float:left; line-height:26px;}
+.form1 .btn{ padding:20px; text-align:center;}
+.form1 .btn input{border:none; background:url(/images/proscenium/btn_green.gif) no-repeat center; width:116px; height:29px; font-size:14px; font-weight:bold; color:#FFF; cursor:pointer;}
+.form1 table{float:left;}

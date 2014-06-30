@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans default-autowire="byName" default-lazy-init="true">
+	
+	<bean id="fkzfController" parent="mvc_parentController" class="cn.qtone.eims.khmx.controller.FkzfController">
+	    <property name="listPage"  value="/eims/khmx/fkzf/list"></property>
+		<property name="editPage"  value="/eims/khmx/fkzf/edit"></property>
+		<property name="showPage"  value="/eims/khmx/fkzf/show"></property>
+		<property name="indexPage" value="/eims/khmx/fkzf/index"></property>
+		<property name="service" ref="fkzfService"></property>
+	</bean>
+	<bean id="fkzfService" class="cn.qtone.eims.khmx.service.FkzfService" />
+
+</beans>
+

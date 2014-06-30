@@ -1,0 +1,447 @@
+<!-- auto generated -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>应收客户帐款</title>
+<link href="/html/syspurview/skins/default/body.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="/html/syspurview/js/base.js?load(page_exe.js)"></script>
+<script language="javascript" src="/js/common/prototype.js"></script>
+<script language="javascript" src="/js/common/log/log4javascript.js"></script>
+<script language="javascript" src="/js/calendar.js"></script>
+<script language="javascript" src="/js/xdate.js"></script><script language="javascript" src="/js/table2xls.js"></script>
+</head>
+<body class="body_bg">
+
+<script type="text/javascript">
+var pag = new PageExe();
+var baseUrl = '/eims/khmx/khqk.do';
+
+//初始化index
+function indexOnLoad(){
+	query();
+}
+
+//查询
+function query(){	
+	if (pag == null) pag = new PageExe();
+	var qv = '_temp='+Math.random();
+	if($F('_dh') != ''){
+		qv += '&dh__like__string=' + new BaseClass().encode($F('_dh'),true);
+	}
+	if($F('_bgdh') != ''){
+		qv += '&bgdh__like__string=' + new BaseClass().encode($F('_bgdh'),true);
+	}
+	if($F('_ksrq') != ''){
+		qv += '&bgrq__gte__date=' + $F('_ksrq') +' 00:00:00';
+	}
+	if($F('_jsrq') != ''){
+		qv += '&bgrq__lte__date=' + $F('_jsrq') + ' 23:59:59';
+	}
+	
+	pag.query(
+		baseUrl + '?action=list',
+		'_list',
+		qv + '&orders=id__desc'
+	);
+}
+
+//输出xls
+function exportXls(){
+	var qv = '_temp='+Math.random();
+	if($F('_dh') != ''){
+		qv += '&dh__like__string=' + new BaseClass().encode($F('_dh'),true);
+	}
+	if($F('_bgdh') != ''){
+		qv += '&bgdh__like__string=' + new BaseClass().encode($F('_bgdh'),true);
+	}
+	if($F('_ksrq') != ''){
+		qv += '&bgrq__gte__date=' + $F('_ksrq') +' 00:00:00';
+	}
+	if($F('_jsrq') != ''){
+		qv += '&bgrq__lte__date=' + $F('_jsrq') + ' 23:59:59';
+	}
+	
+	base.confirm('您确信要导出EXCEL数据吗？', function() {
+		window.target="_self";
+		window.open(baseUrl + "?action=exportXls&" + qv + '&orders=id__desc');
+	});
+}
+// 分页查询方法
+function khqkJump(/*string*/_url, /*int*/curPage)
+{
+	pag.query(
+		_url + curPage,
+		'_list'
+	);
+}
+
+// 删除
+function remove(id)
+{
+	var _id = base.getChecked('id', true);
+	if (!id && _id.length < 1) {
+		base.alert('请先选择要删除的记录！');
+		return;
+	}
+	base.log('要删除的记录ID为：' + (id || _id.join(',')));
+	base.confirm('您确信要删除选中的记录吗？', function() {
+		new Ajax.Request(
+				baseUrl + '?action=remove',
+				{
+					method : 'POST',
+					evalScripts : true,
+					parameters :	'id=' + (id || _id.join('&id=')),
+					onComplete : function(xmlHttp,error){
+						alert("删除成功");
+						query();
+					}
+				}
+			);		
+	});
+}
+
+//保存
+function checkForm(){	
+	if (!$('bgdh') || $('bgdh').value.strip() == '') {
+ 		base.alert('请输入报关单号！',function(){$('bgdh').focus();});
+ 		return false;
+ 	}
+	if(!checkBgdh()){
+		base.alert('您输入的报关单号已存在！',function(){$('bgdh').focus();});
+		return false;
+	}
+	if (!$('_bgrq') || $('_bgrq').value.strip() == '') {
+ 		base.alert('请输入报关日期！',function(){$('_bgrq').focus();});
+ 		return false;
+ 	}
+	if (!checkPrice($('bgje'))) {
+		base.alert('报关金额格式不正确，只允许数据带2位小数！',function(){$('bgje').focus();});return false;
+ 	}
+	if (!$('dh') || $('dh').value.strip() == '') {
+ 		base.alert('请输入单号！',function(){$('dh').focus();});
+ 		return false;
+ 	}
+	if (!$('khmc') || $('khmc').value.strip() == '') {
+ 		base.alert('请输入客户名称！',function(){$('khmc').focus();});
+ 		return false;
+ 	}
+	if (!checkPrice($('dlf'))) {
+		base.alert('代理费格式不正确，只允许数据带2位小数！',function(){$('dlf').focus();});return false;
+ 	}
+	if (!checkPrice($('bgf'))) {
+		base.alert('报关费格式不正确，只允许数据带2位小数！',function(){$('bgf').focus();});return false;
+ 	}
+	if (!checkPrice($('gjf'))) {
+		base.alert('港建费格式不正确，只允许数据带2位小数！',function(){$('gjf').focus();});return false;
+ 	}
+	if (!checkPrice($('sjf'))) {
+		base.alert('商检费格式不正确，只允许数据带2位小数！',function(){$('sjf').focus();});return false;
+ 	}
+	if (!checkPrice($('gj'))) {
+		base.alert('国检费格式不正确，只允许数据带2位小数！',function(){$('gj').focus();});return false;
+ 	}
+	if (!checkPrice($('xyf'))) {
+		base.alert('续页费格式不正确，只允许数据带2位小数！',function(){$('xyf').focus();});return false;
+ 	}
+	if (!checkPrice($('lgf'))) {
+		base.alert('连柜费格式不正确，只允许数据带2位小数！',function(){$('lgf').focus();});return false;
+ 	}
+	if (!checkPrice($('tcf'))) {
+		base.alert('拖车费格式不正确，只允许数据带2位小数！',function(){$('tcf').focus();});return false;
+ 	}
+	if (!checkPrice($('smf'))) {
+		base.alert('扫描费格式不正确，只允许数据带2位小数！',function(){$('smf').focus();});return false;
+ 	}
+	if (!checkPrice($('cgf'))) {
+		base.alert('查柜费格式不正确，只允许数据带2位小数！',function(){$('cgf').focus();});return false;
+ 	}
+	if (!checkPrice($('xzf'))) {
+		base.alert('熏蒸费格式不正确，只允许数据带2位小数！',function(){$('xzf').focus();});return false;
+ 	}
+	if (!checkPrice($('jq'))) {
+		base.alert('加签费格式不正确，只允许数据带2位小数！',function(){$('jq').focus();});return false;
+ 	}
+	if (!checkPrice($('xyzf'))) {
+		base.alert('信用证费格式不正确，只允许数据带2位小数！',function(){$('xyzf').focus();});return false;
+ 	}
+	if (!checkPrice($('cdzf'))) {
+		base.alert('产地证费格式不正确，只允许数据带2位小数！',function(){$('cdzf').focus();});return false;
+ 	}
+	if (!checkPrice($('kbdzf'))) {
+		base.alert('空白单证费格式不正确，只允许数据带2位小数！',function(){$('kbdzf').focus();});return false;
+ 	}
+	if (!checkPrice($('kdf'))) {
+		base.alert('快递费格式不正确，只允许数据带2位小数！',function(){$('kdf').focus();});return false;
+ 	}
+	if (!checkPrice($('bcf'))) {
+		base.alert('驳船费格式不正确，只允许数据带2位小数！',function(){$('bcf').focus();});return false;
+ 	}
+	if (!checkPrice($('ftf'))) {
+		base.alert('封条费格式不正确，只允许数据带2位小数！',function(){$('ftf').focus();});return false;
+ 	}
+	if (!checkPrice($('cdf'))) {
+		base.alert('仓单费格式不正确，只允许数据带2位小数！',function(){$('cdf').focus();});return false;
+ 	}
+	if (!checkPrice($('gpf'))) {
+		base.alert('过磅费格式不正确，只允许数据带2位小数！',function(){$('gpf').focus();});return false;
+ 	}
+	if (!checkPrice($('hzptf'))) {
+		base.alert('换证凭条费格式不正确，只允许数据带2位小数！',function(){$('hzptf').focus();});return false;
+ 	}
+	if (!checkPrice($('qt'))) {
+		base.alert('其他费格式不正确，只允许数据带2位小数！',function(){$('qt').focus();});return false;
+ 	}
+	if (!checkPrice($('ysje'))) {
+		base.alert('已收金额格式不正确，只允许数据带2位小数！',function(){$('ysje').focus();});return false;
+ 	}
+	
+	pag.update(
+		baseUrl + '?action=save',
+		'theForm',
+		function() {
+			pag.back('_index','_edit');
+			query();
+		}
+	);	
+	return false;
+}
+// 编辑页面显示
+function edit(id)
+{
+	var _id = base.getChecked('id', true);
+	if (!id && _id.length != 1) {
+		base.alert('请先选择要编辑的记录，编辑只能一次选择一条记录！');
+		return;
+	}
+	base.log('要编辑的记录ID为：' + (id || _id[0]));
+	pag.showEdit(
+		baseUrl + '?action=edit',
+		'_edit',
+		'_index',
+		{
+			id : id || _id[0]
+		},
+		function() {
+			$('bgdh').focus(); 
+			document.onkeypress=keyDown; //键盘按下事件
+		}
+	);
+}
+// 添加页面显示
+function insert(){
+	pag.showAdd(
+		baseUrl + '?action=create',
+		'_edit', 
+		'_index',
+		function() {
+			$('bgdh').focus(); 
+			document.onkeypress=keyDown; //键盘按下事件
+		}
+	);
+}
+
+function detail(id){
+	var _id = base.getChecked('id', true);
+	base.log('要查看的ID为：' + (id || _id[0]));
+	pag.showEdit(
+		baseUrl + '?action=show',
+		'_edit',
+		'_index',
+		{
+			id : id || _id[0]
+		},
+		function() {
+			
+		}
+	);
+}
+
+//价格check
+function checkPrice(price){  
+	return (/^(([1-9]\d*)|\d)(\.\d{1,2})?$/).test(price.value);
+}
+
+function checkBgdh(){
+	var flag;
+	new Ajax.Request(
+		baseUrl + '?action=checkBgdh', 
+		{
+			method : 'POST',
+			asynchronous:false, //ajax同步
+			evalScripts : true,
+			parameters :'bgdh='+$('bgdh').value.strip()+'&id='+$F('_id')+'&_temp='+Math.random(),
+			onComplete : function(xmlHttp,error){
+				var returnVal = xmlHttp.responseText;
+				if(returnVal == 'false'){
+					//base.alert('您输入的报关单号已存在！',function(){$('bgdh').focus();});
+					flag = false;
+				}else{
+					flag = true;
+				}				
+			}
+		}
+	);
+	return flag;
+}
+
+function getGhdhTips(){
+	if(!checkBgdh()){
+		document.getElementById("ghdhTips").innerHTML="<font color='red'>报关单号已存在！<\/font>";
+	}else{
+		document.getElementById("ghdhTips").innerHTML="";
+	}
+}
+
+function getKhts(){
+	new Ajax.Request(
+		'/eims/khmx/khts.do?action=getKhts', 
+		{
+			method : 'POST',
+			evalScripts : true,
+			parameters :'bgdh='+$('bgdh').value.strip()+'&_temp='+Math.random(),
+			onComplete : function(xmlHttp,error){
+				var obj = eval("("+xmlHttp.responseText+")");
+				if(obj.message=="success"){
+					var data = obj.data;
+					document.getElementById("khmc").value = data.khmc;
+					document.getElementById("_bgrq").value = data.bgrq;
+					document.getElementById("bgje").value = data.bgje;
+				}else{
+					document.getElementById("khmc").value = "";
+					document.getElementById("_bgrq").value = "";
+					document.getElementById("bgje").value = "";
+				}
+			}
+		}
+	);
+}
+
+function carWsje(){
+	var dlf = 0; //代理费
+	if($F('dlf') != '') dlf = parseFloat($F('dlf'));
+	var bgf = 0; //报关费
+	if($F('bgf') != '') bgf = parseFloat($F('bgf'));
+	var gjf = 0; //港建费
+	if($F('gjf') != '') gjf = parseFloat($F('gjf'));
+	var sjf = 0; //商检费
+	if($F('sjf') != '') sjf = parseFloat($F('sjf'));
+	var gj = 0; //国检费
+	if($F('gj') != '') gj = parseFloat($F('gj'));
+	var xyf = 0; //续页费
+	if($F('xyf') != '') xyf = parseFloat($F('xyf'));
+	var lgf = 0; //连柜费
+	if($F('lgf') != '') lgf = parseFloat($F('lgf'));
+	var tcf = 0; //拖车费
+	if($F('tcf') != '') tcf = parseFloat($F('tcf'));
+	var smf = 0; //扫描费	
+	if($F('smf') != '') smf = parseFloat($F('smf'));
+	var cgf = 0; //查柜费
+	if($F('cgf') != '') cgf = parseFloat($F('cgf'));
+	var xzf = 0; //熏蒸费
+	if($F('xzf') != '') xzf = parseFloat($F('xzf'));
+	var jq = 0; //加签
+	if($F('jq') != '') jq = parseFloat($F('jq'));
+	var xyzf = 0; //信用证费
+	if($F('xyzf') != '') xyzf = parseFloat($F('xyzf'));
+	var cdzf = 0; //产地证费
+	if($F('cdzf') != '') cdzf = parseFloat($F('cdzf'));
+	var kbdzf = 0; //空白单证费
+	if($F('kbdzf') != '') kbdzf = parseFloat($F('kbdzf'));
+	var kdf = 0; //快递费
+	if($F('kdf') != '') kdf = parseFloat($F('kdf'));
+	var bcf = 0; //驳船费
+	if($F('bcf') != '') bcf = parseFloat($F('bcf'));
+	var ftf = 0; //封条费
+	if($F('ftf') != '') ftf = parseFloat($F('ftf'));
+	var cdf = 0; //仓单费
+	if($F('cdf') != '') cdf = parseFloat($F('cdf'));
+	var gpf = 0; //过磅费
+	if($F('gpf') != '') gpf = parseFloat($F('gpf'));
+	var hzptf = 0; //换证凭条费
+	if($F('hzptf') != '') hzptf = parseFloat($F('hzptf'));
+	var qt = 0; //其他
+	if($F('qt') != '') qt = parseFloat($F('qt'));
+	
+	var hj = (dlf+bgf+gjf+sjf+gj+xyf+lgf+tcf+smf+cgf+xzf+jq+xyzf+cdzf+kbdzf+kdf+bcf+ftf+cdf+gpf+hzptf+qt).toFixed(2);
+	document.getElementById("hj").value = hj;
+	
+	var ysje = 0;
+	if($F('ysje') != '') ysje = parseFloat($F('ysje'));
+	var wsje = (hj-ysje).toFixed(2);
+	document.getElementById("wsje").value = wsje;
+}
+
+function keyDown(){
+	var arr = new Array("bgdh","dh","dlf","bgf","gjf","sjf","gj","xyf","lgf","tcf","smf","cgf","xzf","jq",
+			"xyzf","cdzf","kbdzf","kdf","bcf","ftf","cdf","gpf","hzptf","qt","skrq","ysje");
+	
+	var evt = window.event || arguments.callee.caller.arguments[0];
+	var src = event.srcElement.name; 
+	if(evt.keyCode==13){
+		event.keyCode=9;
+		for(var i=0;i <arr.length-1;i++){ //循环到arr数组的长度减一，最后一个就不用循环了 
+			if(arr[i]==src)
+				$(arr[i+1]).focus();
+		} 	
+	}
+}
+</script>
+<script type="text/javascript">
+	BaseClass.addOnLoad(indexOnLoad);
+</script>
+<#include "../../../common_loading.ftl" />
+<div id="_index">
+<div class="position_line">您的位置是：费用明细>> 应收客户帐款</div>
+
+<#include "../../../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_query">
+
+	<tr>
+		<td  align="right" height="12" width="10%">单号 ：</td>
+		<td align="left" bgcolor="#FFFFFF" width="10%"><input type="text" name="_dh" id="_dh" size="12" />  </td>
+		<td  align="right" height="12" width="10%">报关单号 ：</td>
+		<td align="left" bgcolor="#FFFFFF" width="10%"><input type="text" name="_bgdh" id="_bgdh" size="12" />  </td>
+		<td  align="right" height="12" width="10%">
+			 报关开始日期 ：
+		</td>
+		<td align="left" bgcolor="#FFFFFF" width="10%">
+        	<input type="text" name="_ksrq" id="_ksrq" size="10" onclick="setday(this)" readonly/>  
+		</td>			
+		<td  align="right" width="10%">
+			 报关结束日期 ：
+		</td>
+		<td align="left" bgcolor="#FFFFFF" width="30%">
+			<input type="text" name="_jsrq" id="_jsrq" size="10" onclick="setday(this)" readonly/>
+		</td>	
+	</tr>
+		
+	<tr>		
+		<td width="100%" align="center" colspan="8" bgcolor="#FFFFFF">
+			<input name="sub"                  type="button" onclick="query()"  class="btn01" value="查 询" />&nbsp;
+			<input name="sub" sys_opt="save"   type="button" onclick="insert()" class="btn01" value="添 加" />&nbsp;
+			<input name="sub" sys_opt="edit"   type="button" onclick="edit()"   class="btn01" value="修 改" />&nbsp;
+			<input name="sub" sys_opt="remove" type="button" onclick="remove()" class="btn01" value="删 除">&nbsp;
+			<input name="sub" sys_opt="exportXls"   type="button" onclick="exportXls()" class="btn01" value="导出xls" />
+		</td>
+	</tr>
+</table>
+
+
+
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_query">
+
+
+	</form>
+</table>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+
+<span id="_list"></span>
+</div>
+<div id="_edit" >
+</div>
+
+</body>
+</html>

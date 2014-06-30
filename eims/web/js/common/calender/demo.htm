@@ -1,0 +1,21 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE> 日期选择器 </TITLE>
+<link rel="stylesheet" type="text/css" media="all" href="css/calendar-brown.css" title="win2k-cold-1" />
+<script type="text/javascript" src="calendar.js"></script>
+<script type="text/javascript" src="calendar-setup.js"></script>
+<script type="text/javascript" src="lang/calendar-zh.js"></script>
+</HEAD>
+
+<BODY>
+<!-- DEMO BY 马必强 -->
+<center>
+日期1 <input type="text" size="20" value="" onclick="showCalendar(this, 'y/m/d', true);">
+</center><br>
+日期2 <input type="text" size="20" value="" id="cal2" onclick="showCalendar('cal2', 'y/mm/dd');"><br>
+日期3 <input type="text" size="20" value="" id="cal3" onclick="showCalendar(this.id, 'yy-mm-dd', true);"><br>
+日期4 <input type="text" size="20" value="" onclick="showCalendar(this, 'y/m/d', true, true);"><br>
+日期5 <input type="text" size="20" value="" onclick="showCalendar(this, 'y/mm/dd', true,false,'bl');"><br>
+</BODY>
+</HTML>

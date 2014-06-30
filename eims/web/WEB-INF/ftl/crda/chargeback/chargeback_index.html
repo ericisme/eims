@@ -1,0 +1,66 @@
+<!-- auto generated -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>��ｈ垂璁板��</title>
+<link href="/html/syspurview/skins/default/body.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="/html/syspurview/js/base.js?load(page_exe.js,/html/crda/chargeback.js)"></script>
+<script language="javascript" src="/js/common/prototype.js"></script>
+<script language="javascript" src="/html/util/uploadUtil.js"></script>
+<script language="javascript" src="/js/common/log/log4javascript.js"></script>
+</head>
+
+<body class="body_bg">
+<script type="text/javascript">
+<!--
+	BaseClass.addOnLoad(chargebackQuery);
+-->
+</script>
+<#include "../../common_loading.ftl" />
+<div id="chargeback_index">
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+    	<td class="line">��ㄧ�板�ㄧ��浣�缃�锛� 瀛���������胯�� -> ��ｈ垂璁板��</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<#include "../../common_tips.ftl" />
+<form name="chargebackForm">
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_query">
+	<tr>
+	  <td align="right" width="8%">��ｈ垂��堕��:</td>
+	  <td   bgcolor="#FFFFFF" width="25%">
+	      <select name="year">${yearOptionHtmlSelect!}</select>&nbsp;骞�<select name="month">${monthOptionHtmlSelect!}</select>&nbsp;���
+	   </td>
+	  <td align="right" width="8%">�����哄�风��:</td>
+	   <td align="left" bgcolor="#FFFFFF"  width="15%">
+	    	<input name="mobile" id="mobile" type="text" size="15"/>
+       </td>
+     </tr>
+     <tr>
+	   <td align="center" bgcolor="#FFFFFF"  colspan="4">
+	    	<input name="sub" type="button" onclick="chargebackQuery()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="��� 璇�" />&nbsp;
+	    	<input name="sub" type="button" onclick="creatChargeback()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="��������ｈ垂璁板��" />&nbsp;
+	    	<input name="sub" type="button" onclick="downloadChargeback()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="瀵煎�烘�ｈ垂璁板��" />&nbsp;
+		    <input name="sub" sys_opt="importChargebackInit" type="button" onclick="importChargebackInit()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="瀵煎�ユ�ｈ垂������" />&nbsp;
+		    <input name="sub" sys_opt="synchronizationToCrda" type="button" onclick="synchronizationToCrda()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="���姝ユ�ｈ垂�����靛�版����挎。妗�琚�" />&nbsp;
+			<!-- <input name="sub" sys_opt="save" type="button" onclick="chargebackAdd()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="娣� ���" />&nbsp;
+			<input name="sub" sys_opt="edit" type="button" onclick="chargebackEdit()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="淇� ���" />&nbsp;
+			<input name="sub" sys_opt="remove" type="button" onclick="chargebackDel()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="��� ���">&nbsp;
+			 -->
+       </td>
+   </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+</form>
+<span id="chargeback_list">
+</span>
+</div>
+<div id="chargeback_update" style="display:none">
+</div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<#-- 查询指定模块下的所有模块和功能的区域 -->
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="update_tbl">
+		<tr class="tdLeft">
+			<td colspan="2" align="center">选择/反选全部 <input type="checkbox" name="mSltAll" onclick="roleGrantSelectAll(this.checked)" /></td>
+		</tr>
+	<#-- 列表每一个模块和其功能 -->
+	<#list modules as mod>
+		<tr class="tdLeft" onMouseOver="this.className='list_over'" onMouseOut="this.className='tdLeft'">
+			<td align="right" valign="middle" style="width:150px; overflow:visible;">
+				<input type="hidden" name="moduleId" value="${mod.moduleId}" /> ${mod.moduleName} 
+				<font color="green">[全选<input type="checkbox" onclick="roleSltAllFunc(this.parentNode.parentNode.parentNode,this.checked)" />]</font>
+			</td>
+			<td align="left" valign="middle">
+				<#if mod.roleFuncList?size = 0>
+					<font color="red">该模块还没有添加功能！</font>
+				<#else>
+					<#-- 以五个功能为一行显示 -->
+					<#list mod.roleFuncList?chunk(5) as subFuncs>
+						<#list subFuncs as func>
+							<span>
+								<input type="checkbox" name="funcId_${mod.moduleId}" value="${func.funcId}" <#if func.havePurview>checked</#if> > ${func.funcName}
+							</span>
+						</#list>
+						<br/>
+					</#list>
+				</#if>
+			</td>
+		</tr>
+	</#list>
+</table>

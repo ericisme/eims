@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <!--author:贺少辉-->
+	<!-- url地址和Controller的解析类 -->
+	<bean id="mvc_urlHandlerMapping"
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="interceptors">
+			<list>
+				<ref bean="openSessionInViewInterceptor" />
+			</list>
+		</property>
+		<property name="mappings">
+			<props>
+				<!-- 权限系统的URL地址映射 -->
+				<prop key="/syspurview/role.do">syspurview_roleController</prop>
+				<prop key="/syspurview/group.do">syspurview_userGroupController</prop>
+				<prop key="/syspurview/module.do">syspurview_moduleController</prop>
+				<prop key="/syspurview/system.do">syspurview_systemController</prop>
+				<prop key="/syspurview/user.do">syspurview_userController</prop>
+				<prop key="/syspurview/admin.do">syspurview_adminController</prop>
+				<prop key="/syspurview/login.do">syspurview_loginController</prop>
+				<prop key="/syspurview/controlpanel.do">syspurview_controlPanelController</prop>
+				<prop key="/common/getpwd.do">syspurview_getPwdController</prop>		
+				<prop key="/library/school.do">schoolController</prop>
+				<prop key="/library/zfptclass.do">zfptClassController</prop>
+				<prop key="/library/agency.do">agencyController</prop>
+				<prop key="/library/student.do">studentController</prop>
+				<!-- 
+				<prop key="/library/parent.do">parentController</prop>
+				<prop key="/library/xxptparam.do">xxptParamController</prop>
+				<prop key="/library/xxptnews.do">xxptNewsController</prop>
+				<prop key="/library/sendnewslog.do">sendNewsLogController</prop>
+				<prop key="/library/usersendnewslog.do">userSendNewsLogController</prop>
+				<prop key="/library/parenttmp.do">parentTmpController</prop>
+				<prop key="/crda/subscribe.do">subscribeController</prop>
+				<prop key="/crda/classstudent.do">classStudentController</prop>
+				<prop key="/crda/chargeback.do">chargebackController</prop>
+				 -->
+				<prop key="/library/techer.do">techerController</prop>
+				<prop key="/library/category.do">categoryController</prop>
+				<prop key="/library/book.do">bookController</prop>
+									<prop key="/library/bookJsys.do">bookJsysController</prop>
+									<prop key="/library/bookQkzz.do">bookQkzzController</prop>
+				<prop key="/library/bookall.do">bookallController</prop>
+									<prop key="/library/bookFq.do">bookFqController</prop>
+				<prop key="/library/common.do">commonController</prop>
+				<prop key="/library/borrow.do">borrowController</prop>
+				<prop key="/library/main.do">mainController</prop>
+				<prop key="/library/summary.do">summaryController</prop>
+				
+				
+				
+				
+				
+				
+				<!-- eims企业信息管理系统 -->
+				<!-- eims企业信息管理系统  -->
+				
+					<!-- 费用明细 -->
+						<!-- 员工工资 -->
+							<prop key="/eims/fymx/yggz.do">yggzController</prop>
+						<!-- 管理费用明细 -->
+							<prop key="/eims/fymx/glfymx.do">glfymxController</prop>
+						<!-- 固定资产 -->
+							<prop key="/eims/fymx/gdzc.do">gdzcController</prop>				
+						<!-- 所得税 -->
+							<prop key="/eims/fymx/sds.do">sdsController</prop>		
+						<!-- 财务费用明细或营业外支出 -->
+							<prop key="/eims/fymx/cwfy.do">cwfyController</prop>								
+							
+					<!-- 收借款管理 -->
+						<!-- 公司借出 -->
+							<prop key="/eims/sjhgl/gsjc.do">gsjcController</prop>	
+						<!-- 公司借入 -->
+							<prop key="/eims/sjhgl/gsjr.do">gsjrController</prop>	
+				
+				
+					<!-- 报表管理 -->
+						<!-- 费用明细表 -->	
+							<prop key="/eims/bbgl/fymxb.do">fymxbController</prop>
+							<prop key="/eims/bbgl/khmxb.do">khmxbController</prop>
+				
+				
+				
+				<prop key="/eims/khmx/gjts.do">gjtsController</prop>
+				<prop key="/eims/khmx/fkzf.do">fkzfController</prop>
+				<prop key="/eims/khmx/khts.do">khtsController</prop>
+				<prop key="/eims/khmx/khqk.do">khqkController</prop>
+				<prop key="/eims/khmx/yywsr.do">yywsrController</prop>
+				<prop key="/eims/khmx/tczc.do">tczcController</prop>
+				
+				<!-- 损益表 -->
+				<prop key="/eims/lb/syb.do">sybController</prop>
+				
+				<!-- eims企业信息管理系统  -->
+				<!-- eims企业信息管理系统  -->
+				
+										
+				
+			</props>
+		</property>
+	</bean>
+	<!-- 为了配合hibernate的延迟加载实现 -->
+	<bean name="openSessionInViewInterceptor"
+		class="org.springframework.orm.hibernate3.support.OpenSessionInViewInterceptor">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		<property name="flushMode" value="1"/>   
+        <property name="singleSession" value="true" />
+	</bean>
+
+
+	<!-- Controller返回的视图名称解析，使用FreeMarker。这里设置contentType属性避免了客户端中文乱码问题。-->
+	<bean id="mvc_viewResolver"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="suffix" value=".html" />
+		<property name="contentType" value="text/html;charset=UTF-8"></property>
+	</bean>
+
+
+	<!-- FreeMarkder配置对象。
+		- 在正式系统部署中，将template_update_delay改为3600或更大（因为模板文件几乎是不会更新的，freemarker会使用缓存保存模板）
+	-->
+	<bean id="mvc_freeMarkerConfiger"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="templateLoaderPath"
+			value="${mvc.ftl.tplRootPath}" />
+		<property name="defaultEncoding" value="UTF-8"></property>
+		<property name="freemarkerSettings">
+			<props>
+				<prop key="template_update_delay">
+					${mvc.ftl.tplUpdateDelay}
+				</prop>
+				<prop key="number_format">
+					${mvc.ftl.tplNumberFormat}
+				</prop>
+			</props>
+		</property>
+	</bean>
+
+
+	<!-- MutilAction多控制解析和所有controller的父类配置（抽象）。 -->
+	<bean id="mvc_parentController" abstract="true">
+		<property name="methodNameResolver">
+			<bean
+				class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+				<property name="paramName" value="action"></property>
+				<property name="defaultMethodName" value="list"></property>
+			</bean>
+		</property>
+	</bean>
+
+	<alias name="mvc_parentController"
+		alias="syspurview_parentController" />
+	<alias name="mvc_parentController" alias="logParentController" />
+
+</beans>

@@ -1,0 +1,120 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+		<td class="line">您的位置是：客户明细>> 应收客户帐款 >> 查看应收客户帐款</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td>
+			&nbsp;	
+		</td>
+	</tr>
+</table>
+<#include "../../../common_tips.ftl" />
+
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="update_tbl">
+	<tr>
+		<td align="right" class="tdLeft" >报关单号： </td>
+		<td align="left" valign="top" class="tdRight">${khqk.bgdh!}</td>
+		<td align="right" class="tdLeft" width="15%">报关日期： </td>
+		<td align="left" valign="top" class="tdRight" width="35%">${khqk.bgrq?if_exists?string('yyyy-MM-dd')}</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" >报关金额： </td>
+		<td align="left" valign="top" class="tdRight"><#if khqk.bgje??>${khqk.bgje?string("0.##")}</#if></td>
+		<td align="right" class="tdLeft" width="15%">单号：</td>
+		<td align="left" valign="top" class="tdRight" width="35%">${khqk.dh!}</td>		
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" >客户名称： </td>
+		<td align="left" valign="top" class="tdRight">${khqk.khmc!}</td>
+		<td align="right" class="tdLeft" width="15%">代理费：</td>
+		<td align="left" valign="top" class="tdRight" width="35%"><#if khqk.dlf??>${khqk.dlf?string('0.##')}</#if></td>		
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" >报关费： </td>
+		<td align="left" valign="top" class="tdRight"><#if khqk.bgf??>${khqk.bgf?string("0.##")}</#if></td>
+		<td align="right" class="tdLeft" >港建费： </td>
+		<td align="left" valign="top" class="tdRight"><#if khqk.gjf??>${khqk.gjf?string("0.##")}</#if></td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" >商检费： </td>
+		<td align="left" valign="top" class="tdRight"><#if khqk.sjf??>${khqk.sjf?string("0.##")}</#if></td>
+		<td align="right" class="tdLeft" >国检费： </td>
+		<td align="left" valign="top" class="tdRight"><#if khqk.gj??>${khqk.gj?string("0.##")}</#if></td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" >续页费： </td>
+		<td align="left" valign="top" class="tdRight"><#if khqk.xyf??>${khqk.xyf?string("0.##")}</#if></td>
+		<td align="right" class="tdLeft" >连柜费： </td>
+		<td align="left" valign="top" class="tdRight"><#if khqk.lgf??>${khqk.lgf?string("0.##")}</#if></td>		
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" >拖车费： </td>
+		<td align="left" valign="top" class="tdRight"><#if khqk.tcf??>${khqk.tcf?string("0.##")}</#if></td>
+		<td align="right" class="tdLeft" >扫描费： </td>
+		<td align="left" valign="top" class="tdRight"><#if khqk.smf??>${khqk.smf?string("0.##")}</#if></td>		
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" >查柜费： </td>
+		<td align="left" valign="top" class="tdRight"><#if khqk.cgf??>${khqk.cgf?string("0.##")}</#if></td>
+		<td align="right" class="tdLeft" >熏蒸费： </td>
+		<td align="left" valign="top" class="tdRight"><#if khqk.xzf??>${khqk.xzf?string("0.##")}</#if></td>		
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" >加签： </td>
+		<td align="left" valign="top" class="tdRight"><#if khqk.jq??>${khqk.jq?string("0.##")}</#if></td>
+		<td align="right" class="tdLeft" >信用证费： </td>
+		<td align="left" valign="top" class="tdRight"><#if khqk.xyzf??>${khqk.xyzf?string('0.##')}</#if></td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" >产地证费： </td>
+		<td align="left" valign="top" class="tdRight"><#if khqk.cdzf??>${khqk.cdzf?string('0.##')}</#if></td>
+		<td align="right" class="tdLeft" >空白单证费： </td>
+		<td align="left" valign="top" class="tdRight"><#if khqk.kbdzf??>${khqk.kbdzf?string('0.##')}</#if></td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" >快递费： </td>
+		<td align="left" valign="top" class="tdRight"><#if khqk.kdf??>${khqk.kdf?string('0.##')}</#if></td>	
+		<td align="right" class="tdLeft" >驳船费： </td>
+		<td align="left" valign="top" class="tdRight"><#if khqk.bcf??>${khqk.bcf?string('0.##')}</#if></td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" >封条费： </td>
+		<td align="left" valign="top" class="tdRight"><#if khqk.ftf??>${khqk.ftf?string('0.##')}</#if></td>
+		<td align="right" class="tdLeft" >仓单费： </td>
+		<td align="left" valign="top" class="tdRight"><#if khqk.cdf??>${khqk.cdf?string('0.##')}</#if></td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" >过磅费： </td>
+		<td align="left" valign="top" class="tdRight"><#if khqk.gpf??>${khqk.gpf?string('0.##')}</#if></td>
+		<td align="right" class="tdLeft" >换证凭条费： </td>
+		<td align="left" valign="top" class="tdRight"><#if khqk.hzptf??>${khqk.hzptf?string('0.##')}</#if></td>	
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" >其他： </td>
+		<td align="left" valign="top" class="tdRight" colspan="3"><#if khqk.qt??>${khqk.qt?string("0.##")}</#if></td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" >收款日期： </td>
+		<td align="left" valign="top" class="tdRight">${khqk.skrq!}</td>
+		<td align="right" class="tdLeft" >已收金额： </td>
+		<td align="left" valign="top" class="tdRight"><#if khqk.ysje??>${khqk.ysje?string("0.##")}</#if></td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" >合计： </td>
+		<td align="left" valign="top" class="tdRight"><#if khqk.hj??>${khqk.hj?string('0.##')}</#if></td>
+		<td align="right" class="tdLeft" >未收金额： </td>
+		<td align="left" valign="top" class="tdRight"><#if khqk.wsje??>${khqk.wsje?string("0.##")}</#if></td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td height="5">&nbsp;</td>
+	</tr>
+	<tr>
+		<td height="5" align="center">
+			<input name="btn01" type="button" class="btn01" onclick="pag.back('_index','_edit');" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="返 回" />
+		</td>
+	</tr>
+</table>

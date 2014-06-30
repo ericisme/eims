@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5"> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>费用明细表表</title> 
+<!--media=print 这个属性可以在打印时有效--> 
+<style media=print> 
+.Noprint {display:none;} 
+.PageNext {page-break-after: always;} 
+</style> 
+<style type="text/css">
+<!--
+.T_Sample {
+border-collapse: collapse;
+border: none;
+background: #FFFFEE;
+}
+.T_Sample th {
+border: solid 1px #000000;
+  font-size:10pt;
+  font-family:"宋体";
+}
+.T_Sample td {
+  border: solid 1px #000000;
+  font-size:10pt;
+  font-family:"宋体";
+}
+.NOPRINT { 
+font-family: "宋体"; 
+font-size: 10pt; 
+} 
+td,tr,body{
+  font-size:10pt;
+  font-family:"宋体";
+}
+.STYLE1 {
+	font-size: 16pt;
+	font-weight: bold;
+	font-family: "宋体";
+	height:40px;
+	border-top:thin;
+	text-align:center;
+}
+-->
+</style>  
+</head> 
+<body> 
+	<center class="Noprint" > 
+		<p>
+			如不能打印，请设置IE浏览器，在"工具"-"Internet选项"-"安全"-"自定义级别",选择"启用"--对没有标记为安全的ActiveX控件进行初始化和脚本运行并在页面设计中设置页眉和页脚。
+		</p>
+		<p>
+			<OBJECT id=WebBrowser classid=CLSID:8856F961-340A-11D0-A96B-00C04FD705A2 height=0 width=0>
+			</OBJECT>
+		</p> 
+		<p>
+  			<input type=button value=页面设置 onclick=document.all.WebBrowser.ExecWB(8,1)>&nbsp; 
+  			<input type=button value=打印预览 onclick=document.all.WebBrowser.ExecWB(7,1)>&nbsp;
+  			<input type=button value=直接打印 onclick=document.all.WebBrowser.ExecWB(6,6)>&nbsp;
+			<br/> 
+		</p> 
+		<hr align="center" width="90%" size="1" > 
+	</center> 
+	<div align="center" class="STYLE1">费用明细表</div>
+	<div align="center">${xlsHtml!}</div>
+		
+</body>
+</html>

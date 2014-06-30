@@ -1,0 +1,93 @@
+<!-- 用户组编辑页面 -->
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+		<td class="line">您现在的位置： 用户组管理 -> 编辑用户组</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<form name="groupUpdateForm" id="roleUpdateForm" method="POST" action="" onsubmit="return groupUpdateCheck(2);">
+<#include "../common_tips.ftl" />
+<input type="hidden" name="groupId" value="${group.groupId!}" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="update_tbl">
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 用户组名称： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="groupName" id="groupName" type="text" value="${group.groupName!}" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 用户组角色： </td>
+		<td align="left" valign="top" class="tdRight">
+			<table>
+				<tr>
+					<td width="120px">
+						<select name="s_roleId" id="s_roleId" size="6" multiple>
+							<#list roles as role>
+								<option value="${role.roleId}">${role.name}</option>
+							</#list>
+						</select>
+					</td>
+					<td align="center" width="80px">
+						<p><input name="btn01" type="button" class="btn01" onclick="groupAddRole()" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="添 加" /></p>
+						<p><input name="btn01" type="button" class="btn01" onclick="groupDelRole()" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="删 除" /></p>
+					</td>
+					<td width="120px">
+						<select name="groupRole" id="groupRole" size="6" multiple>
+							<#list roles as role>
+								<#list group.groupRole as groupRole>
+									<#if groupRole=role.roleId>
+										<option value="${role.roleId}">${role.name!}</option>
+									</#if>
+								</#list>
+							</#list>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 借书本数限制： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="book_limit" id="book_limit"  value="${group.book_limit!}" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 借书天数限制： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="day_limit" id="day_limit"  value="${group.day_limit!}" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 办证押金： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="deposit" id="deposit"  value="#{group.deposit?default(0);M2}" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>元
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 超期罚金： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="fine" id="fine"   value="#{group.fine?default(0);M2}" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>元/本/天
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px">用户组描述： </td>
+		<td align="left" valign="top" class="tdRight">
+			<textarea name="groupDetail" id="groupDetail" rows="6" cols="60" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'">${group.groupDetail!}</textarea>
+		</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td height="5">&nbsp;</td>
+	</tr>
+	<tr>
+		<td height="5" align="center">
+			<input name="btn01" id="role_update_btn" type="submit" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="提 交" />&nbsp;&nbsp;&nbsp;&nbsp;
+			<input name="btn01" type="button" class="btn01" onclick="pag.back('group_index','group_update');" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="返 回" />
+		</td>
+	</tr>
+</table>
+</form>

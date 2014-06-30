@@ -1,0 +1,62 @@
+<!-- auto generated -->
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+		<td class="line">您现在的位置： 学校 -> 查看学校</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<form name="schoolUpdateForm" id="schoolUpdateForm" method="POST" action="" onsubmit="return schoolUpdateCheck(2);">
+<#include "../../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="update_tbl">
+	<tr>
+		<td align="right" class="tdLeft" width="20%">学校名称： </td>
+		<td align="left" valign="top" class="tdRight">
+			${school.school_name!}
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="20%">学校编码： </td>
+		<td align="left" valign="top" class="tdRight">
+			${school.school_no!}
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="20%">学校代码： </td>
+		<td align="left" valign="top" class="tdRight">
+			${school.school_code!}
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="20%">学校所属机构： </td>
+		<td align="left" valign="top" class="tdRight">
+			${school.agency.agency_name!}
+		</td>
+	</tr>
+		<tr>
+		<td align="right" class="tdLeft" width="20%">学校包含的年级类型： </td>
+		<td align="left" valign="top" class="tdRight">
+			${school.containGradeValue()!}
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="20%">学校描述型： </td>
+		<td align="left" valign="top" class="tdRight">
+			<label>
+		    	<textarea name="agency_desc" id="agency_desc" cols="45" rows="5" readonly="readonly">${school.schoolDesc?default("")}</textarea>
+		 	 </label>
+		</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td height="5">&nbsp;</td>
+	</tr>
+	<tr>
+		<td height="5" align="center">
+			<input name="btn01" type="button" class="btn01" onclick="pag.back('school_index','school_update');" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="返 回" />
+		</td>
+	</tr>
+</table>
+</form>

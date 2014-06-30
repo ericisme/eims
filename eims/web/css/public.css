@@ -1,0 +1,32 @@
+@charset "utf-8";
+
+*{margin:0;padding:0;font-family:Arial;}
+li{list-style-type:none;}
+a img{border:0;}
+img{ vertical-align:bottom; border:0; }
+form {border:0;}
+em,i{font-style:normal;}
+input,select,textarea{font-size:12px;vertical-align:middle;}
+body{background:#fff; font-size:12px;}
+html>/**/body .clearfix{overflow:hidden;}
+.clearfix{zoom:1;}
+.clearfix:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+a { color:#000; text-decoration:none;}
+a:hover { color:#009; text-decoration:underline;}
+#container{width:949px;margin:0 auto; overflow:hidden;}
+div{ overflow:hidden;}
+.hidden{ display:none;}
+
+#top{ background:url(/images/proscenium/logo_02.gif) no-repeat left; width:949px; height:70px; padding-top:17px;}
+#top p{ line-height:30px; height:30px; color:#999; text-align:right; width:560px; float:right;}
+#top p a{ color:#07679c;}
+#top p .font1{ color:#F00; font-weight:bold;}
+
+#bottom{width:949px; height:75px; padding:20px 0px; margin:0 auto;}
+#bottom .about{ background-color:#ddf7fd; height:25px; line-height:25px; text-align:center; color:#999;}
+#bottom .about a{ color:#666;}
+#bottom p{ padding-top:10px; line-height:25px; color:#999; float:left; height:50px;}
+#bottom .btn{ float:right; height:45px; text-align:right; padding-top:15px;}
+
+/*---------------边框样式---------------------*/
+.bg1{ border:#9db0bc 1px dotted; background-color:#edfbff; padding-bottom:15px;}

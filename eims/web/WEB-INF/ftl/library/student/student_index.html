@@ -1,0 +1,134 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>学生管理</title>
+<link href="/html/syspurview/skins/default/body.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="/html/syspurview/js/base.js?load(page_exe.js,/html/library/student.js)"></script>
+<script language="javascript" src="/html/library/xxptUtils.js"></script>
+<script language="javascript" src="/js/common/prototype.js"></script>
+<script language="javascript" src="/js/common/log/log4javascript.js"></script>
+<script language="javascript" src="/js/calendar.js"></script>
+<script language="javascript" src="/html/library/baseDataCascade.js"></script>
+</head>
+<body class="body_bg">
+<script type="text/javascript">
+<!--
+	BaseClass.funcList.push(selectOptionByDiv);
+	BaseClass.addOnLoad(studentQuery);
+-->
+</script>
+<#include "../../common_loading.ftl" />
+<div id="student_index">
+<table width="100%" border="0" cellspacing="0" cellpadding="2">
+	<tr>
+    	<td class="line">您现在的位置： 基础管理 -> 学生管理</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<#include "../../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_query">
+	<tr style="display:${areaSel!}">
+		<td  align="right">
+			镇区：
+		</td>
+		<td  align="left" bgcolor="#FFFFFF">
+			<select name="queryCityId" onchange="changeZhptAgencyIndex(this.value,'queryAgencyId','querySchoolId','queryGradeId','queryAgency','querySchool','queryGrade')" ${disableTown!}>
+				${citySelectHtml!}
+			</select>&nbsp;
+		</td>
+		
+		
+		<td  align="right">
+			机构：
+		</td>
+		<td  align="left" bgcolor="#FFFFFF" >
+			<span id="queryAgency" name="queryAgency">
+			<select name="queryAgencyId" onchange="changeZhptSchoolIndex(this.value,'querySchoolId','queryGradeId','querySchool','queryGrade')" ${disableAgency!}>
+			${agencySelectHtml!}
+			</select>
+			</span>&nbsp;
+		</td>
+		<td  align="right">
+			学校：
+		</td>
+		<td  align="left" bgcolor="#FFFFFF">
+			<span id="querySchool" name="querySchool">
+				<select name="querySchoolId" onchange="changeZhptGrade(this.value,'queryGradeId','queryGrade')" ${disableSchool!}>
+					${schoolHtmlSelect!}
+				</select>
+			</span>&nbsp;
+		</td>
+		</tr>
+	<tr>
+		<td  align="right">
+			年级：
+		</td>
+		<td align="left" bgcolor="#FFFFFF">
+			<span id="queryGrade" name="queryGrade">
+				<select name="queryGradeId"  onchange="changeClassName(this.value,'queryClassNameId', 'queryClassName')">
+					<option value="-1">--所有--</option>
+					${editGradeHtmlSelect!}
+				</select>
+			</span>
+		</td>
+		<td  align="right">
+			班级：
+		</td>	
+		<td  align="left" bgcolor="#FFFFFF">
+			<span id="queryClassName" name="queryClassName">
+			 	<select name="queryClassNameId" >
+			 		<option value="-1">--所有--</option>
+					${editClassNameHtmlSelect!}
+				</select>
+			</span>
+		</td>
+		<td   align="right">
+			学生：
+		</td>
+		<td  align="left" bgcolor="#FFFFFF">
+			<input type="text" name="studentName" id="studentName" size="12"></input>&nbsp;&nbsp;
+		</td>
+	<tr>
+		<td   align="right">
+			学籍号：
+		</td>
+		<td  align="left" bgcolor="#FFFFFF">
+			<input type="text" name="queryLoginName" id="queryLoginName" size="12"></input>&nbsp;&nbsp;
+		</td>
+		<td   align="right">
+			卡号：
+		</td>
+		<td  align="left" bgcolor="#FFFFFF">
+			<input type="text" name="queryIdCard" id="queryIdCard" size="12"></input>&nbsp;&nbsp;
+		</td>
+		<td   align="right">
+		</td>
+		<td  align="left" bgcolor="#FFFFFF">
+		</td>
+		
+	</tr>
+	<tr>
+		<td width="100%" align="center" colspan="8" bgcolor="#FFFFFF">&nbsp;&nbsp;
+			<input name="sub" type="button" onclick="studentQuery()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="查 询" />&nbsp;
+			<input name="sub" sys_opt="save" type="button" onclick="studentAdd()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="添 加" />&nbsp;
+			<input name="sub" sys_opt="edit" type="button" onclick="studentEdit()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="修 改" />&nbsp;
+			<input name="sub" sys_opt="remove" type="button" onclick="studentDel()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="删 除">&nbsp;
+			<input name="sub" sys_opt="importinit" type="button" onclick="importinit()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="批量导入" />&nbsp;
+			<input name="sub" sys_opt="export" type="button" onclick="downloadStudent()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="批量导出" />&nbsp;
+		</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<span id="student_list">
+</span>
+</div>
+<div id="student_update" style="display:none">
+</div>
+<div id="parent_update" style="display:none">
+</div>
+</body>
+</html>

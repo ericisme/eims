@@ -1,0 +1,1 @@
+<script>window.location='syspurview/login.do?action=logininit'</script>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans default-autowire="byName" default-lazy-init="true">
+
+	<bean id="borrowController" parent="mvc_parentController" class="cn.qtone.library.borrow.controller.BorrowController">
+		<property name="ajaxPage" value="/library/common/ajax"></property>
+		
+		<property name="listPage" value="/library/borrow/borrow_list"></property>
+		<property name="borrowPage" value="/library/borrow/borrow_borrow"></property>
+		<property name="returnPage" value="/library/borrow/borrow_return"></property>
+		<property name="editPage" value="/library/borrow/borrow_edit"></property>
+		<property name="showPage" value="/library/borrow/borrow_show"></property>
+		<property name="indexPage" value="/library/borrow/borrow_index"></property>
+		<property name="borrowService" ref="borrowService"></property>
+		<property name="bookService" ref="bookService"></property>
+		<property name="schoolService" ref="schoolService"></property>
+		<property name="cityService" ref="cityService"></property>
+		<property name="agencyService" ref="agencyService"></property>
+		<property name="userGroupService" ref="syspurview_userGroupService"></property>
+		<property name="commonService" ref="commonService"></property>
+	</bean>
+	<bean id="borrowService" class="cn.qtone.library.borrow.service.BorrowService">
+	</bean>
+
+</beans>
+

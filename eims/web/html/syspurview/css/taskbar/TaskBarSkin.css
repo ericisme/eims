@@ -1,0 +1,97 @@
+﻿/* 整个任务栏的样式 */
+.TabBack1
+{
+  background-color: #ece9d8;
+}
+
+/* 当前激活的窗口的样式 */
+.TabItemSelectedLeft
+{
+  width: 3px;
+  height: 22px;
+  background-image: url('./images/style1/sel_left.png');
+}
+.TabItemSelectedRight
+{
+  width: 3px;
+  height: 22px;
+  background-image: url('./images/style1/sel_right.png');
+}
+.TabItemSelectedMiddle
+{
+  height: 22px;
+  background-image: url('./images/style1/sel_middle.png');
+  background-repeat: repeat-x;
+}
+.TabItemTextSelected
+{
+  margin-left: 4px;
+  margin-right: 7px;
+  font-family: arial;
+  font-size: 12px;
+  text-align: left;
+  padding-top: 3px;
+  cursor : default;
+}
+
+
+/* 没有被激活的窗口的样式 */
+.TabItemLeft
+{
+  width: 3px;
+  height: 22px;
+  background-image: url('./images/style1/left.png');
+}
+.TabItemRight
+{
+  width: 3px;
+  height: 22px;
+  background-image: url('./images/style1/right.png');
+}
+.TabItemMiddle
+{
+  height: 22px;
+  background-image: url('./images/style1/middle.png');
+  background-repeat: repeat-x;
+}
+.TabItemText
+{
+  margin-left: 4px;
+  margin-right: 7px;
+  font-family: arial;
+  font-size: 12px;
+  text-align: left;
+  padding-top: 5px;
+  cursor : default;
+}
+.TabItemText_OnMouseOver
+{
+  margin-left: 4px;
+  margin-right: 7px;
+  font-family: arial;
+  font-size: 12px;
+  text-align: left;
+  padding-top: 5px;
+  cursor : default;
+  color:red;
+}
+
+
+/* 关闭按钮的样式 */
+.TabItemCloseNormal
+{
+  color: gray;
+  background-color:white;
+}
+.TabItemCloseFocus
+{
+  color: red;
+  background-color:gray;
+}
+
+
+.TabLine
+{
+  background-image: url('./images/style1/line.png');
+  background-repeat: repeat-x;
+}

@@ -1,0 +1,73 @@
+<!-- auto generated -->
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+		<td class="line">您现在的位置： 费用明细>> 管理费用明细  -> <#if glfymx.id??>编辑<#else>添加</#if> 管理费用明细记录</td>
+	</tr>
+</table>
+<form name="theForm" id="theForm" method="POST" action="" onsubmit="return checkForm();">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td>
+			<input name="id" id="id" type="hidden" value="${glfymx.id!}" />	
+		</td>
+	</tr>
+</table>
+<#include "../../../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="update_tbl">
+		
+	<tr class="list_title">   	    	
+    	<td width="4%" align="center">费用日期</td>    
+		<td width="4%" align="center">社保费</td>	
+    	<td width="4%" align="center">水电费</td>
+    	<td width="4%" align="center">电话费</td>
+    	<td width="4%" align="center">办公费</td>
+    	<td width="4%" align="center">差旅费</td>
+    	<td width="4%" align="center">汽油费</td>
+    	 	
+	</tr>
+	<form name="theForm" id="theForm" method="POST" action="" onsubmit="return checkForm('');">
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+	  	<td align="right"><input type="text" name="fyrq" id="fyrq" value="<#if glfymx.id??>${glfymx.fyrq!}<#else></#if>"    maxlength="10" size="8" onclick="setday(this)" readonly style="font-size:12px;text-align:right;"/></td>
+		<td align="right"><input type="text" name="sbf" id="sbf"   value="<#if glfymx.id??>${glfymx.sbf?string("0.##")}<#else></#if>"    maxlength="10" size="9" style="font-size:12px;text-align:right;"/></td>
+		<td align="right"><input type="text" name="sdf" id="sdf"   value="<#if glfymx.id??>${glfymx.sdf?string("0.##")}<#else></#if>"    maxlength="10" size="9" style="font-size:12px;text-align:right;"/></td>
+		<td align="right"><input type="text" name="dhf" id="dhf"   value="<#if glfymx.id??>${glfymx.dhf?string("0.##")}<#else></#if>"    maxlength="10" size="9" style="font-size:12px;text-align:right;"/></td>
+		<td align="right"><input type="text" name="bgf" id="bgf"   value="<#if glfymx.id??>${glfymx.bgf?string("0.##")}<#else></#if>"    maxlength="10" size="9" style="font-size:12px;text-align:right;"/></td>
+		<td align="right"><input type="text" name="clf" id="clf"   value="<#if glfymx.id??>${glfymx.clf?string("0.##")}<#else></#if>"    maxlength="10" size="9" style="font-size:12px;text-align:right;"/></td>
+  		<td align="right"><input type="text" name="qyf" id="qyf"   value="<#if glfymx.id??>${glfymx.qyf?string("0.##")}<#else></#if>"    maxlength="10" size="9" style="font-size:12px;text-align:right;"/></td>
+
+  	</tr>	
+	<tr class="list_title">   	 
+		<td width="4%" align="center">堤围费</td>   
+    	<td width="4%" align="center">快递费</td>
+    	<td width="4%" align="center">印花税</td>
+    	<td width="4%" align="center">租金</td>
+    	<td width="4%" align="center">租车费</td>
+    	<td width="4%" align="center">建帐费</td>
+    	<td width="4%" align="center">其他</td> 	
+	</tr>
+	<form name="theForm" id="theForm" method="POST" action="" onsubmit="return checkForm('');">
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+  		<td align="right"><input type="text" name="twf" id="twf"   value="<#if glfymx.id??>${glfymx.twf?string("0.##")}<#else></#if>"    maxlength="10" size="9" style="font-size:12px;text-align:right;"/></td>
+ 		<td align="right"><input type="text" name="kdf" id="kdf"   value="<#if glfymx.id??>${glfymx.kdf?string("0.##")}<#else></#if>"  maxlength="10" size="9" style="font-size:12px;text-align:right;"/></td>
+  		<td align="right"><input type="text" name="yhs" id="yhs"   value="<#if glfymx.id??>${glfymx.yhs?string("0.##")}<#else></#if>"  maxlength="10" size="9" style="font-size:12px;text-align:right;"/></td>
+  		<td align="right"><input type="text" name="zj"  id="zj"    value="<#if glfymx.id??>${glfymx.zj?string("0.##")}<#else></#if>"   maxlength="10" size="9" style="font-size:12px;text-align:right;"/></td>
+  		<td align="right"><input type="text" name="zcf" id="zcf"   value="<#if glfymx.id??>${glfymx.zcf?string("0.##")}<#else></#if>"  maxlength="10" size="9" style="font-size:12px;text-align:right;"/></td>
+  		<td align="right"><input type="text" name="jzf" id="jzf"   value="<#if glfymx.id??>${glfymx.jzf?string("0.##")}<#else></#if>"  maxlength="10" size="9" style="font-size:12px;text-align:right;"/></td>
+  		<td align="right"><input type="text" name="qt"  id="qt"    value="<#if glfymx.id??>${glfymx.qt?string("0.##")}<#else></#if>"   maxlength="10" size="9" style="font-size:12px;text-align:right;"/></td>
+  		
+	</tr>		
+
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td height="5">&nbsp;</td>
+	</tr>
+	<tr>
+		<td height="5" align="center">
+			<input name="btn01" id="sys_update_btn" type="submit" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="提 交" />&nbsp;&nbsp;&nbsp;&nbsp;
+			<input name="btn01" type="button" class="btn01" onclick="pag.back('_index','_update');" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="返 回" />
+		</td>
+	</tr>
+</table>
+
+</form>

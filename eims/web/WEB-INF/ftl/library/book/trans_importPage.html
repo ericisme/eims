@@ -1,0 +1,113 @@
+<!-- auto generated -->
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+		<td class="line">您现在的位置： 图书管理 -> 图书迁移</td>
+	</tr>
+</table>
+<form name="bookTransForm" id="bookTransForm" method="POST" action="/library/book.do?action=importBookTransSubmit" onsubmit="return importHandleTrans();">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<#include "../../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="update_tbl">
+  	 <tr style="display: none">
+		<td align="right" class="tdLeft" >ID： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="book_id" id="book_id" type="text" maxlength="50" size="25" class="box0" value="-1"
+				onFocus="this.className='box1'" onBlur="this.className='box0'" />
+		</td>
+	</tr> 
+	<tr>
+		<td align="right" class="tdLeft" width="20%">模板下载： </td>
+		<td align="left" valign="top" class="tdRight">
+		<input  type="button" onclick="downloadTrans()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="下 载" />
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" class="tdLeft" width="20%">图书所属学校： </td>
+		<td align="left" valign="top" class="tdRight">
+		  	<select id="importCityId" name="importCityId" onchange="changeZhptAgencyIndex(this.value,'importAgencyId','importAgency','importSchoolId','importSchool')" ${disableTown!}>
+				${citySelectHtml!}
+			</select>  
+			<font color="red"><B>*</B></font>
+		<span id="importAgency">
+		  	<select id="importAgencyId" name="importAgencyId" onchange="changeZhptSchoolIndex(this.value,'importSchoolId','importSchool')" ${disableAgency!}>
+				 ${agencySelectHtml!}
+			</select>  
+		</span>
+			<font color="red"><B>*</B></font>
+			<span id="importSchool">
+			  	<select id="importSchoolId" name="importSchoolId" onchange="changeZhptGrade(this.value,'','')" ${disableSchool!}>
+					 ${schoolHtmlSelect!}
+				</select>  
+			</span>
+				<font color="red"><B>*</B></font>
+		</td>
+	</tr>
+	
+	
+	<tr>
+		<td align="right" class="tdLeft" width="20%">迁移目标学校： </td>
+		<td align="left" valign="top" class="tdRight">
+		  	<select id="descCityId" name="descCityId" onchange="changeZhptAgencyIndex(this.value,'descAgencyId','descAgency','descSchoolId','descSchool')" >
+				${citySelectHtml!}
+			</select>  
+			<font color="red"><B>*</B></font>
+		<span id="descAgency">
+		  	<select id="descAgencyId" name="descAgencyId" onchange="changeZhptSchoolIndex(this.value,'descSchoolId','descSchool')" >
+				 ${agencySelectHtml!}
+			</select>  
+		</span>
+			<font color="red"><B>*</B></font>
+			<span id="descSchool">
+			  	<select id="descSchoolId" name="descSchoolId" onchange="changeZhptGrade(this.value,'','')" >
+					 ${schoolHtmlSelect!}
+				</select>  
+			</span>
+				<font color="red"><B>*</B></font>
+		</td>
+	</tr>
+	
+	
+	<tr>
+	 <td align="right" class="tdLeft" width="20%">附件： 
+	 </td>
+	 <td align="left" valign="top" class="tdRight">
+		<span id="file_delete"></span>
+	</td>
+	</tr> 
+	<tr>
+	 <td align="right" class="tdLeft" width="20%">上传： 
+	    <input type=hidden id='F1' onclick="importend()">
+	    <input id="importName" name="importName" type="hidden"/>
+		<input id="importattach_path" name="importattach_path" type="hidden"/>
+	 </td>
+	 <td align="left" valign="top" class="tdRight">
+			<iframe frameborder="0" name="my_upload" id="my_upload" height="25" width="100%" src="/fileuploadframe/studentimport.htm"></iframe>
+	</td>
+	</tr> 
+ <tr>
+	 <td align="right" class="tdLeft" width="20%">注意： 
+	 </td>
+	 <td align="left" valign="top" class="tdRight">
+		<font color=red>请严格填写模板的图书编号，系统将根据图书编号进行迁移；<br/>
+		
+		</font>
+	</td>
+	</tr> 
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td height="5">&nbsp;</td>
+	</tr>
+	<tr>
+		<td height="5" align="center">
+			<input name="btn01" id="sys_update_btn" type="submit" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="提 交" />&nbsp;&nbsp;&nbsp;&nbsp;
+			<input name="btn01" type="button" class="btn01" onclick="pag.back('book_index','book_update');" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="返 回" />
+		</td>
+	</tr>
+</table>
+</form>

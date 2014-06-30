@@ -1,0 +1,56 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+		<td class="line">您的位置是：客户明细>> 应收国家退税 >> 查看应收国家退税</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td>
+			&nbsp;	
+		</td>
+	</tr>
+</table>
+<#include "../../../common_tips.ftl" />
+
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="update_tbl">
+	<tr>
+		<td align="right" class="tdLeft"  width="15%">报关单号： </td>
+		<td align="left" valign="top" class="tdRight" width="35%">${gjts.bgdh!}</td>
+		<td align="right" class="tdLeft" width="15%">客户名称： </td>
+		<td align="left" valign="top" class="tdRight" width="35%">${gjts.khmc!}</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft">单号：</td>
+		<td align="left" valign="top" class="tdRight">${gjts.dh!}</td>		
+		<td align="right" class="tdLeft" >增值税率： </td>
+		<td align="left" valign="top" class="tdRight">${gjts.zzsl!}</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" >退税率： </td>
+		<td align="left" valign="top" class="tdRight">${gjts.tsl!}</td>
+		<td align="right" class="tdLeft" >退税金额： </td>
+		<td align="left" valign="top" class="tdRight"><#if gjts.tsje??>${gjts.tsje?string("0.##")}</#if></td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" >收退税日期： </td>
+		<td align="left" valign="top" class="tdRight"><#if gjts.tsrq??>${gjts.tsrq?if_exists?string('yyyy-MM-dd')}</#if></td>
+		<td align="right" class="tdLeft" >已收金额： </td>
+		<td align="left" valign="top" class="tdRight"><#if gjts.ysje??>${gjts.ysje?string("0.##")}</#if></td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" >未收金额： </td>
+		<td align="left" valign="top" class="tdRight"><#if gjts.wsje??>${gjts.wsje?string("0.##")}</#if></td>
+		<td align="right" class="tdLeft" >录入时间： </td>
+		<td align="left" valign="top" class="tdRight">${gjts.lrsj?if_exists?string("yyyy-MM-dd")}</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td height="5">&nbsp;</td>
+	</tr>
+	<tr>
+		<td height="5" align="center">
+			<input name="btn01" type="button" class="btn01" onclick="pag.back('_index','_edit');" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="返 回" />
+		</td>
+	</tr>
+</table>

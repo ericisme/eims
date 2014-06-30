@@ -1,0 +1,81 @@
+<#-- 控制面板中用户个人密码保护设置页面 -->
+
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+		<td class="line">您现在的位置： 控制面板 -> 密码保护</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<span id="no_cryptoguard" <#if isSetted>style="display:none"</#if> >
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="update_tbl">
+	<tr>
+		<td align="center" class="tdLeft">
+			<font color="red">您暂时还没有设置密码保护，为保证帐号安全，建议您尽快设置密码保护！</font>
+		</td>
+	</tr>
+</table>
+</span>
+<form name="userCryptoguardUpdateForm" id="userCryptoguardUpdateForm" method="POST" action="" onsubmit="return controlUpdateCryptoguard();">
+<#include "../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="update_tbl">
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 提示问题： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="userQuestion" id="userQuestion" type="text" value="${guard.userQuestion}" maxlength="200" size="30" class="box0" 
+				onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 问题答案： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="userAnswer" id="userAnswer" type="text" value="${guard.userAnswer}" maxlength="200" size="30" class="box0" 
+				onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 取回方式： </td>
+		<td align="left" valign="top" class="tdRight">
+			<#-- 查看系统可用的密码取回方式，邮件或手机短信,两者必须有一 -->
+			<#if disabledEmail && !disabledSms>
+				<input name="useEmailMethod" id="EmailGetMethod" type="radio" value="true" disabled /> Email取回
+				<input name="useEmailMethod" id="MobileGetMethod" type="radio" value="false" checked/> 手机取回
+			<#elseif !disabledEmail && disabledSms>
+				<input name="useEmailMethod" id="EmailGetMethod" type="radio" value="true" checked /> Email取回
+				<input name="useEmailMethod" id="MobileGetMethod" type="radio" value="false" disabled/> 手机取回
+			<#else>
+				<input name="useEmailMethod" id="EmailGetMethod" type="radio" value="true" <#if guard.useEmailMethod>checked</#if> /> Email取回
+				<input name="useEmailMethod" id="MobileGetMethod" type="radio" value="false" <#if !guard.useEmailMethod>checked</#if>/> 手机取回
+			</#if>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> Email地址： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="userEmail" id="userEmail" type="text" value="${guard.userEmail}" maxlength="200" size="30" class="box0" 
+				onFocus="this.className='box1'" onBlur="this.className='box0'"/>&nbsp;&nbsp;
+			<font color="red">Email方式取回必填！</font>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 手机号码： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="userMobile" id="userMobile" type="text" value="${guard.userMobile}" maxlength="200" size="30" class="box0" 
+				onFocus="this.className='box1'" onBlur="this.className='box0'"/>&nbsp;&nbsp;
+			<font color="red">手机方式取回必填！</font>
+		</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td height="5">&nbsp;</td>
+	</tr>
+	<tr>
+		<td height="5" align="center">
+			<input name="btn01" type="submit" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="保 存" />&nbsp;&nbsp;&nbsp;&nbsp;
+			<input name="btn01" type="button" class="btn01" onclick="pag.back('control_index','control_update');" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="返 回" />
+		</td>
+	</tr>
+</table>
+</form>

@@ -1,0 +1,113 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>班级</title>
+<link href="/html/syspurview/skins/default/body.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="/html/syspurview/js/base.js?load(page_exe.js,/html/library/xxptclass.js)"></script>
+<script language="javascript" src="/html/library/xxptUtils.js"></script>
+<script language="javascript" src="/html/library/baseDataCascade.js"></script>
+<script language="javascript" src="/js/common/prototype.js"></script>
+<script language="javascript" src="/js/common/log/log4javascript.js"></script>
+</head>
+
+<body class="body_bg">
+<script type="text/javascript">
+<!--
+	BaseClass.funcList.push(selectOptionByDiv);
+	BaseClass.addOnLoad(zfptClassQuery);
+-->
+</script>
+<#include "../../common_loading.ftl" />
+<div id="zfptClass_index">
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+    	<td class="line">您现在的位置： 基础管理 -> 班级管理</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<#include "../../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_query">
+	<tr style="display:${areaSel!}">
+		<td width="2%" align="right">
+			镇区：
+		</td>
+		<td width="8%" align="left" bgcolor="#FFFFFF">
+			<select name="queryCityId" onchange="changeZhptAgencyIndex(this.value,'queryAgencyId','querySchoolId','queryGradeId','queryAgency','querySchool','queryGrade')" ${disableTown!}>
+				${citySelectHtml!}
+			</select>
+		</td>
+		<td width="2%" align="right">
+			机构：
+		</td>
+		<td width="8%" align="left" bgcolor="#FFFFFF">
+			<span id="queryAgency" name="queryAgency">
+				<select name="queryAgencyId" onchange="changeZhptSchoolIndex(this.value,'querySchoolId','queryGradeId','querySchool','queryGrade')" ${disableAgency!}>
+					${agencySelectHtml!}
+				</select>
+			</span>
+		</td>
+		<td width="2%" align="right">
+			学校：
+		</td>
+		<td width="8%" align="left" bgcolor="#FFFFFF">
+			<span id="querySchool" name="querySchool">
+				<select name="querySchoolId" onchange="changeZhptGrade(this.value,'queryGradeId','queryGrade')" ${disableSchool!}>
+					<option value="-1">--所有--</option>
+					${schoolHtmlSelect!}
+				</select>
+			</span>
+		</td>
+	</tr>
+	<tr>
+		
+		<td width="2%" align="right">
+			年级：
+		</td>
+		<td width="5%" align="left" bgcolor="#FFFFFF">
+			<span id="queryGrade" name="queryGrade">
+				<select name="queryGradeId"  onchange="changeClassName(this.value,'queryClassNameId', 'queryClassName')">
+					<option value="-1">--所有--</option>
+					${editGradeHtmlSelect!}
+				</select>
+			</span>
+		</td>
+		<td width="2%" align="right">
+			班级：
+		</td>	
+		<td width="2%" align="left" bgcolor="#FFFFFF">
+			<span id="queryClassName" name="queryClassName">
+			 	<select name="queryClassNameId" >
+			 		<option value="-1">--所有--</option>
+					${editClassNameHtmlSelect!}
+				</select>
+			</span>
+		</td>
+		<td width="2%" align="right">
+			
+		</td>	
+		<td width="2%" align="left" bgcolor="#FFFFFF">
+			
+		</td>
+	</tr>
+	<tr>
+		<td width="100%" align="center" colspan="6" bgcolor="#FFFFFF">&nbsp;&nbsp;
+			<input name="sub" type="button" onclick="zfptClassQuery()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="查 询" />&nbsp;
+			<input name="sub" sys_opt="save" type="button" onclick="zfptClassAdd()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="添 加" />&nbsp;
+			<input name="sub" sys_opt="edit" type="button" onclick="zfptClassEdit()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="修 改" />&nbsp;
+			<input name="sub" sys_opt="remove" type="button" onclick="zfptClassDel()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="删 除">&nbsp;
+			<input name="sub" sys_opt="export" type="button" onclick="downloadClass()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="批量导出" />&nbsp;
+	</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<span id="zfptClass_list">
+</span>
+</div>
+<div id="zfptClass_update" style="display:none">
+</div>
+</body>
+</html>

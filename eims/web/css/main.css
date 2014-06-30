@@ -1,0 +1,79 @@
+@charset "utf-8";
+/*--------------菜单部分-----------------*/
+#menu{ width:949px; height:65px; padding-bottom:20px;}
+#menu_left{ width:5px; height:65px; float:left; background:url(/images/proscenium/menu_left.gif) no-repeat;}
+#menu_right{ width:5px; height:65px; float:left;background:url(/images/proscenium/menu_right.gif) no-repeat;}
+.menu_mid{ width:906px; height:65px; float:left; padding-left:33px; background:url(/images/proscenium/menu_bg.gif) repeat-x top;}
+/*--------------菜单_一级样式——-----------------*/
+.menu_mid .big{ height:32px;}
+.menu_mid .big li{ float:left; width:97px; height:27px; padding:5px 5px 0px 5px; text-align:center; line-height:27px; font-size:14px; font-weight:bold;}
+.menu_mid .big .on{ background:url(/images/proscenium/menu_1a_on.gif) no-repeat;}
+.menu_mid .big .on a{ color:#2b81c1;}
+.menu_mid .big li a{ color:#FFF;}
+/*--------------菜单_二级样式——-----------------*/
+.menu_mid .small{ height:33px;}
+.menu_mid .small li{ float:left; width:83px; height:22px; padding:4px 5px 7px 5px; line-height:22px; font-size:12px;}
+.menu_mid .small .on{background:url(/images/proscenium/menu_2a_hit.gif) no-repeat center center;color:#005eab; text-align:center;}
+.menu_mid .small li a{color:#005eab; width:83px; height:22px; display:block; text-align:center;}
+.menu_mid .small li a:hover{background:url(/images/proscenium/menu_2a_on.gif) no-repeat; text-decoration:none;}
+
+/*--------------主要内容—-----------------*/
+#main{ width:949px; overflow:hidden;}
+.space_10px{ height:10px; overflow:hidden;}
+
+/*--------------左部分-----------------*/
+#left{ width:702px; float:left;}
+.left_div{ width:700px; border:#c9e2e9 1px solid;}
+
+/*--------------左部分_标题部分—-----------------*/
+.left_div .title{ width:100%; height:30px; background:url(/images/proscenium/item_25.gif) repeat-x top; padding-left:10px;}
+.left_div .title li{ background:url(/images/proscenium/item_27.gif) no-repeat top; width:87px; height:25px; padding-top:5px; color:#5b5b5b; font-size:12px; float:left; text-align:center; line-height:25px;}
+.left_div .title ul .on{background:url(/images/proscenium/item_26.gif); font-weight:bold;}
+
+/*--------------左部分_服务项-----------------*/
+#left .item_btn li{ float:left; width:58px; height:87px; padding:25px 0px 25px 25px;}
+#left .item_btn li img{ filter:alpha(opacity=60); opacity:0.6; }
+#left .item_btn li img:hover{ filter:alpha(opacity=100); opacity:1; }
+
+/*--------------左部分_文章列表—-----------------*/
+#left .item_list ul{ padding:20px 25px;}
+#left .item_list ul li{ line-height:24px; width:635px; background:url(/images/proscenium/ling_bg.gif) no-repeat bottom left; height:25px; color:#999; padding-left:15px;}
+#left .item_list ul li a{ color:#666;}
+#left .item_list ul li a:hover{ color:#06F;}
+
+/*--------------左部分_收支记录table—-----------------*/
+.tab_style{ background-color:#c0d9e0;}
+.tab_style td{background-color:#FFF; line-height:22px; padding:5px; color:#666;}
+.tab_style td .font1{ color:#F00;}
+.tab_style td a{ color:#06F; line-height:18px;}
+.tab_style .title{ background:url(/images/proscenium/item_25.gif) repeat-x top #FFF;}
+.tab_style .title b{ color:#000; font-size:14px;}
+.tab_style .tr2 td{background-color:#f9feff;}
+.tab_style2 td{ padding:0px; background:none;}
+.tab_style td strong{ color:#039;}
+.tab_style .bottom{ line-height:14px;  background:url(/images/proscenium/item_25.gif) repeat-x top #FFF; height:22px; padding:2px 5px; text-align:right;}
+
+/*--------------右部分-----------------*/
+#right{ width:235px; float:right;s}
+
+/*--------------个人信息区------------------*/
+#right_id{ background:url(/images/proscenium/ID_bg_30.gif) no-repeat top; padding:10px; width:215px; height:134px;}
+#id_num{ width:205px; height:20px; line-height:20px; color:#333; padding:4px 5px 1px 5px;}
+#id_main{ padding:8px;}
+#id_main img{ float:left; width:54px; height:54px; padding:2px; border:#999 1px solid;}
+#id_main p{ overflow:hidden; float:right; width:132px; height:60px; line-height:14px; color:#999;}
+#id_main p b{ color:#000; font-size:18px; vertical-align:top;line-height:26px;}
+#id_main p a{ color:#06F; line-height:24px;}
+#id_btn{ padding-top:6px;}
+#id_btn img{ filter:alpha(opacity=60); opacity:0.6;}
+#id_btn img:hover{ filter:alpha(opacity=100); opacity:1;}
+
+
+/*-------------常见问题------------------*/
+#right_question{ width:235px; background:url(/images/proscenium/right_tab_bg_2.gif) repeat-y center;}
+#right_question .title{ padding:10px 15px 5px 15px; background:url(/images/proscenium/right_tab_bg_1.gif) top no-repeat;}
+#right_question .title a{color:#06F;}
+#right_question ul{ padding:0px 15px 10px 15px; background:url(/images/proscenium/right_tab_bg_3.gif) bottom no-repeat;}
+#right_question li{ height:25px; line-height:25px; font-size:9px; color:#999;}
+#right_question li a{ font-size:12px; color:#666;}
+#right_question li a:hover{color:#06F;}

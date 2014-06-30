@@ -1,0 +1,63 @@
+<!-- auto generated -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>学生唯一标识号管理</title>
+<link href="/html/syspurview/skins/default/body.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="/html/syspurview/js/base.js?load(page_exe.js,/html/crda/classstudent.js)"></script>
+<script language="javascript" src="/html/library/xxptUtils.js"></script>
+<script language="javascript" src="/js/common/prototype.js"></script>
+<script language="javascript" src="/js/common/log/log4javascript.js"></script>
+<script type="text/ecmascript" language="javascript" src="/js/calendar.js"></script>
+<script language="javascript" src="/html/library/baseDataCascade.js"></script>
+</head>
+
+<body class="body_bg">
+<script type="text/javascript">
+<!--
+	BaseClass.addOnLoad(classstudentQuery);
+-->
+</script>
+<#include "../../common_loading.ftl" />
+<div id="classstudent_index">
+<form name="classStudentUpdateForm" id="classStudentUpdateForm" method="POST" action="" onsubmit="return importParentHandle();">
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+    	<td class="line">您现在的位置： 学生成长袋 -> 学生匹配查询</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<#include "../../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_query">
+	<tr>
+	   <td align="left" width="5%">
+			<input name="sub" type="button" onclick="classstudentQuery()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="查 询" />
+		</td>
+		<td align="left" width="5%">
+			<input name="sub" type="button" onclick="classstudentQuery(0)" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="无效数据" />
+		</td>
+		<td align="right" width="5%">机构:</td>
+	   	<td align="left" bgcolor="#FFFFFF" width="5%">
+	    	<select name='queryAgencyId' id='queryAgencyId'>${agencySelectHtml!}</select>
+       	</td>
+       	<td align="left" width="5%">
+       		<input name="sub" type="button" sys_opt="check" onclick="classstudentCheck()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="匹配" />&nbsp;
+       	</td>
+       	<td align="left">
+       		<input name="sub" sys_opt="export" type="button" onclick="downloadClassStudent()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="导出无效数据" />&nbsp;
+       	</td>
+	</tr>
+</table>
+</form>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<span id="classstudent_list">
+</span>
+</div>
+<div id="classstudent_update" style="display:none">
+</div>
+</body>
+</html>

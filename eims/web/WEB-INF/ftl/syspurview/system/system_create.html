@@ -1,0 +1,62 @@
+<!-- 子系统添加页面 -->
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+		<td class="line">您现在的位置： 子系统管理 -> 新增子系统</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<form name="sysUpdateForm" id="sysUpdateForm" method="POST" action="" onsubmit="return sysUpdateCheck(1);">
+<#include "../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="update_tbl">
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 子系统名称： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="sysName" id="sysName" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 子系统标记： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="sysFlag" id="sysFlag" type="text" maxlength="30" size="30" class="box0" onFocus="this.className='box1'" onBlur="javascript:sysCheckFlag(this.value);this.className='box0';"/>
+			<input id="ckresult" type="hidden" value="0" />
+			<span id="cktips"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 子系统地址： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="sysUrl" id="sysUrl" type="text" maxlength="200" size="60" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/> *用户登陆成功后的首页地址！
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 子系统排序： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="sysSequence" id="sysSequence" value="${seq}" type="text" maxlength="3" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px">窗口特性： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="sysTarget" id="sysTarget_1" type="radio" value="default" checked/> 默认窗口 
+			<input name="sysTarget" id="sysTarget_2" type="radio" value="_blank"/> 新窗口 
+		</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td height="5"><br/><font color="red">温馨提示&gt;&gt;&gt;</font>子系统标记的规范格式为：xx_xx_xx，其中xx_xx_为子系统标记的前缀，其后的可自定义。
+		对于具有相同前缀的子系统，其登陆用户组将被归为一类！</td>
+	</tr>
+	<tr>
+		<td height="5">&nbsp;</td>
+	</tr>
+	<tr>
+		<td height="5" align="center">
+			<input name="btn01" id="sys_update_btn" type="submit" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="提 交" />&nbsp;&nbsp;&nbsp;&nbsp;
+			<input name="btn01" type="button" class="btn01" onclick="pag.back('sys_index','sys_update');" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="返 回" />
+		</td>
+	</tr>
+</table>
+</form>

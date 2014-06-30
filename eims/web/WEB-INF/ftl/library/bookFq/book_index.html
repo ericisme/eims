@@ -1,0 +1,142 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>图书管理</title>
+<link href="/html/syspurview/skins/default/body.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="/html/syspurview/js/base.js?load(page_exe.js,/html/library/bookFq.js)"></script>
+<script language="javascript" src="/html/library/xxptUtils.js"></script>
+<script language="javascript" src="/js/common/prototype.js"></script>
+<script language="javascript" src="/js/common/log/log4javascript.js"></script>
+<script language="javascript" src="/js/calendar.js"></script>
+<script language="javascript" src="/html/library/bookDataCascade.js"></script>
+
+</head>
+<body class="body_bg">
+<script type="text/javascript">
+<!--
+	//BaseClass.funcList.push(selectOptionByDiv);
+	BaseClass.addOnLoad(bookQuery);
+-->
+</script>
+<#include "../../common_loading.ftl" />
+<div id="book_index">
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+    	<td class="line">您现在的位置： 图书管理 -> 废弃图书查询</td>
+    	<!-- td class="line" align=right>条码打印机安装视频<a href="javascript:downloadFile('/sofeware/TTP_244ME_loading_supply_E.rar')" >（1</a> &nbsp;<a href="javascript:downloadFile('/sofeware/TTP_244ME_loading_ribbon_E.rar')" >2）</a> &nbsp;<a href="javascript:downloadFile('/sofeware/BarTender7.75.rar')" >条码打印软件下载</a> &nbsp;<a href="javascript:downloadFile('/sofeware/Driver.rar')" >条码打印机驱动下载</a></td-->
+		<td class="line" align=right>条码打印机安装视频<a href="/sofeware/TTP_244ME_loading_supply_E.rar" >（1</a> &nbsp;<a href="/sofeware/TTP_244ME_loading_ribbon_E.rar')" >2）</a> &nbsp;<a href="javascript:downloadFile('/sofeware/BarTender7.75.rar')" >条码打印软件下载</a> &nbsp;<a href="javascript:downloadFile('/sofeware/Driver.rar')" >条码打印机驱动下载</a></td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<#include "../../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_query">
+	<tr height="12" style="display:">
+		<td  align="right" height="12">
+			镇区：
+		</td>
+		<td align="left" bgcolor="#FFFFFF">
+			<select name="queryCityId" onchange="changeZhptAgencyIndex(this.value,'queryAgencyId','queryAgency','querySchoolId','querySchool')" >
+				${citySelectHtml!}
+			</select>&nbsp;
+		</td>
+		<td  align="right">
+			机构：
+		</td>
+		<td align="left" bgcolor="#FFFFFF" >
+			<span id="queryAgency" name="queryAgency">
+			<select name="queryAgencyId" onchange="changeZhptSchoolIndex(this.value,'querySchoolId','querySchool')" >
+				${agencySelectHtml!}
+			</select></span>&nbsp;
+		</td>
+		<td  align="right">
+			学校：
+		</td>
+		<td align="left" bgcolor="#FFFFFF" >
+			<span id="querySchool" name="querySchool">
+				<select name="querySchoolId" >
+					${schoolHtmlSelect!}
+				</select>
+			</span>&nbsp;
+		</td>
+		
+		</tr>
+	<tr  height="12">
+		<td  align="right">
+			索书号：
+		</td>
+		<td align="left" bgcolor="#FFFFFF" >
+			<input type="text" name="bookIndex" id="bookIndex" size="12"></input>
+		</td>
+		<td   align="right">
+			图书：
+		</td>
+		<td align="left" bgcolor="#FFFFFF">
+			<input type="text" name="bookName" id="bookName" size="12"></input>
+		</td>
+		
+		
+		<td   align="right">
+			入库时间：
+		</td>
+		<td align="left" bgcolor="#FFFFFF">
+			<input type="text" name="bookStorageTime" id="bookStorageTime" size="12" onFocus="setdayWithOnTime(this)"></input>
+		</td>
+		
+	</tr>
+	<tr  height="12">
+		<td  align="right">
+			可阅读性：
+		</td>
+		<td align="left" bgcolor="#FFFFFF" >
+			<select id="kydx" name="kydx">
+				<option value="0" selected="selected">所有</option>
+				<option value="1">好</option>
+				<option value="2">中</option>
+				<option value="3">差</option>
+			</select>			
+		</td>
+		<td   align="right">
+			书籍类型：
+		</td>
+		<td align="left" bgcolor="#FFFFFF">
+			<select id="sjlx" name="sjlx">
+				<option value="-1" selected="selected">所有</option>
+				<option value="0">学生图书</option>
+				<option value="1">教师用书</option>
+				<option value="2">期刊杂志</option>
+			</select>
+		</td>
+		
+		
+		<td   align="right">
+			
+		</td>
+		<td align="left" bgcolor="#FFFFFF">
+			
+		</td>
+		
+	</tr>
+	<tr  height="12">
+		<td width="100%" align="center" colspan="6" bgcolor="#FFFFFF">&nbsp;&nbsp;
+			<input name="sub" type="button" onclick="bookQuery()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="查 询" />&nbsp;
+			<!-- >input name="sub" sys_opt="save" type="button" onclick="bookAdd()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="添 加" />&nbsp;
+			<input name="sub" sys_opt="edit" type="button" onclick="bookEdit()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="修 改" />&nbsp;
+			<input name="sub" sys_opt="remove" type="button" onclick="bookDel()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="删 除">&nbsp;
+			<input name="sub" sys_opt="importinit" type="button" onclick="importinit()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="批量导入" /-->&nbsp;
+			<input name="sub" sys_opt="export" type="button" onclick="downloadBook()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="批量导出" />&nbsp;
+			<input name="sub" sys_opt="exportprint" type="button" onclick="downloadPrint()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="条形码导出" />&nbsp;
+		</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<span id="book_list">
+</span>
+</div>
+<div id="book_update" style="display:none">
+</div>
+</body>
+</html>

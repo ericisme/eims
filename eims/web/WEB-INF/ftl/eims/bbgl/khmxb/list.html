@@ -1,0 +1,235 @@
+<!-- auto generated -->
+<html>
+<body id="main_body">
+<table width="3750" border="0" cellpadding="5" cellspacing="1" class="list_table" style="word-break:break-all">
+	<tr class="list_title">	
+    	<td width="50" align="center" rowspan="2">客户名称</td>
+    	<td width="50" align="center" rowspan="2">合作单位</td>
+    	<td width="75" align="center" rowspan="2">报关日期</td>
+    	<td width="100" align="center" rowspan="2">报关单号</td>
+    	<td width="70" align="center" rowspan="2">报关金额</td>
+    	<td width="70" align="center" rowspan="2">发票金额</td>
+    	<td width="50" align="center" rowspan="2">收发票日期</td>
+    	<td width="50" align="center" rowspan="2">退税金额</td>
+    	<td width="50" align="center" rowspan="2">支付退税日期</td>
+    	<td width="50" align="center" rowspan="2">收到国税退税日期</td>
+    	<td width="50" align="center" rowspan="2">代理费</td>
+    	
+    	<td width="100" align="center" colspan="2">报关费</td>
+    	<td width="100" align="center" colspan="2">广建费</td>
+    	<td width="100" align="center" colspan="2">国检费</td>
+    	<td width="100" align="center" colspan="2">商检费</td>
+    	<td width="100" align="center" colspan="2">续页费</td>
+    	<td width="100" align="center" colspan="2">连柜费</td>
+    	<td width="100" align="center" colspan="2">拖车费</td>
+    	<td width="100" align="center" colspan="2">扫描费</td>
+    	<td width="100" align="center" colspan="2">查柜费</td>
+    	<td width="100" align="center" colspan="2">熏蒸费</td>
+    	<td width="100" align="center" colspan="2">加签</td>
+    	<td width="100" align="center" colspan="2">信用证费</td>
+    	<td width="100" align="center" colspan="2">产地证费</td>
+    	<td width="100" align="center" colspan="2">空白单证费</td>
+    	<td width="100" align="center" colspan="2">快递费</td>
+    	<td width="100" align="center" colspan="2">驳船费</td>
+    	<td width="100" align="center" colspan="2">封条费</td>
+    	<td width="100" align="center" colspan="2">仓单费</td>
+    	<td width="100" align="center" colspan="2">过磅费</td>
+    	<td width="100" align="center" colspan="2">换证凭条费</td>
+    	<td width="100" align="center" colspan="2">其他</td>
+    	<td width="40" align="center" colspan="2">合计</td>
+    	
+    	<td width="75" align="center" rowspan="2">毛利</td>
+    	<td width="75" align="center" rowspan="2">利润</td>
+    	<td width="50" align="center" rowspan="2">业务员</td>
+    	<td width="75" align="center" rowspan="2">代理费标准</td>
+	</tr>
+	<tr class="list_title">
+		<td width="50" align="center">收入</td>
+		<td width="50" align="center">成本</td>
+		<td width="50" align="center">收入</td>
+		<td width="50" align="center">成本</td>
+		<td width="50" align="center">收入</td>
+		<td width="50" align="center">成本</td>
+		<td width="50" align="center">收入</td>
+		<td width="50" align="center">成本</td>
+		<td width="50" align="center">收入</td>
+		<td width="50" align="center">成本</td>
+		<td width="50" align="center">收入</td>
+		<td width="50" align="center">成本</td>
+		<td width="50" align="center">收入</td>
+		<td width="50" align="center">成本</td>
+		<td width="50" align="center">收入</td>
+		<td width="50" align="center">成本</td>
+		<td width="50" align="center">收入</td>
+		<td width="50" align="center">成本</td>
+		<td width="50" align="center">收入</td>
+		<td width="50" align="center">成本</td>
+		<td width="50" align="center">收入</td>
+		<td width="50" align="center">成本</td>
+		<td width="50" align="center">收入</td>
+		<td width="50" align="center">成本</td>
+		<td width="50" align="center">收入</td>
+		<td width="50" align="center">成本</td>
+		<td width="50" align="center">收入</td>
+		<td width="50" align="center">成本</td>
+		<td width="50" align="center">收入</td>
+		<td width="50" align="center">成本</td>
+		<td width="50" align="center">收入</td>
+		<td width="50" align="center">成本</td>
+		<td width="50" align="center">收入</td>
+		<td width="50" align="center">成本</td>
+		<td width="50" align="center">收入</td>
+		<td width="50" align="center">成本</td>
+		<td width="50" align="center">收入</td>
+		<td width="50" align="center">成本</td>
+		<td width="50" align="center">收入</td>
+		<td width="50" align="center">成本</td>
+		<td width="50" align="center">收入</td>
+		<td width="50" align="center">成本</td>
+		<td width="50" align="center">收入</td>
+		<td width="50" align="center">成本</td>
+	</tr>
+	<#assign entitySize=page.result?size />
+	<#if entitySize = 0>
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+		<td align="center" colspan="60"><font color="red">没有符合条件的记录！</font></td>
+	</tr>
+	<#else>
+	<#list page.result as map >
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'"> 	
+	  	<td align="center">${map.khmc!}</td>
+	  	<td align="center">${map.gsmc!}</td>
+	  	<td align="center">${map.bgrq?if_exists?string('yyyy-MM-dd')}</td>
+	  	<td align="center">${map.bgdh!}</td>
+	  	<td align="center">${map.bgje?string("0.##")}</td>
+	  	<td align="center">${map.fpje?string("0.##")}</td>
+	  	<td align="center">${map.sfprq!}</td>
+	  	<td align="center">${map.tsje?string("0.##")}</td>
+	  	<td align="center">${map.zftsrq!}</td>
+	  	<td align="center"><#if map.tsrq??>${map.tsrq?if_exists?string('yyyy-MM-dd')}</#if></td> 
+	  	<td align="center">${map.sum_dlf?string("0.##")}</td>
+	  	
+	  	<td align="center">${map.sr_bgf?string("0.##")}</td>
+	  	<td align="center">${map.cb_bgf?string("0.##")}</td>
+	  	<td align="center">${map.sr_gjf?string("0.##")}</td>
+	  	<td align="center">${map.cb_gjf?string("0.##")}</td>
+	  	<td align="center">${map.sr_gj?string("0.##")}</td>
+	  	<td align="center">${map.cb_gj?string("0.##")}</td>
+	  	<td align="center">${map.sr_sjf?string("0.##")}</td>
+	  	<td align="center">${map.cb_sjf?string("0.##")}</td>	  	
+	  	<td align="center">${map.sr_xyf?string("0.##")}</td>
+	  	<td align="center">${map.cb_xyf?string("0.##")}</td>
+	  	<td align="center">${map.sr_lgf?string("0.##")}</td>
+	  	<td align="center">${map.cb_lgf?string("0.##")}</td>
+	  	<td align="center">${map.sr_tcf?string("0.##")}</td>
+	  	<td align="center">${map.cb_tcf?string("0.##")}</td>
+	  	<td align="center">${map.sr_smf?string("0.##")}</td>
+	  	<td align="center">${map.cb_smf?string("0.##")}</td>
+	  	<td align="center">${map.sr_cgf?string("0.##")}</td>
+	  	<td align="center">${map.cb_cgf?string("0.##")}</td>
+	  	<td align="center">${map.sr_xzf?string("0.##")}</td>
+	  	<td align="center">${map.cb_xzf?string("0.##")}</td>
+	  	<td align="center">${map.sr_jq?string("0.##")}</td>
+	  	<td align="center">${map.cb_jq?string("0.##")}</td>
+	  	<td align="center">${map.sr_xyzf?string("0.##")}</td>
+	  	<td align="center">${map.cb_xyzf?string("0.##")}</td>
+	  	<td align="center">${map.sr_cdzf?string("0.##")}</td>
+	  	<td align="center">${map.cb_cdzf?string("0.##")}</td>
+	  	<td align="center">${map.sr_kbdzf?string("0.##")}</td>
+	  	<td align="center">${map.cb_kbdzf?string("0.##")}</td>
+	  	<td align="center">${map.sr_kdf?string("0.##")}</td>
+	  	<td align="center">${map.cb_kdf?string("0.##")}</td>
+	  	<td align="center">${map.sr_bcf?string("0.##")}</td>
+	  	<td align="center">${map.cb_bcf?string("0.##")}</td>
+	  	<td align="center">${map.sr_ftf?string("0.##")}</td>
+	  	<td align="center">${map.cb_ftf?string("0.##")}</td>
+	  	<td align="center">${map.sr_cdf?string("0.##")}</td>
+	  	<td align="center">${map.cb_cdf?string("0.##")}</td>
+	  	<td align="center">${map.sr_gpf?string("0.##")}</td>
+	  	<td align="center">${map.cb_gpf?string("0.##")}</td>
+	  	<td align="center">${map.sr_hzptf?string("0.##")}</td>
+	  	<td align="center">${map.cb_hzptf?string("0.##")}</td>
+	  	<td align="center">${map.sr_qt?string("0.##")}</td>
+	  	<td align="center">${map.cb_qt?string("0.##")}</td>
+	  	
+	  	<td align="center">${map.sum_sr?string("0.##")}</td>
+	  	<td align="center">${map.sum_cb?string("0.##")}</td>
+	  	
+	  	<td align="center">${map.ml?string("0.##")}</td>
+	  	<td align="center">${map.lr?string("0.##")}</td>
+	  	<td align="center">${map.ywy!}</td>
+	  	<td align="center">${map.dlfbz!}</td>
+	</tr>
+	</#list>
+
+	<#if ifLastPage == true>
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+		<td align="right" colspan="4"><font color="red"><strong>合计</strong></font></td>	
+		<td align="center"><strong>${hj.hj_bgje?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_fpje?string("0.##")}</strong></td>
+		<td align="center"></td>
+		<td align="center"><strong>${hj.hj_tsje?string("0.##")}</strong></td>
+		<td align="center"></td>
+		<td align="center"></td>
+		<td align="center"><strong>${hj.hj_dlf?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_sr_bgf?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_cb_bgf?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_sr_gjf?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_cb_gjf?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_sr_gj?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_cb_gj?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_sr_sjf?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_cb_sjf?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_sr_xyf?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_cb_xyf?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_sr_lgf?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_cb_lgf?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_sr_tcf?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_cb_tcf?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_sr_smf?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_cb_smf?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_sr_cgf?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_cb_cgf?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_sr_xzf?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_cb_xzf?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_sr_jq?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_cb_jq?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_sr_xyzf?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_cb_xyzf?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_sr_cdzf?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_cb_cdzf?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_sr_kbdzf?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_cb_kbdzf?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_sr_kdf?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_cb_kdf?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_sr_bcf?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_cb_bcf?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_sr_ftf?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_cb_ftf?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_sr_cdf?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_cb_cdf?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_sr_gpf?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_cb_gpf?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_sr_hzptf?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_cb_hzptf?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_sr_qt?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_cb_qt?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_sum_sr?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_sum_cb?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_ml?string("0.##")}</strong></td>
+		<td align="center"><strong>${hj.hj_lr?string("0.##")}</strong></td>
+		<td align="center"></td>
+		<td align="center"></td>
+	</tr>
+	</#if>
+	</#if>
+</table>
+
+<table width="100%" border="0" cellpadding="5" cellspacing="1">
+	<tr>
+		<td width="60%">&nbsp;</td>
+		<td align="right">${page.paginate}</td>
+	</tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!-- 角色添加页面 -->
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+		<td class="line">您现在的位置： 角色管理 -> 新增角色</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<form name="roleUpdateForm" id="roleUpdateForm" method="POST" action="" onsubmit="return roleUpdateCheck(1);">
+<#include "../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="update_tbl">
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 角色名称： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="name" id="name" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px">角色描述： </td>
+		<td align="left" valign="top" class="tdRight">
+			<textarea name="detail" id="detail" rows="6" cols="60" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"></textarea>
+		</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td height="5">&nbsp;</td>
+	</tr>
+	<tr>
+		<td height="5" align="center">
+			<input name="btn01" id="role_update_btn" type="submit" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="提 交" />&nbsp;&nbsp;&nbsp;&nbsp;
+			<input name="btn01" type="button" class="btn01" onclick="pag.back('role_index','role_update');" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="返 回" />
+		</td>
+	</tr>
+</table>
+</form>

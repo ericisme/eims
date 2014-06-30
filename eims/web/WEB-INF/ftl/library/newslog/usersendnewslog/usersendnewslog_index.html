@@ -1,0 +1,68 @@
+<!-- auto generated -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>用户发送短信操作日志</title>
+<link href="/html/syspurview/skins/default/body.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="/html/syspurview/js/base.js?load(page_exe.js,/html/library/usersendnewslog.js)"></script>
+<script language="javascript" src="/js/common/prototype.js"></script>
+<script language="javascript" src="/js/common/log/log4javascript.js"></script>
+<script type="text/ecmascript" language="javascript" src="/js/calendar.js"></script>
+</head>
+
+<body class="body_bg">
+<script type="text/javascript">
+<!--
+	BaseClass.addOnLoad(getCurrentDate);
+	BaseClass.addOnLoad(userSendNewsLogQuery);
+-->
+</script>
+<#include "../../../common_loading.ftl" />
+<div id="userSendNewsLog_index">
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+    	<td class="line">您现在的位置： 短信日志 -> 用户发送短信操作日志</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<#include "../../../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_query">
+  <tr>
+	<td align="right" width="8%">发送时间:</td>
+	<td   bgcolor="#FFFFFF" width="25%">
+			<input name="QDateTimeSelectStart" id="QDateTime1" type="text" style="width:100px;"  onfocus="setdayWithOnTime(this)"/>
+			~
+			<input name="QDateTimeSelectEnd" id="QDateTime2"  type="text" style="width:100px;"  onfocus="setdayWithOnTime(this)"/>
+	</td>
+	<td align="right" width="8%">短信类型:</td>
+	<td align="left" bgcolor="#FFFFFF"  width="15%">
+	       <select name='xxlb' id='xxlb'><option value='-1'>-请选择-</option>${xxlbQueryHtmlSelect!}</select>
+	</td>
+	<td align="right" width="8%">操作用户:</td>
+	<td align="left" bgcolor="#FFFFFF"  width="15%">
+	    	<input name="createUsername" id="createUsername" type="text" size="15"/>
+     </td>
+  </tr>
+  <tr>
+	<td align="right" width="8%">短信内容:</td>
+	<td align="left" bgcolor="#FFFFFF"  width="15%" colspan="3">
+		<input name="newscontent" id="newscontent" type="text" size="30"/>
+	</td>
+	<td  align="left" bgcolor="#FFFFFF" width="11%" colspan="2">&nbsp;
+			<input name="sub" type="button" onclick="userSendNewsLogQuery()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="查 询" />&nbsp;
+			<input name="sub" type="button" onclick="clearTime()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="清空时间" />&nbsp;
+	</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<span id="userSendNewsLog_list">
+</span>
+</div>
+<div id="userSendNewsLog_update" style="display:none">
+</div>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<#-- 这里加html和body是为了使用页面级的按钮权限控制 -->
+<html>
+<body>
+<#-- 首先获取当前页的角色的size大小 -->
+<#assign pRoleSize=Roles?size />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_table">
+	<tr class="list_title">
+		<td width="10%" align="center"><input type="checkbox" name="ckbox" value="checkbox" onclick="base.checkAll('roleId',this.checked)" />全选</td>
+    	<td width="20%" align="center">角色名称	</td>
+    	<td width="20%" align="center">角色描述</td>
+    	<td width="20%" align="center">创建时间</td>
+    	<td align="center">操作</td>
+	</tr>
+	<#if pRoleSize = 0>
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+		<td align="center" colspan="5"><font color="red">暂时没有任何角色！</font></td>
+	</tr>
+	</#if>
+	<#list Roles as role>
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+	  	<td align="center"><input type="checkbox" name="roleId" value="${role.roleId}" /></td>
+	    <td align="left">&nbsp;<span id="dmspan_${role.roleId}">${role.name}</span></td>
+	    <td align="left">&nbsp;${role.detail}</td>
+	    <td align="left">&nbsp;${role.addTime}</td>
+	    <td align="left">&nbsp;
+	    	<input name="btn_del" onclick="roleEdit('${role.roleId}')" type="button" sys_opt="edit" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="修 改" /> &nbsp;
+	    	<input name="btn_del" onclick="roleDel('${role.roleId}')" type="button" sys_opt="remove" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="删 除" /> &nbsp;
+	    	<input name="btn_sq" onclick="roleGrant('${role.roleId}','${role.name}')" type="button" sys_opt="grantIndex" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="授 权" />
+	    </td>
+	  </tr>
+	  </#list>
+</table>
+</body>
+</html>

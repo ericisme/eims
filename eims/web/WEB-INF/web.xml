@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app>
+    
+  <!-- tomcat集群的session复制,如果没有则需要屏蔽 -->
+  <!--
+		<distributable />
+	-->
+  <session-config>
+    <session-timeout>120</session-timeout>
+  </session-config>
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath*:/spring/allSpring.xml
+    </param-value>
+  </context-param>
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <!-- spring的编码设置过滤器 -->
+  <filter>
+    <filter-name>encodingFilter</filter-name>
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+    <init-param>
+      <param-name>forceEncoding</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>encodingFilter</filter-name>
+    <url-pattern>*.do</url-pattern>
+  </filter-mapping>
+  <!-- 权限系统的权限过滤器链设置——操作权限控制过滤器设置 -->
+  <filter>
+    <filter-name>syspurviewPriviilegeFilter</filter-name>
+    <filter-class>cn.qtone.common.components.syspurview.check.filter.priviilege.PriviilegeFilter</filter-class>
+    <!-- 指定配置文件来进行参数配置，如果有指定配置文件那么将优先使用配置文件，参数
+			- 配置将被忽略！如果没有配置文件，请置为空，系统将使用参数进行配置 -->
+    <init-param>
+      <param-name>location</param-name>
+      <param-value>/WEB-INF/classes/resources/syspurview/syspurview.properties</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>syspurviewPriviilegeFilter</filter-name>
+    <url-pattern>*.do</url-pattern>
+  </filter-mapping>
+  <!-- 权限系统的权限过滤器链设置——页面按钮等元素的权限过滤器设置 -->
+  <filter>
+    <filter-name>syspurviewPagePurviewFilter</filter-name>
+    <filter-class>cn.qtone.common.components.syspurview.check.filter.page.PagePurviewFilter</filter-class>
+    <!-- 指定配置文件来进行参数配置，如果同时指定了配置文件和配置参数，那么优先使用配置文件 -->
+    <init-param>
+      <param-name>location</param-name>
+      <param-value>/WEB-INF/classes/resources/syspurview/sys_page_purview.properties</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>syspurviewPagePurviewFilter</filter-name>
+    <url-pattern>*.do</url-pattern>
+  </filter-mapping>
+  <!-- 代理登陆的页面浮动条设置的过滤器配置 -->
+  <filter>
+    <filter-name>proxyLoginFilter</filter-name>
+    <filter-class>cn.qtone.common.components.syspurview.check.filter.ProxyLoginFilter</filter-class>
+    <!-- 指定配置文件来进行参数配置，如果同时指定了配置文件和配置参数，那么优先使用配置文件 -->
+    <init-param>
+      <param-name>location</param-name>
+      <param-value>/WEB-INF/classes/resources/syspurview/proxylogin.properties</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>proxyLoginFilter</filter-name>
+    <url-pattern>*.do</url-pattern>
+  </filter-mapping>
+  <!-- spring MVC dispatcher servlet configure -->
+  <servlet>
+    <servlet-name>dispatcherServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath*:/spring/allSpring.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>dispatcherServlet</servlet-name>
+    <url-pattern>*.do</url-pattern>
+  </servlet-mapping>
+  <!-- 随机验证码 -->
+  <servlet>
+    <servlet-name>randomcode</servlet-name>
+    <servlet-class>cn.qtone.common.base.share.ValidateServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>randomcode</servlet-name>
+    <url-pattern>/rand.do</url-pattern>
+  </servlet-mapping>
+  <!-- 文件上传servlet -->
+  <servlet>
+    <servlet-name>fileUploadServlet</servlet-name>
+    <servlet-class>cn.qtone.library.other.FileUploadServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>fileUploadServlet</servlet-name>
+    <url-pattern>/myUpload</url-pattern>
+  </servlet-mapping>
+  <!-- 文件上传后删除servlet -->
+  <servlet>
+    <servlet-name>fileDeleteServlet</servlet-name>
+    <servlet-class>cn.qtone.library.other.FileDeleteServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>fileDeleteServlet</servlet-name>
+    <url-pattern>/myDelete.do</url-pattern>
+  </servlet-mapping>
+  <!-- 404 页面不存在错误 -->
+    <error-page>
+    <error-code>404</error-code>
+    <location>/error.htm</location>
+  </error-page>
+  <!-- 500 服务器内部错误 -->
+  <error-page>
+    <error-code>500</error-code>
+    <location>/error.htm</location>
+  </error-page>
+  <!-- java.lang.Exception异常错误,依据这个标记可定义多个类似错误提示 -->
+  <error-page>
+    <exception-type>java.lang.Exception</exception-type>
+    <location>/error.htm</location>
+  </error-page>
+  <welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+	</welcome-file-list>
+  
+  
+</web-app>
+

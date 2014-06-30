@@ -1,0 +1,58 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>统计管理</title>
+<link href="/html/syspurview/skins/default/body.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="/html/syspurview/js/base.js?load(page_exe.js,/html/library/summary.js)"></script>
+<script language="javascript" src="/js/common/prototype.js"></script>
+<script language="javascript" src="/js/common/log/log4javascript.js"></script>
+
+</head>
+<body class="body_bg">
+<script type="text/javascript">
+<!--
+	BaseClass.addOnLoad(classSummaryDetailQuery);
+-->
+</script>
+<#include "../../common_loading.ftl" />
+<div id="borrow_index">
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+    	<td class="line">您现在的位置： 统计管理 -> 班级阅读统计 -> 班级阅读详细 </td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5">
+	<input type="hidden" name="classId" id="classId" value="${classId}"/>
+	</td></tr>
+</table>
+<#include "../../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_query">
+	<tr height="12" >
+		<td  align="right" height="12" align="right"  width=30>
+			学校
+		</td>
+		<td  align="left" bgcolor="#FFFFFF"  width=150>
+			${schoolName!}
+		</td>
+		<td  align="right" height="12" align="right"  width=30>
+			班级
+		</td>
+		<td  align="left" bgcolor="#FFFFFF"  width=100>
+			${className!}
+		</td>
+		<td  align="right" height="12"  >
+		
+		</td>
+		
+		</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5">
+	</td></tr>
+</table>
+<span id="summary_list">
+</span>
+</div>
+</body>
+</html>

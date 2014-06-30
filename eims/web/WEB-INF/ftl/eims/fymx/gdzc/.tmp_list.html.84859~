@@ -1,0 +1,62 @@
+<!-- auto generated -->
+<html>
+<body id="main_body">
+<#assign entitySize=page.result?size />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_table" style="word-break:break-all">
+	<tr class="list_title">
+		<td width="2%" align="center">
+		<input type="checkbox" name="ckbox" value="checkbox" onclick="base.checkAll('id',this.checked)" />
+		</td>
+		<td width="8%" align="center">设备项目名称</td>
+		<td width="3%" align="center">单位</td>
+		<td width="3%" align="center">数量</td>
+		<td width="4%" align="center">单价</td>
+		<td width="4%" align="center">总金额</td>
+		<td width="4%" align="center">折旧月份</td>
+		<td width="6%" align="center">每月折旧金额</td>
+		<td width="5%" align="center">已折旧月份</td>
+		<td width="5%" align="center">已折旧金额</td>
+		<td width="4%" align="center">余额</td>
+	</tr>
+	<#if entitySize = 0>
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+		<td align="center" colspan="11"><font color="red">没有符合条件的记录！</font></td>
+	</tr>
+	<#else>	
+
+	</#if>
+	<#list page.result as entity >
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+	  	<td align="center"><input type="checkbox" name="id" value="${entity.id}" /></td>	  	  	
+	  	<td align="center">${entity.sbxmmc!}</td>
+		<td align="center">${entity.dw!}</td>
+		<td align="center">${entity.sl!}</td>
+  		<td align="center">${entity.dj?string("0.##")}</td>
+  		<td align="center">${entity.zje?string("0.##")}</td>
+ 		<td align="center">${entity.zjyf!}</td>
+  		<td align="center">${entity.myzjje?string("0.##")}</td>
+  		<td align="center">${entity.yzjyf!}</td>
+  		<td align="center">${entity.yzjje?string("0.##")}</td>
+  		<td align="center">${entity.ye?string("0.##")}</td>	  	
+	</tr>
+	</#list>
+	<#if ifLastPage == true>
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+	  	<td align="center" colspan="5"><font color="red"><strong>合计</strong></font></td>	  
+	  	<td align="center"><strong>${sum_zje?string("0.##")}</strong></td>
+		<td align="center"><strong></strong></td>
+		<td align="center"><strong>${sum_myzjje?string("0.##")}</strong></td>
+		<td align="center" colspan="1"></td>
+		<td align="center"><strong>${sum_yzjje?string("0.##")}</strong></td>
+		<td align="center"><strong>${sum_ye?string("0.##")}</strong></td>
+	</tr>	
+	</#if>
+</table>
+<table width="100%" border="0" cellpadding="5" cellspacing="1">
+	<tr>
+		<td width="60%">&nbsp;</td>
+		<td align="right">${page.paginate}</td>
+	</tr>
+</table>
+</body>
+</html>

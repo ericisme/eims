@@ -1,0 +1,61 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>图书管理</title>
+<link href="/html/syspurview/skins/default/body.css" rel="stylesheet" type="text/css" />
+</head>
+<body class="body_bg">
+<#include "../../common_loading.ftl" />
+<div id="book_index">
+<body>
+
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_query">
+	<tr height="12">
+		<td align="center" bgcolor="#FFFFFF" style="color:red" >
+			请根据“Excel行号”和“导入出错原因”更正你的Excel数据再重新导入。
+		</td>
+		<td width=60 bgcolor="#FFFFFF">
+		<input name="sub" sys_opt="importinit" type="button" onclick="importinit()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="返回" />
+		</td>
+		</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<#assign bookSize=errorList?size />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_table" style="word-break:break-all">
+	<tr class="list_title">
+		<td align="center">Excel行号</td>
+    	<td align="center">姓名</td>
+    	<td align="center">学籍号</td>
+    	<td align="center">出生日期</td>
+    	<td align="center">性别</td>
+    	<td align="center">IC卡号</td>
+    	<td align="center">导入出错原因</td>
+	</tr>
+	<#if bookSize = 0>
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+		<td align="center" colspan="7"><font color="red">没有符合条件的记录！</font></td>
+	</tr>
+	</#if>
+	<#list errorList as student >
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+		<td align="center">${student.line!}</td>
+    	<td align="center">${student.realName!}</td>
+    	<td align="center">${student.loginName!}</td>
+    	<td align="center">${student.birthday!}</td>
+    	<td align="center">${student.gender!}</td>
+    	<td align="left">${student.id_card!}</td>
+    	<td align="center" style="color:red">${student.errorReason!}</td>
+	</tr>
+	</#list>
+</table>
+<div id="book_update" style="display:none">
+</body>
+</html>
+<script>
+// 导入学生初始化�
+	function importinit() {
+		window.location.href="/library/student.do?action=index";
+	}
+</script>

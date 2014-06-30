@@ -1,0 +1,123 @@
+<html>
+<body>
+<#-- 模块的功能管理页面 -->
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+		<td class="line">您现在的位置： 模块管理 -> [ <strong>${modFunc.MName}</strong> ]功能管理</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<form name="moduleFuncForm" id="moduleFuncForm" method="POST" action="" onsubmit="return moduleFuncSubmit();">
+<#include "../common_tips.ftl" />
+<input type="hidden" name="MId" id="func_mId" value="${modFunc.MId}" />
+<input type="hidden" name="MName" id="func_mName" value="${modFunc.MName}" />
+<#-- 提示没有功能的区域 -->
+<span id="func_no" <#if modFunc.funcList?size != 0> style="display:none" </#if> >
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="update_tbl">
+	<tr>
+		<td align="center" class="tdLeft">模块[ <strong>${modFunc.MName}</strong> ]暂时还没有任何功能！</td>
+	</tr>
+</table>
+</span>
+<#-- 提示没有功能的区域结束 -->
+<#-- 这个span用来动态的管理功能区域 -->
+<span id="func_area">
+<#list modFunc.funcList as func>
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="update_tbl">
+	<tr>
+		<td align="right" class="tdLeft" width="100px">功能名称：</td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="funcId" type="hidden" value="${func.funcId}" />
+			<input name="funcName" type="text" value="${func.funcName}" maxlength="50" size="20" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+			&nbsp;&nbsp;<font color="red"><B>*</B></font>
+		</td>
+		<td align="right" class="tdLeft" width="100px">操作标识符：</td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="funcOperate" type="text" value="${func.funcOperate}" maxlength="30" size="20" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+			&nbsp;&nbsp;<font color="red"><B>*</B></font>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="100px">关联操作 ：</td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="relOperate" type="text" value="${func.relOperate}" maxlength="100" size="35" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+		</td>
+		<td align="right" class="tdRight" colspan="2">
+			<input name="btnSave" sys_opt="updateFunc" type="button" onclick="moduleSaveFunc(this.parentNode.parentNode.parentNode)" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="保 存" />&nbsp;
+			<input name="btnDel" sys_opt="removeFunc" type="button" onclick="moduleDelFunc(this.parentNode.parentNode.parentNode)" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="删 除" />
+		</td>
+	</tr>
+	<tr style="background-color:#ffffff">
+		<td style="height:6px" colspan="4">&nbsp;</td>
+	</tr>
+</table>
+</#list>
+</span>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td height="5" align="right">
+			<br/>
+			<span id="mfunc_tpl_span">
+			<font color="green"><strong>功能模板：</strong></font>
+			<input type="checkbox" name="mfunc_all" value="" onclick="moduleFuncTplCheck(this.checked)"> <font color="blue">全选</font> 
+			<input type="checkbox" name="mfunc_tpl" value="query"> 查询 
+			<input type="checkbox" name="mfunc_tpl" value="add"> 添加 
+			<input type="checkbox" name="mfunc_tpl" value="update"> 修改 
+			<input type="checkbox" name="mfunc_tpl" value="delete"> 删除 
+			</span>
+			<input name="btn01" onclick="moduleAddFuncArea()" type="button" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="添加功能" />
+		</td>
+	</tr>
+	<tr>
+		<td align="center">
+			<br/>
+			<input name="btn01" id="module_update_btn" type="submit" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="提 交" />&nbsp;&nbsp;&nbsp;&nbsp;
+			<input name="btn01" type="button" class="btn01" onclick="pag.back('module_index','module_update');" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="返 回" />
+		</td>
+	</tr>
+	<tr>
+		<td align="left">
+		<br />
+		1.<strong><font color="red">操作标识符</font></strong>通常就是URL地址中action的值，每一个action表示一个动作；<br/>
+		2.<strong><font color="red">关联操作</font></strong>也是URL地址中action的一个值，表示该动作和指定的<strong>操作标识符</strong>是同一权限（比如添加页面的显示和添加两个操作就是同一权限）；<br/>
+		  &nbsp;&nbsp;&nbsp;如果一个操作有多个关联操作，请使用空格分割！
+		</td>
+	</tr>
+</table>
+</form>
+<#-- 功能输入区域的模板 -->
+<span id="func_tpl" style="display:none">
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="update_tbl">
+	<tr>
+		<td align="right" class="tdLeft" width="100px">功能名称：</td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="funcId" type="hidden" value="0" />
+			<input name="funcName" type="text" value="" maxlength="50" size="20" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+			&nbsp;&nbsp;<font color="red"><B>*</B></font>
+		</td>
+		<td align="right" class="tdLeft" width="100px">操作标识符：</td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="funcOperate" type="text" value="" maxlength="30" size="20" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+			&nbsp;&nbsp;<font color="red"><B>*</B></font>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="100px">关联操作 ：</td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="relOperate" type="text" value="" maxlength="100" size="35" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+		</td>
+		<td align="right" class="tdRight" colspan="2">
+			<input name="btnSave" sys_opt="updateFunc" type="button" onclick="moduleSaveFunc(this.parentNode.parentNode.parentNode)" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="保 存" />&nbsp;
+			<input name="btnDel" sys_opt="removeFunc" type="button" onclick="moduleDelFunc(this.parentNode.parentNode.parentNode)" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="删 除" />
+		</td>
+	</tr>
+	<tr style="background-color:#ffffff">
+		<td style="height:6px" colspan="4">&nbsp;</td>
+	</tr>
+</table>
+</span>
+<#-- 模板输入区域结束 -->
+</body>
+</html>

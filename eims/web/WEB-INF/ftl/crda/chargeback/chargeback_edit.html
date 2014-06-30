@@ -1,0 +1,87 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+		<td class="line">您现在的位置： 扣费记录 -> 编辑扣费记录</td>
+	</tr>
+</table>
+<form name="chargebackUpdateForm" id="chargebackUpdateForm" method="POST" action="" onsubmit="return chargebackUpdateCheck(2);">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td><input name="id" id="id" type="hidden" value="${chargeback.id!}" /></tr>
+</table>
+<#include "../../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="update_tbl">
+	  	 
+	<tr>
+		<td align="right" class="tdLeft" width="20%">学生唯一标识： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="stu_unique" id="stu_unique" type="text" maxlength="50" size="30" class="box0" value="${chargeback.stu_unique!}"
+				onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+				<font color="red"><B>*</B></font>
+		</td>
+	</tr>
+	 
+	<tr>
+		<td align="right" class="tdLeft" width="20%">生成时间： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="occuredTime" id="occuredTime" type="text" maxlength="50" size="30" class="box0" value="${chargeback.occuredTime!}"
+				onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+				<font color="red"><B>*</B></font>
+		</td>
+	</tr>
+	 
+	<tr>
+		<td align="right" class="tdLeft" width="20%">扣费状态： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="chargeback" id="chargeback" type="text" maxlength="50" size="30" class="box0" value="${chargeback.chargeback!}"
+				onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+				<font color="red"><B>*</B></font>
+		</td>
+	</tr>
+	 
+	<tr>
+		<td align="right" class="tdLeft" width="20%">扣费次数： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="chargebackTimes" id="chargebackTimes" type="text" maxlength="50" size="30" class="box0" value="${chargeback.chargebackTimes!}"
+				onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+				<font color="red"><B>*</B></font>
+		</td>
+	</tr>
+	 
+	<tr>
+		<td align="right" class="tdLeft" width="20%">扣费金额： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="chargeFees" id="chargeFees" type="text" maxlength="50" size="30" class="box0" value="${chargeback.chargeFees!}"
+				onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+				<font color="red"><B>*</B></font>
+		</td>
+	</tr>
+	 
+	<tr>
+		<td align="right" class="tdLeft" width="20%">扣费时间： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="chargebackTime" id="chargebackTime" type="text" maxlength="50" size="30" class="box0" value="${chargeback.chargebackTime!}"
+				onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+				<font color="red"><B>*</B></font>
+		</td>
+	</tr>
+	 
+	<tr>
+		<td align="right" class="tdLeft" width="20%">手机号码： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="mobile" id="mobile" type="text" maxlength="50" size="30" class="box0" value="${chargeback.mobile!}"
+				onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+				<font color="red"><B>*</B></font>
+		</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td height="5">&nbsp;</td>
+	</tr>
+	<tr>
+		<td height="5" align="center">
+			<input name="btn01" id="sys_update_btn" type="submit" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="提 交" />&nbsp;&nbsp;&nbsp;&nbsp;
+			<input name="btn01" type="button" class="btn01" onclick="pag.back('chargeback_index','chargeback_update');" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="返 回" />
+		</td>
+	</tr>
+</table>
+</form>

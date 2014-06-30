@@ -1,0 +1,73 @@
+<!-- auto generated -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>璁㈤��绠＄��</title>
+<link href="/html/syspurview/skins/default/body.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="/html/syspurview/js/base.js?load(page_exe.js,/html/crda/subscribe.js)"></script>
+<script language="javascript" src="/js/common/prototype.js"></script>
+<script language="javascript" src="/js/common/log/log4javascript.js"></script>
+<script type="text/ecmascript" language="javascript" src="/js/calendar.js"></script>
+</head>
+
+<body class="body_bg">
+<script type="text/javascript">
+<!--
+	BaseClass.addOnLoad(getCurrentDate);
+	BaseClass.addOnLoad(subscribeQuery);
+-->
+</script>
+<#include "../../common_loading.ftl" />
+<div id="subscribe_index">
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+    	<td class="line">��ㄧ�板�ㄧ��浣�缃�锛� 瀛���������胯�� -> 璁㈤����ヨ��</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<#include "../../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_query">
+  <tr>
+	  <td align="right" width="8%">璁㈤����堕��:</td>
+	  <td   bgcolor="#FFFFFF" width="25%">
+		    <input name="QDateTimeSelectStart" id="QDateTime1" type="text" style="width:100px;"  onfocus="setdayWithOnTime(this)"/>
+			~
+		    <input name="QDateTimeSelectEnd" id="QDateTime2"  type="text" style="width:100px;"  onfocus="setdayWithOnTime(this)"/>
+	   </td>
+	   <td align="right" width="8%">��ｈ垂��舵��:</td>
+	   <td align="left" bgcolor="#FFFFFF"  width="15%">
+	       <select name='chargeback' id='chargeback'><option value='-2'>-璇烽�����-</option>${chargebackHtmlSelect!}</select>
+	   </td>
+	   <td align="right" width="8%">瀛�������涓����璇�:</td>
+	   <td align="left" bgcolor="#FFFFFF"  width="15%">
+	    	<input name="stu_unique" id="stu_unique" type="text" size="15"/>
+       </td>
+   </tr>
+	<tr>
+	   <td align="right" width="8%">�����哄�风��:</td>
+	   <td align="left" bgcolor="#FFFFFF"  width="15%">
+	    	<input name="mobile" id="mobile" type="text" size="15"/>
+       </td>
+	   <td   align="left" bgcolor="#FFFFFF" colspan="2">
+	       &nbsp;
+			<input name="sub" type="button" onclick="subscribeQuery()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="��� 璇�" />&nbsp;
+			<input name="sub" type="button" onclick="clearTime()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="娓�绌烘�堕��" />&nbsp;
+			<!-- <input name="sub" sys_opt="save" type="button" onclick="subscribeAdd()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="娣� ���" />&nbsp; 
+			<input name="sub" sys_opt="edit" type="button" onclick="subscribeEdit()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="淇� ���" />&nbsp;
+			<input name="sub" sys_opt="remove" type="button" onclick="subscribeDel()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="��� ���">&nbsp;
+			-->
+		</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<span id="subscribe_list">
+</span>
+</div>
+<div id="subscribe_update" style="display:none">
+</div>
+</body>
+</html>

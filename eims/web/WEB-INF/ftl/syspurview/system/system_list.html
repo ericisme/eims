@@ -1,0 +1,35 @@
+<#-- 这里加html和body是为了使用页面级的按钮权限控制 -->
+<html>
+<body>
+<#-- 首先获取当前的子系统的size大小 -->
+<#assign pSysSize=Systems?size />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_table">
+	<tr class="list_title">
+		<td width="10%" align="center"><input type="checkbox" name="ckbox" value="checkbox" onclick="base.checkAll('sysId',this.checked)" />全选</td>
+    	<td width="20%" align="center">子系统名称</td>
+    	<td width="10%" align="center">标记</td>
+    	<td width="30%" align="center">子系统地址</td>
+    	<td width="10%" align="center">排序序号</td>
+    	<td align="center">操作</td>
+	</tr>
+	<#if pSysSize = 0>
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+		<td align="center" colspan="6"><font color="red">暂时没有任何子系统！</font></td>
+	</tr>
+	</#if>
+	<#list Systems as sys>
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+	  	<td align="center"><input type="checkbox" name="sysId" value="${sys.systemId}" /> ${sys_index+1}</td>
+	    <td align="center"><span id="dmspan_${sys.systemId}">${sys.sysName}</span></td>
+	    <td align="center">${sys.sysFlag}</td>
+	    <td align="center">${sys.sysUrl}</td>
+	    <td align="center">${sys.sysSequence}</td>
+	    <td align="center">
+	    	<input name="btn_del" sys_opt="edit" onclick="sysEdit('${sys.systemId}')" type="button" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="修 改" /> &nbsp;
+	    	<input name="btn_del" sys_opt="remove" onclick="sysDel('${sys.systemId}')" type="button" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="删 除" />
+	    </td>
+	</tr>
+	</#list>
+</table>
+</body>
+</html>

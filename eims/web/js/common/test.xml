@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" title="XSL Formatting" href="/show_new_final.xsl" media="all"?>
+<!--
+SINA Corporation (NASDAQ: SINA) is a leading online media company and value-added information service (VAS) provider for China and for Chinese communities worldwide. With a branded network of localized websites targeting Greater China and overseas Chinese, SINA provides services through five major business lines including SINA.com (online news and content), SINA Mobile (mobile value-added services), SINA Online (community-based services and games), SINA.net (search and enterprise services) and SINA E-commerce (online shopping), offering Internet users and government and business clients an array of services including online media and entertainment, online fee-based VAS/wireless VAS, and e-commerce and enterprise e-solutions.
+With 230 million registered users worldwide, 450 million daily page views and over 60 million active users for a variety of fee-based services, SINA is the most recognized Internet brand name in China and among Chinese communities globally.
+In various surveys and polls, SINA has been recognized as the most valuable brand and the most popular website in China. For 2003 and 2005, SINA was ranked the "Most Preferred Website" in China according to the Chinese Academy of Social Sciences and considered "The Most Respected Chinese Company" for three consecutive years in 2003, 2004 and 2005 by the Economic Observer and the Management Case Study Center of Beijing University. At the same time, South China Weekend in both 2003 and 2004 honored SINA with the prestigious award of the "Chinese Language Medium of the Year."
+-->
+<rss version="2.0">
+	<channel>
+		<title>新浪军事-焦点新闻</title>
+		<image>
+			<title>舰船知识</title>
+			<link>http://jczs.sina.com.cn</link>
+			<url>http://image2.sina.com.cn/jc/sina_jczs_new.gif</url>
+		</image>
+		<description>焦点新闻</description>
+		<link>http://jczs.sina.com.cn/focus/index.html</link>
+		<language>zh-cn</language>
+		<generator>WWW.SINA.COM.CN</generator>
+		<ttl>5</ttl>
+		<copyright>Copyright 1996 - 2005 SINA Inc. All Rights Reserved</copyright>
+		<pubDate>Sat, 21 Apr 2007 05:31:45 GMT</pubDate>
+		<category></category>
+	
+		<item>
+			<title>韩国军方透露将购买210枚美制SM-2舰对空导弹</title>
+			<link>http://jczs.sina.com.cn/p/2007-04-21/1208440876.html</link>
+			<author>www.sina.com.cn</author>
+			<guid>http://jczs.sina.com.cn/p/2007-04-21/1208440876.html</guid>
+			<category>焦点新闻</category>
+			<pubDate>Sat, 21 Apr 2007 04:08:34 GMT</pubDate>
+			<comments>http://comment.news.sina.com.cn/cgi-bin/comment/comment.cgi?channel=jc&amp;newsid=27-1-440876</comments>
+			<description>　　中新网4月21日电 韩国军方21日透露，将从美国大量(新浪军事注：大量应改为购买)210枚SM-2舰对空导弹。这些导弹将配备在2008年服役的“KDX-Ⅲ”宙斯盾驱逐舰等KDX-II级以上的驱逐舰。 
+
+　　据韩联社报道，美国国防部下属的国防安全合作署(DSCA)20日也表示，已通知美国国会，....</description>
+		</item>
+		
+	</channel>
+</rss>

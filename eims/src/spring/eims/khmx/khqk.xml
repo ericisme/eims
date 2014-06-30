@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans default-autowire="byName" default-lazy-init="true">
+	
+	<bean id="khqkController" parent="mvc_parentController" class="cn.qtone.eims.khmx.controller.KhqkController">
+	    <property name="listPage"  value="/eims/khmx/khqk/list"></property>
+		<property name="editPage"  value="/eims/khmx/khqk/edit"></property>
+		<property name="showPage"  value="/eims/khmx/khqk/show"></property>
+		<property name="indexPage" value="/eims/khmx/khqk/index"></property>
+		<property name="service" ref="khqkService"></property>
+	</bean>
+	<bean id="khqkService" class="cn.qtone.eims.khmx.service.KhqkService" />
+
+</beans>
+

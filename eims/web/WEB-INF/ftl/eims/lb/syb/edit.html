@@ -1,0 +1,79 @@
+<!-- auto generated -->
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+		<td class="line">您现在的位置： 例表管理>> 损益表  -> <#if syb.id??>编辑<#else>添加</#if> 损益表</td>
+	</tr>
+</table>
+<form name="theForm" id="theForm" method="POST" action="" onsubmit="return checkForm();">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td>
+			<input name="id" id="id" type="hidden" value="${syb.id!}" />	
+		</td>
+	</tr>
+</table>
+<#include "../../../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="update_tbl">
+		
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 年月： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="_ny" id="_ny"  value="<#if syb.ny??>${syb.ny?if_exists?string('yyyy-MM-dd')}</#if>" type="text" maxlength="10" size="8" onclick="setday(this)" readonly style="font-size:12px;text-align:right;"/>
+		</td>
+	</tr>	
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 主营业务利润： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="zyywlr" id="zyywlr"  value="<#if syb.zyywlr??>${syb.zyywlr?string("0.##")}</#if>" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+		</td>
+	</tr>	
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 管理费用： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="glfy" id="glfy"  value="<#if syb.glfy??>${syb.glfy?string("0.##")}</#if>" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 财务费用： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="cwfy" id="cwfy"  value="<#if syb.cwfy??>${syb.cwfy?string("0.##")}</#if>" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 经营费用： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="jyfy" id="jyfy"  value="<#if syb.jyfy??>${syb.jyfy?string("0.##")}</#if>" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 营业外收入： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="yywsr" id="yywsr"  value="<#if syb.yywsr??>${syb.yywsr?string("0.##")}</#if>" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 营业外支出： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="yywzc" id="yywzc"  value="<#if syb.yywzc??>${syb.yywzc?string("0.##")}</#if>" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 所得税： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="sds" id="sds"  value="<#if syb.sds??>${syb.sds?string("0.##")}</#if>" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+		</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td height="5">&nbsp;</td>
+	</tr>
+	<tr>
+		<td height="5" align="center">
+			<input name="btn01" id="sys_update_btn" type="submit" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="提 交" />&nbsp;&nbsp;&nbsp;&nbsp;
+			<input name="btn01" type="button" class="btn01" onclick="pag.back('_index','_edit');" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="返 回" />
+		</td>
+	</tr>
+</table>
+
+</form>

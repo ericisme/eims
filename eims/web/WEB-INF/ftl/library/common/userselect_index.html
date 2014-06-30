@@ -1,0 +1,120 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>读者查询</title>
+<link href="/html/syspurview/skins/default/body.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="/html/syspurview/js/base.js?load(page_exe.js,/html/library/common.js)"></script>
+<script language="javascript" src="/html/library/parent.js"></script>
+<script language="javascript" src="/html/library/xxptUtils.js"></script>
+<script language="javascript" src="/js/common/prototype.js"></script>
+<script language="javascript" src="/js/common/log/log4javascript.js"></script>
+<script language="javascript" src="/js/calendar.js"></script>
+<script language="javascript" src="/html/library/baseDataCascade.js"></script>
+</head>
+
+<body class="body_bg">
+<script type="text/javascript">
+	BaseClass.funcList.push(selectOptionByDiv);
+	BaseClass.addOnLoad(userQuery);
+</script>
+<#include "../../common_loading.ftl" />
+<div id="student_index">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_query">
+	<tr>
+		<td  align="right">
+			镇区：
+		</td>
+		<td  align="left" bgcolor="#FFFFFF">
+			<select name="queryCityId" onchange="changeZhptAgencyIndex(this.value,'queryAgencyId','querySchoolId','queryGradeId','queryAgency','querySchool','queryGrade')" >
+				${citySelectHtml!}
+			</select>
+		</td>
+		
+		
+		<td  align="right">
+			机构：
+		</td>
+		<td  align="left" bgcolor="#FFFFFF" >
+			<span id="queryAgency" name="queryAgency">
+			<select name="queryAgencyId" onchange="changeZhptSchoolIndex(this.value,'querySchoolId','queryGradeId','querySchool','queryGrade')" >
+			${agencySelectHtml!}
+			</select>
+			</span>
+		</td>
+		<td  align="right">
+			学校：
+		</td>
+		<td  align="left" bgcolor="#FFFFFF">
+			<span id="querySchool" name="querySchool">
+				<select name="querySchoolId" onchange="changeZhptGrade(this.value,'queryGradeId','queryGrade')" >
+					${schoolHtmlSelect!}
+				</select>
+			</span>
+		</td>
+		<td  align="right">
+			年级：
+		</td>
+		<td align="left" bgcolor="#FFFFFF">
+			<span id="queryGrade" name="queryGrade">
+				<select name="queryGradeId"  onchange="changeClassName(this.value,'queryClassNameId', 'queryClassName')">
+					<option value="-1">--所有--</option>
+					${editGradeHtmlSelect!}
+				</select>
+			</span>
+		</td>
+		</tr>
+		<tr>
+		
+		<td  align="right">
+			班级：
+		</td>	
+		<td  align="left" bgcolor="#FFFFFF">
+			<span id="queryClassName" name="queryClassName">
+			 	<select name="queryClassNameId" >
+			 		<option value="-1">--所有--</option>
+					${editClassNameHtmlSelect!}
+				</select>
+			</span>
+		</td>
+		<td  align="right">
+			学籍（继教）号：
+		</td>	
+		<td  align="left" bgcolor="#FFFFFF">
+			<input type="text" name="userNo" id="userNo" size="12"></input>
+		</td>
+		<td   align="right">
+			姓名：
+		</td>
+		<td  align="left" bgcolor="#FFFFFF">
+			<input type="text" name="userName" id="userName" size="12"></input>
+		</td>
+		<td   align="right">
+			IC卡号：
+		</td>
+		<td  align="left" bgcolor="#FFFFFF">
+			<input type="text" name="idCard" id="idCard" size="12"></input>
+		</td>
+		
+	</tr>
+	<tr>
+		<td width="100%" align="center" colspan="8" bgcolor="#FFFFFF">&nbsp;&nbsp;
+			<input name="sub" type="button" onclick="userQuery()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="查 询" />&nbsp;
+			<input name="sub" type="button" onclick="userConfirm()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="选 择" /> <font color=red>（双击该行也可以进行选择）</font>
+		</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<span id="user_list">
+</span>
+</div>
+<div id="user_update" style="display:none">
+</div>
+<div id="parent_update" style="display:none">
+</div>
+</body>
+</html>

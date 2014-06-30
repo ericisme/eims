@@ -1,0 +1,45 @@
+<html>
+<body>
+<#include "../../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1">
+	<tr>
+		<td align="left" bgcolor="#FFFFFF"><font color="red">&nbsp;温馨提示:  目前已经匹配${isValidCount!}条学生信息.</td>
+	</tr>
+</table>
+<#assign classstudentSize=page.result?size />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_table" style="word-break:break-all">
+	<tr class="list_title">
+    	<td align="center">学生唯一标识</td>
+    	<td align="center">学生姓名</td>
+    	<td align="center">学籍号</td>
+    	<td align="center">学校名称</td>
+    	<td align="center">班级名称</td>
+    	<td align="center">是否匹配成功</td>
+<!--    	<td align="center" >操作</td>-->
+    	
+	</tr>
+	<#if classstudentSize = 0>
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+		<td align="center" colspan="9"><font color="red">没有符合条件的记录！</font></td>
+	</tr>
+	</#if>
+	<#list page.result as classstudent >
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+    	<td align="left">&nbsp;${classstudent.unique_no!}</td>
+    	<td align="left">&nbsp;${classstudent.truename!}</td>
+    	<td align="left">&nbsp;${classstudent.teacher_no!}</td>
+    	<td align="left">&nbsp;${classstudent.school_name!}</td>
+    	<td align="left">${classstudent.class_name!}</td>
+    	<td align="left"><#if classstudent.is_valid=1><span style="color: blue">${classstudent.containIsValidValue()!}</span>
+    			<#else><span style="color: red">${classstudent.containIsValidValue()!}</span></#if></td>
+	</tr>
+	</#list>
+</table>
+<table width="100%" border="0" cellpadding="5" cellspacing="1">
+	<tr>
+		<td width="60%">&nbsp;</td>
+		<td align="right">${page.paginate}</td>
+	</tr>
+</table>
+</body>
+</html>

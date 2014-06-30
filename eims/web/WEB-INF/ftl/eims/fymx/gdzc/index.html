@@ -1,0 +1,268 @@
+<!-- auto generated -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>固定资产</title>
+<link href="/html/syspurview/skins/default/body.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="/html/syspurview/js/base.js?load(page_exe.js)"></script>
+<script language="javascript" src="/js/common/prototype.js"></script>
+<script language="javascript" src="/js/common/log/log4javascript.js"></script>
+<script language="javascript" src="/js/xdate.js"></script><script language="javascript" src="/js/table2xls.js"></script>
+</head>
+<body class="body_bg">
+
+<script type="text/javascript">
+var pag = new PageExe();
+var baseUrl = '/eims/fymx/gdzc.do';
+function AllAreaExcel()    
+{   
+ var oXL = new ActiveXObject("Excel.Application");    
+ var oWB = oXL.Workbooks.Add();    
+ var oSheet = oWB.ActiveSheet;     
+ var sel=document.body.createTextRange();   
+ sel.moveToElementText(eimsListTable);   
+ sel.select();   
+ sel.execCommand("Copy");   
+ oSheet.Paste();   
+ oXL.Visible = true;   
+}
+//查询
+function query(){	
+	if (pag == null) pag = new PageExe();
+	var qv = 'a=a';
+	if($F('_sbxmmc') != ''){
+		qv += '&sbxmmc__like__string=' + new BaseClass().encode($F('_sbxmmc'),true);
+	}
+	qv +='&zjzt='+$F('zjzt');
+	pag.query(
+		baseUrl + '?action=list',
+		'_list',
+		qv + '&orders=id__desc'
+	);
+}
+// 分页查询方法
+function gdzcJump(/*string*/_url, /*int*/curPage)
+{
+	pag.query(
+		_url + curPage,
+		'_list'
+	);
+}
+
+// 删除
+function remove(id)
+{
+	var _id = base.getChecked('id', true);
+	if (!id && _id.length < 1) {
+		base.alert('请先选择要删除的记录！');
+		return;
+	}
+	base.log('要删除的员工工资记录ID为：' + (id || _id.join(',')));
+	base.confirm('您确信要删除选中的记录吗？', function() {
+		new Ajax.Request(
+				baseUrl + '?action=remove',
+				{
+					method : 'POST',
+					evalScripts : true,
+					parameters :	'id=' + (id || _id.join('&id=')),
+					onComplete : function(xmlHttp,error){
+						alert("删除成功");
+						query();
+					}
+				}
+			);		
+	});
+}
+
+//保存
+function checkForm(){		
+	
+	if (!$('sbxmmc') || $('sbxmmc').value.strip() == '') {
+ 		base.alert('请填写 设备项目名称！',function(){$('sbxmmc').focus();});
+ 		return false;
+ 	}		
+	if (!$('dw') || $('dw').value.strip() == '') {
+ 		base.alert('请填写 单位！',function(){$('dw').focus();});
+ 		return false;
+ 	}
+	if (!$('sl') || $('sl').value.strip() == '') {
+ 		base.alert('请填写 数量！',function(){$('sl').focus();});
+ 		return false;
+ 	}	
+	if (!checkPrice($('dj'))) {
+		base.alert(' 金额格式不正确，只允许数据带2位小数！',function(){$('dj').focus();});return false;
+ 	}	
+	if (!checkPrice($('zje'))) {
+		base.alert(' 金额格式不正确，只允许数据带2位小数！',function(){$('zje').focus();});return false;
+ 	}	
+	if (!$('zjyf') || $('zjyf').value.strip() == '') {
+ 		base.alert('请填写 折旧月份！',function(){$('zjyf').focus();});
+ 		return false;
+ 	}	
+	if (!checkPrice($('myzjje'))) {
+		base.alert(' 金额格式不正确，只允许数据带2位小数！',function(){$('myzjje').focus();});return false;
+ 	}
+	if (!$('yzjyf') || $('yzjyf').value.strip() == '') {
+ 		base.alert('请填写 折旧月份！',function(){$('yzjyf').focus();});
+ 		return false;
+ 	}
+	
+	if(parseInt($('yzjyf').value+0)>parseInt($('zjyf').value+0)){
+		base.alert('已折旧月份 不能大于 折旧月份！',function(){$('yzjyf').focus();});
+ 		return false;
+	}
+	
+//	if (!checkPrice($('yzjje'))) {
+//		base.alert(' 金额格式不正确，只允许数据带2位小数！',function(){$('yzjje').focus();});return false;
+// 	}
+//	if (!checkPrice($('ye'))) {
+//		base.alert(' 金额格式不正确，只允许数据带2位小数！',function(){$('ye').focus();});return false;
+// 	}
+     	
+	pag.update(
+		baseUrl + '?action=save',
+		'theForm',
+		function() {
+			pag.back('_index','_update');
+			query();
+		}
+	);	
+	return false;
+}
+// 编辑页面显示
+function edit(id)
+{
+	var _id = base.getChecked('id', true);
+	if (!id && _id.length != 1) {
+		base.alert('请先选择要编辑的记录，编辑只能一次选择一条记录！');
+		return;
+	}
+	base.log('要编辑的记录ID为：' + (id || _id[0]));
+	pag.showEdit(
+		baseUrl + '?action=edit',
+		'_update',
+		'_index',
+		{
+			id : id || _id[0]
+		},
+		function() {}
+	);
+}
+// 添加页面显示
+function insert(){
+	pag.showAdd(
+		baseUrl + '?action=create',
+		'_update', 
+		'_index',
+		function() { }
+	);
+}
+
+// 计提折旧
+function jtzj(id)
+{
+	var _id = base.getChecked('id', true);
+	if (!id && _id.length < 1) {
+		base.alert('请先选择要 计提折旧 的记录！');
+		return;
+	}
+	base.log('要 计提折旧 的记录ID为：' + (id || _id.join(',')));
+	base.confirm('您确信要 计提折旧 选中的记录吗？', function() {
+		new Ajax.Request(
+				baseUrl + '?action=jtzj',
+				{
+					method : 'POST',
+					evalScripts : true,
+					parameters :	'id=' + (id || _id.join('&id=')),
+					onComplete : function(xmlHttp,error){
+						retStr = xmlHttp.responseText;						
+						if(retStr == "success"){
+							alert("操作成功");
+							query();
+						}else{
+							alert(retStr);
+						}						
+					}
+				}
+			);		
+	});
+}
+
+
+//价格check
+function checkPrice(price){  
+	return (/^(([1-9]\d*)|\d)(\.\d{1,2})?$/).test(price.value);
+}
+
+
+</script>
+<script type="text/javascript">
+	BaseClass.addOnLoad(query);
+</script>
+<#include "../../../common_loading.ftl" />
+<div id="_index">
+<div class="position_line">您的位置是：费用明细>> 固定资产</div>
+
+<#include "../../../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_query">
+
+	<tr height="12" style="display:${areaSel!}">
+		<td  align="right" height="12">
+			设备项目名称 ：
+		</td>
+		<td align="left" bgcolor="#FFFFFF">
+        	<input type="text" name="_sbxmmc" id="_sbxmmc" size="18" maxlength="33"/>  
+		</td>			
+		<td  align="right">
+			折旧状态：
+		</td>
+		<td align="left" bgcolor="#FFFFFF" >
+			<select name="zjzt" id="zjzt">
+				<option value="0">---所有---</option>
+				<option value="1">-未折旧完-</option>
+				<option value="2">-折旧完-</option>
+			</select>
+		</td>
+		<td  align="right">
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		</td>
+		<td align="left" bgcolor="#FFFFFF" >
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		</td>
+	</tr>
+		
+	<tr>		
+		<td width="100%" align="center" colspan="6" bgcolor="#FFFFFF">
+			<input name="sub"                  type="button" onclick="query()"  class="btn01" value="查 询" />&nbsp;
+			<input name="sub" sys_opt="save"   type="button" onclick="insert()" class="btn01" value="添 加" />&nbsp;
+			<input name="sub" sys_opt="edit"   type="button" onclick="edit()"   class="btn01" value="修 改" />&nbsp;
+			<input name="sub" sys_opt="remove" type="button" onclick="remove()" class="btn01" value="删 除">&nbsp;
+			<input name="sub" sys_opt="jtzj"   type="button" onclick="jtzj()" class="btn01" value="计提折旧">&nbsp;
+			<input name="sub" type="button" onclick="AllAreaExcel2();" class="btn01" value="导出xls">
+		</td>
+	</tr>
+</table>
+
+
+
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_query">
+
+
+	</form>
+</table>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+
+<span id="_list"></span>
+</div>
+<div id="_update" >
+</div>
+<div id="_import" style="display:none">
+</div>
+
+<span id="_list"></span>
+
+</body>
+</html>

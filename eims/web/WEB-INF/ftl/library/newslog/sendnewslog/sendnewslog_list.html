@@ -1,0 +1,48 @@
+<!-- auto generated -->
+<html>
+<body>
+<#assign sendNewsLogSize=page.result?size />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_table" style="word-break:break-all">
+	<tr class="list_title">
+		<!-- <td width="8%" align="center">
+		<input type="checkbox" name="ckbox" value="checkbox" onclick="base.checkAll('id',this.checked)" />全选
+		</td>
+		 -->
+    	<td align="center" width="10%">接收的手机号码</td>
+    	<td align="center" width="12%">发送时间</td>
+    	<td align="center" width="10%">学生唯一标识</td>
+    	<td align="center" width="8%">信息类型</td>
+    	<td align="center" width="8%">发送状态</td>
+    	<td align="center" width="52%">短信内容</td>
+    	<!-- <td align="center" >操作</td> -->
+    	
+	</tr>
+	<#if sendNewsLogSize = 0>
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+		<td align="center" colspan="9"><font color="red">没有符合条件的记录！</font></td>
+	</tr>
+	</#if>
+	<#list page.result as sendNewsLog >
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+	  	<!-- <td align="center"><input type="checkbox" name="sendNewsLogId" value="${sendNewsLog.id}" /> </td> -->
+    	<td align="left">&nbsp;${sendNewsLog.mobile!}</td>
+    	<td align="left">&nbsp;${sendNewsLog.send_time!}</td>
+    	<td align="left">&nbsp;${sendNewsLog.student_unique!}</td>
+    	<td align="center">${sendNewsLog.news_type.param_name!}</td>
+    	<td align="center"><#if sendNewsLog.status=1><span style="color: blue">${sendNewsLog.statusValue()!}</span><#else><span style="color: red">${sendNewsLog.statusValue()!}</span></#if></td>
+    	<td align="left">&nbsp;${sendNewsLog.newscontent!}</td>
+	     <!-- <td align="center">
+	    	<input sys_opt="show" onclick="sendNewsLogDetail('${sendNewsLog.id}')" type="button" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="查看详情" />
+	    </td>
+	     -->
+	</tr>
+	</#list>
+</table>
+<table width="100%" border="0" cellpadding="5" cellspacing="1">
+	<tr>
+		<td width="60%">&nbsp;</td>
+		<td align="right">${page.paginate}</td>
+	</tr>
+</table>
+</body>
+</html>

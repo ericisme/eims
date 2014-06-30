@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans default-autowire="byName" default-lazy-init="true">
+
+	<bean id="classStudentController" parent="mvc_parentController" class="cn.qtone.crda.classstudent.controller.ClassStudentController">
+		<property name="listPage" value="/crda/classstudent/classstudent_list"></property>
+		<property name="editPage" value="/crda/classstudent/classstudent_edit"></property>
+		<property name="showPage" value="/crda/classstudent/classstudent_show"></property>
+		<property name="indexPage" value="/crda/classstudent/classstudent_index"></property>
+		<property name="classStudentService" ref="classStudentService"></property>
+		<property name="agencyService" ref="agencyService"></property>
+	</bean>
+	<bean id="classStudentService" class="cn.qtone.crda.classstudent.service.ClassStudentService">
+		<property name="classStudentQueryDao" ref="classStudentQueryDao"></property>
+	</bean>
+	<bean id="classStudentQueryDao" parent="base_dao" class="cn.qtone.crda.classstudent.dao.mysql.ClassStudentQueryDaoImpl"/>
+	<!-- newBeanConfig -->
+
+</beans>
+

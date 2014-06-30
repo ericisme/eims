@@ -1,0 +1,274 @@
+<!-- auto generated -->
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+		<td class="line">您现在的位置： 图书管理 -> 编辑图书</td>
+	</tr>
+</table>
+<form name="bookUpdateForm" id="bookUpdateForm" method="POST" action="" onsubmit="return bookUpdateCheck(1);">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td>
+	<input name="id" id="id" type="hidden" value="${book.id!}" />
+	<input name="book_no" id="book_no" type="hidden" value="${book.book_no!}" />
+	</td>
+	</tr>
+</table>
+<#include "../../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="update_tbl">
+	<tr>
+		<td align="right" class="tdLeft"  >图书名称： </td>
+		<td align="left" valign="top" class="tdRight" colspan="3">
+			<input name="book_name" id="book_name" type="text" maxlength="50" size="25" class="box0" value="${book.book_name!}"
+				onFocus="this.className='box1'"  onBlur="this.className='box0'" onchange="checkMaxLength(event,20)" />
+			<font color="red"><B>*</B></font>
+		</td>
+	</tr>
+	
+	<tr>
+		<td align="right" class="tdLeft"  >一级分类： </td>
+		<td align="left" valign="top" class="tdRight" colspan="3">
+			<select name="category_id" style="width:200px;" onchangeeeeeeeeeeee="changeCategory(this.value,'category_two_id');">
+				<option value='-1'>请选择</option>
+					${categoryHtmlSelect!}
+			</select><font color="red"><B>*</B></font>
+		</td>
+		<!-- modified at 2011-6-21 -->
+		<!-- td align="right" class="tdLeft"  >二级分类： </td>
+		<td align="left" valign="top" class="tdRight">
+			<span id="category_two_id">
+			<select name="category_two_id" >
+					${categoryTwoHtmlSelect!}
+			</select>
+			</span>
+		</td-->
+	</tr>
+	 
+	<tr style="display:none">
+	<td align="right" class="tdLeft"  >分类号： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="category_code" id="category_code" type="text" maxlength="50" size="25" class="box0" value="${book.category_code!}"
+				onFocus="this.className='box1'" onBlur="this.className='box0'" onchange="checkMaxLength(event,18)" />
+				<font color="red"><B>*</B></font>
+		</td>
+		<td align="right" class="tdLeft"  >分类名： </td>
+		<td align="left" valign="top" class="tdRight" >
+			<input name="category_name" id="category_name" type="text" maxlength="50" size="25" class="box0" value="${book.category_name!}"
+				onBlur="this.className='box0'" onchange="checkMaxLength(event,20)" readonly/>
+				<font color="red"><B>*</B></font>
+		</td>
+		
+	</tr>
+	 
+	<tr>
+		
+		<td align="right" class="tdLeft" width="15%">定价： </td>
+		<td align="left" valign="top" class="tdRight" >
+			<input name="book_price" id="book_price" type="text" maxlength="50" size="25" class="box0" value="${book.book_price!}"
+				onFocus="this.className='box1'"  onBlur="this.className='box0'" onchange="checkMaxLength(event,20)" />
+			<font color="red"><B>*</B></font>
+		</td>
+		<td align="right" class="tdLeft"  >存放位置： </td>
+		<td align="left" valign="top" class="tdRight" >
+			<input name="book_place" id="book_place" type="text" maxlength="50" size="25" class="box0" value="${book.book_place!}"
+				onBlur="this.className='box0'" onchange="checkMaxLength(event,20)" />
+				<font color="red"><B>*</B></font>
+		</td>
+	</tr>
+	 
+	 
+	<tr>
+		<td align="right" class="tdLeft" width="15%">镇区： </td>
+		<td align="left" valign="top" class="tdRight" colspan="3" >
+			
+			<select name="queryCityId" onchange="changeZhptAgencyIndex(this.value,'queryAgencyId2','queryAgency2','querySchoolId2','querySchool2')" ${disableTown!}>
+				${citySelectHtml!}
+			</select>&nbsp;
+				<font color="red"><B>*</B></font>
+		</td>
+		
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="15%">机构： </td>
+		<td align="left" valign="top" class="tdRight" colspan="3" >
+			<span id="queryAgency2" name="queryAgency2">
+			<select name="queryAgencyId2" onchange="changeZhptSchoolIndex(this.value,'querySchoolId2','querySchool2')"  ${disableAgency!}>
+				${agencySelectHtml!}
+			</select></span>&nbsp;
+				<font color="red"><B>*</B></font>
+		</td>
+		
+		
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="15%">学校： </td>
+		<td align="left" valign="top" class="tdRight" colspan="3" >
+			<span id="querySchool2" name="querySchool2">
+				<select name="querySchoolId2"   ${disableSchool!}>
+					${schoolHtmlSelect!}
+				</select>
+			</span>&nbsp;
+				<font color="red"><B>*</B></font>
+		</td>
+		
+		
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="15%">状态： </td>
+		<td align="left" valign="top" class="tdRight" colspan="3" >
+				<select name="status" >
+					${statusHtmlSelect!}
+				</select>
+			&nbsp;
+				<font color="red"><B>*</B></font>
+		</td>
+		
+		
+	</tr>
+	<!-- 2011-6-20 新增 -->
+	<tr>
+		<td align="right" class="tdLeft" width="15%">书籍类型： </td>
+		<td align="left" valign="top" class="tdRight" >
+			<select name="sjlx" disabled="disabled">
+					${sjlxHtml!}
+			</select>
+		</td>
+		<td align="right" class="tdLeft" width="15%">可阅读性： </td>
+		<td align="left" valign="top" class="tdRight" >
+			<select name="readability" >
+					${readabilityHtml!}
+			</select>	
+		</td>
+	</tr>
+	
+	<tr>
+		<td align="right" class="tdLeft" width="15%">标准ISBN： </td>
+		<td align="left" valign="top" class="tdRight" >
+			<input name="book_isbn" id="book_isbn" type="text" maxlength="50" size="25" class="box0" value="${book.book_isbn!}"
+				onFocus="this.className='box1'"  onBlur="this.className='box0'" onchange="checkMaxLength(event,20)" />
+		</td>
+		<td align="right" class="tdLeft" width="15%">作者： </td>
+		<td align="left" valign="top" class="tdRight" >
+			<input name="book_author" id="book_author" type="text" maxlength="50" size="25" class="box0" value="${book.book_author!}"
+				onFocus="this.className='box1'"  onBlur="this.className='box0'" onchange="checkMaxLength(event,20)" />
+		</td>
+		
+		
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="15%">出版社： </td>
+		<td align="left" valign="top" class="tdRight" >
+			<input name="book_publish" id="book_publish" type="text" maxlength="50" size="25" class="box0" value="${book.book_publish!}"
+				onFocus="this.className='box1'"  onBlur="this.className='box0'" onchange="checkMaxLength(event,20)" />
+		</td>
+		
+		<td align="right" class="tdLeft" width="15%">出版地： </td>
+		<td align="left" valign="top" class="tdRight" >
+			<input name="book_publish_place" id="book_publish_place" type="text" maxlength="50" size="25" class="box0" value="${book.book_publish_place!}"
+				onFocus="this.className='box1'"  onBlur="this.className='box0'" onchange="checkMaxLength(event,20)" />
+		</td>
+		
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="15%">出版年份： </td>
+		<td align="left" valign="top" class="tdRight" colspan="3">
+			<input name="book_publish_year" id="book_publish_year" type="text" maxlength="50" size="25" class="box0" value="${book.book_publish_year!}"
+				onFocus="this.className='box1'"  onBlur="this.className='box0'" onchange="checkMaxLength(event,20)" />
+		</td>
+		<!-- 2011-6-20 新增 -->
+		<!--td align="right" class="tdLeft" width="15%">入库时间： </td>
+		<td align="left" valign="top" class="tdRight" >
+			<input name="book_storage_time" id="book_storage_time" type="text" maxlength="50" size="25" class="box0" value="${book_storage_time!}"
+				onFocus="setdayWithOnTime(this)" onFocus="this.className='box1'"  onBlur="this.className='box0'" onchange="checkMaxLength(event,20)" />
+		</td-->
+		
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="15%">内容简介： </td>
+		<td align="left" valign="top" class="tdRight" colspan="3">
+		 <textarea name="book_content" id="book_content" cols="45" rows="5" onchange="checkMaxLength(event,255);" >${book.book_content?default("")}</textarea>
+		</td>
+		
+		
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="15%">密级： </td>
+		<td align="left" valign="top" class="tdRight" >
+			<select name="book_private" >
+					${bookPrivateHtml!}
+			</select>
+		</td>
+		
+		<td align="right" class="tdLeft" width="15%">页码： </td>
+		<td align="left" valign="top" class="tdRight" >
+			<input name="book_page" id="book_page" type="text" maxlength="50" size="25" class="box0" value="${book.book_page!}"
+				onFocus="this.className='box1'"  onBlur="this.className='box0'" onchange="checkMaxLength(event,20)" />
+		</td>
+		
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="15%">开本： </td>
+		<td align="left" valign="top" class="tdRight" >
+			<input name="book_format" id="book_format" type="text" maxlength="50" size="25" class="box0" value="${book.book_format!}"
+				onFocus="this.className='box1'"  onBlur="this.className='box0'" onchange="checkMaxLength(event,20)" />
+		</td>
+		
+		<td align="right" class="tdLeft" width="15%">语种： </td>
+		<td align="left" valign="top" class="tdRight" >
+			<input name="book_language" id="book_language" type="text" maxlength="50" size="25" class="box0" value="${book.book_language!}"
+				onFocus="this.className='box1'"  onBlur="this.className='box0'" onchange="checkMaxLength(event,20)" />
+		</td>
+		
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="15%">配送物品： </td>
+		<td align="left" valign="top" class="tdRight" >
+			<input name="book_goods" id="book_goods" type="text" maxlength="50" size="25" class="box0" value="${book.book_goods!}"
+				onFocus="this.className='box1'"  onBlur="this.className='box0'" onchange="checkMaxLength(event,20)" />
+		</td>
+		
+		<td align="right" class="tdLeft" width="15%">版次： </td>
+		<td align="left" valign="top" class="tdRight" >
+			<input name="book_publish_time" id="book_publish_time" type="text" maxlength="50" size="25" class="box0" value="${book.book_publish_time!}"
+				onFocus="this.className='box1'"  onBlur="this.className='box0'" onchange="checkMaxLength(event,20)" />
+		</td>
+		
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="15%">所属丛书： </td>
+		<td align="left" valign="top" class="tdRight" >
+			<input name="book_congshu" id="book_congshu" type="text" maxlength="50" size="25" class="box0" value="${book.book_congshu!}"
+				onFocus="this.className='box1'"  onBlur="this.className='box0'" onchange="checkMaxLength(event,20)" />
+		</td>
+		
+		<td align="right" class="tdLeft" width="15%">印刷版面： </td>
+		<td align="left" valign="top" class="tdRight" >
+			<input name="printface" id="printface" type="text" maxlength="50" size="25" class="box0" value="${book.printface!}"
+				onFocus="this.className='box1'"  onBlur="this.className='box0'" onchange="checkMaxLength(event,20)" />
+		</td>
+		
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="15%">备注信息： </td>
+		<td align="left" valign="top" class="tdRight" colspan="3">
+			 <textarea name="content" id="content" cols="45" rows="5" onchange="checkMaxLength(event,255);" onpropertychange="checkMaxLength(event,255);">${book.content?default("")}</textarea>
+		
+		</td>
+		
+		
+	</tr>
+
+	
+	
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td height="5">&nbsp;</td>
+	</tr>
+	<tr>
+		<td height="5" align="center">
+			<input name="btn01" id="sys_update_btn" type="submit" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="提 交" />&nbsp;&nbsp;&nbsp;&nbsp;
+			<input name="btn01" type="button" class="btn01" onclick="pag.back('book_index','book_update');" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="返 回" />
+		</td>
+	</tr>
+</table>
+
+</form>

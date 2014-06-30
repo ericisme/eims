@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans default-autowire="byName" default-lazy-init="true">
+
+	<bean id="bookFqController" parent="mvc_parentController" class="cn.qtone.library.book.controller.BookFqController">
+		<property name="listPage" value="/library/bookFq/book_list"></property>
+		<property name="newPage" value="/library/bookFq/book_create"></property>
+		<property name="editPage" value="/library/bookFq/book_edit"></property>
+		<property name="showPage" value="/library/bookFq/book_show"></property>
+		<property name="indexPage" value="/library/bookFq/book_index"></property>
+		<property name="categorySelectPage" value="/library/bookFq/categorySelect"></property>
+		<property name="nameCodePage" value="/library/bookFq/category_name_code"></property>
+		<property name="importPage" value="/library/bookFq/book_importPage"></property>
+		<property name="bookService" ref="bookService"></property>
+		<property name="schoolService" ref="schoolService"></property>
+		<property name="cityService" ref="cityService"></property>
+		<property name="agencyService" ref="agencyService"></property>
+	</bean>
+	<bean id="bookService" class="cn.qtone.library.book.service.BookService">
+	</bean>
+	<!-- newBeanConfig -->
+
+</beans>
+

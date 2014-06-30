@@ -1,0 +1,65 @@
+<!-- auto generated -->
+<html>
+<body id="main_body">
+<#assign entitySize=page.result?size />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_table" style="word-break:break-all">
+	<tr class="list_title">
+		<td width="2%" align="center">
+		<input type="checkbox" name="ckbox" value="checkbox" onclick="base.checkAll('id',this.checked)" />
+		</td>
+    	<td width="5%" align="center">年月</td>    	
+    	<td width="4%" align="center">主营业务利润</td>
+    	<td width="4%" align="center">管理费用</td>
+    	<td width="4%" align="center">财务费用</td>
+    	<td width="4%" align="center">经营费用</td>
+    	<td width="4%" align="center">营业外收入</td>
+    	<td width="4%" align="center">营业外支出</td> 
+    	<td width="4%" align="center">所得税</td>
+    	<td width="4%" align="center">净利润</td>
+    	<!-- <td width="4%" align="center">录入时间</td> -->
+	</tr>
+	<#if entitySize = 0>
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+		<td align="center" colspan="11"><font color="red">没有符合条件的记录！</font></td>
+	</tr>	
+	<#else>
+	
+	<#list page.result as entity >
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+	  	<td align="center"><input type="checkbox" name="id" value="${entity.id}" /></td>	  	
+	  	<td align="center"><a href="javascript:void(0);" onclick="detail(${entity.id})">${entity.ny?if_exists?string("yyyy-MM-dd")}</a></td>
+	  	<td align="center">${entity.zyywlr?string("0.##")}</td>
+	  	<td align="center">${entity.glfy?string("0.##")}</td>
+	  	<td align="center">${entity.cwfy?string("0.##")}</td>
+	  	<td align="center">${entity.jyfy?string("0.##")}</td>
+	  	<td align="center">${entity.yywsr?string("0.##")}</td>
+	  	<td align="center">${entity.yywzc?string("0.##")}</td>
+	  	<td align="center">${entity.sds?string("0.##")}</td>
+	  	<td align="center">${entity.jlr?string("0.##")}</td>
+	  	<!-- <td align="center">${entity.lrsj?if_exists?string("yyyy-MM-dd")}</td> -->
+	</tr>
+	</#list>
+	
+	<#if ifLastPage == true>
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+		<td align="right" colspan="2"><font color="red"><strong>合计</strong></font></td>	
+		<td align="center"><strong>${sum_zyywlr?string("0.##")}</strong></td>
+		<td align="center"><strong>${sum_glfy?string("0.##")}</strong></td>
+		<td align="center"><strong>${sum_cwfy?string("0.##")}</strong></td>
+		<td align="center"><strong>${sum_jyfy?string("0.##")}</strong></td>
+		<td align="center"><strong>${sum_yywsr?string("0.##")}</strong></td>
+		<td align="center"><strong>${sum_yywzc?string("0.##")}</strong></td>
+		<td align="center"><strong>${sum_sds?string("0.##")}</strong></td>
+		<td align="center"><strong>${sum_jlr?string("0.##")}</strong></td>
+	</tr>	
+	</#if>
+	</#if>
+</table>
+<table width="100%" border="0" cellpadding="5" cellspacing="1">
+	<tr>
+		<td width="60%">&nbsp;</td>
+		<td align="right">${page.paginate}</td>
+	</tr>
+</table>
+</body>
+</html>

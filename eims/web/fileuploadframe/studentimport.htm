@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<link href="../../css/css_blue.css" rel="stylesheet" type="text/css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+ 
+<script language="javascript"> 
+ 
+   function addAtt()
+   {
+         
+      form1.filename.value=form1.file2.value
+   
+   }
+   
+   function  upload()
+   {
+       form1.filename.value="";
+       if(form1.file2.value=="")
+	   {
+	          alert("请选择文件!");
+			  return false;
+	   }
+	 var patn = /\.xls/i;
+	if(!patn.test(form1.file2.value)){ 
+		alert("请确认提交的是正确的Excel模板文件。");
+		form1.reset();
+		return false;
+	}
+       form1.submit();
+       document.getElementById("tip").innerHTML="正在上传附件..."
+   }
+ 
+ 
+</script>
+<link href="../../css/css_blue.css" rel="stylesheet" type="text/css" />
+</head>
+ 
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" >
+<form name="form1" action="/myUpload" method="post" enctype="multipart/form-data">
+   	<input type="hidden" name="filename"  class="box_60"   readonly />
+   	<input type="hidden" name="uploadFlag"  value="studentUpload" />
+ 	 <input name="file2"  onchange="addAtt()"   size="14" class="box_all"  contentEditable="false" type="file" />       
+	<input name="" value="上 传" type="button"  onclick="upload()"  class="btn01" /><span id="tip"></span>	
+</form>	
+</body>
+</html>

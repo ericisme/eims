@@ -1,0 +1,168 @@
+﻿<html>
+<head>
+	<script type="text/javascript" src="./mootools-release-1.11.js"></script>
+	<script type="text/javascript" src="./Swiff.Base.js"></script>
+	<script type="text/javascript" src="./Swiff.Uploader.js"></script>
+	<script type="text/javascript" src="./FancyUpload.js"></script>
+
+	<style type="text/css">
+		/**
+		 * Thats the basic css needed for the upload bars
+		 */
+
+		.upload-queue
+		{
+			list-style:				none;
+		}
+		.upload-queue li
+		{
+			background:				url(./photo_upload.png) no-repeat 0 5px;
+			padding:				5px 0 5px 22px;
+		}
+
+		.upload-queue .queue-file
+		{
+			font-weight:			bold;
+		}
+
+		.upload-queue .queue-size
+		{
+			color:					#aaa;
+			margin-left:			1em;
+			font-size:				0.9em;
+		}
+
+		.upload-queue .queue-loader
+		{
+			position:				relative;
+			margin:					3px 15px;
+			font-size:				0.9em;
+			background-color:		#ddd;
+			color:					#fff;
+			border:					1px inset #ddd;
+		}
+		.upload-queue .queue-subloader
+		{
+			text-align:				center;
+			position:				relative;
+			background-color:		#81B466;
+			height:					20px;
+			width:					0%;
+			left:					0;
+			top:					0;
+			border:					1px inset #ddd;
+		}
+
+		.upload-queue .input-delete
+		{
+			width:					16px;
+			height:					16px;
+			background:				url(./delete.png) no-repeat 0 0;
+			text-decoration:		none;
+			border:					none;
+			float:					right;
+		}
+	</style>
+
+	<script type="text/javascript">
+		//<![CDATA[
+
+		/**
+		 * Sample Data
+		 */
+
+		var uploader = null;
+		
+		window.addEvent('load', function()
+		{
+			// 首先修改form1的action值加上一随机参数，这个可以由服务器进行设置也可以由JS进行设置
+			var srand = Math.random();
+			$('form1').action += '&srand=' + srand;
+			$('form2').action += '&srand=' + srand;
+			
+			/**
+			 * We take the first input with this class we can find ...
+			 */
+			var input = $('myfile');
+
+			/**
+			 * Simple and easy
+			 * 
+			 * swf: the path to the swf
+			 * container: the object is embedded in this container (default: document.body)
+			 * 
+			 * NOTE: container is only used for the first uploader u create, all others depend
+			 * on the same swf in that container, so the container option for the other uploaders
+			 * will be ignored.
+			 * 
+			 */
+			uploader = new FancyUpload(input, {
+				swf: 'Swiff.Uploader.swf',
+				//url : _url,
+				queued: false,
+				queueList: 'myupqueue',
+				types:{'哈哈 (*.rm, *.avi)': '*.rm; *.avi;'},
+				optionFxDuration:1000,
+				limitFiles:2,
+				multiple:true,
+				onAllComplete:function() {
+					$('form2').submit(); // 这里才是表单参数的提交
+				}
+			});
+
+			/**
+			 * We create the clear-queue link on-demand, since we don't know if the user has flash/javascript.
+			 * 
+			 * You can also create the complete xhtml structure thats needed for the queue here, to be sure
+			 * that its only in the document when the user has flash enabled.
+			 */
+			/*$('upload-status').adopt(new Element('a', {
+				href: 'javascript:void(null);',
+				events: {
+					click: uplooad.clearList.bind(uploader, [false])
+				}
+			}).setHTML('Clear Completed'));*/
+		});
+		
+		// 文件列表检查
+		function check()
+		{
+			if ($('para1').value == '') {
+				alert('请输入表单参数一');
+				return false;
+			}
+			if ($('para2').value == '') {
+				alert('请输入表单参数二');
+				return false;
+			}
+			if (uploader.fileList.length < 1) {
+				alert('请选择要上传的文件！');
+				return false;
+			}
+			// 表单提交来上传文件
+			$('mysub').click();
+			return true;
+		}
+
+		//]]>
+	</script>
+
+</head>
+<body>
+	
+<form action="/demo/video.do?action=upload&upfile=true" method="post" id="form1" enctype="multipart/form-data">
+	<input type="file" name="Filedata" id="myfile" />
+	<span style="width:600;" id="hahaupload">
+	<ul class="upload-queue" id="myupqueue">
+		<li style="display: none" />
+	</ul>
+	</span>
+	<input type="submit" id="mysub" style="display:none" />
+</form>
+<form action="/demo/video.do?action=upload" method="post" id="form2">
+	<input type="button" value="提 交" onclick="check()"/>
+	表单参数一：<input type="text" name="para1" id="para1"/>
+	表单参数二：<input type="text" name="para2" id="para2"/>
+</form>
+</body>
+</html>

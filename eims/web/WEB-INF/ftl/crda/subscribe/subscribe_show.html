@@ -1,0 +1,65 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+		<td class="line">您现在的位置： 订阅查询 -> 查看订阅详情</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<form name="subscribeUpdateForm" id="subscribeUpdateForm" method="POST" action="" onsubmit="return subscribeUpdateCheck(2);">
+<#include "../../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="update_tbl">
+	<tr>
+		<td align="right" class="tdLeft" width="20%">学生唯一标识： </td>
+		<td align="left" valign="top" class="tdRight">
+			${subscribe.stu_unique!}
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="20%">订阅时间： </td>
+		<td align="left" valign="top" class="tdRight">
+			${subscribe.subscribeTime!}
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="20%">取消时间： </td>
+		<td align="left" valign="top" class="tdRight">
+			${subscribe.cancelTime!}
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="20%">扣费状态： </td>
+		<td align="left" valign="top" class="tdRight">
+			${subscribe.subscribeChargebackValue()!}
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="20%">扣费次数： </td>
+		<td align="left" valign="top" class="tdRight">
+			${subscribe.chargebackTimes!}
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="20%">扣费金额： </td>
+		<td align="left" valign="top" class="tdRight">
+			<font color="red"> ${subscribe.chargeFees!}&nbsp;元</font>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="20%">手机号码： </td>
+		<td align="left" valign="top" class="tdRight">
+			${subscribe.mobile!}
+		</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td height="5">&nbsp;</td>
+	</tr>
+	<tr>
+		<td height="5" align="center">
+			<input name="btn01" type="button" class="btn01" onclick="pag.back('subscribe_index','subscribe_update');" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="返 回" />
+		</td>
+	</tr>
+</table>
+</form>

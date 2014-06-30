@@ -1,0 +1,32 @@
+#left_menu { width:161px; padding:0px; margin:0px; border-top:1px #40aded solid;}
+#nav { width:161px; list-style-type: none; text-align:left; /*定义整个ul菜单的行高和背景色*/ margin:0; border:0; padding:0;
+}
+/*==================一级目录===================*/
+#nav a { display: block; }
+#nav li { float:left; width:161px; margin:0; border:0; padding:0; }
+#nav li h1 { background:url(../images/left_menu_fir_bg.jpg) left bottom repeat-x; font-size:14px; font-weight:bold; width:168px; height:25px; border-right:1px #40aded solid; border-bottom:1px #40aded solid; border-left:1px #40aded solid; padding-left:12px;}
+#nav li h1 a { font-size:12px; color:#004080; line-height:25px; font-weight:bold; text-decoration:none;}
+#nav li h1 a:hover { font-size:12px; color:#004080; line-height:25px; font-weight:bold; text-decoration:underline; }
+
+
+/*==================二级目录===================*/
+#nav li ul { background:#F00; list-style:none; text-align:left;  margin:0; border:0; padding:0;}
+#nav li ul li { float:left; background:#7cc9f4; font-size:12px; color:#004080; font-weight:bold; width:168px; height:25px; border-left:1px #40aded solid; border-right:1px #40aded solid; border-bottom:1px #40aded solid; padding-left:22px; }
+#nav li ul a { color:#004080; line-height:25px; text-decoration:none;}
+#nav li ul a:hover { color:#004080; line-height:25px; text-decoration:underline;}
+
+
+
+
+
+
+
+/*
+#nav li ul a { color:#004080; text-decoration:none;}
+#nav li ul a:hover { color:#004080; text-decoration:underline; font-weight:normal; }
+
+*//*==============================*/
+#nav li:hover ul { left: auto; }
+#nav li.sfhover ul { left: auto; }
+#content { clear: left; }
+#nav ul.collapsed { display: none; }

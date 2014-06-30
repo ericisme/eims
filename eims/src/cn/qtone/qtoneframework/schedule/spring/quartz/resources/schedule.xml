@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans SYSTEM "../../../../../../../../webs/security/WEB-INF/lib/spring-beans-2.0.dtd">
+<beans>
+	<!--第一步，配置你想调用的方法所在的类-->
+	<bean id="toWrite" class="toWrite"/>
+	<!--第二步，配置Spring方法调用的工厂Bean，在这里有两个地方要填写，一个是目标方法所在类，另一个是目标方法名称-->
+	<bean id="scheduleLog"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<!--目标方法所在的类-->
+		<property name="targetObject" ref="toWrite"/>
+		<!--目标方法名称-->
+		<property name="targetMethod" value="toWrite"/>
+	</bean>
+	<!--第三步配置触发器，这里有两个地方要填写，一个为刚才填写好的工厂Bean，另一个为cron表达式-->
+	<bean id="twentyFourTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<!--第二步配置好的工厂Bean-->
+		<property name="jobDetail" ref="toWrite"/>
+		<!--cron表达式-->
+		<property name="cronExpression" value="toWrite"/>
+	</bean>
+	<!--第四步,把触发器放入SchedulerFactoryBean的triggers属性-->
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<!--填写配置好的触发器-->
+				<ref local="toWrite"/>
+			</list>
+		</property>
+	</bean>
+</beans>

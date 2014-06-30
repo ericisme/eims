@@ -1,0 +1,241 @@
+<!-- auto generated -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>管理费用明细</title>
+<link href="/html/syspurview/skins/default/body.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="/html/syspurview/js/base.js?load(page_exe.js)"></script>
+<script language="javascript" src="/js/common/prototype.js"></script>
+<script language="javascript" src="/js/common/log/log4javascript.js"></script>
+<script language="javascript" src="/js/calendar.js"></script>
+<script language="javascript" src="/js/xdate.js"></script><script language="javascript" src="/js/table2xls.js"></script>
+</head>
+<body class="body_bg">
+
+<script type="text/javascript">
+var pag = new PageExe();
+var baseUrl = '/eims/fymx/glfymx.do';
+function AllAreaExcel()    
+{   
+ var oXL = new ActiveXObject("Excel.Application");    
+ var oWB = oXL.Workbooks.Add();    
+ var oSheet = oWB.ActiveSheet;     
+ var sel=document.body.createTextRange();   
+ sel.moveToElementText(eimsListTable);   
+ sel.select();   
+ sel.execCommand("Copy");   
+ oSheet.Paste();   
+ oXL.Visible = true;   
+}
+//初始化index
+function indexOnLoad(){
+	query();
+}
+
+//查询
+function query(){	
+	if (pag == null) pag = new PageExe();
+	var qv = 'a=a';
+	if($F('_ksrq') != ''){
+		qv += '&fyrq__gte__string=' + $F('_ksrq');
+	}
+	if($F('_jsrq') != ''){
+		qv += '&fyrq__lte__string=' + $F('_jsrq');
+	}
+	pag.query(
+		baseUrl + '?action=list',
+		'_list',
+		qv + '&orders=id__desc'
+	);
+}
+// 分页查询方法
+function glfymxJump(/*string*/_url, /*int*/curPage)
+{
+	pag.query(
+		_url + curPage,
+		'_list'
+	);
+}
+
+// 删除
+function remove(id)
+{
+	var _id = base.getChecked('id', true);
+	if (!id && _id.length < 1) {
+		base.alert('请先选择要删除的记录！');
+		return;
+	}
+	base.log('要删除的员工工资记录ID为：' + (id || _id.join(',')));
+	base.confirm('您确信要删除选中的记录吗？', function() {
+		new Ajax.Request(
+				baseUrl + '?action=remove',
+				{
+					method : 'POST',
+					evalScripts : true,
+					parameters :	'id=' + (id || _id.join('&id=')),
+					onComplete : function(xmlHttp,error){
+						alert("删除成功");
+						query();
+					}
+				}
+			);		
+	});
+}
+
+//保存
+function checkForm(){	
+	if (!$('fyrq') || $('fyrq').value.strip() == '') {
+ 		base.alert('请选择 费用日期！',function(){$('fyrq').focus();});
+ 		return false;
+ 	}	
+	if (!checkPrice($('sbf'))) {
+		base.alert(' 金额格式不正确，只允许数字带2位小数！',function(){$('sdf').focus();});return false;
+ 	}	
+	if (!checkPrice($('sdf'))) {
+		base.alert(' 金额格式不正确，只允许数字带2位小数！',function(){$('sdf').focus();});return false;
+ 	}	
+	if (!checkPrice($('dhf'))) {
+		base.alert(' 金额格式不正确，只允许数字带2位小数！',function(){$('dhf').focus();});return false;
+ 	}
+	if (!checkPrice($('bgf'))) {
+		base.alert(' 金额格式不正确，只允许数字带2位小数！',function(){$('bgf').focus();});return false;
+ 	}
+	if (!checkPrice($('clf'))) {
+		base.alert(' 金额格式不正确，只允许数字带2位小数！',function(){$('clf').focus();});return false;
+ 	}
+	if (!checkPrice($('qyf'))) {
+		base.alert(' 金额格式不正确，只允许数字带2位小数！',function(){$('qyf').focus();});return false;
+ 	}
+	if (!checkPrice($('twf'))) {
+		base.alert(' 金额格式不正确，只允许数字带2位小数！',function(){$('twf').focus();});return false;
+ 	}
+	if (!checkPrice($('kdf'))) {
+		base.alert(' 金额格式不正确，只允许数字带2位小数！',function(){$('kdf').focus();});return false;
+ 	}
+	if (!checkPrice($('yhs'))) {
+		base.alert(' 金额格式不正确，只允许数字带2位小数！',function(){$('yhs').focus();});return false;
+ 	}
+	if (!checkPrice($('zj'))) {
+		base.alert(' 金额格式不正确，只允许数字带2位小数！',function(){$('zj').focus();});return false;
+ 	}
+	if (!checkPrice($('zcf'))) {
+		base.alert(' 金额格式不正确，只允许数字带2位小数！',function(){$('zcf').focus();});return false;
+ 	}
+	if (!checkPrice($('jzf'))) {
+		base.alert(' 金额格式不正确，只允许数字带2位小数！',function(){$('jzf').focus();});return false;
+ 	}
+	if (!checkPrice($('qt'))) {
+		base.alert(' 金额格式不正确，只允许数字带2位小数！',function(){$('qt').focus();});return false;
+ 	}      	
+	pag.update(
+		baseUrl + '?action=save',
+		'theForm',
+		function() {
+			pag.back('_index','_update');
+			query();
+		}
+	);	
+	return false;
+}
+// 编辑页面显示
+function edit(id)
+{
+	var _id = base.getChecked('id', true);
+	if (!id && _id.length != 1) {
+		base.alert('请先选择要编辑的记录，编辑只能一次选择一条记录！');
+		return;
+	}
+	base.log('要编辑的记录ID为：' + (id || _id[0]));
+	pag.showEdit(
+		baseUrl + '?action=edit',
+		'_update',
+		'_index',
+		{
+			id : id || _id[0]
+		},
+		function() {}
+	);
+}
+// 添加页面显示
+function insert(){
+	pag.showAdd(
+		baseUrl + '?action=create',
+		'_update', 
+		'_index',
+		function() { }
+	);
+}
+
+
+//价格check
+function checkPrice(price){  
+	return (/^(([1-9]\d*)|\d)(\.\d{1,2})?$/).test(price.value);
+}
+
+
+</script>
+<script type="text/javascript">
+	BaseClass.addOnLoad(indexOnLoad);
+</script>
+<#include "../../../common_loading.ftl" />
+<div id="_index">
+<div class="position_line">您的位置是：费用明细>> 管理费用明细</div>
+
+<#include "../../../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_query">
+
+	<tr height="12" style="display:${areaSel!}">
+		<td  align="right" height="12">
+			 开始日期 ：
+		</td>
+		<td align="left" bgcolor="#FFFFFF">
+        	<input type="text" name="_ksrq" id="_ksrq" size="10" onclick="setday(this)" readonly/>  
+		</td>			
+		<td  align="right">
+			 结束日期 ：
+		</td>
+		<td align="left" bgcolor="#FFFFFF" >
+			<input type="text" name="_jsrq" id="_jsrq" size="10" onclick="setday(this)" readonly/>
+		</td>
+		<td  align="right">
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		</td>
+		<td align="left" bgcolor="#FFFFFF" >
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		</td>
+	</tr>
+		
+	<tr>		
+		<td width="100%" align="center" colspan="6" bgcolor="#FFFFFF">
+			<input name="sub"                  type="button" onclick="query()"  class="btn01" value="查 询" />&nbsp;
+			<input name="sub" sys_opt="save"   type="button" onclick="insert()" class="btn01" value="添 加" />&nbsp;
+			<input name="sub" sys_opt="edit"   type="button" onclick="edit()"   class="btn01" value="修 改" />&nbsp;
+			<input name="sub" sys_opt="remove" type="button" onclick="remove()" class="btn01" value="删 除">&nbsp;
+			<input name="sub" type="button" onclick="AllAreaExcel2();" class="btn01" value="导出xls">
+		</td>
+	</tr>
+</table>
+
+
+
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_query">
+
+
+	</form>
+</table>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+
+<span id="_list"></span>
+</div>
+<div id="_update" >
+</div>
+<div id="_import" style="display:none">
+</div>
+
+<span id="_list"></span>
+
+</body>
+</html>

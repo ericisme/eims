@@ -1,0 +1,53 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>${configer.systemName} - 模块管理</title>
+<link href="${configer.prefix}/skins/default/body.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="${configer.prefix}/js/base.js?load(page_exe.js,module.js)"></script>
+<script language="javascript" src="/js/common/prototype.js"></script>
+<script language="javascript" src="/js/common/log/log4javascript.js"></script>
+</head>
+
+<body class="body_bg">
+<script type="text/javascript">
+<!--
+	BaseClass.addOnLoad(moduleQuery);
+-->
+</script>
+<#include "../common_loading.ftl" />
+<div id="module_index">
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+    	<td class="line">您现在的位置： 模块管理 -> 模块列表</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<#include "../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_query">
+	<tr>
+		<td width="100%" align="left">
+			<span <#if systems?size = 1>style="display:none"</#if> >
+				子系统：<select name="searchSysId" id="searchSysId">
+				<#list systems as sys>
+					<option value="${sys.systemId}">${sys.sysName}</option>
+				</#list>
+				</select>&nbsp;&nbsp;
+			</span>
+			模块名：<input type="text" name="moduleName" id="moduleName" maxlength="30" size="20" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'">
+			<input name="sub" type="button" onclick="moduleQuery()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="查 询" />&nbsp;
+			<input name="sub" sys_opt="save" type="button" onclick="moduleAdd()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="添 加" />
+		</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<span id="module_list">
+</span>
+</div>
+<div id="module_update" style="display:none">
+</div>
+</body>
+</html>

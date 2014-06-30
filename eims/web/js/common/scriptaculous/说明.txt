@@ -1,0 +1,2 @@
+1.scriptaculous版本号1.7.0
+2.需要prototype.js，版本是1.5.0

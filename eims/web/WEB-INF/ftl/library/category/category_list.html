@@ -1,0 +1,64 @@
+<html>
+<body>
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_table">
+<tbody id="mod_body">
+	<tr class="list_title">
+		<td  align="center">序号</td>
+    	<td  align="center">分类名称</td>
+    	<td  align="center">分类编码</td>
+    	<td  align="center">排序</td>
+    	<td  align="center">操作</td>
+	</tr>
+	<#if page.result?size=0>
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+		<td align="center" colspan="5"><font color="red">暂时没有任何分类！</font></td>
+	</tr>
+	<#else>
+		<#list page.result as mList>
+					<tr name="MToken${mList.id}" height="24" bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+				  	<td align="center">
+				  			${mList_index+1}
+				  	</td>
+				    <td align="left">
+				    	<img src="/html/syspurview/images/menu_close.gif" title="${mList.name!}" style="cursor:pointer" 
+					    			onclick="categoryQueryChild(this,'children${mList.id}')" />${mList.name!}
+				    </td>
+				    <td align="center">${mList.code}</td>
+				    <td align="left"></td>
+				    <td align="center">
+				    	<input name="sub" sys_opt="edit" type="button" onclick="categoryEdit('${mList.id}')" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="编 辑">&nbsp;
+				    	<input name="sub" sys_opt="remove" type="button" onclick="categoryDel('${mList.id}')" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="删 除">&nbsp;
+				    </td>
+				</tr>
+			<#if mList.categoryChildren?size gt 0>
+			
+			<#list mList.categoryChildren as mod>
+					<tr name="children${mList.id}" id="children${mList.id}" style="display:none" height="24" bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+				  	<td align="center">
+				  	</td>
+				    <td align="left">
+				    			<img src="/html/syspurview/images/join_last.gif" style="float:top;" />
+				    		<img src="/html/syspurview/images/page.gif" title="子分类" />
+				    	&nbsp;<span id="dmspan_${mod.id}" title="">${mod.name!}</span>
+				    </td>
+				    <td align="center">${mod.code}</td>
+				    <td align="left"></td>
+				    <td align="center">
+				    	<input name="sub" sys_opt="edit" type="button" onclick="categoryEdit('${mod.id}')" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="编 辑">&nbsp;
+				    	<input name="sub" sys_opt="remove" type="button" onclick="categoryDel('${mod.id}')" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="删 除">&nbsp;
+				    </td>
+				</tr>
+			</#list>
+			</#if>
+		</#list>
+	</#if>
+</tbody>
+</table>
+<table width="100%" border="0" cellpadding="5" cellspacing="1">
+	<tr>
+		<td width="60%">&nbsp;</td>
+		<td align="right">${page.paginate}</td>
+	</tr>
+</table>
+</body>
+</html>

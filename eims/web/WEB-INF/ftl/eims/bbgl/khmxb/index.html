@@ -1,0 +1,164 @@
+<!-- auto generated -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>统计客户明细表</title>
+<link href="/html/syspurview/skins/default/body.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="/html/syspurview/js/base.js?load(page_exe.js)"></script>
+<script language="javascript" src="/js/common/prototype.js"></script>
+<script language="javascript" src="/js/common/log/log4javascript.js"></script>
+<script language="javascript" src="/js/calendar.js"></script>
+<script language="javascript" src="/js/xdate.js"></script><script language="javascript" src="/js/table2xls.js"></script>
+
+</head>
+<body class="body_bg">
+
+<script type="text/javascript">
+var pag = new PageExe();
+var baseUrl = '/eims/bbgl/khmxb.do';
+
+//初始化index
+function indexOnLoad(){
+//	var firstDate = new Date();
+//	firstDate.setDate(1); //第一天
+//	var endDate = new Date(firstDate);
+//	endDate.setMonth(firstDate.getMonth()+1);
+//	endDate.setDate(0);
+//	$('_ksrq').value=new XDate(firstDate).toString('yyyy-MM-dd');
+//	$('_jsrq').value=new XDate(endDate).toString('yyyy-MM-dd');
+	
+	query();
+}
+
+//输出xls
+function exportXls(){
+	var qv = '_temp='+Math.random();	
+	if($F('_bgdh') != ''){
+		qv += '&bgdh=' + new BaseClass().encode($F('_bgdh'),true);
+	}
+	if($F('_khmc') != ''){
+		qv += '&khmc=' + new BaseClass().encode($F('_khmc'),true);
+	}
+	if($F('_ywy') != ''){
+		qv += '&ywy=' + new BaseClass().encode($F('_ywy'),true);
+	}
+	if($F('_ksrq') != ''){
+		qv += '&ksrq=' + $F('_ksrq') +' 00:00:00';
+	}
+	if($F('_jsrq') != ''){
+		qv += '&jsrq=' + $F('_jsrq') + ' 23:59:59';
+	}
+	if($F('_gsmc') != ''){
+		qv += '&gsmc=' + new BaseClass().encode($F('_gsmc'),true);
+	}
+	
+	base.confirm('您确信要导出EXCEL数据吗？', function() {
+		window.target="_self";
+		window.open(baseUrl + "?action=exportXls&" + qv + '&orders=id__desc');
+	});
+}
+
+
+//查询
+function query(){	
+	if (pag == null) pag = new PageExe();
+	var qv = '_temp='+Math.random();
+	if($F('_bgdh') != ''){
+		qv += '&bgdh=' + new BaseClass().encode($F('_bgdh'),true);
+	}
+	if($F('_khmc') != ''){
+		qv += '&khmc=' + new BaseClass().encode($F('_khmc'),true);
+	}
+	if($F('_ywy') != ''){
+		qv += '&ywy=' + new BaseClass().encode($F('_ywy'),true);
+	}
+	if($F('_ksrq') != ''){
+		qv += '&ksrq=' + $F('_ksrq') +' 00:00:00';
+	}
+	if($F('_jsrq') != ''){
+		qv += '&jsrq=' + $F('_jsrq') + ' 23:59:59';
+	}
+	if($F('_gsmc') != ''){
+		qv += '&gsmc=' + new BaseClass().encode($F('_gsmc'),true);
+	}
+	
+	pag.query(
+		baseUrl + '?action=list',
+		'_list',
+		qv
+	);
+}
+
+
+// 分页查询方法
+function jump(/*string*/_url, /*int*/curPage)
+{
+	pag.query(
+		_url + curPage,
+		'_list'
+	);
+}
+
+function print()
+{
+	var _dh = base.getChecked('dh', true);
+	if (_dh.length != 1) {
+		base.alert('请先选择要打印的记录，打印只能一次选择一条记录！');
+		return;
+	}
+	window.open(baseUrl + '?action=print&dh='+_dh[0], "打印");
+}
+</script>
+<script type="text/javascript">
+	BaseClass.addOnLoad(indexOnLoad);
+</script>
+<#include "../../../common_loading.ftl" />
+<div id="_index">
+<div class="position_line">您的位置是：报表管理>> 统计客户明细表</div>
+
+<#include "../../../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_query">
+
+	<tr height="12">
+		<td  align="right" height="12" width="12%">报关单号 ：</td>
+		<td align="left" bgcolor="#FFFFFF" width="8%"><input type="text" name="_bgdh" id="_bgdh" size="12" /> </td>		
+		<td  align="right" height="12" width="12%">客户名称 ：</td>
+		<td align="left" bgcolor="#FFFFFF" width="8%"><input type="text" name="_khmc" id="_khmc" size="12" />  </td>
+		<td  align="right" height="12" width="9%">业务员 ：</td>
+		<td align="left" bgcolor="#FFFFFF" width="8%"><input type="text" name="_ywy" id="_ywy" size="12" />  </td>
+		<td  align="right" height="12" width="13%">
+			 报关开始日期 ：
+		</td>
+		<td align="left" bgcolor="#FFFFFF" width="8%">
+        	<input type="text" name="_ksrq" id="_ksrq" size="10" onclick="setday(this)" readonly/>  
+		</td>			
+		<td  align="right" width="13%">
+			 报关结束日期 ：
+		</td>
+		<td align="left" bgcolor="#FFFFFF" width="8%">
+			<input type="text" name="_jsrq" id="_jsrq" size="10" onclick="setday(this)" readonly/>
+		</td>		
+	</tr>	
+	<tr>
+		<td  align="right" height="12" width="12%">合作单位 ：</td>
+		<td align="left" bgcolor="#FFFFFF" width="8%" colspan="9"><input type="text" name="_gsmc" id="_gsmc" size="12" />  </td>
+	</tr>	
+	<tr>		
+		<td width="100%" align="center" colspan="10" bgcolor="#FFFFFF">
+			<input name="sub" type="button" onclick="query()"  class="btn01" value="查 询" />&nbsp;
+			<input name="sub" sys_opt="exportXls"   type="button" onclick="exportXls()" class="btn01" value="导出xls" />&nbsp;
+			<!-- <input name="sub" sys_opt="print"   type="button" onclick="print()" class="btn01" value="打印" /> -->
+		</td>
+	</tr>
+</table>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+
+<span id="_list"></span>
+</div>
+<div id="_import" style="display:none">
+</div>
+</body>
+</html>

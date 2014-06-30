@@ -1,0 +1,18 @@
+1、页面引入js和css
+<script type="text/javascript" src="/*/*/dtree.js"></script>
+   <link rel="StyleSheet" href="/*/*/dtree.css" type="text/css" />
+
+2、在需要生成树型菜单的地方写入以下代码
+<script type="text/javascript">
+		<!--
+
+		d = new dTree('d');
+		d.add(0,-1,'组织机构');
+		{List}
+		d.add('{foldid}','{pid}','{foldname}','{url}','','gwgdrightframe');
+		{List}
+		
+		document.write(d);
+
+		//-->
+	</script>

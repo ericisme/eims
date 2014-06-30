@@ -1,0 +1,194 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>借还管理</title>
+<link href="/html/syspurview/skins/default/body.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="/html/syspurview/js/base.js?load(page_exe.js,/html/library/borrow.js)"></script>
+<script language="javascript" src="/js/common/prototype.js"></script>
+<script language="javascript" src="/js/common/log/log4javascript.js"></script>
+<OBJECT
+	  classid="clsid:FE0E7B7F-834D-4278-B108-7EE988B99E71"	 
+	  width=120
+	  height=30
+	  align=center
+	  hspace=0
+	  vspace=0
+	  id="sensor">
+</OBJECT>
+</head>
+<body class="body_bg">
+<#include "../../common_loading.ftl" />
+<form name="borrowForm" id="borrowForm" method="POST" action="" >
+<div id="book_index">
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+    	<td class="line">您现在的位置： 借还管理 -> 借阅管理</td>
+    	<td class="line" align=right><!-- a href="javascript:downloadFile('/sofeware/ICReader.rar')" --><a href="../sofeware/ICReader.rar" >读卡器软件下载</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:downloadFile('/sofeware/管理员借书还书操作使用说明书.doc')" >管理员借书还书操作使用说明书</a></td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<#include "../../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_query">
+	<tr  height="12">
+		<td width="100%" align="center" colspan="8" bgcolor="#FFFFFF" >读者录入
+		</td>
+	</tr>
+	<tr height="12">
+		<td  align="right" height="12" >
+			读者卡号：
+		</td>
+		<td align="left" bgcolor="#FFFFFF">
+			<input type="text" name="id_card" id="id_card" size="12"  onkeypress="if(event.keyCode==13){userSubmit();return false;}"  ondblClick="selectUser('id_card','id_card')"/>
+			<input type="hidden" name="userId" id="userId"  />
+			<!-- <input type="button" style="font-size:10px" value="读卡" onclick="readCardSN();"/> -->
+		</td>
+		
+		<td  align="right">
+			编号：
+		</td>
+		<td align="left" bgcolor="#FFFFFF" >
+		<input type="text" name="loginName" id="loginName" size="12" disabled/>
+		</td>
+		
+		
+		<td  align="right">
+			姓别：
+		</td>
+		<td align="left" bgcolor="#FFFFFF" >
+		<input type="text" name="gender" id="gender" size="12" disabled/>
+		</td>	
+			
+		<td   align="right">
+			可借数量：
+		</td>
+		<td align="left" bgcolor="#FFFFFF">
+			<input type="text" name="book_limit" id="book_limit" size="12" disabled/>
+		</td>	
+		</tr>
+	<tr  height="12">
+		<td  align="right">
+			姓名：
+		</td>
+		<td align="left" bgcolor="#FFFFFF" >
+			<input type="text" name="realName" id="realName" size="12" disabled/>
+		</td>
+		
+		<td  align="right">
+			类型：
+		</td>
+		<td align="left" bgcolor="#FFFFFF" >
+			<input type="text" name="user_type" id="user_type" size="12" disabled/>
+		</td>
+		
+		<td   align="right">
+			未还：
+		</td>
+		<td align="left" bgcolor="#FFFFFF">
+			<input type="text" name="unreturn" id="unreturn" size="12"  disabled/>
+		</td>
+		
+		<td   align="right">
+			可借天数：
+		</td>
+		<td align="left" bgcolor="#FFFFFF">
+			<input type="text" name="day_limit" id="day_limit" size="12" disabled/>
+		</td>
+		
+	</tr>
+	<tr>
+		<td colspan="8" align=center>
+		<span id="userMsg" style="color:red;" ></span>
+		</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_query">
+	<tr  height="12">
+		<td width="100%" align="center" colspan="8" bgcolor="#FFFFFF" >图书录入
+		</td>
+	</tr>
+	<tr height="12">
+		<td  align="right" height="12">
+			图书编号：
+		</td>
+		<td align="left" bgcolor="#FFFFFF">
+			<input type="text" name="bookNo" id="bookNo" size="12"  onkeypress="if(event.keyCode==13){bookSubmit(this.value);return false;}" ondblClick="selectBook('bookIndex','bookIndex')"/>
+			<input type="hidden" name="bookIds" id="bookIds" value="" />
+		</td>
+		<td  align="right">
+			所属学校：
+		</td>
+		<td align="left" bgcolor="#FFFFFF" >
+		<input type="text" name="bookSchool" id="bookSchool" size="12" disabled/>
+		</td>
+		<td   align="right">
+			价格：
+		</td>
+		<td align="left" bgcolor="#FFFFFF">
+			<input type="text" name="bookPrice" id="bookPrice" size="12" disabled/>
+		</td>
+			
+		<td  align="right">
+			位置：
+		</td>
+		<td align="left" bgcolor="#FFFFFF" >
+		<input type="text" name="bookPlace" id="bookPlace" size="12" disabled/>
+		</td>
+			
+		</tr>
+	<tr  height="12">
+		<td  align="right">
+			名称：
+		</td>
+		<td align="left" bgcolor="#FFFFFF" >
+			<input type="text" name="bookName" id="bookName" size="12" disabled/>
+		</td>
+		<td  align="right">
+			索书号：
+		</td>
+		<td align="left" bgcolor="#FFFFFF" >
+			<input type="text" name="bookIndex" id="bookIndex" size="12" disabled/>
+		</td>
+		
+		<td   align="right">
+			分类：
+		</td>
+		<td align="left" bgcolor="#FFFFFF">
+			<input type="text" name="categoryName" id="categoryName" size="12" disabled/>
+		</td>
+		<td   align="right">
+			作者：
+		</td>
+		<td align="left" bgcolor="#FFFFFF">
+			<input type="text" name="bookAuthor" id="bookAuthor" size="12" disabled/>
+		</td>
+	</tr>
+	<tr  height="12">
+		<td width="100%" align="center" colspan="8" bgcolor="#FFFFFF">&nbsp;&nbsp;
+			<input name="sub" type="button" onclick="borrowSubmit()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="借 出" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input name="sub" type="button" onclick="cancel()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="取 消" />
+		</td>
+	</tr>
+</table>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<span id="borrow_list">
+</span>
+</div>
+</form>
+</body>
+</html>
+<script language = "JavaScript">
+BaseClass.addOnLoad(init);
+interId=window.setInterval(readCardSN,100); 
+$('id_card').focus();
+</script>
+
+
+

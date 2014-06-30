@@ -1,0 +1,77 @@
+body{
+	scrollbar-face-color:#98D9FF;
+	scrollbar-highlight-color:#32B4FF;
+	scrollbar-3dlight-color:#ECFAFE;
+	scrollbar-darkshadow-color:#ECFAFE;
+	scrollbar-Shadow-color:#32B4FF;
+	scrollbar-arrow-color:#32B4FF;
+	scrollbar-track-color:#ECFAFE;
+	}
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+body,td,th {
+	font-size: 12px;
+}
+#img1 {
+	background-image: url(../../images/Vista-blue/logo.gif);
+	background-repeat: no-repeat;
+	height: 58px;
+}
+#img2 {
+	background-image: url(../../images/Vista-blue/bg2.gif);
+	background-repeat: repeat-x;
+	height:93px;
+}
+#img3 {
+	background-image: url(../../images/Vista-blue/bottom.gif);
+	background-repeat: repeat-x;
+	height:43px;
+}
+.bg1 {
+	background-image: url(../../images/Vista-blue/bg1.gif);
+	background-repeat: repeat-x;
+}
+.bg2 {
+	background-image: url(../../images/Vista-blue/bg2.gif);
+	background-repeat: repeat-x;
+}
+.title {
+	font-size: 16px;
+	font-weight: bold;
+	color: #319AEB;
+}
+.title2 {
+	font-size: 12px;
+	color: #319AEB;
+}
+a:link {
+	text-decoration: none;
+	color: #ffffff;
+}
+a:visited {
+	text-decoration: none;
+	color: #ffffff;
+}
+a:hover {
+	text-decoration: none;
+	color: #FFFF99;
+}
+a:active {
+	text-decoration: none;
+	color: #ffffff;
+}
+
+ 
+.logintt {
+	font-size: 14px;
+	font-weight: bold;
+	color: #0066CC;
+}
+.loginbox {
+	background-color: #FFFFEC;
+	border: 1px solid #B3D9FF;
+}

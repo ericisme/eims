@@ -1,0 +1,40 @@
+<html>
+<body>
+<#assign studentSize=page.result?size />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_table" style="word-break:break-all">
+	<tr class="list_title">
+		<td align="center">选择</td>
+    	<td align="center">姓名</td>
+    	<td align="center">用户类型</td>
+    	<td align="center">编号</td>
+    	<td align="center">性别</td>
+    	<td align="center">学校</td>
+    	<td align="center">班级</td>
+    	<td align="center">IC卡号</td>
+	</tr>
+	<#if studentSize = 0>
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+		<td align="center" colspan="8"><font color="red">没有符合条件的记录！</font></td>
+	</tr>
+	</#if>
+	<#list page.result as student >
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'" ondblClick="userConfirm('${student.userId}')">
+	  	<td align="center"><input type="checkbox" name="id" value="${student.userId}" /></td>
+    	<td align="left">${student.realName!}</td>
+    	<td align="left">${student.uerTypeValue()!}</td>
+    	<td align="left">${student.loginName!}</td>
+    	<td align="left"><#if student.gen?default(1)==1>男<#else>女</#if></td>
+    	<td align="left"><#if student.school??>${student.school.school_name!}</#if></td>
+    	<td align="left"><#if student.zfptClass??>${student.zfptClass.class_name!}</#if></td>
+    	<td align="left">${student.id_card!}</td>
+	</tr>
+	</#list>
+</table>
+<table width="100%" border="0" cellpadding="5" cellspacing="1">
+	<tr>
+		<td width="60%">&nbsp;</td>
+		<td align="right">${page.paginate}</td>
+	</tr>
+</table>
+</body>
+</html>

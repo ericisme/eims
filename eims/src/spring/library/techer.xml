@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans default-autowire="byName" default-lazy-init="true">
+
+	<bean id="techerController" parent="mvc_parentController" class="cn.qtone.library.techer.controller.TecherController">
+		<property name="listPage" value="/library/techer/techer_list"></property>
+		<property name="editPage" value="/library/techer/techer_edit"></property>
+		<property name="showPage" value="/library/techer/techer_show"></property>
+		<property name="indexPage" value="/library/techer/techer_index"></property>
+		<property name="createPage" value="/library/techer/techer_create"></property>
+		<property name="checkLoginPage" value="/library/techer/techer_check"></property>
+		<property name="importPage" value="/library/techer/techer_importPage"></property>
+		<property name="techerService" ref="techerService"></property>
+		<property name="schoolService" ref="schoolService"></property>
+		<property name="cityService" ref="cityService"></property>
+		<property name="agencyService" ref="agencyService"></property>
+		<property name="zfptClassService" ref="zfptClassService"></property>
+	</bean>
+	<bean id="techerService" class="cn.qtone.library.techer.service.TecherService">
+	    <property name="techerQueryDao" ref="techerQueryDao"></property>
+	    <property name="groupDao" ref="syspurview_userGroupDAO"></property>
+	</bean>
+   <bean id="techerQueryDao" parent="base_dao" class="cn.qtone.library.techer.dao.mysql.TecherQueryDaoImpl"/>
+    
+</beans>
+

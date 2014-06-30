@@ -1,0 +1,75 @@
+<!-- auto generated -->
+<html>
+<body id="main_body">
+<#assign entitySize=page.result?size />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_table" style="word-break:break-all">
+	<tr class="list_title">
+		<td width="2%" align="center">
+		<input type="checkbox" name="ckbox" value="checkbox" onclick="base.checkAll('id',this.checked)" />
+		</td>
+    	<td width="5%" align="center">费用日期</td>    	
+    	<td width="4%" align="center">水电费</td>
+    	<td width="4%" align="center">电话费</td>
+    	<td width="4%" align="center">办公费</td>
+    	<td width="4%" align="center">差旅费</td>
+    	<td width="4%" align="center">汽油费</td>
+    	<td width="4%" align="center">堤围费</td> 
+    	<td width="4%" align="center">快递费</td>
+    	<td width="4%" align="center">印花税</td>
+    	<td width="4%" align="center">租金</td>
+    	<td width="4%" align="center">租车费</td>
+    	<td width="4%" align="center">建帐费</td>
+    	<td width="4%" align="center">其他</td>
+	</tr>
+	<#if entitySize = 0>
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+		<td align="center" colspan="14"><font color="red">没有符合条件的记录！</font></td>
+	</tr>
+	<#else>	
+
+
+	<#list page.result as entity >
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+	  	<td align="center"><input type="checkbox" name="id" value="${entity.id}" /></td>	  	
+	  	<td align="center"><font color="blue"><strong>${entity.fyrq!}</strong></font></td>
+	  	<td align="center">${entity.sdf?string("0.##")}</td>
+	  	<td align="center">${entity.dhf?string("0.##")}</td>
+	  	<td align="center">${entity.bgf?string("0.##")}</td>
+	  	<td align="center">${entity.clf?string("0.##")}</td>
+	  	<td align="center">${entity.qyf?string("0.##")}</td>
+	  	<td align="center">${entity.twf?string("0.##")}</td>
+	  	<td align="center">${entity.kdf?string("0.##")}</td>
+	  	<td align="center">${entity.yhs?string("0.##")}</td>
+	  	<td align="center">${entity.zj?string("0.##")}</td>
+	  	<td align="center">${entity.zcf?string("0.##")}</td>
+	  	<td align="center">${entity.jzf?string("0.##")}</td>
+	  	<td align="center">${entity.qt?string("0.##")}</td>
+	</tr>
+	</#list>
+	<#if ifLastPage == true>
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+	  	<td align="center" colspan="2"><font color="red"><strong>合计</strong></font></td>	  
+	  	<td align="center"><strong>${sum_sdf?string("0.##")}</strong></td>
+	  	<td align="center"><strong>${sum_dhf?string("0.##")}</strong></td>
+	  	<td align="center"><strong>${sum_bgf?string("0.##")}</strong></td>
+	  	<td align="center"><strong>${sum_clf?string("0.##")}</strong></td>
+	  	<td align="center"><strong>${sum_qyf?string("0.##")}</strong></td>
+	  	<td align="center"><strong>${sum_twf?string("0.##")}</strong></td>
+	  	<td align="center"><strong>${sum_kdf?string("0.##")}</strong></td>
+	  	<td align="center"><strong>${sum_yhs?string("0.##")}</strong></td>
+	  	<td align="center"><strong>${sum_zj?string("0.##")}</strong></td>
+	  	<td align="center"><strong>${sum_zcf?string("0.##")}</strong></td>
+	  	<td align="center"><strong>${sum_jzf?string("0.##")}</strong></td>
+	  	<td align="center"><strong>${sum_qt?string("0.##")}</strong></td>
+	</tr>	
+	</#if>
+	</#if>
+</table>
+<table width="100%" border="0" cellpadding="5" cellspacing="1">
+	<tr>
+		<td width="60%">&nbsp;</td>
+		<td align="right">${page.paginate}</td>
+	</tr>
+</table>
+</body>
+</html>

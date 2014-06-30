@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>base.js - test</title>
+<script type="text/javascript" src="./base.js?load(gg.js,/js/common/pp.js,,)"></script>
+<script type="text/javascript" src="../../../js/common/prototype.js"></script>
+</head>
+<body>
+<script>
+function hell()
+{
+	var loader = new ResourceLoader();
+	loader.load("system.js", "js", function() {
+		alert(sysIsRightFlag("hell"));
+	});
+	loader.load("../css/syspurview.css", "css");
+}
+</script>
+<input type="button" id="hello" value="ÄãºÃ" class="btn01" onclick="hell()" />
+	
+</body>
+</html>

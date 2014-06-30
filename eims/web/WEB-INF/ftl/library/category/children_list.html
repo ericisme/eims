@@ -1,0 +1,40 @@
+ <table width="100%" border="0" cellpadding="0" cellspacing="1" class="list_table2">
+<#if list?size=0>
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+		<td align="center" colspan="5"><font color="red">暂时没有任何分类！</font></td>
+	</tr>
+	<#else>
+		<#-- 这里的每一个mList表示的是一个父级模块和其子模块的list列表（已排好序的） -->
+	<#list list as mod>
+	<tr name="${mod.id}" height="24" bgcolor="#FFFFFF"
+	onMouseOver="this.className='list_over'"
+	onMouseOut="this.className='list_out'">
+	<td align="center" width="30">
+
+	</td>
+	<td align="left" width="20%">
+		<#-- 如果当前模块的索引值大于0，则表示其是子模块（相对该列表中索引为0的模块而言） -->
+		<img src="/html/syspurview/images/join_last.gif" style="float: top;" />
+		<img src="/html/syspurview/images/module_icon.gif" title="功能模块" />
+		&nbsp;
+		<span id="dmspan_${mod.id}" title="">${mod.name!}</span>
+	</td width="50">
+	<td align="center">
+		${mod.code}
+	</td>
+	<td align="left" width="40" ></td>
+	<td align="center" width="200">
+		<input name="sub" sys_opt="edit" type="button"
+			onclick="moduleEdit('${mod.id}')" class="btn01"
+			onmouseover="this.className='btn02'"
+			onMouseOut="this.className='btn01'" value="编 辑">
+		&nbsp;
+		<input name="sub" sys_opt="remove" type="button" onclick="moduleDel('MToken${mod.id}',
+		<#if mod.parent_id gt 0>'true'<#else>'false'</#if>)" class="btn01"
+		onmouseover="this.className='btn02'"
+		onMouseOut="this.className='btn01'" value="删 除">&nbsp;
+	</td>
+</tr>
+</#list>
+ </#if>
+</table>

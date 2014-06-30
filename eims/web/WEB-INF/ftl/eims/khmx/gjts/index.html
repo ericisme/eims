@@ -1,0 +1,318 @@
+<!-- auto generated -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>应收国家退税</title>
+<link href="/html/syspurview/skins/default/body.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="/html/syspurview/js/base.js?load(page_exe.js)"></script>
+<script language="javascript" src="/js/common/prototype.js"></script>
+<script language="javascript" src="/js/common/log/log4javascript.js"></script>
+<script language="javascript" src="/js/calendar.js"></script>
+<script language="javascript" src="/js/xdate.js"></script><script language="javascript" src="/js/table2xls.js"></script>
+</head>
+<body class="body_bg">
+
+<script type="text/javascript">
+var pag = new PageExe();
+var baseUrl = '/eims/khmx/gjts.do';
+
+//初始化index
+function indexOnLoad(){
+	query();
+}
+
+//查询
+function query(){	
+	if (pag == null) pag = new PageExe();
+	var qv = '_temp='+Math.random();
+	if($F('_dh') != ''){
+		qv += '&dh__like__string=' + new BaseClass().encode($F('_dh'),true);
+	}
+	if($F('_khmc') != ''){
+		qv += '&khmc__like__string=' + new BaseClass().encode($F('_khmc'),true);
+	}
+	if($F('_bgdh') != ''){
+		qv += '&bgdh__like__string=' + new BaseClass().encode($F('_bgdh'),true);
+	}
+	if($F('_ksrq') != ''){
+		qv += '&tsrq__gte__date=' + $F('_ksrq') +' 00:00:00';
+	}
+	if($F('_jsrq') != ''){
+		qv += '&tsrq__lte__date=' + $F('_jsrq') + ' 23:59:59';
+	}
+	
+	pag.query(
+		baseUrl + '?action=list',
+		'_list',
+		qv + '&orders=id__desc'
+	);
+}
+
+//输出xls
+function exportXls(){
+	var qv = '_temp='+Math.random();
+	if($F('_dh') != ''){
+		qv += '&dh__like__string=' + $F('_dh');
+	}
+	if($F('_khmc') != ''){
+		qv += '&khmc__like__string=' + $F('_khmc');
+	}
+	if($F('_bgdh') != ''){
+		qv += '&bgdh__like__string=' + $F('_bgdh');
+	}
+	if($F('_ksrq') != ''){
+		qv += '&tsrq__gte__date=' + $F('_ksrq') +' 00:00:00';
+	}
+	if($F('_jsrq') != ''){
+		qv += '&tsrq__lte__date=' + $F('_jsrq') + ' 23:59:59';
+	}
+	
+	base.confirm('您确信要导出EXCEL数据吗？', function() {
+		window.target="_self";
+		window.open(baseUrl + "?action=exportXls&" + qv + '&orders=id__desc');
+	});
+}
+// 分页查询方法
+function gjtsJump(/*string*/_url, /*int*/curPage)
+{
+	pag.query(
+		_url + curPage,
+		'_list'
+	);
+}
+
+// 删除
+function remove(id)
+{
+	var _id = base.getChecked('id', true);
+	if (!id && _id.length < 1) {
+		base.alert('请先选择要删除的记录！');
+		return;
+	}
+	base.log('要删除的记录ID为：' + (id || _id.join(',')));
+	base.confirm('您确信要删除选中的记录吗？', function() {
+		new Ajax.Request(
+				baseUrl + '?action=remove',
+				{
+					method : 'POST',
+					evalScripts : true,
+					parameters :	'id=' + (id || _id.join('&id=')),
+					onComplete : function(xmlHttp,error){
+						alert("删除成功");
+						query();
+					}
+				}
+			);		
+	});
+}
+
+//保存
+function checkForm(){	
+	if (!$('bgdh') || $('bgdh').value.strip() == '') {
+ 		base.alert('请输入报关单号！',function(){$('bgdh').focus();});
+ 		return false;
+ 	}
+	if(!checkBgdh()){
+		base.alert('您输入的报关单号已存在！',function(){$('bgdh').focus();});
+		return false;
+	}
+	if (!$('khmc') || $('khmc').value.strip() == '') {
+ 		base.alert('请输入客户名称！',function(){$('khmc').focus();});
+ 		return false;
+ 	}
+	if (!$('dh') || $('dh').value.strip() == '') {
+ 		base.alert('请输入单号！',function(){$('dh').focus();});
+ 		return false;
+ 	}
+	if (!$('zzsl') || $('zzsl').value.strip() == '') {
+ 		base.alert('请输入增值税率！',function(){$('zzsl').focus();});
+ 		return false;
+ 	}
+	if (!$('tsl') || $('tsl').value.strip() == '') {
+ 		base.alert('请输入退税率！',function(){$('tsl').focus();});
+ 		return false;
+ 	}
+	if (!checkPrice($('tsje'))) {
+		base.alert('退税金额格式不正确，只允许数据带2位小数！',function(){$('tsje').focus();});return false;
+ 	}
+	if (!checkPrice($('ysje'))) {
+		base.alert('已收金额格式不正确，只允许数据带2位小数！',function(){$('ysje').focus();});return false;
+ 	}
+	
+	pag.update(
+		baseUrl + '?action=save',
+		'theForm',
+		function() {
+			pag.back('_index','_edit');
+			query();
+		}
+	);	
+	return false;
+}
+// 编辑页面显示
+function edit(id)
+{
+	var _id = base.getChecked('id', true);
+	if (!id && _id.length != 1) {
+		base.alert('请先选择要编辑的记录，编辑只能一次选择一条记录！');
+		return;
+	}
+	base.log('要编辑的记录ID为：' + (id || _id[0]));
+	pag.showEdit(
+		baseUrl + '?action=edit',
+		'_edit',
+		'_index',
+		{
+			id : id || _id[0]
+		},
+		function() {}
+	);
+}
+// 添加页面显示
+function insert(){
+	pag.showAdd(
+		baseUrl + '?action=create',
+		'_edit', 
+		'_index',
+		function() { }
+	);
+}
+
+function detail(id){
+	var _id = base.getChecked('id', true);
+	base.log('要查看的ID为：' + (id || _id[0]));
+	pag.showEdit(
+		baseUrl + '?action=show',
+		'_edit',
+		'_index',
+		{
+			id : id || _id[0]
+		},
+		function() {
+			
+		}
+	);
+}
+
+//价格check
+function checkPrice(price){  
+	return (/^(([1-9]\d*)|\d)(\.\d{1,2})?$/).test(price.value);
+}
+
+function checkBgdh(){
+	var flag;
+	new Ajax.Request(
+		baseUrl + '?action=checkBgdh', 
+		{
+			method : 'POST',
+			asynchronous:false, //ajax同步
+			evalScripts : true,
+			parameters :'bgdh='+$('bgdh').value.strip()+'&id='+$F('_id')+'&_temp='+Math.random(),
+			onComplete : function(xmlHttp,error){
+				var returnVal = xmlHttp.responseText;
+				if(returnVal == 'false'){
+					//base.alert('您输入的报关单号已存在！',function(){$('bgdh').focus();});
+					flag = false;
+				}else{
+					flag = true;
+				}			
+			}
+		}
+	);
+	return flag;
+}
+
+function getGhdhTips(){
+	if(!checkBgdh()){
+		document.getElementById("ghdhTips").innerHTML="<font color='red'>报关单号已存在！<\/font>";
+	}else{
+		document.getElementById("ghdhTips").innerHTML="";
+	}
+}
+
+function getKhts(){
+	new Ajax.Request(
+		'/eims/khmx/khts.do?action=getKhts', 
+		{
+			method : 'POST',
+			evalScripts : true,
+			parameters :'bgdh='+$('bgdh').value.strip()+'&_temp='+Math.random(),
+			onComplete : function(xmlHttp,error){
+				var obj = eval("("+xmlHttp.responseText+")");
+				if(obj.message=="success"){
+					var data = obj.data;
+					document.getElementById("khmc").value = data.khmc;
+				}else{
+					document.getElementById("khmc").value = "";
+				}
+			}
+		}
+	);
+}
+
+//计算未收金额
+function cauWsje(){
+	var tsje = 0; //退税金额
+	if($F('tsje') != '')
+		tsje = parseFloat($F('tsje'));
+	var ysje = 0; //已收金额
+	if($F('ysje') != '')
+		ysje = parseFloat($F('ysje'));
+	var wsje = (tsje - ysje).toFixed(2);  /*小数点后几位*/
+	document.getElementById("wsje").value = wsje;
+}
+</script>
+<script type="text/javascript">
+	BaseClass.addOnLoad(indexOnLoad);
+</script>
+<#include "../../../common_loading.ftl" />
+<div id="_index">
+<div class="position_line">您的位置是：客户明细>> 应收国家退税</div>
+
+<#include "../../../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_query">
+
+	<tr>
+		<td  align="right" height="12" width="12%">报关单号 ：</td>
+		<td align="left" bgcolor="#FFFFFF" width="8%"><input type="text" name="_bgdh" id="_bgdh" size="12" /></td>		
+		<td  align="right" height="12" width="12%">客户名称 ：</td>
+		<td align="left" bgcolor="#FFFFFF"><input type="text" name="_khmc" id="_khmc" size="12" /></td>
+		<td  align="right" height="12" width="8%">单号 ：</td>
+		<td align="left" bgcolor="#FFFFFF"><input type="text" name="_dh" id="_dh" size="12" />  </td>
+		<td  align="right" height="12" width="14%">
+			 收退税开始日期 ：
+		</td>
+		<td align="left" bgcolor="#FFFFFF" width="6%">
+        	<input type="text" name="_ksrq" id="_ksrq" size="10" onclick="setday(this)" readonly/>  
+		</td>			
+		<td  align="right" width="14%">
+			 收退税结束日期 ：
+		</td>
+		<td align="left" bgcolor="#FFFFFF" width="6%">
+			<input type="text" name="_jsrq" id="_jsrq" size="10" onclick="setday(this)" readonly/>
+		</td>	
+	</tr>
+		
+	<tr>		
+		<td width="100%" align="center" colspan="10" bgcolor="#FFFFFF">
+			<input name="sub"                  type="button" onclick="query()"  class="btn01" value="查 询" />&nbsp;
+			<input name="sub" sys_opt="save"   type="button" onclick="insert()" class="btn01" value="添 加" />&nbsp;
+			<input name="sub" sys_opt="edit"   type="button" onclick="edit()"   class="btn01" value="修 改" />&nbsp;
+			<input name="sub" sys_opt="remove" type="button" onclick="remove()" class="btn01" value="删 除">&nbsp;
+			<input name="sub" sys_opt="exportXls"   type="button" onclick="exportXls()" class="btn01" value="导出xls" />
+		</td>
+	</tr>
+</table>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+
+<span id="_list"></span>
+</div>
+<div id="_edit" >
+</div>
+
+</body>
+</html>

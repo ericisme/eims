@@ -1,0 +1,164 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>统计管理</title>
+<link href="/html/syspurview/skins/default/body.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="/html/syspurview/js/base.js?load(page_exe.js,/html/library/summary.js)"></script>
+<script language="javascript" src="/js/common/prototype.js"></script>
+<script language="javascript" src="/js/common/log/log4javascript.js"></script>
+<script language="javascript" src="/html/library/baseDataCascade.js"></script>
+
+</head>
+<body class="body_bg">
+<script type="text/javascript">
+<!--
+	//BaseClass.funcList.push(selectOptionByDiv);
+	BaseClass.addOnLoad(zsdqeduClassSummaryQuery);
+	BaseClass.addOnLoad(zsdqeduStudentSummaryQuery);
+-->
+</script>
+<#include "../../common_loading.ftl" />
+<div id="borrow_index">
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+    	<td class="line">东区-- 班级阅读排名</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<#include "../../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_query">
+	<tr style="display:${areaSel!}">	
+		<span style="display: none;">
+			<select name="queryCityId1" onchange="changeZhptAgencyIndex(this.value,'queryAgencyId1','querySchoolId1','queryGradeId1','queryAgency1','querySchool1','queryGrade1')" ${disableTown!}>
+				${citySelectHtml!}
+			</select>&nbsp;
+			<select name="queryAgencyId1" onchange="changeZhptSchoolIndex(this.value,'querySchoolId1','queryGradeId1','querySchool1','queryGrade1')" ${disableAgency!}>
+			${agencySelectHtml!}
+			</select>
+		</span>
+		<td  align="right" width="17%">
+			学校：
+		</td>
+		<td  align="left" bgcolor="#FFFFFF" width="17%">
+			<span id="querySchool1" name="querySchool1">
+				<select name="querySchoolId1" onchange="changeZhptGrade(this.value,'queryGradeId1','queryGrade1')" ${disableSchool!}>
+					${schoolHtmlSelect!}
+				</select>
+			</span>&nbsp;
+		</td>
+		<td  align="right" width="17%">
+			年级：
+		</td>
+		<td align="left" bgcolor="#FFFFFF" width="17%">
+			<span id="queryGrade1" name="queryGrade1">
+				<select name="queryGradeId1"  onchange="changeClassName(this.value,'queryClassNameId1', 'queryClassName1')">
+					<option value="-1">--请选择--</option>
+					${editGradeHtmlSelect!}
+				</select>
+			</span>
+		</td>	
+		</td>
+		<td   align="right" width="17%">
+		</td>
+		<td  align="left" bgcolor="#FFFFFF" width="17%">
+		</td>	
+		<span style="display: none;">
+			<span id="queryClassName1" name="queryClassName1">
+			 	<select name="queryClassNameId1" >
+			 		<option value="-1">--请选择--</option>
+					${editClassNameHtmlSelect!}
+				</select>
+			</span>
+		</span>		
+	</tr>		
+	<tr>
+		<td width="100%" align="center" colspan="6" bgcolor="#FFFFFF">
+		<input name="sub" type="button" onclick="zsdqeduClassSummaryQuery()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="查 询" />&nbsp;
+		
+		</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<span id="class_summary_list">
+</span>
+
+
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+    	<td class="line">东区-- 学生阅读排名</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<#include "../../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_query">
+	<tr height="12" style="display:${areaSel!}">
+		<span style="display: none;">
+			<select name="queryCityId" onchange="changeZhptAgencyIndex(this.value,'queryAgencyId','querySchoolId','queryGradeId','queryAgency','querySchool','queryGrade')" ${disableTown!}>
+				${citySelectHtml!}
+			</select>&nbsp;
+			<select name="queryAgencyId" onchange="changeZhptSchoolIndex(this.value,'querySchoolId','queryGradeId','querySchool','queryGrade')" ${disableAgency!}>
+			${agencySelectHtml!}
+			</select>
+		</span>
+		<td  align="right" width="17%">
+			学校：
+		</td>
+		<td  align="left" bgcolor="#FFFFFF" width="17%">
+			<span id="querySchool" name="querySchool">
+				<select name="querySchoolId" onchange="changeZhptGrade(this.value,'queryGradeId','queryGrade')" ${disableSchool!}>
+					${schoolHtmlSelect!}
+				</select>
+			</span>&nbsp;
+		</td>
+		
+		<td  align="right" width="17%">
+			年级：
+		</td>
+		<td align="left" bgcolor="#FFFFFF" width="17%">
+			<span id="queryGrade" name="queryGrade">
+				<select name="queryGradeId"  onchange="changeClassName(this.value,'queryClassNameId', 'queryClassName')">
+					<option value="-1">--请选择--</option>
+					${editGradeHtmlSelect!}
+				</select>
+			</span>
+		</td>
+		<td  align="right" width="17%">
+			班级：
+		</td>	
+		<td  align="left" bgcolor="#FFFFFF" width="17%">
+			<span id="queryClassName" name="queryClassName">
+			 	<select name="queryClassNameId" >
+			 		<option value="-1">--请选择--</option>
+					${editClassNameHtmlSelect!}
+				</select>
+			</span>
+		</td>
+	</tr>
+	<span style="display: none;">
+		<input type="text" name="studentName" id="studentName" size="12"></input>
+	</span>
+	<tr>
+		<td width="100%" align="center" colspan="6" bgcolor="#FFFFFF">
+		<input name="sub" type="button" onclick="zsdqeduStudentSummaryQuery()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="查 询" />&nbsp;
+		
+		</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<span id="summary_list">
+</span>
+
+
+</div>
+</body>
+</html>

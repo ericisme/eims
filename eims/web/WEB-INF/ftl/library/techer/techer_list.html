@@ -1,0 +1,52 @@
+<html>
+<body>
+<#assign techerSize=page.result?size />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_table" style="word-break:break-all">
+	<tr class="list_title">
+		<td width="8%" align="center">
+		<input type="checkbox" name="ckbox" value="checkbox" onclick="base.checkAll('id',this.checked)" />全选
+		</td>
+    	
+    	<td align="center">姓名</td>
+    	<td align="center">继教号</td>
+    	<td align="center">出生日期</td>
+    	<td align="center">性别</td>
+    	<td align="center">学校</td>
+    	<td align="center">班级</td>
+    	
+    	<td align="center">IC卡号</td>
+    	<td align="center">操作</td>
+    	
+	</tr>
+	<#if techerSize = 0>
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+		<td align="center" colspan="9"><font color="red">没有符合条件的记录！</font></td>
+	</tr>
+	</#if>
+	<#list page.result as techer >
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+	  	<td align="center"><input type="checkbox" name="id" value="${techer.userId}" /></td>
+    
+    	<td align="center">${techer.realName!}</td>
+    	<td align="center">${techer.loginName!}</td>
+    	<td align="center">${techer.birthday!}</td>
+    	<td align="center"><#if techer.gender?default(1)==1>男<#else>女</#if></td>
+    	<td align="center"><#if techer.school??>${techer.school.school_name!}</#if></td>
+    	<td align="center"><#if techer.zfptClass??>${techer.zfptClass.class_name!}</#if></td>
+    		<td align="center">${techer.id_card!}</td>
+	     <td align="center">
+	    	<a href="#" onclick="techerEdit('${techer.userId}')" >编 辑</a>&nbsp;
+	    	<a href="#" onclick="techerDel('${techer.userId}')" >删 除</a>&nbsp;
+	    	<a href="#" onclick="techerDetail('${techer.userId}')" >查看详情</a>&nbsp;
+	    </td>
+	</tr>
+	</#list>
+</table>
+<table width="100%" border="0" cellpadding="5" cellspacing="1">
+	<tr>
+		<td width="60%">&nbsp;</td>
+		<td align="right">${page.paginate}</td>
+	</tr>
+</table>
+</body>
+</html>

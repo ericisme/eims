@@ -1,0 +1,62 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+		<td class="line">您的位置是：例表管理>> 损益表 >> 查看损益表</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td>
+			&nbsp;	
+		</td>
+	</tr>
+</table>
+<#include "../../../common_tips.ftl" />
+
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="update_tbl">
+	<tr>
+		<td align="right" class="tdLeft" width="15%">年月：</td>
+		<td align="left" valign="top" class="tdRight" width="85%">${syb.ny?if_exists?string("yyyy-MM-dd")}</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="15%">主营业务利润： </td>
+		<td align="left" valign="top" class="tdRight" width="85%"><#if syb.zyywlr??>${syb.zyywlr?string("0.##")}</#if></td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft">管理费用： </td>
+		<td align="left" valign="top" class="tdRight"><#if syb.glfy??>${syb.glfy?string("0.##")}</#if></td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft">财务费用： </td>
+		<td align="left" valign="top" class="tdRight"><#if syb.cwfy??>${syb.cwfy?string("0.##")}</#if></td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft">经营费用： </td>
+		<td align="left" valign="top" class="tdRight"><#if syb.jyfy??>${syb.jyfy?string("0.##")}</#if></td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft">营业外支出： </td>
+		<td align="left" valign="top" class="tdRight"><#if syb.yywzc??>${syb.yywzc?string("0.##")}</#if></td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft">所得税： </td>
+		<td align="left" valign="top" class="tdRight"><#if syb.sds??>${syb.sds?string("0.##")}</#if></td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft">净利润： </td>
+		<td align="left" valign="top" class="tdRight"><#if syb.jlr??>${syb.jlr?string("0.##")}</#if></td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft">录入时间： </td>
+		<td align="left" valign="top" class="tdRight">${syb.lrsj?if_exists?string("yyyy-MM-dd")}</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td height="5">&nbsp;</td>
+	</tr>
+	<tr>
+		<td height="5" align="center">
+			<input name="btn01" type="button" class="btn01" onclick="pag.back('_index','_edit');" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="返 回" />
+		</td>
+	</tr>
+</table>

@@ -1,0 +1,72 @@
+<!-- auto generated -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>学校</title>
+<link href="/html/syspurview/skins/default/body.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="/html/syspurview/js/base.js?load(page_exe.js,/html/library/school.js)"></script>
+<script language="javascript" src="/js/common/prototype.js"></script>
+<script language="javascript" src="/html/library/xxptUtils.js"></script>
+<script language="javascript" src="/js/common/log/log4javascript.js"></script>
+<script language="javascript" src="/html/library/baseDataCascade.js"></script>
+</head>
+<body class="body_bg">
+<script type="text/javascript">
+<!--
+	BaseClass.addOnLoad(schoolQuery);
+	BaseClass.funcList.push(selectOptionByDiv);
+-->
+</script>
+<#include "../../common_loading.ftl" />
+<div id="school_index">
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+    	<td class="line">您现在的位置： 学校管理 -> 学校</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<#include "../../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_query">
+	<tr style="display:${areaSel!}">
+		<td  width="10%" align="right">
+		镇区：
+		</td>
+		<td   width="20%" align="left" bgcolor="#FFFFFF">
+			<select id="citySelect" style= "width:100" name="citySelect" onchange="getAgencySelectByCityId(this.value,'agencyHtml','agencySelect')">${citySelectHtml!}</select>&nbsp;&nbsp;
+		</td>
+		<td  width="10%" align="right">
+		机构：
+		</td>
+		<td   width="20%" align="left" bgcolor="#FFFFFF">
+			<span id="agencyHtml"><select id="agencySelect" style= "width:250" name="agencySelect">${agencySelectHtml!}</select></span>&nbsp;&nbsp;
+		</td>
+		<td  width="15%" align="right">
+			学校名称：
+		</td>
+		<td   width="25%" align="left" bgcolor="#FFFFFF">
+			<input type="text" name="schoolName" size="20"></input>&nbsp;&nbsp;
+		</td>&nbsp;&nbsp;
+	</tr>
+	<tr>
+		<td  colspan="6"  align="middle" bgcolor="#FFFFFF">
+			<input name="sub" type="button" onclick="schoolQuery()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="查 询" />&nbsp;
+			<input name="sub" sys_opt="save" type="button" onclick="schoolAdd()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="添 加" />&nbsp;
+			<input name="sub" sys_opt="edit" type="button" onclick="schoolEdit()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="修 改" />&nbsp;
+			<input name="sub" sys_opt="remove" type="button" onclick="schoolDel()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="删 除">&nbsp;
+			<input name="sub" sys_opt="importinit" type="button" onclick="importinit()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="批量导入" />&nbsp;
+			<input name="sub" sys_opt="export" type="button" onclick="downloadSchool()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="批量导出" />&nbsp;
+		</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<span id="school_list">
+</span>
+</div>
+<div id="school_update" style="display:none">
+</div>
+</body>
+</html>

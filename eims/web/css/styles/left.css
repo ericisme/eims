@@ -1,0 +1,111 @@
+body{
+	scrollbar-face-color:#98D9FF;
+	scrollbar-highlight-color:#32B4FF;
+	scrollbar-3dlight-color:#ECFAFE;
+	scrollbar-darkshadow-color:#ECFAFE;
+	scrollbar-Shadow-color:#32B4FF;
+	scrollbar-arrow-color:#32B4FF;
+	scrollbar-track-color:#ECFAFE;
+}
+
+.newsbox03{
+	border-top-width: 0px;
+	border-right-width: 0px;
+	border-bottom-width: 1px;
+	border-left-width: 0px;
+	border-bottom-style: dashed;
+	border-bottom-color: #999999;
+	line-height: 20px;
+	}
+
+.title {
+	font-size: 13px;
+	color: #03698F;
+	font-weight: bold;
+}
+.title2 {
+	font-size: 14px;
+       font-weight: bold;
+	color: #319AEB;
+}
+.bg1 {
+	background-image: url(../../images/Vista-blue/bg3.gif);
+}
+#img1 {
+	background-image: url(../../images/Vista-blue/left_menu.gif);
+	background-repeat: no-repeat;
+	height: 24px;
+#img2 {
+	background-image: url(left_menubg.gif);
+       background-repeat: repeat-y;}
+#img3 {
+	background-image: url(../../images/Vista-blue/gncd.gif);
+	background-repeat: no-repeat;
+	height: 34px;
+}
+body {
+	margin-left: 5px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+body,td,th {
+	font-size: 12px;
+}
+.font1{
+	color:#0000FF;
+	text-decoration: none;
+}
+.font2{
+	color:#920000;}
+.leftbg {
+	background-color: #FFFFFF;
+	background-image: url(../../images/leftbg.gif);
+	background-repeat: no-repeat;
+	background-position: left bottom;
+}
+
+a {
+	font-size: 12px;
+	color: #328DD9;
+}
+a:link {
+	text-decoration: none;
+	color: #0F3351;
+}
+a:visited {
+	text-decoration: none;
+	color: #0F3351;
+}
+a:hover {
+	text-decoration: none;
+	color: #328DD9;
+}
+a:active {
+	text-decoration: none;
+	color: #0F3351;
+}
+.tb_bd {
+	background-color: #8296A6;
+	margin: 1px;
+}
+.tbtitle_bg1 {
+	background-color: #FDFDF2;
+}
+.tbtitle_bg2 {
+	background-color: #FEFDF5;
+}
+.tbtitle_bg3 {
+	background-color: #ffffff;
+}
+.unuse {
+	color: #999999;
+	border-top-width: 0px;
+	border-right-width: 0px;
+	border-bottom-width: 1px;
+	border-left-width: 0px;
+	border-bottom-style: dashed;
+	border-bottom-color: #999999;
+	line-height: 20px;
+	}
+}

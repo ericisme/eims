@@ -1,0 +1,67 @@
+<#-- 角色授权首页的左侧子系统和菜单列表 -->
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+<tbody id="mod_body">
+	<#-- 如果是查询三级和以下级别的模块时要显示上一级的操作控制 -->
+	<#if showUp>
+		<tr>
+			<td align="left">
+				<div style="background:#F9F9F9; border-bottom:1px solid #F4F4F4">
+					<span onclick="roleGetMenuList('${pToken}')" style="cursor:pointer" title="查看上级菜单模块">
+						<img src="${configer.prefix}/images/module_up.gif" align="absmiddle"> 返回上级菜单模块
+					</span>
+				</div>
+			</td>
+		</tr>
+	</#if>
+	<#-- 如果没有菜单则显示提示信息 -->
+	<#if noResult>
+		<tr><td align="center"><font color="red">暂无任何模块！</font></td></tr>
+	<#else>
+		<#-- 点击显示当前系统下的所有可授权模块 -->
+		<tr><td style="padding-left:3px;">
+			<img src="${configer.prefix}/images/all_list.gif" title="当前系统下的所有可授权模块列表"/>
+			<span name="_m653_Name_" style="cursor:pointer" title="点击获取当前系统下的所有可授权模块" onclick="roleQueryModuleFunc(this, '', false)">
+				<font color="green">所有模块</font>
+			</span>
+		</td></tr>
+		<#-- 每一个mList表示的是一个模块和其子模块的列表，索引为0的表示父模块 -->
+		<#list Modules as mList>
+			<#list mList as mod>
+			<tr name="${mod.MToken}" <#if mod_index!=0>style="display:none"</#if> >
+				<td style="padding-left:3px;">
+					<#-- 显示层次图标 -->
+					<#if mod_index!=0>
+						<#if mod_index!=mList?size-1>
+							<img src="${configer.prefix}/images/join_middle.gif" style="float:bottom;" />
+						<#else>
+							<img src="${configer.prefix}/images/join_last.gif" style="float:top;" />
+						</#if>
+					</#if>
+					<#-- 如果为菜单则显示菜单图片，否则显示模块图片,对于子菜单模块（即索引大于0的）需要从服务器获取其子模块信息 -->
+					<#if mod.menu>
+						<#if mod_index=0>
+							<img src="${configer.prefix}/images/menu_close.gif" title="[菜单模块]单击展开其下级模块" style="cursor:pointer" 
+								onclick="roleQueryModuleChild(this,'${mod.MToken}',true)" />
+						<#else>
+							<img src="${configer.prefix}/images/menu_close.gif" title="[菜单模块]单击获取其下级模块" style="cursor:pointer" 
+								onclick="roleQueryModuleChild(this,'${mod.MToken}',false)" />
+						</#if>
+					<#else>
+						<img src="${configer.prefix}/images/module_icon.gif" title="功能模块"/>
+					</#if>
+					<span name="_m653_Name_" style="cursor:pointer" title="点击获取该模块下所有可授权的功能模块和其功能列表" 
+						onclick="roleQueryModuleFunc(this, '${mod.MToken}',${mod.menu?string('true','false')})">
+						${mod.MName}
+					</span>
+				</td>
+			</tr>
+			</#list>
+		</#list>
+	</#if>
+</tbody>
+</table>
+<style type="text/css">
+<!--
+.mLeftBold{font-weight: bold;}
+-->
+</style>

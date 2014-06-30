@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans default-autowire="byName" default-lazy-init="true">
+
+	<bean id="bookController" parent="mvc_parentController" class="cn.qtone.library.book.controller.BookController">
+		<property name="listPage" value="/library/book/book_list"></property>
+		<property name="newPage" value="/library/book/book_create"></property>
+		<property name="editPage" value="/library/book/book_edit"></property>
+		<property name="showPage" value="/library/book/book_show"></property>
+		<property name="indexPage" value="/library/book/book_index"></property>
+		<property name="categorySelectPage" value="/library/book/categorySelect"></property>
+		<property name="nameCodePage" value="/library/book/category_name_code"></property>
+		<property name="importPage" value="/library/book/book_importPage"></property>
+		<property name="bookService" ref="bookService"></property>
+		<property name="schoolService" ref="schoolService"></property>
+		<property name="cityService" ref="cityService"></property>
+		<property name="agencyService" ref="agencyService"></property>
+		<property name="transImportPage" value="/library/book/trans_importPage"></property>
+	</bean>
+	<bean id="bookService" class="cn.qtone.library.book.service.BookService">
+	</bean>
+	<!-- newBeanConfig -->
+
+</beans>
+

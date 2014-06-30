@@ -1,0 +1,38 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+		<td class="line">您的位置是：客户明细>> 营业外收入 >> 查看营业外收入</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td>
+			&nbsp;	
+		</td>
+	</tr>
+</table>
+<#include "../../../common_tips.ftl" />
+
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="update_tbl">
+	<tr>
+		<td align="right" class="tdLeft" width="15%">单号：</td>
+		<td align="left" valign="top" class="tdRight" width="35%">${yywsr.dh!}</td>
+		<td align="right" class="tdLeft" width="15%">年月： </td>
+		<td align="left" valign="top" class="tdRight" width="35%">${yywsr.ny?if_exists?string('yyyy-MM-dd')}</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="15%">摘要： </td>
+		<td align="left" valign="top" class="tdRight" width="35%">${yywsr.zy!}</td>
+		<td align="right" class="tdLeft" width="15%">金额： </td>
+		<td align="left" valign="top" class="tdRight" width="35%">${yywsr.je?string("0.##")}</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td height="5">&nbsp;</td>
+	</tr>
+	<tr>
+		<td height="5" align="center">
+			<input name="btn01" type="button" class="btn01" onclick="pag.back('_index','_edit');" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="返 回" />
+		</td>
+	</tr>
+</table>

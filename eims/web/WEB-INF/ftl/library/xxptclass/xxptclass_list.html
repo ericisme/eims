@@ -1,0 +1,44 @@
+<!-- auto generated -->
+<html>
+<body>
+<#assign zfptClassSize=page.result?size />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_table" style="word-break:break-all">
+	<tr class="list_title">
+		<td width="8%" align="center">
+		<input type="checkbox" name="ckbox" value="checkbox" onclick="base.checkAll('id',this.checked)" />全选
+		</td>
+    	<td align="center">班级名称</td>
+    	<td align="center">班级所属的机构</td>
+    	<td align="center">班级所属的学校</td>
+    	<td align="center">班级所在年级</td>
+    	<td align="center" >操作</td>
+    	
+	</tr>
+	<#if zfptClassSize = 0>
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+		<td align="center" colspan="9"><font color="red">没有符合条件的记录！</font></td>
+	</tr>
+	</#if>
+	<#list page.result as zfptClass >
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+	  	<td align="center"><input type="checkbox" name="id" value="${zfptClass.id}" /></td>
+    	<td align="left">${zfptClass.class_name!}</td>
+    	<td align="left">${zfptClass.school.agency.agency_name!}</td>
+    	<td align="left">${zfptClass.school.school_name!}</td>
+    	<td align="left">${zfptClass.gradeValue()!}</td>
+	     <td align="center">
+	    	<input sys_opt="edit" onclick="zfptClassEdit('${zfptClass.id}')" type="button" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="编 辑" />&nbsp;
+	    	<input sys_opt="remove" onclick="zfptClassDel('${zfptClass.id}')" type="button" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="删 除" />&nbsp;
+	    	<input sys_opt="show" onclick="zfptClassDetail('${zfptClass.id}')" type="button" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="查看详情" />
+	    </td>
+	</tr>
+	</#list>
+</table>
+<table width="100%" border="0" cellpadding="5" cellspacing="1">
+	<tr>
+		<td width="60%">&nbsp;</td>
+		<td align="right">${page.paginate}</td>
+	</tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="/newcss/common.css">
+<script language="javascript" src="/js/common/prototype.js"></script>
+<script language="javascript" src="/js/common/top.js"></script>
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" id="top">
+  <tr>
+    <td align="center" valign="top" style=" background:url(/newimages/top_bg.jpg) left top repeat-x; height:102px; border-bottom:2px #FF0000 solid;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="left" valign="top"><img src="/newimages/simple_logo.jpg" width="360" height="68" /></td>
+        <td align="right" style="color:#FFF; padding-right:15px;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td align="right">用户[ <font color="red">${user.realName}</font> ]您好！&nbsp;&nbsp;今日：  <script language="JavaScript"> today=new Date();       
+    function initArray()       
+      {   this.length=initArray.arguments.length       
+          for(var i=0;i<this.length;i++)       
+          this[i+1]=initArray.arguments[i]        
+     }       
+   var d=new initArray("<font color=red>星期日","星期一","星期二","星期三","星期四","星期五","星期六");       
+     document.write("",today.getYear(),"年",today.getMonth()+1,"月","",today.getDate(),"日&nbsp;&nbsp;",d[today.getDay()+1]);</script></td>
+          </tr>
+          <tr>
+            <td align="right">
+               <img src="/newimages/button_desk.gif" width="24" height="21" align="absmiddle"  style="margin:5px 0;"/>
+             <a href="/syspurview/admin.do?action=mainMenu"   target="main" title="返回桌面" >桌面</a>&nbsp;&nbsp;&nbsp;&nbsp; 
+              <img src="/newimages/button_mod_pwd.gif" width="24" height="21" align="absmiddle"  style="margin:5px 0;"/>
+              <a href="/syspurview/controlpanel.do"   title="控制面板" target="main">我的设置</a>&nbsp;&nbsp;&nbsp;&nbsp;<img src="/newimages/button_exit.gif" width="24" height="21" align="absmiddle" style="margin:5px 0;" />
+              <a href="javascript:adminExit();" title="退出"  >退出系统</a></td>
+          </tr>
+        </table></td>
+      </tr>
+      
+    </table></td>
+  </tr>
+</table>
+</body>
+</html>

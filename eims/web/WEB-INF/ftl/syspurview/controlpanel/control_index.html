@@ -1,0 +1,74 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>${configer.systemName} - 控制面板</title>
+<link href="${configer.prefix}/skins/default/body.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="${configer.prefix}/js/base.js?load(page_exe.js,controlpanel.js)"></script>
+<script language="javascript" src="/js/common/prototype.js"></script>
+<script language="javascript" src="/js/common/log/log4javascript.js"></script>
+<script language="javascript" src="/js/common/calender/calendar.js"></script>
+<script language="javascript" src="/js/common/calender/calendar-setup.js"></script>
+<script language="javascript" src="/js/common/calender/lang/calendar-zh.js"></script>
+<link href="/js/common/calender/css/calendar-tas.css" rel="stylesheet" type="text/css">
+</head>
+
+<body class="body_bg">
+<script type="text/javascript">
+<!--
+	BaseClass.addOnLoad(controlInit);
+-->
+</script>
+<#include "../common_loading.ftl" />
+<div id="control_index">
+<table width="100%" border="0" cellpadding="5" cellspacing="1">
+<tr>
+	<td class="line" colspan="3">您现在的位置： 系统管理 -> 控制面板</td>
+</tr>
+<tr>
+	<td width="48%">
+		<#-- 控制面板第一行左侧 -->
+		<table width="100%" border="0" class="control_body">
+			<tr class="control_head">
+				<td colspan="2" style="padding-left:12px">帐户信息</td>
+			</tr>
+			<tr>
+				<td style="padding-left:12px">・<a href="javascript:controlUserInfoEdit();">个人资料</a></td>
+				<td>更改您的姓名、手机号码和其它个人信息</td>
+			</tr>
+			<tr>
+				<td style="padding-left:12px">・<a href="javascript:controlUserPassword();">密码修改</a></td>
+				<td>建议您定期更改密码以确保帐户安全</td>
+			</tr>
+			<tr>
+				<td style="padding-left:12px">・<a href="javascript:controlUserCryptoguard();">密码保护</a></td>
+				<td>密码保护可以在丢失密码的情况下快速安全的找回密码</td>
+			</tr>
+		</table>
+	</td>
+	<td width="4%">&nbsp;</td>
+	<td width="48%">
+		<#-- 控制面板第一行右侧 -->
+		<table width="100%" border="0" class="control_body">
+			<tr class="control_head">
+				<td colspan="2" style="padding-left:12px">个人助理</td>
+			</tr>
+			<tr>
+				<td style="padding-left:12px">・<a href="javascript:controlCalculate('${configer.prefix}');">公历农历</a></td>
+				<td>一个很方便查看各国家和地区的网上日历</td>
+			</tr>
+			<tr>
+				<td style="padding-left:12px">・<a href="javascript:controlAlmanac('${configer.prefix}');">计算器</a></td>
+				<td>为您提供常用的数学计算功能</td>
+			</tr>
+			<tr>
+				<td style="padding-left:12px">&nbsp;</td>
+				<td>&nbsp;</td>
+			</tr>
+		</table>
+	</td>
+</tr>
+</table>
+</div>
+<div id="control_update"></div>
+</body>
+</html>

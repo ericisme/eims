@@ -1,0 +1,46 @@
+<!-- auto generated -->
+<html>
+<body>
+<#assign userSendNewsLogSize=page.result?size />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_table" style="word-break:break-all">
+	<tr class="list_title">
+		<!-- <td width="8%" align="center">
+		<input type="checkbox" name="ckbox" value="checkbox" onclick="base.checkAll('id',this.checked)" />全选
+		</td>
+		 -->
+    	<td align="center" width="8%">操作用户</td>
+    	<td align="center" width="13%">发送时间</td>
+    	<td align="center" width="29%">发送对象</td>
+    	<td align="center" width="10%">信息类型</td>
+    	<td align="center" width="40%">短信内容</td>
+    	<!-- <td align="center" >操作</td> -->
+    	
+	</tr>
+	<#if userSendNewsLogSize = 0>
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+		<td align="center" colspan="9"><font color="red">没有符合条件的记录</font></td>
+	</tr>
+	</#if>
+	<#list page.result as userSendNewsLog >
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+	  <!-- 	<td align="center"><input type="checkbox" name="userSendNewsLogId" value="${userSendNewsLog.id}" /></td> -->
+    	<td align="center">${userSendNewsLog.user_name!}</td>
+    	<td align="left">&nbsp;${userSendNewsLog.send_time!}</td>
+    	<td align="left">&nbsp;${userSendNewsLog.sendFw!}</td>
+    	<td align="center">${userSendNewsLog.news_type.param_name!}</td>
+    	<td align="left">&nbsp;${userSendNewsLog.newscontent!}</td>
+	    <!--  <td align="center">
+	    	<input sys_opt="show" onclick="userSendNewsLogDetail('${userSendNewsLog.id}')" type="button" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="查看详情" />
+	    </td>
+	     -->
+	</tr>
+	</#list>
+</table>
+<table width="100%" border="0" cellpadding="5" cellspacing="1">
+	<tr>
+		<td width="60%">&nbsp;</td>
+		<td align="right">${page.paginate}</td>
+	</tr>
+</table>
+</body>
+</html>

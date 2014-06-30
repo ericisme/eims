@@ -1,0 +1,35 @@
+<html>
+<body>
+<#setting datetime_format="yyyy-MM-dd"/> 
+<#assign summarySize=page.result?size />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_table" style="word-break:break-all">
+	<tr class="list_title">
+    	<td align="center">序号</td>
+    	<td align="center">姓名</td>
+    	<td align="center">性别</td>
+    	<td align="center">学籍号</td>
+    	<td align="center">借阅量</td>
+	</tr>
+	<#if summarySize = 0>
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+		<td align="center" colspan="8"><font color="red">没有符合条件的记录！</font></td>
+	</tr>
+	</#if>
+	<#list page.result as user >
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+    	<td align="center">${user_index+1}</td>
+    	<td align="center">${user.user_name!}</td>
+    	<td align="center"><#if user.gender?default('1')=='1'>男<#else>女</#if></td>
+    	<td align="center">${user.loginName!}</td>
+    	<td align="center">${user.total!}</td>
+	</tr>
+	</#list>
+</table>
+<table width="100%" border="0" cellpadding="5" cellspacing="1">
+	<tr>
+		<td width="60%">&nbsp;</td>
+		<td align="right">${page.paginate}</td>
+	</tr>
+</table>
+</body>
+</html>

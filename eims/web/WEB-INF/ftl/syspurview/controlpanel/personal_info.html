@@ -1,0 +1,56 @@
+<#-- 控制面板中用户个人信息的编辑页面 -->
+
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+		<td class="line">您现在的位置： 控制面板 -> 个人信息修改</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<form name="userUpdateForm" id="userUpdateForm" method="POST" action="" onsubmit="return controlUpdateUserInfo();">
+<#include "../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="update_tbl">
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 真实姓名： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="realName" id="realName" type="text" maxlength="50" size="30" class="box0" value="${user.realName}"
+				onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+			<input name="userId" id="userId" type="hidden" value="${user.userId}" />
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 手机号码： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="mobile" id="mobile" type="text" maxlength="11" size="30" class="box0" onFocus="this.className='box1'" value="${user.mobile}"
+				onBlur="this.className='box0'"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px">电子邮件： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="email" id="email" type="text" maxlength="100" size="30" class="box0" onFocus="this.className='box1'" 
+				onBlur="this.className='box0'" value="${user.email}"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 用户密码： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="loginPassword" id="loginPassword" type="password" maxlength="18" size="30" class="box0" onFocus="this.className='box1'" 
+				onBlur="this.className='box0'" value=""/> 
+			<font color="red">为保证用户信息安全，请输入当前帐号密码！</font>
+		</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td height="5">&nbsp;</td>
+	</tr>
+	<tr>
+		<td height="5" align="center">
+			<input name="btn01" type="submit" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="保 存" />&nbsp;&nbsp;&nbsp;&nbsp;
+			<input name="btn01" type="button" class="btn01" onclick="pag.back('control_index','control_update');" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="返 回" />
+		</td>
+	</tr>
+</table>
+</form>

@@ -1,0 +1,172 @@
+<div class="position_line">您的位置是：基础信息管理>> 教师信息 >> 查看教师信息</div>
+<#include "../../common_tips.ftl" />
+
+<table width="100%" cellspacing="0" cellpadding="0" bordercolor="#AAC7DD" border="1" class="m_t">
+	<tr>
+		<td width="15%" class="t_title t_r">学校：</td>
+		<td width="35%" class="t_right">${xx.mc!}</td>
+		<td width="15%" class="t_title t_r">学校代码： </td>
+		<td width="35%" class="t_right">${xx.xx_m!}</td>
+	</tr>
+	<tr>
+		<td width="15%" class="t_title t_r">姓名： </td>
+		<td width="35%" class="t_right">${js.xm!}</td>
+		<td width="15%" class="t_title t_r">性别： </td>
+		<td width="35%" class="t_right"><#if js.xb = 1>男</#if><#if js.xb = 2>女</#if></td>
+	</tr>
+	<tr>
+		<td width="15%" class="t_title t_r">民族： </td>
+		<td width="35%" class="t_right">${mzString!}</td>
+		<td width="15%" class="t_title t_r">出生日期： </td>
+		<td width="35%" class="t_right">
+		<#if js.csrq?exists>${js.csrq?date?string('yyyy-MM-dd')}</#if>
+		</td>
+	</tr>
+	<tr>
+		<td width="15%" class="t_title t_r">户籍： </td>
+		<td width="35%" class="t_right" colspan="3">
+		${dqlink!}
+		</td>
+	</tr>
+	<tr>
+		<td width="15%" class="t_title t_r">身份证号： </td>
+		<td width="35%" class="t_right">${js.sfzh!}</td>
+		<td width="15%" class="t_title t_r">证件类型： </td>
+		<td width="35%" class="t_right">${zjlxString!}</td>
+	</tr>
+	<tr>
+		<td width="15%" class="t_title t_r">政治面貌： </td>
+		<td width="35%" class="t_right">${zzmmString!}</td>
+		<td width="15%" class="t_title t_r">加入政治面貌日期： </td>
+		<td width="35%" class="t_right"><#if js.jrzzmmrq?exists>${js.jrzzmmrq?date?string('yyyy-MM-dd')}</#if></td>
+	</tr>
+	<tr>
+		<td width="15%" class="t_title t_r">教职工类别： </td>
+		<td width="35%" class="t_right">${jzglbString!}</td>
+		<td width="15%" class="t_title t_r">职称： </td>
+		<td width="35%" class="t_right">${zcString!}</td>
+	</tr>
+	<tr>
+		<td width="15%" class="t_title t_r">学位： </td>
+		<td width="35%" class="t_right">${xwString!}</td>
+		<td width="15%" class="t_title t_r">职务： </td>
+		<td width="35%" class="t_right">${zwString!}</td>
+	</tr>
+	<tr>
+		<td width="15%" class="t_title t_r">学历： </td>
+		<td width="35%" class="t_right">${xlString!}</td>
+		<td width="15%" class="t_title t_r">课程： </td>
+		<td width="35%" class="t_right">${kcString!}</td>
+	</tr>
+	<tr>
+		<td width="15%" class="t_title t_r">在编情况： </td>
+		<td width="35%" class="t_right">${zbqkString!}</td>
+		<td width="15%" class="t_title t_r">是否华桥： </td>
+		<td width="35%" class="t_right"><#if js.hq = 0>否</#if><#if js.hq = 1>是</#if></td>
+	</tr>
+	<tr>
+		<td width="15%" class="t_title t_r">教师特征： </td>
+		<td width="35%" class="t_right">${jstzString!}</td>
+		<td width="15%" class="t_title t_r">外籍国家： </td>
+		<td width="35%" class="t_right">${wjString!}</td>
+	</tr>
+	
+	
+	
+	
+			<#if xx.xxlb_m = '41' || xx.xxlb_m = '42' || xx.xxlb_m = '91' || xx.xxlb_m = '92'>			
+				<tr>
+			<td width="15%" class="t_title t_r">非教师职称： </td>
+			<td width="35%" class="t_right" >${fjszcString!}</td>
+			<td width="15%" class="t_title t_r">双师型： </td>
+			<td width="35%" class="t_right" >${ssxString!}</td>		
+		</tr>		
+		<tr>
+			<td width="15%" class="t_title t_r">研究生指导教师类别： </td>
+			<td width="35%" class="t_right" >${yjszdjslbString!}</td>
+			<td width="15%" class="t_title t_r">授课专业码（高校）6位数字： </td>
+			<td width="35%" class="t_right" >${js.zy!}</td>		
+		</tr>
+		<#else>
+			<#if xx.xxlb_m = '36' || xx.xxlb_m = '93'>
+				
+				<tr>
+			<td width="15%" class="t_title t_r">非教师职称： </td>
+			<td width="35%" class="t_right" >${fjszcString!}</td>
+			<td width="15%" class="t_title t_r">双师型： </td>
+			<td width="35%" class="t_right" >${ssxString!}</td>		
+		</tr>		
+		<tr>
+			<td width="15%" class="t_title t_r">研究生指导教师类别： </td>
+			<td width="35%" class="t_right" >${yjszdjslbString!}</td>
+			<td width="15%" class="t_title t_r">授课专业码（中职）6位数字： </td>
+			<td width="35%" class="t_right" >${js.zy!}</td>		
+		</tr>
+			<#else>
+				
+			<tr>
+			<td width="15%" class="t_title t_r">专任教师类别： </td>
+			<td width="35%" class="t_right" >
+			${zrjslbString!}
+			</td>
+			<td width="15%" class="t_title t_r"> </td>
+			<td width="35%" class="t_right"></td>		
+		</tr>
+			</#if>
+		</#if>	
+
+<!-- ------------------------------------------------------------------------------------- -->			
+		<#if xx.xxlb_m = '41' || xx.xxlb_m = '42' || xx.xxlb_m = '36' || xx.xxlb_m = '93' || xx.xxlb_m = '91' || xx.xxlb_m = '92'>
+		<#else>
+		<tr>
+			<td width="15%" class="t_title t_r">学前教育专业毕业： </td>
+			<td width="35%" class="t_right" >
+				<#if js.yrsfby?exists><#if js.yrsfby = '0'>否</#if><#if js.yrsfby = '1'>是</#if></#if>
+			</td>
+			<td width="15%" class="t_title t_r">受过特教专业培训： </td>
+			<td width="35%" class="t_right" >
+				<#if js.sgtjzypx?exists><#if js.sgtjzypx = '0'>否</#if><#if js.sgtjzypx = '1'>是</#if></#if>
+			</td>		
+		</tr>	
+		<tr>
+			<td width="15%" class="t_title t_r">是否毕业生： </td>
+			<td width="35%" class="t_right" >
+				<#if js.sfbys?exists><#if js.sfbys = '0'>否</#if><#if js.sfbys = '1'>是</#if></#if>
+			</td>
+			<td width="15%" class="t_title t_r">是否师范生： </td>
+			<td width="35%" class="t_right" >
+				<#if js.sfsfs?exists><#if js.sfsfs = '0'>否</#if><#if js.sfsfs = '1'>是</#if></#if>
+			</td>		
+		</tr>
+		</#if>
+<!-- ------------------------------------------------------------------------------------- -->	
+		<tr>
+			<td width="15%" class="t_title t_r">接受培训情况： </td>
+			<td width="35%" class="t_right" >
+					${jspxqk_mSelect!}
+			</td>
+			<td width="15%" class="t_title t_r">接受培训时间： </td>
+			<td width="35%" class="t_right" >
+					${jspxsj_mSelect!}
+			</td>
+		</tr>	
+		<!-- tr>
+			<td width="15%" class="t_title t_r">少数民族双语教学班： </td>
+			<td width="35%" class="t_right" >
+				<#if js.sxmzsyjxb?exists><#if js.sxmzsyjxb = '0'>否</#if><#if js.sxmzsyjxb = '1'>是</#if></#if>
+			</td>
+			<td width="15%" class="t_title t_r">模式： </td>
+			<td width="35%" class="t_right" >
+					${ms_mSelect!}
+			</td>		
+		</tr-->	
+
+	<tr>
+		<td width="15%" class="t_title t_r">简要备注： </td>
+		<td width="35%" class="t_right" colspan="3">${js.jybz!}</td>
+	</tr>
+	<tr>
+		<th colspan="4" class="t_title t_c">
+		<input type="button" class="sort_sub" onclick="pag.back('_index','_update');" value="返回" /></th>
+	</tr>
+</table>

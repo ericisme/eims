@@ -1,0 +1,36 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>测试</title>
+<script language="javascript" src="./prototype.js"></script>
+<script language="javascript" src="./rssReader.js"></script>
+<script language="javascript" src="D:/JavaPro/components/web/html/syspurview/js/base.js"></script>
+<script type="text/javascript">
+function edit(_id)
+{
+	alert(_id);
+	var json = '{"items":[{"title":"你好啊","link":"http://www.sohu.com"}]}';
+	var obj = eval('(' + json + ')');
+	alert(obj.items.length);
+	alert("你好哦安定\"gsd\"".gsub(/"/,"'"));
+}
+
+function rss()
+{
+	var rss = new RssReader();
+	rss.getRss($('rss').value, function(xml) {
+		var json = rss.parseRss(xml);
+		alert(json);
+	});
+	rss.getAndParse($('rss').value, function(json) {
+		alert(json.items.length);
+	});
+}
+</script>
+</head>
+
+<body>
+<span id='tttggg' onClick='edit(this.id);'>你好啊</span></br>
+<input name='rss' id='rss' type='text' size='80' /> <input type="button" value="解析RSS" onclick="rss()" />
+</body>
+</html>

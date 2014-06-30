@@ -1,0 +1,49 @@
+<html>
+<body>
+<#-- 模块添加页面 -->
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+		<td class="line">您现在的位置： 图书分类管理 -> 添加分类</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<form name="categoryUpdateForm" id="categoryUpdateForm" method="POST" action="" onsubmit="return categoryUpdateCheck(1);">
+<#include "../../common_loading.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="update_tbl">
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 所属分类：</td>
+		<td align="left" valign="top" class="tdRight">
+			<select name=parent_id id="parent_id" >
+				${parentSelectHtml}
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px">分类名称：</td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="name" id="name" type="text" value="${category.name!}" />
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px">分类编码：</td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="code" id="code" type="text" value="${category.code!}" />
+		</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td height="5">&nbsp;</td>
+	</tr>
+	<tr>
+		<td height="5" align="center">
+			<input name="btn01" id="submit" type="submit" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="提 交" />&nbsp;&nbsp;&nbsp;&nbsp;
+			<input name="btn01" type="button" class="btn01" onclick="pag.back('category_index','category_update');" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="返 回" />
+		</td>
+	</tr>
+</table>
+</form>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans default-autowire="byName" default-lazy-init="true">
+	<!-- 固定资产 -->	
+	<bean id="gdzcController" parent="mvc_parentController" class="cn.qtone.eims.fymx.gdzc.controller.GdzcController">
+	    <property name="listPage"  value="/eims/fymx/gdzc/list"></property>
+		<property name="editPage"  value="/eims/fymx/gdzc/edit"></property>
+		<property name="showPage"  value="/eims/fymx/gdzc/show"></property>
+		<property name="indexPage" value="/eims/fymx/gdzc/index"></property>
+		<property name="service"     ref="gdzcService"></property>
+	</bean>
+	<bean id="gdzcService" class="cn.qtone.eims.fymx.gdzc.service.GdzcService" />
+</beans>
+

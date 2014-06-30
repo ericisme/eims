@@ -1,0 +1,195 @@
+<!-- auto generated -->
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+		<td class="line">您现在的位置： 客户明细>> 应付帐款  -> <#if fkzf.id??>编辑<#else>添加</#if> 应付帐款</td>
+	</tr>
+</table>
+<form name="theForm" id="theForm" method="POST" action="" onsubmit="return checkForm();">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td>
+			<input name="id" id="id" type="hidden" value="${fkzf.id!}" />	
+			<input name="_id" id="_id" type="hidden" value="${fkzf.id!}" />
+		</td>
+	</tr>
+</table>
+<#include "../../../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="update_tbl">
+		
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 报关单号： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="bgdh" id="bgdh"  value="${fkzf.bgdh!}" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0';getGhdhTips();getKhts();" />
+			<div id="ghdhTips"> </div>
+		</td>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 合作单位： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="gsmc" id="gsmc"  value="${fkzf.gsmc!}" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+		</td>
+	</tr>		
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 客户名称： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="khmc" id="khmc"  value="${fkzf.khmc!}" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'" />
+		</td>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 报关日期： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="_bgrq" id="_bgrq"  value="<#if fkzf.bgrq??>${fkzf.bgrq?if_exists?string('yyyy-MM-dd')}</#if>" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'" onclick="setday(this)" readonly />
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 报关金额： </td>
+		<td align="left" valign="top" class="tdRight">
+			USD<input name="bgje" id="bgje"  value="<#if fkzf.bgje??>${fkzf.bgje?string('0.##')}</#if>" type="text" maxlength="50" size="26" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'" />
+		</td>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 单号： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="dh" id="dh"  value="${fkzf.dh!}" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+		</td>	
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 报关费： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="bgf" id="bgf"  value="<#if fkzf.bgf??>${fkzf.bgf?string('0.##')}</#if>" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0';carWfje();"/>
+		</td>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 港建费： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="gjf" id="gjf"  value="<#if fkzf.gjf??>${fkzf.gjf?string('0.##')}</#if>" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0';carWfje();"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 商检费： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="sjf" id="sjf"  value="<#if fkzf.sjf??>${fkzf.sjf?string('0.##')}</#if>" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0';carWfje();"/>
+		</td>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 国检费： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="gj" id="gj"  value="<#if fkzf.gj??>${fkzf.gj?string('0.##')}</#if>" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0';carWfje();"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 续页费： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="xyf" id="xyf"  value="<#if fkzf.xyf??>${fkzf.xyf?string('0.##')}</#if>" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0';carWfje();"/>
+		</td>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 包柜费： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="lgf" id="lgf"  value="<#if fkzf.lgf??>${fkzf.lgf?string('0.##')}</#if>" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0';carWfje();"/>
+		</td>		
+	</tr>
+	<tr>
+		<!-- 
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 拖车费： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="tcf" id="tcf"  value="<#if fkzf.tcf??>${fkzf.tcf?string("0.##")}</#if>" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+		</td>
+		 -->
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 扫描费： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="smf" id="smf"  value="<#if fkzf.smf??>${fkzf.smf?string('0.##')}</#if>" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0';carWfje();"/>
+		</td>	
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 查柜费： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="cgf" id="cgf"  value="<#if fkzf.cgf??>${fkzf.cgf?string('0.##')}</#if>" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0';carWfje();"/>
+		</td>	
+	</tr>
+	<tr>		
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 熏蒸费： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="xzf" id="xzf"  value="<#if fkzf.xzf??>${fkzf.xzf?string('0.##')}</#if>" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0';carWfje();"/>
+		</td>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 加签： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="jq" id="jq"  value="<#if fkzf.jq??>${fkzf.jq?string('0.##')}</#if>" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0';carWfje();"/>
+		</td>		
+	</tr>
+	<tr>		
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 信用证费： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="xyzf" id="xyzf"  value="<#if fkzf.xyzf??>${fkzf.xyzf?string('0.##')}</#if>" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0';carWfje();"/>
+		</td>	
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 产地证费： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="cdzf" id="cdzf"  value="<#if fkzf.cdzf??>${fkzf.cdzf?string('0.##')}</#if>" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0';carWfje();"/>
+		</td>		
+	</tr>
+	<tr>		
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 空白单证费： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="kbdzf" id="kbdzf"  value="<#if fkzf.kbdzf??>${fkzf.kbdzf?string('0.##')}</#if>" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0';carWfje();"/>
+		</td>	
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 快递费： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="kdf" id="kdf"  value="<#if fkzf.kdf??>${fkzf.kdf?string('0.##')}</#if>" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0';carWfje();"/>
+		</td>		
+	</tr>
+	<tr>		
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 驳船费： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="bcf" id="bcf"  value="<#if fkzf.bcf??>${fkzf.bcf?string('0.##')}</#if>" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0';carWfje();"/>
+		</td>	
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 封条费： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="ftf" id="ftf"  value="<#if fkzf.ftf??>${fkzf.ftf?string('0.##')}</#if>" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0';carWfje();"/>
+		</td>		
+	</tr>
+	<tr>		
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 仓单费： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="cdf" id="cdf"  value="<#if fkzf.cdf??>${fkzf.cdf?string('0.##')}</#if>" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0';carWfje();"/>
+		</td>	
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 过磅费： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="gpf" id="gpf"  value="<#if fkzf.gpf??>${fkzf.gpf?string('0.##')}</#if>" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0';carWfje();"/>
+		</td>		
+	</tr>
+	<tr>		
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 换证凭条费： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="hzptf" id="hzptf"  value="<#if fkzf.hzptf??>${fkzf.hzptf?string('0.##')}</#if>" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0';carWfje();"/>
+		</td>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 其他： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="qt" id="qt"  value="<#if fkzf.qt??>${fkzf.qt?string('0.##')}</#if>" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0';carWfje();"/>
+		</td>			
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 支付金额： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="zfje" id="zfje"  value="<#if fkzf.zfje??>${fkzf.zfje?string('0.##')}</#if>" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0';carWfje();"/>
+		</td>
+		<td align="right" class="tdLeft" width="120px">支付日期： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="zfrq" id="zfrq"  value="<#if fkzf.zfrq??>${fkzf.zfrq!}</#if>" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'" onclick="setday(this)" readonly/>
+		</td>	
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 合计： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="hj" id="hj"  value="<#if fkzf.hj??>${fkzf.hj?string('0.##')}</#if>" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'" readonly/>
+		</td>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 未付金额： </td>
+		<td align="left" valign="top" class="tdRight" colspan="3">
+			<input name="wfje" id="wfje"  value="<#if fkzf.wfje??>${fkzf.wfje?string('0.##')}</#if>" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'" readonly/>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px">备注： </td>
+		<td align="left" valign="top" class="tdRight" colspan="3">
+			<textarea rows="5" cols="90" name="bz" id="bz">${fkzf.bz!}</textarea>
+		</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td height="5">&nbsp;</td>
+	</tr>
+	<tr>
+		<td height="5" align="center">
+			<input name="btn01" id="sys_update_btn" type="submit" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="提 交" />&nbsp;&nbsp;&nbsp;&nbsp;
+			<input name="btn01" type="button" class="btn01" onclick="pag.back('_index','_edit');" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="返 回" />
+		</td>
+	</tr>
+</table>
+
+</form>

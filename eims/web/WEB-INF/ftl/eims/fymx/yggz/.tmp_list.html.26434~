@@ -1,0 +1,63 @@
+<!-- auto generated -->
+<html>
+<body id="main_body">
+<#assign bookSize=page.result?size />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_table" style="word-break:break-all">
+	<tr class="list_title">
+		<td width="2%" align="center">
+		<input type="checkbox" name="ckbox" value="checkbox" onclick="base.checkAll('id',this.checked)" />
+		</td>
+    	<!-- <td width="4%" align="center">员工编号</td> -->
+    	<td width="7%" align="center">员工姓名</td>
+    	<td width="3%" align="center">性别</td>
+    	<td width="5%" align="center">工资日期</td>
+    	<td width="4%" align="center">基本工资</td>
+    	<td width="4%" align="center">提成</td>
+    	<td width="4%" align="center">应付工资</td>
+    	<td width="4%" align="center">社保费</td>
+    	<td width="4%" align="center">扣回工资</td>
+    	<td width="4%" align="center">实发工资</td>
+	</tr>
+	<#if bookSize = 0>
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+		<td align="center" colspan="11"><font color="red">没有符合条件的记录！</font></td>
+	</tr>
+	<#else>
+
+
+	<#list page.result as entity >
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+	  	<td align="center"><input type="checkbox" name="id" value="${entity.id}" /></td>	  	
+	  	<!--<td align="center">${entity.ygbh!}</td>-->
+	  	<td align="center">${entity.ygxm!}</td>
+	  	<td align="center">${entity.xb!}</td>
+	  	<td align="center">${entity.gzrq!}</td>
+	  	<td align="center">${entity.jbgz?string("0.##")}</td>
+	  	<td align="center">${entity.tc?string("0.##")}</td>
+	  	<td align="center">${entity.yfgz?string("0.##")}</td>
+	  	<td align="center">${entity.sbf?string("0.##")}</td>
+	  	<td align="center">${entity.khgz?string("0.##")}</td>
+	  	<td align="center">${entity.sfgz?string("0.##")}</td>
+	</tr>
+	</#list>
+	<#if ifLastPage == true>
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+	  	<td align="center" colspan="4"><font color="red"><strong>合计</strong></font></td>	  
+	  	<td align="center"><strong>${sum_jbgz?string("0.##")}</strong></td>
+	  	<td align="center"><strong>${sum_tc?string("0.##")}</strong></td>
+	  	<td align="center"><strong>${sum_yfgz?string("0.##")}</strong></td>
+	  	<td align="center"><strong>${sum_sbf?string("0.##")}</strong></td>
+	  	<td align="center"><strong>${sum_khgz?string("0.##")}</strong></td>
+	  	<td align="center"><strong>${sum_sfgz?string("0.##")}</strong></td>
+	</tr>	
+	</#if>
+	</#if>
+</table>
+<table width="100%" border="0" cellpadding="5" cellspacing="1">
+	<tr>
+		<td width="60%">&nbsp;</td>
+		<td align="right">${page.paginate}</td>
+	</tr>
+</table>
+</body>
+</html>

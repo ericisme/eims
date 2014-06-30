@@ -1,0 +1,43 @@
+@charset "utf-8";
+
+
+/*-------------交易条件区------------------*/
+.search{ font-size:14px; line-height:26px;}
+.search .title{ height:26px; border-bottom:#666 1px solid; padding-top:4px; padding-left:10px;}
+.search .title a{ color:#06F; font-size:12px;}
+.search li{ height:26px; padding:10px; float:left;}
+.search li input{ line-height:14px; padding:2px;}
+.search .btn{ padding:20px 10px;}
+.search .btn input{border:none; background:url(/images/proscenium/btn_green.gif) no-repeat center; width:116px; height:29px; font-size:14px; font-weight:bold; color:#FFF; cursor:pointer;}
+
+/*----------------交易状态区-----------------------*/
+.state{ padding-bottom:10px;}
+.state .title{ height:26px; padding-top:4px; padding-left:10px;}
+.state .title a{ color:#06F; font-size:12px;}
+.state li{ height:26px; padding:15px; font-size:24px; font-weight:bold;}
+.state .btn{ padding:20px 20px 10px 20px;}
+.state .btn input{border:none; background:url(/images/proscenium/btn_green.gif) no-repeat center; width:116px; height:29px; font-size:14px; font-weight:bold; color:#FFF; cursor:pointer;}
+
+
+/*-----------------列表标题----------------------*/
+.tab_title{ background:url(/images/proscenium/item_25.gif) repeat-x top #FFF; height:29px; border:#c0d9e0 1px solid; border-bottom:none;border-top:none;}
+.tab_title td{ padding:5px;}
+
+/*---------------记录列表样式--------------------*/
+#recrod_type { height:21px; padding-top:6px;background-color:#00c4fa; border:#0071c0 1px solid; border-bottom:none;}
+#recrod_type ul{ float:right; height:21px;}
+#recrod_type li{ float:left;margin-right:5px; background:url(/images/proscenium/type_bg2.gif) no-repeat bottom; width:90px; text-align:center; height:16px; padding-top:5px;}
+#recrod_type li a{ line-height:16px; font-size:12px; color:#333;}
+#recrod_type ul .on{ background:url(/images/proscenium/type_bg1.gif) no-repeat bottom; width:92px; height:18px; padding-top:3px;}
+#recrod_type ul .on a{ line-height:18px; font-weight:bold; color:#333;}
+
+
+/*------------------交易详细内容--------------------*/
+.recrod_show_item{ background:url(/images/proscenium/item2_bg_04.gif) repeat-x bottom; height:29px;}
+.recrod_show_item li{ cursor:pointer; margin-right:5px; width:133px; height:29px; line-height:29px; color:#36C; padding:0px; font-size:14px; background:url(/images/proscenium/item2_bg_02.gif) no-repeat; text-align:center; float:left; clear:none;}
+.recrod_show_item .on{ cursor:auto; color:#000; font-weight:bold; background:url(/images/proscenium/item2_bg_03.gif) no-repeat;}
+
+.recrod_show_main{ padding:20px; border:#9db0bc 1px solid; border-top:none;}
+.recrod_show_main li{ line-height:26px; padding:15px 15px 0px 15px; font-size:14px; clear:both;}
+.recrod_show_main ul li span{ width:120px; text-align:right; float:left; line-height:26px;}
+.recrod_show_list{ border-bottom:#c0d9e0 1px solid; border-top:#c0d9e0 1px solid;}

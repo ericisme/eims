@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>图书管理系统</title>
+<link href="/html/syspurview/skins/default/body.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="/html/syspurview/js/base.js?load(page_exe.js,/html/library/main.js)"></script>
+<script language="javascript" src="/js/common/prototype.js"></script>
+<script language="javascript" src="/js/common/log/log4javascript.js"></script>
+<style type="text/css">
+		<!--
+			a,a:hover {line-height: 25px;}
+
+			.cssWeekList{}	
+			.cssRollDiv{height:150px;width:100%;overflow:hidden;}
+			.cssRollTd{text-align:center;width:50%;border:0px solid #000;}
+			.cssRollTable{width:100%;}
+			.cssRollTable td.cssRollTableTitle{width:60px;border-bottom: 0px dotted #000000;}
+			.cssRollTable td.cssRollTableTitleRight{text-align:left;border-bottom: 0px dotted #000000;}
+			.cssRollTable td.cssRollTableTd{text-align:left;padding-left:10px;}
+			.cssA{line-height:15px;}
+			.cssA:hover{line-height:15px;}
+
+			.cssTDTitle{veritical-align:text-bottom;padding-top:3px;}
+			.cssTDContent{font-size:12px;font-weight:bold;text-align:left;}
+			.cssTDImg{text-align:left;width:20px;}
+			.cssTDMore{text-align:right;}
+		-->
+		</style>
+		
+<script type="text/javascript">
+	BaseClass.addOnLoad(bookTotalQuery);
+	BaseClass.addOnLoad(unReturnQuery);
+	BaseClass.addOnLoad(bookSummaryQuery);
+	BaseClass.addOnLoad(classSummaryQuery);
+	
+</script>
+</head>
+<body>
+<!-- 信息加载提示区 -->
+<div style="top:10px;right:10px;z-index:100;position:absolute;padding:2px 9px 2px 6px;display:none" id="common_loading">
+	<div style='font-size:12px;background-color:#ffffe1;border:2px solid #ccc;padding:2px;padding-left:3px;
+		margin:2px; background-position:7px 10px;background-repeat:no-repeat;overflow:auto;'>
+		<img src="/images/loading_16x16.gif" align="absmiddle" />
+		<span id="loading_tips">数据加载中，请稍候...</span>
+	</div>
+</div>
+<table width="100%" border="0" cellspacing="0" cellpadding="4">
+	
+  <tr>
+    <td  width="50%" align="center" valign="top">
+  
+		<table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#595959"  style="margin-bottom:10px;">
+			<tr>
+				<td height="25" bgcolor="#DBEDFF" >
+					<table width="100%" border="0" cellspacing="0" cellpadding="0">
+						<tr>
+							<td class="cssTDImg"><img src="/images/dot_04.gif"/></td>
+							<td class="cssTDContent cssTDTitle">图书信息</td>
+							<td class="cssTDMore cssTDTitle"></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td style="background:#FFFFFF;">
+					<div id="desk_book" name="desk_book" class="cssDivFrame"></div>
+				</td>
+			</tr>
+		</table>  
+		<table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#595959" style="margin-bottom:10px;">
+			<tr>
+				<td height="25" bgcolor="#DBEDFF" style="padding:0 5px;">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0">
+						<tr>
+							<td class="cssTDImg"><img src="/images/dot_04.gif"/></td>
+							<td class="cssTDContent cssTDTitle">图书阅读量</td>
+							<td class="cssTDMore cssTDTitle"><a href="/library/summary.do?action=bookSummaryIndex">更多...</a></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td style="  background:#FFFFFF;">
+					<div id="desk_book_summary" name="desk_book_summary" class="cssDivFrame"></div>
+				</td>
+			</tr>
+		</table>  
+		
+    </td>
+    
+    <td width="50%" align="center" valign="top">
+  
+		<table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#595959" style="margin-bottom:10px;">
+			<tr>
+				<td height="25" bgcolor="#DBEDFF" style="padding:0 5px;">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0">
+						<tr>
+							<td class="cssTDImg"><img src="/images/dot_04.gif"/></td>
+							<td class="cssTDContent cssTDTitle">超期未归还</td>
+							<td class="cssTDMore cssTDTitle"><a href="/library/borrow.do?action=expiredIndex">更多...</a></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td style="  background:#FFFFFF;">
+					<div id="desk_unreturn" name="desk_unreturn" class="cssDivFrame"></div>
+				</td>
+			</tr>
+		</table>  
+		
+		<table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#595959" style="margin-bottom:10px;">
+			<tr>
+				<td height="25" bgcolor="#DBEDFF" style="padding:0 5px;">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0">
+						<tr>
+							<td class="cssTDImg"><img src="/images/dot_04.gif"/></td>
+							<td class="cssTDContent cssTDTitle">班级阅读量</td>
+							<td class="cssTDMore cssTDTitle"><a href="/library/summary.do?action=classSummaryIndex">更多...</a></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td style="  background:#FFFFFF;">
+					<div id="desk_class_summary" name="desk_class_summary" class="cssDivFrame"></div>
+				</td>
+			</tr>
+		</table>  
+    </td>
+  </tr>
+</table>
+</body>
+</html>

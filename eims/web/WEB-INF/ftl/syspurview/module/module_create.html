@@ -1,0 +1,94 @@
+<html>
+<body>
+<#-- 模块添加页面 -->
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+		<td class="line">您现在的位置： 模块管理 -> 添加模块</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<form name="moduleUpdateForm" id="moduleUpdateForm" method="POST" action="" onsubmit="return moduleUpdateCheck(1);">
+<#include "../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="update_tbl">
+	<tr>
+		<td align="right" class="tdLeft" width="120px">模块类型：</td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="menu" id="menu1" type="radio" value="true" onclick="moduleChangeToMenu(true)" checked/> 菜单模块
+			<input name="menu" id="menu2" type="radio" value="false" onclick="moduleChangeToMenu(false)"/> 功能模块
+		</td>
+	</tr>
+	<tr id="sys_tr" <#if systems?size = 1>style="display:none"</#if> >
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 所属子系统：</td>
+		<td align="left" valign="top" class="tdRight">
+			<select name="sysId" id="sysId" onchange="moduleGetMenuBySystem(this.value)">
+				<#list systems as sys>
+					<option value="${sys.systemId}" <#if pMod.sysId = sys.systemId>selected</#if> >${sys.sysName}</option>
+				</#list>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 所属菜单：</td>
+		<td align="left" valign="top" class="tdRight">
+			<select name="parentMenu" id="parentMenu" onchange="moduleSltParentMenu(this.value, ${systems?size})">
+					<option value="">---作为一级模块---</option>
+				<#list menus as menu>
+					<option value="${menu.MToken}" <#if menu.MToken = pMod.MToken>selected</#if> >${menu.MName}</option>
+				</#list>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 模块名称：</td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="MName" id="MName" type="text" maxlength="100" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 排序序号：</td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="MSequence" id="MSequence" type="text" value="1" maxlength="3" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px">模块状态：</td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="MStatus" id="mStatus1" type="radio" value="0" checked/> 正常 
+			<input name="MStatus" id="mStatus2" type="radio" value="-1"/> 不可用
+			<span id="stat_pub" style="display:none">
+			<input name="MStatus" id="mStatus3" type="radio" value="1"/> 公用（无须授权）
+			<input name="MStatus" id="mStatus4" type="radio" value="2"/> 隐藏
+			</span>
+		</td>
+	</tr>
+	<#-- 功能模块的URL地址添加区域 -->
+	<tr id="tr_mlink" style="display:none">
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 链接地址：</td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="MUrl" id="MUrl" type="text" maxlength="200" size="100" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+			&nbsp;&nbsp;<font color="red"><B>*</B></font>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px">备注信息：</td>
+		<td align="left" valign="top" class="tdRight">
+			<textarea name="MInfo" id="MInfo" rows="10" cols="80" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/></textarea>
+		</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td height="5">&nbsp;</td>
+	</tr>
+	<tr>
+		<td height="5" align="center">
+			<input name="btn01" id="module_update_btn" type="submit" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="提 交" />&nbsp;&nbsp;&nbsp;&nbsp;
+			<input name="btn01" type="button" class="btn01" onclick="pag.back('module_index','module_update');" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="返 回" />
+		</td>
+	</tr>
+</table>
+</form>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!-- auto generated -->
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+		<td class="line">您现在的位置：
+		 <#if cwfy.type='201'>
+		 	营业外支出
+		<#else>
+			<#if cwfy.type='101' || cwfy.type='102' || cwfy.type='103' || cwfy.type='104'>
+			财务费用
+			<#else>
+			管理费用明细
+			</#if>
+		</#if>
+		 >> 编辑 </td>
+	</tr>
+</table>
+<form name="editForm" id="editForm" method="POST" action="" onsubmit="return checkForm('');">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td>
+			<input name="id" id="id" type="hidden" value="${cwfy.id}" />	
+		</td>
+	</tr>
+</table>
+<#include "../../../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="update_tbl">
+		
+	<tr class="list_title">
+    	<td width="15%" align="center">费用类型</td>
+    	<td width="15%" align="center">费用日期</td>
+    	<td width="25%" align="center">单号</td>
+    	<td width="25%" align="center">摘要</td>
+    	<td width="15%" align="center">金额</td> 
+	</tr>
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+		  	<td align="center">
+		  	<select name="type" id="type">
+		  		<#if cwfy.type='201'>
+		  		<option value="201">营业外支出</option>
+		  		<#else>
+					<#if cwfy.type='101' || cwfy.type='102' || cwfy.type='103' || cwfy.type='104'>
+	  					<option value="101" <#if cwfy.type?exists><#if cwfy.type = '101'>selected="selected"</#if></#if>>
+	  						贷款利息
+	  					</option>
+	  					<option value="102" <#if cwfy.type?exists><#if cwfy.type = '102'>selected="selected"</#if></#if>>
+	  						存款利息
+	  					</option>
+	  					<option value="103" <#if cwfy.type?exists><#if cwfy.type = '103'>selected="selected"</#if></#if>>
+	  						银行手续费
+	  					</option>
+	  					<option value="104" <#if cwfy.type?exists><#if cwfy.type = '104'>selected="selected"</#if></#if>>
+	  						汇兑损益
+	  					</option>		  	
+					<#else>	
+						<option value="3001" <#if cwfy.type?exists><#if cwfy.type = '3001'>selected="selected"</#if></#if> >社保费</option>  		
+						<option value="3002" <#if cwfy.type?exists><#if cwfy.type = '3002'>selected="selected"</#if></#if> >水电费</option>
+						<option value="3003" <#if cwfy.type?exists><#if cwfy.type = '3003'>selected="selected"</#if></#if> >电话费</option>
+						<option value="3004" <#if cwfy.type?exists><#if cwfy.type = '3004'>selected="selected"</#if></#if> >办公费</option>
+						<option value="3005" <#if cwfy.type?exists><#if cwfy.type = '3005'>selected="selected"</#if></#if> >差旅费</option>
+						<option value="3006" <#if cwfy.type?exists><#if cwfy.type = '3006'>selected="selected"</#if></#if> >汽油费</option>
+						<option value="3007" <#if cwfy.type?exists><#if cwfy.type = '3007'>selected="selected"</#if></#if> >堤围费</option>
+						<option value="3008" <#if cwfy.type?exists><#if cwfy.type = '3008'>selected="selected"</#if></#if> >快递费</option>
+						<option value="3009" <#if cwfy.type?exists><#if cwfy.type = '3009'>selected="selected"</#if></#if> >印花税</option>
+						<option value="3010" <#if cwfy.type?exists><#if cwfy.type = '3010'>selected="selected"</#if></#if> >租金     </option>
+						<option value="3011" <#if cwfy.type?exists><#if cwfy.type = '3011'>selected="selected"</#if></#if> >租车费</option>
+						<option value="3012" <#if cwfy.type?exists><#if cwfy.type = '3012'>selected="selected"</#if></#if> >建帐费</option>
+						<option value="3013" <#if cwfy.type?exists><#if cwfy.type = '3013'>selected="selected"</#if></#if> >其他     </option>
+						<option value="3014" <#if cwfy.type?exists><#if cwfy.type = '3014'>selected="selected"</#if></#if> >折旧费</option>
+					</#if>
+		  		</#if>
+				
+				
+				
+		  	</select>	  		
+	  	</td>
+	  	<td align="center"><input type="text" name="fyrq" id="fyrq"  value="${cwfy.fyrq!}"              maxlength="10" size="6" onclick="setday(this)" readonly/></td>
+	  	<td align="center"><input type="text" name="dh"   id="dh"    value="${cwfy.dh!}"                maxlength="33" size="23"/></td>
+	  	<td align="center"><input type="text" name="zy"   id="zy"    value="${cwfy.zy!}"                maxlength="33" size="30"/></td>
+	  	<td align="center"><input type="text" name="je"   id="je"    value="${cwfy.je?string("0.##")}"  maxlength="10" size="7" style="text-align:right;"/></td>	
+	</tr>	
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td height="5">&nbsp;</td>
+	</tr>
+	<tr>
+		<td height="5" align="center">
+			<input name="btn01" id="sys_update_btn" type="submit" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="提 交" />&nbsp;&nbsp;&nbsp;&nbsp;
+			<input name="btn01" type="button" class="btn01" onclick="pag.back('_index','_update');" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="返 回" />
+		</td>
+	</tr>
+</table>
+
+</form>

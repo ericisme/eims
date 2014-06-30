@@ -1,0 +1,49 @@
+<#-- 控制面板中用户个人密码修改页面 -->
+
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+		<td class="line">您现在的位置： 控制面板 -> 密码修改</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<form name="userPwdUpdateForm" id="userPwdUpdateForm" method="POST" action="" onsubmit="return controlUpdateUserPwd();">
+<#include "../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="update_tbl">
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><B>*</B></font> 原始密码： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="oldPassword" id="oldPassword" type="password" maxlength="18" size="30" class="box0" onFocus="this.className='box1'" 
+				onBlur="this.className='box0'" value=""/> 
+			<font color="red">为保证用户信息安全，请输入当前帐号密码！</font>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><B>*</B></font> 帐号新密码： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="loginPassword" id="loginPassword" type="password" maxlength="18" size="30" class="box0" onFocus="this.className='box1'" 
+				onBlur="this.className='box0'" onKeyPress="Password.check(this.value, 'pwdStrong');"/>
+			<span id="pwdStrong"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><B>*</B></font> 新密码确认： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="reLoginPassword" id="reLoginPassword" type="password" maxlength="18" size="30" class="box0" onFocus="this.className='box1'" 
+				onBlur="this.className='box0'" value=""/>
+		</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td height="5">&nbsp;</td>
+	</tr>
+	<tr>
+		<td height="5" align="center">
+			<input name="btn01" type="submit" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="保 存" />&nbsp;&nbsp;&nbsp;&nbsp;
+			<input name="btn01" type="button" class="btn01" onclick="pag.back('control_index','control_update');" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="返 回" />
+		</td>
+	</tr>
+</table>
+</form>

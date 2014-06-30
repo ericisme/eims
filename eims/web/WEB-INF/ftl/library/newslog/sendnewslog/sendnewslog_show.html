@@ -1,0 +1,66 @@
+<!-- auto generated -->
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+		<td class="line">您现在的位置： 短信日志 -> 信息发送日志 -> 查看信息发送日志</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<form name="sendNewsLogUpdateForm" id="sendNewsLogUpdateForm" method="POST" action="" onsubmit="return sendNewsLogUpdateCheck(2);">
+<#include "../../../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="update_tbl">
+	<tr>
+		<td align="right" class="tdLeft" width="20%">主键： </td>
+		<td align="left" valign="top" class="tdRight">
+			${sendNewsLog.id!}
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="20%">信息ID： </td>
+		<td align="left" valign="top" class="tdRight">
+			${sendNewsLog.news_id!}
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="20%">接收的手机号码： </td>
+		<td align="left" valign="top" class="tdRight">
+			${sendNewsLog.mobile!}
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="20%">发送时间： </td>
+		<td align="left" valign="top" class="tdRight">
+			${sendNewsLog.send_time!}
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="20%">学生唯一标识： </td>
+		<td align="left" valign="top" class="tdRight">
+			${sendNewsLog.student_unique!}
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="20%">信息类型： </td>
+		<td align="left" valign="top" class="tdRight">
+			${sendNewsLog.news_type!}
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="20%">短信内容： </td>
+		<td align="left" valign="top" class="tdRight">
+			${sendNewsLog.newscontent!}
+		</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td height="5">&nbsp;</td>
+	</tr>
+	<tr>
+		<td height="5" align="center">
+			<input name="btn01" type="button" class="btn01" onclick="pag.back('sendNewsLog_index','sendNewsLog_update');" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="返 回" />
+		</td>
+	</tr>
+</table>
+</form>

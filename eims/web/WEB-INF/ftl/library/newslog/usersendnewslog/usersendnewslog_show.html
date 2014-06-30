@@ -1,0 +1,48 @@
+<!-- auto generated -->
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+		<td class="line">您现在的位置： 短信日志 -> 用户发送短信操作日志 -> 查看用户发送短信操作日志</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<form name="userSendNewsLogUpdateForm" id="userSendNewsLogUpdateForm" method="POST" action="" onsubmit="return userSendNewsLogUpdateCheck(2);">
+<#include "../../../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="update_tbl">
+	<tr>
+		<td align="right" class="tdLeft" width="20%">用户真实姓名： </td>
+		<td align="left" valign="top" class="tdRight">
+			${userSendNewsLog.user_name!}
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="20%">发送时间： </td>
+		<td align="left" valign="top" class="tdRight">
+			${userSendNewsLog.send_time!}
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="20%">信息类型： </td>
+		<td align="left" valign="top" class="tdRight">
+			${userSendNewsLog.news_type.param_name!}
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="20%">短信内容： </td>
+		<td align="left" valign="top" class="tdRight">
+			${userSendNewsLog.newscontent!}
+		</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td height="5">&nbsp;</td>
+	</tr>
+	<tr>
+		<td height="5" align="center">
+			<input name="btn01" type="button" class="btn01" onclick="pag.back('userSendNewsLog_index','userSendNewsLog_update');" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="返 回" />
+		</td>
+	</tr>
+</table>
+</form>

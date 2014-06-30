@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans default-autowire="byName" default-lazy-init="true">
+	
+	<bean id="sybController" parent="mvc_parentController" class="cn.qtone.eims.lb.controller.SybController">
+	    <property name="listPage"  value="/eims/lb/syb/list"></property>
+		<property name="editPage"  value="/eims/lb/syb/edit"></property>
+		<property name="showPage"  value="/eims/lb/syb/show"></property>
+		<property name="indexPage" value="/eims/lb/syb/index"></property>
+		<property name="service" ref="sybService"></property>
+	</bean>
+	<bean id="sybService" class="cn.qtone.eims.lb.service.SybService" />
+
+</beans>
+

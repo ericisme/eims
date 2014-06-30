@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <!--author:贺少辉-->
+	<!-- 所有spring配置文件的汇总 -->
+	<import resource="./base/dbpool.xml"/>
+	<import resource="./base/syspurview.xml"/>
+	<import resource="./mvc/mvc.xml"/>
+	<import resource="./base/hibernate_context.xml"/>
+	<import resource="./library/agency.xml"/>
+	<import resource="./library/school.xml"/>
+	<import resource="./library/xxptclass.xml"/>
+	<import resource="./library/city.xml"/>
+	<import resource="./library/student.xml"/>
+	<!-- 
+	<import resource="./library/parent.xml"/>
+	<import resource="./library/xxptparam.xml"/>
+	<import resource="./library/xxptnews.xml"/>
+	<import resource="./library/sendnewslog.xml"/>
+	<import resource="./library/usersendnewslog.xml"/>
+	<import resource="./library/parenttmp.xml"/>
+	<import resource="./crda/subscribe.xml"/>
+	<import resource="./crda/classstudent.xml"/>
+	<import resource="./crda/chargeback.xml"/>
+	 -->
+	<import resource="./library/techer.xml"/>
+	<import resource="./library/category.xml"/>
+	<import resource="./library/book.xml"/>
+		<import resource="./library/bookJsys.xml"/>
+		<import resource="./library/bookQkzz.xml"/>
+	<import resource="./library/bookall.xml"/>
+		<import resource="./library/bookFq.xml"/>
+	<import resource="./library/common.xml"/>
+	<import resource="./library/borrow.xml"/>
+	<import resource="./library/main.xml"/>
+	<import resource="./library/summary.xml"/>
+	
+	<!-- eims企业信息管理系统  -->
+	<!-- eims企业信息管理系统  -->
+	
+		<!-- 费用明细 -->
+			<!-- 员工工资 -->	
+				<import resource="./eims/fymx/yggz.xml"/>	
+			<!-- 管理费用明细 -->
+				<import resource="./eims/fymx/glfymx.xml"/>
+			<!-- 固定资产-->
+				<import resource="./eims/fymx/gdzc.xml"/>	
+			<!-- 所得税 -->
+				<import resource="./eims/fymx/sds.xml"/>
+			<!-- 财务费用明细或营业外支出 -->
+				<import resource="./eims/fymx/cwfy.xml"/>	
+	
+		<!-- 收借款管理 -->
+			<!-- 公司借出 -->
+				<import resource="./eims/sjhgl/gsjc.xml"/>
+			<!-- 公司借入 -->
+				<import resource="./eims/sjhgl/gsjr.xml"/>	
+	
+		<!-- 报表管理 -->
+			<!-- 费用明细表 -->	
+				<import resource="./eims/bbgl/fymxb.xml"/>		
+				<import resource="./eims/bbgl/khmxb.xml"/>	
+	
+
+	<import resource="./eims/khmx/fkzf.xml" />
+	<import resource="./eims/khmx/gjts.xml" />
+	<import resource="./eims/khmx/khqk.xml" />
+	<import resource="./eims/khmx/khts.xml" />
+	<import resource="./eims/khmx/yywsr.xml"/>
+	<import resource="./eims/khmx/tczc.xml"/>
+	
+	<!-- 损益表 -->
+	<import resource="./eims/lb/syb.xml"/>
+	
+	<!-- eims企业信息管理系统  -->
+	<!-- eims企业信息管理系统  -->	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 系统的资源属性配置文件 -->
+	<bean id="base_beanConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>/WEB-INF/classes/spring/resource/db.properties</value>
+				<value>/WEB-INF/classes/spring/resource/mvc.properties</value>
+				<value>/WEB-INF/classes/spring/resource/syspurview.properties</value>
+				<value>/WEB-INF/classes/resources/syspurview/log.properties</value>
+			</list>
+		</property>
+	</bean>
+</beans>

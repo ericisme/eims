@@ -1,0 +1,330 @@
+<!-- auto generated -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>员工工资</title>
+<link href="/html/syspurview/skins/default/body.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="/html/syspurview/js/base.js?load(page_exe.js)"></script>
+<script language="javascript" src="/js/common/prototype.js"></script>
+<script language="javascript" src="/js/common/log/log4javascript.js"></script>
+<script language="javascript" src="/js/calendar.js"></script>
+</head>
+<body class="body_bg">
+
+<script type="text/javascript">
+var pag = null;
+var baseUrl = '/eims/fymx/yggz.do';
+
+//查询
+function query(){	
+	if (pag == null) pag = new PageExe();
+	var qv = 'a=a';
+	//if($F('_ygbh') != ''){
+	//	qv += '&ygbh__like__string=' + new BaseClass().encode($F('_ygbh'),true);
+	//}
+	if($F('_ygxm') != ''){
+		qv += '&ygxm__like__string=' + new BaseClass().encode($F('_ygxm'),true);
+	}
+	if($F('_xb') != ''){
+		qv += '&xb__eq__string=' + new BaseClass().encode($F('_xb'),true);
+	}
+	if($F('_gzksrq') != ''){
+		qv += '&gzrq__gte__string=' + $F('_gzksrq');
+	}
+	if($F('_gzjsrq') != ''){
+		qv += '&gzrq__lte__string=' + $F('_gzjsrq');
+	}
+	pag.query(
+		baseUrl + '?action=list',
+		'_list',
+		qv + '&orders=id__desc'
+	);
+}
+// 分页查询方法
+function yggzJump(/*string*/_url, /*int*/curPage)
+{
+	pag.query(
+		_url + curPage,
+		'_list'
+	);
+}
+
+// 删除
+function remove(id)
+{
+	var _id = base.getChecked('id', true);
+	if (!id && _id.length < 1) {
+		base.alert('请先选择要删除的记录！');
+		return;
+	}
+	base.log('要删除的员工工资记录ID为：' + (id || _id.join(',')));
+	base.confirm('您确信要删除选中的记录吗？', function() {
+		pag.del(
+			baseUrl + '?action=remove',
+			'',
+			'id=' + (id || _id.join('&id=')),
+			query
+		);	
+	});
+}
+
+//保存,i为外挂字符，为空时为 编辑
+function checkForm(i){	
+	var et = $('ygbh'+i);
+	//if (!et || et.value.strip() == '') {
+ 	//	base.alert('请输入员工编号！',function(){et.focus();});
+ 	//	return false;
+ 	//}	
+	et = $('ygxm'+i);
+	if (!et || et.value.strip() == '') {
+ 		base.alert('请输入员工姓名！',function(){et.focus();});
+ 		return false;
+ 	}
+	et = $('gzrq'+i);
+	if (!et || et.value.strip() == '') {
+ 		base.alert('请选择工资日期！',function(){et.focus();});
+ 		return false;
+ 	}	
+	et = $('jbgz'+i);	
+	if (!checkPrice(et)) {
+ 		base.alert('基本工资 金额格式不正确，只允许数据带2位小数！',function(){et.focus();});
+ 		return false;
+ 	}	
+	et = $('tc'+i);	
+	if (!checkPrice(et)) {
+ 		base.alert('提成 金额格式不正确，只允许数据带2位小数！',function(){et.focus();});
+ 		return false;
+ 	}
+		et = $('yfgz'+i);	
+	if (!checkPrice(et)) {
+ 		base.alert('应付工资 金额格式不正确，只允许数据带2位小数！',function(){et.focus();});
+ 		return false;
+ 	}
+		et = $('sbf'+i);	
+	if (!checkPrice(et)) {
+ 		base.alert('社保费 金额格式不正确，只允许数据带2位小数！',function(){et.focus();});
+ 		return false;
+ 	}
+		et = $('khgz'+i);	
+	if (!checkPrice(et)) {
+ 		base.alert('扣回工资 金额格式不正确，只允许数据带2位小数！',function(){et.focus();});
+ 		return false;
+ 	}
+		et = $('sfgz'+i);	
+	if (!checkPrice(et)) {
+ 		base.alert('实发工资 金额格式不正确，只允许数据带2位小数！',function(){et.focus();});
+ 		return false;
+ 	}
+      
+	//i不为空时为插入，为空时为编辑保存
+	if(!i==''){
+		//插入
+		$('addButtun').disabled="disabled";
+		$('addButtun').value="添加中。"
+		 new Ajax.Request(
+			baseUrl + '?action=save',
+			{
+				method : 'POST',
+				evalScripts : true,
+				parameters :	//'ygbh='+$F('ygbh'+i)+
+								'&ygxm='+$F('ygxm'+i)+
+								'&xb='+$F('xb'+i)+
+								'&gzrq='+$F('gzrq'+i)+
+								'&jbgz='+$F('jbgz'+i)+
+								'&tc='+$F('tc'+i)+
+								'&yfgz='+$F('yfgz'+i)+
+								'&sbf='+$F('sbf'+i)+
+								'&khgz='+$F('khgz'+i)+
+								'&sfgz='+$F('sfgz'+i),
+				onComplete : function(xmlHttp,error){
+					$('addButtun').value="添加完成"
+					query();
+					$('addButtun').disabled="";
+					$('addButtun').value="添加"
+				}
+			}
+		);
+	}else{
+		//编辑保存
+		pag.update(
+			baseUrl + '?action=save',
+			'editForm',
+			function() {
+				pag.back('_index','_update');
+				query();
+			}
+		);
+	}
+	
+	
+	return false;
+}
+// 编辑页面显示
+function edit(id)
+{
+	var _id = base.getChecked('id', true);
+	if (!id && _id.length != 1) {
+		base.alert('请先选择要编辑的记录，编辑只能一次选择一条记录！');
+		return;
+	}
+	base.log('要编辑的记录ID为：' + (id || _id[0]));
+	pag.showEdit(
+		baseUrl + '?action=edit',
+		'_update',
+		'_index',
+		{
+			id : id || _id[0]
+		},
+		function() {}
+	);
+}
+//价格check
+function checkPrice(price){  
+	return (/^(([1-9]\d*)|\d)(\.\d{1,2})?$/).test(price.value);
+}
+
+
+/**
+ * 为text input提供 distinct选项,这里用作  show姓名
+ */
+function setDistinctValue(o,spanId,domainClassName,propertyName){
+	document.getElementById(spanId).style.display='';	
+	var mouseX = event.clientX;
+	var mouseY = event.clientY;	
+	new Ajax.Request(
+		baseUrl + '?action=setDistinctValue', 
+		{
+			method : 'POST',
+			evalScripts : true,
+			parameters :	'spanId='+spanId+
+			            	'&inputId='+o.id+
+			           		'&inputValue='+o.value+
+			            	'&mouseX='+mouseX+
+			            	'&mouseY='+mouseY+
+			            	'&domainClassName='+domainClassName+
+			            	'&propertyName='+propertyName,
+			onComplete : function(xmlHttp,error){
+				var returnVal = xmlHttp.responseText;
+				document.getElementById(spanId).innerHTML=returnVal;
+			}
+		}
+	);
+}
+
+</script>
+<script type="text/javascript">
+	BaseClass.addOnLoad(query);
+</script>
+<#include "../../../common_loading.ftl" />
+<div id="_index">
+<div class="position_line">您的位置是：费用明细>> 员工工资</div>
+
+<#include "../../../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_query">
+	<tr height="12" style="display:${areaSel!}">
+		<!-- <td  align="right" height="12">
+			员工编号 ：
+		</td>
+		<td align="left" bgcolor="#FFFFFF">
+        	<input type="text" name="_ygbh" id="_ygbh" size="10" />  
+		</td>	 -->		
+		<td  align="right">
+			员工姓名：
+		</td>
+		<td align="left" bgcolor="#FFFFFF" >
+			<input type="text" name="_ygxm" id="_ygxm" size="10" ondblclick="setDistinctValue(this,'ygxmSelectorShow','cn.qtone.eims.fymx.yggz.domain.Yggz','ygxm')"/>
+		</td>
+		<td  align="right">
+			性&nbsp;&nbsp;&nbsp;&nbsp;别：
+		</td>
+		<td align="left" bgcolor="#FFFFFF" >
+			<select name="_xb" id="_xb"><option value="">请选择</option><option value="男">男</option><option value="女">女</option></select>
+		</td>
+		<td  align="right">
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		</td>
+		<td align="left" bgcolor="#FFFFFF" >
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		</td>		
+	</tr>	
+	<tr height="12" style="display:${areaSel!}">
+		<td  align="right" height="12">
+			工资 开始日期 ：
+		</td>
+		<td align="left" bgcolor="#FFFFFF">
+        	<input type="text" name="_gzksrq" id="_gzksrq" size="10" onclick="setday(this)" readonly/>  
+		</td>			
+		<td  align="right">
+			工资 结束日期 ：
+		</td>
+		<td align="left" bgcolor="#FFFFFF" >
+			<input type="text" name="_gzjsrq" id="_gzjsrq" size="10" onclick="setday(this)" readonly/>
+		</td>
+		<td  align="right">			
+		</td>
+		<td align="left" bgcolor="#FFFFFF" >			
+		</td>
+	</tr>
+		
+	<tr>		
+		<td width="100%" align="center" colspan="6" bgcolor="#FFFFFF">
+			<input name="sub"                  type="button" onclick="query()"  class="btn01" value="查 询" />&nbsp;
+			<!-- input name="sub" sys_opt="save"   type="button" onclick="insert()" class="btn01" value="添 加" />&nbsp;-->
+			<input name="sub" sys_opt="edit"   type="button" onclick="edit()"   class="btn01" value="修 改" />&nbsp;
+			<input name="sub" sys_opt="remove" type="button" onclick="remove()" class="btn01" value="删 除">&nbsp;
+		</td>
+	</tr>
+</table>
+
+
+
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_query">
+	<tr class="list_title">
+    	<!-- <td width="4%" align="center">员工编号</td> -->
+    	<td width="4%" align="center">员工姓名</td>
+    	<td width="3%" align="center">性别</td>
+    	<td width="4%" align="center">工资日期</td>
+    	<td width="4%" align="center">基本工资</td>
+    	<td width="4%" align="center">提成</td>
+    	<td width="4%" align="center">应付工资</td>
+    	<td width="4%" align="center">社保费</td>
+    	<td width="4%" align="center">扣回工资</td>
+    	<td width="4%" align="center">实发工资</td>    	
+    	<td width="4%" align="center">操作</td>
+	</tr>
+	<form name="theForm" id="theForm" method="POST" action="" onsubmit="return checkForm('_i');">
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+	  <!-- 	<td align="center"><input type="text" name="ygbh_i" id="ygbh_i"  maxlength="8" size="4"/></td>-->
+	  	<td align="center">
+	  		<input type="text" name="ygxm_i" id="ygxm_i"  maxlength="30" size="15" ondblclick="setDistinctValue(this,'ygxmSelectorShow','cn.qtone.eims.fymx.yggz.domain.Yggz','ygxm')"/>
+	  		<span id="ygxmSelectorShow" style="display:none;" >
+	  		</span>
+	  	</td>
+	  	<td align="center"><select name="xb_i" id="xb_i"><option value="男">男</option><option value="女">女</option></select></td>
+	  	<td align="center"><input type="text" name="gzrq_i" id="gzrq_i"  maxlength="10" size="6" onclick="setday(this)" readonly/></td>
+	  	<td align="center"><input type="text" name="jbgz_i" id="jbgz_i"  maxlength="8" size="4"/></td>
+	  	<td align="center"><input type="text" name="tc_i" id="tc_i"  maxlength="8" size="4"/></td>
+	  	<td align="center"><input type="text" name="yfgz_i" id="yfgz_i"  maxlength="8" size="4"/></td>
+	  	<td align="center"><input type="text" name="sbf_i" id="sbf_i"  maxlength="8" size="4"/></td>
+	  	<td align="center"><input type="text" name="khgz_i" id="khgz_i"  maxlength="8" size="4"/></td>
+	  	<td align="center"><input type="text" name="sfgz_i" id="sfgz_i"  maxlength="8" size="4"/></td>	  	
+	  	<td align="center"><input type="button" sys_opt="save" id="addButtun" value="添加" onclick="return checkForm('_i');"/></td>
+	</tr>	
+	</form>
+</table>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+
+<span id="_list"></span>
+</div>
+<div id="_update" >
+</div>
+<div id="_import" style="display:none">
+</div>
+
+<span id="_list"></span>
+
+</body>
+</html>

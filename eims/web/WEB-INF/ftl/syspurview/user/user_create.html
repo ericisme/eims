@@ -1,0 +1,163 @@
+<#-- 用户添加页面 -->
+<html>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+		<td class="line">您现在的位置： 用户管理 -> 新增用户</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<form name="userUpdateForm" id="userUpdateForm" method="POST" action="" onsubmit="return userUpdateCheck(1);">
+<#include "../../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="update_tbl">
+		<tr>
+		<td align="right" class="tdLeft" width="20%"><font color="red"><B>*</B></font> 所属用户组： </td>
+		<td align="left" valign="top" class="tdRight">
+			<select name="groupId" id="groupId">
+				<option value="-1">---请选择用户所属的用户组---</option>
+				<#list userGroups as group>
+					<option value="${group.groupId}">${group.groupName}</option>
+				</#list>
+			</select>
+		</td>
+	</tr>
+	<tr>
+	<td align="right" class="tdLeft" width="20%"><font color="red"><B>*</B></font> 用户类别： </td>
+		<td align="left" valign="top" class="tdRight">
+			<select name="userType" id="userType" >
+				<option value="-1">---请选择用户类别---</option>
+				${userTypeOpiton!}
+			</select>
+		</td>
+	</tr>
+	<tr>
+	<td align="right" class="tdLeft" width="20%"><font color="red"><B>*</B></font> 用户状态： </td>
+		<td align="left" valign="top" class="tdRight">
+			<select name="status" id="status" >
+				${userStatusOpiton!}
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="20%">镇区： </td>
+		<td align="left" valign="top" class="tdRight">
+			<select name="editCityId" onchange="changeZhptAgencyIndex(this.value,'editAgencyId','editSchoolId','editGradeId','editAgency','editSchool','editGrade')">
+			    ${citySelectHtml!}
+			</select>
+		</td>
+	</tr>
+	
+	<tr>
+		<td align="right" class="tdLeft" width="20%">机构： </td>
+		<td align="left" valign="top" class="tdRight">
+			<span id="editAgency">
+				<select name="editAgencyId" onchange="changeZhptSchoolIndex(this.value,'editSchoolId','editGradeId','editSchool','editGrade')">
+				    ${agencySelectHtml!}
+				</select>
+			</span>
+		</td>
+	</tr>
+	
+	<tr>
+		<td align="right" class="tdLeft" width="20%">学校： </td>
+		<td align="left" valign="top" class="tdRight">
+			<span id="editSchool">
+				<select name="editSchoolId" onchange="changeZhptGrade(this.value,'editGradeId','editGrade')">
+					<option value="-1">--请选择--</option>
+					${schoolHtmlSelect!}
+				</select>
+			</span>
+		</td>
+	</tr>
+	
+	<tr>
+		<td align="right" class="tdLeft" width="20%">年级： </td>
+		<td align="left" valign="top" class="tdRight">
+			<span id="editGrade">
+				<select name="editGradeId" onchange="changeClassName(this.value,'editClassNameId', 'editClassName')">
+					<option value="-1">--请选择--</option>
+					${editGradeHtmlSelect!}
+				</select>
+			</span>
+		</td>
+	</tr>
+	
+	 <tr>
+		<td align="right" class="tdLeft" width="20%">班级： </td>
+		<td align="left" valign="top" class="tdRight">
+			<span id="editClassName">
+		 		<select name="editClassNameId" >
+		 			<option value="-1">--请选择--</option>
+					${editClassNameHtmlSelect!}
+				</select>
+			</span>
+		</td>
+	</tr>
+	<tr>
+	<td align="right" class="tdLeft" width="15%">IC卡号： </td>
+		<td align="left" valign="top" class="tdRight" >
+			<input name="id_card" id="id_card" type="text" maxlength="50" size="25" class="box0"
+				onFocus="this.className='box1'"  onBlur="this.className='box0'"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="20%"><font color="red"><B>*</B></font> 真实姓名： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="realName" id="realName" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+		</td>
+	</tr>
+	
+	<tr>
+		<td align="right" class="tdLeft" width="20%"><font color="red"><B>*</B></font> 登陆名称： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="loginName" id="loginName" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" 
+				onBlur="javascript:userLoginNameCheck(this.value);this.className='box0';"/>
+			<input id="ckresult" type="hidden" value="0" />
+			<span id="cktips">用户名添加后将不允许被修改！</span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="20%"><font color="red"><B>*</B></font> 登陆密码： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="loginPassword" id="loginPassword" type="password" maxlength="18" size="30" class="box0" onFocus="this.className='box1'" 
+				onBlur="this.className='box0';" onKeyPress="Password.check(this.value, 'pwdStrong');"/>
+			<span id="pwdStrong"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="20%"><font color="red"><B>*</B></font> 密码确认： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="reLoginPasspword" id="reLoginPasspword" type="password" maxlength="18" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+		</td>
+	</tr>
+	<tr>
+	 
+		<td align="right" class="tdLeft" width="20%"> 手机号码： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="mobile" id="mobile" type="text" maxlength="11" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="20%">电子邮件： </td>
+		<td align="left" colspan="3" valign="top" class="tdRight">
+			<input name="email" id="email" type="text" maxlength="100" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+		</td>
+			
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td height="5">&nbsp;</td>
+	</tr>
+	<tr>
+		<td height="5" align="center">
+			<input name="btn01" id="sys_update_btn" type="submit" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="提 交" />&nbsp;&nbsp;&nbsp;&nbsp;
+			<input name="btn01" type="button" class="btn01" onclick="pag.back('user_index','user_update');" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="返 回" />
+		</td>
+	</tr>
+</table>
+</form>
+</body>
+</html>

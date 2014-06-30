@@ -1,0 +1,77 @@
+<HTML>
+<H3> 读卡测试程序</H3><p>
+
+<HR><center><P>
+<OBJECT
+	  classid="clsid:FE0E7B7F-834D-4278-B108-7EE988B99E71"	 
+	  width=120
+	  height=30
+	  align=center
+	  hspace=0
+	  vspace=0
+	  id="sensor"
+>
+</OBJECT>
+ <!-- codebase="http://ROGER/CardReaderXControl.ocx#version=1,0,0,0" -->
+ <br/>
+  <br/>
+<input type="button" value="连接" onclick="init()" > 
+<input type="button" value="读卡" onclick="readCardSN()" >
+<script type="text/javascript" language="javascript">
+var connected=false;
+
+function init(){
+    var obj=document.getElementById("sensor"); 
+    var ret=0;	
+    var sn='';	
+	try{	
+		//alert(obj);
+		ret = obj.InitDevice;
+		//obj.readCardSN();
+		
+		if(ret==0){
+			alert('设备连接失败,请检查设备是否正常连接,并重新安装组件后再试!');			
+		}else{
+			alert('设备连接成功');
+			//sn=obj.ReadCardSN;
+			//alert(sn);
+			connected=true;			
+		}	
+		return connected;	
+	}
+	catch(e){
+		alert(e.message);
+		return false;
+	}
+	return true;
+}
+
+function readCardSN(){
+    var obj=document.getElementById("sensor"); 
+    var sn='';
+	try{	
+		
+		if(connected){			
+			sn=obj.ReadCardSN;
+			if(sn!=''){
+				alert('卡号:'+sn);
+			}else{
+				alert('读卡出错!');
+			}
+			
+		}else{
+			alert('请先连接设备');			
+		}		
+	}
+	catch(e){
+		alert("出错:"+e.message);
+		return false;
+	}
+	return true;
+}	
+
+
+
+
+</script>
+</HTML>

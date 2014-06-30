@@ -1,0 +1,104 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+		<td class="line">您现在的位置： 教师管理 -> 查看教师管理</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<form name="techerUpdateForm" id="techerUpdateForm" method="POST" action="" onsubmit="return techerUpdateCheck(2);">
+<#include "../../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="update_tbl">
+	<tr style="display: none">
+		<td align="right" class="tdLeft" width="20%">主键： </td>
+		<td align="left" valign="top" class="tdRight" >
+			<input name="techer_id" id="techer_id" type="hidden" value="${techer.id!}"/>
+			${techer.id!}
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" >用户所属的用户组： </td>
+		<td align="left" valign="top" class="tdRight">
+			${userGroupName!}
+		</td>
+		<td align="right" class="tdLeft" >用户类别： </td>
+		<td align="left" valign="top" class="tdRight">
+			${userType!}
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="15%">IC卡号： </td>
+		<td align="left" valign="top" class="tdRight">
+			${techer.id_card!}
+		</td>
+		<td align="right" class="tdLeft" >继教号： </td>
+		<td align="left" valign="top" class="tdRight">
+			${techer.loginName!}
+		</td>
+	</tr>
+	
+	<tr>
+		<td align="right" class="tdLeft" >姓名： </td>
+		<td align="left" valign="top" class="tdRight">
+			${techer.realName!}
+		</td>
+		
+		<td align="right" class="tdLeft" >出生日期： </td>
+		<td align="left" valign="top" class="tdRight">
+			${techer.birthday!}
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" >电话： </td>
+		<td align="left" valign="top" class="tdRight">
+			${techer.phone!}
+		</td>
+		
+		<td align="right" class="tdLeft" >手机： </td>
+		<td align="left" valign="top" class="tdRight">
+			${techer.mobile!}
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" >E-mail：</td>
+		<td align="left" valign="top" class="tdRight" colspan="3">
+			${techer.email!}
+		</td>
+		
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" >性别： </td>
+		<td align="left" valign="top" class="tdRight" colspan="3">
+			${techer.containGenderValue()!}
+		</td>
+		
+		
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" >机构： </td>
+		<td align="left" valign="top" class="tdRight">
+			<#if techer.school??><#if techer.school.agency??>${techer.school.agency.agency_name!}</#if></#if>
+		</td>
+		<td align="right" class="tdLeft" >学校： </td>
+		<td align="left" valign="top" class="tdRight">
+			<#if techer.school??>${techer.school.school_name!}</#if>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" >班级名称： </td>
+		<td align="left" valign="top" class="tdRight" colspan="3">
+			<#if techer.zfptClass??>${techer.zfptClass.class_name!}</#if>
+		</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td height="5">&nbsp;</td>
+	</tr>
+	<tr>
+		<td height="5" align="center">
+			<input name="btn01" type="button" class="btn01" onclick="pag.back('techer_index','techer_update');" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="返 回" />
+		</td>
+	</tr>
+</table>
+</form>

@@ -1,0 +1,96 @@
+<!-- auto generated -->
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+		<td class="line">您现在的位置： 图书管理 -> 导入教师用书管信息</td>
+	</tr>
+</table>
+<form name="bookUpdateForm" id="bookUpdateForm" method="POST" action="/library/bookJsys.do?action=importBookSubmit" onsubmit="return importHandle();">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<#include "../../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="update_tbl">
+  	 <tr style="display: none">
+		<td align="right" class="tdLeft" >ID： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="book_id" id="book_id" type="text" maxlength="50" size="25" class="box0" value="-1"
+				onFocus="this.className='box1'" onBlur="this.className='box0'" />
+		</td>
+	</tr> 
+	<tr>
+		<td align="right" class="tdLeft" width="20%">模板下载： </td>
+		<td align="left" valign="top" class="tdRight">
+		<input  type="button" onclick="download()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="下 载" />
+		</td>
+	</tr>
+	
+	<tr>
+		<td align="right" class="tdLeft" width="20%">导入到所属镇区： </td>
+		<td align="left" valign="top" class="tdRight">
+		  	<select id="importCityId" name="importCityId" onchange="changeZhptAgencyIndex(this.value,'importAgencyId','importAgency','importSchoolId','importSchool')" ${disableTown!}>
+				${citySelectHtml!}
+			</select>  
+			<font color="red"><B>*</B></font>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="20%">导入到所属机构： </td>
+		<td align="left" valign="top" class="tdRight">
+		<span id="importAgency">
+		  	<select id="importAgencyId" name="importAgencyId" onchange="changeZhptSchoolIndex(this.value,'importSchoolId','importSchool')" ${disableAgency!}>
+				 ${agencySelectHtml!}
+			</select>  
+			<font color="red"><B>*</B></font>
+			</span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="20%">导入到所属学校： </td>
+		<td align="left" valign="top" class="tdRight">
+			<span id="importSchool">
+			  	<select id="importSchoolId" name="importSchoolId" onchange="changeZhptGrade(this.value,'','')" ${disableSchool!}>
+					 ${schoolHtmlSelect!}
+				</select>  
+				<font color="red"><B>*</B></font>
+			</span>
+		</td>
+	</tr>
+	<tr>
+	 <td align="right" class="tdLeft" width="20%">附件： 
+	 </td>
+	 <td align="left" valign="top" class="tdRight">
+		<span id="file_delete"></span>
+	</td>
+	</tr> 
+	<tr>
+	 <td align="right" class="tdLeft" width="20%">上传： 
+	    <input type=hidden id='F1' onclick="importend()">
+	    <input id="importName" name="importName" type="hidden"/>
+		<input id="importattach_path" name="importattach_path" type="hidden"/>
+	 </td>
+	 <td align="left" valign="top" class="tdRight">
+			<iframe frameborder="0" name="my_upload" id="my_upload" height="25" width="100%" src="/fileuploadframe/studentimport.htm"></iframe>
+	</td>
+	</tr> 
+ <tr>
+	 <td align="right" class="tdLeft" width="20%">注意： 
+	 </td>
+	 <td align="left" valign="top" class="tdRight">
+		<font color=red>请严格填写模板的图书分类号，系统将对应所属分类进分图书分类；<br/>
+		如果数据填写有误，提交后， 系统会弹出一个“导入失败图书数据表”（表示该表数据未导入成功，其余数据已经成功导入），请下载该表，根据最后一列的提示修改完继续上传
+		</font>
+	</td>
+	</tr> 
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td height="5">&nbsp;</td>
+	</tr>
+	<tr>
+		<td height="5" align="center">
+			<input name="btn01" id="sys_update_btn" type="submit" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="提 交" />&nbsp;&nbsp;&nbsp;&nbsp;
+			<input name="btn01" type="button" class="btn01" onclick="pag.back('book_index','book_update');" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="返 回" />
+		</td>
+	</tr>
+</table>
+</form>

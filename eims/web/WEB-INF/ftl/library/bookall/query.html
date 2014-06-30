@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>仿百度搜索的下拉框效果</title>
+<style type="text/css">
+#search_id{font-size:12px; color:#333333}
+#search_id div{ float:left}
+#search_body{ border:1px solid #999999; padding-top:0px; width:240px; }
+#search_body input{ height:18px; margin-top:0px;}
+#search_body #searchkey_id{ width:238px; border:0px; border-bottom:1px solid #999999;}
+#result_id{ padding-top:0px; width:100%;display:none;}
+#result_id table{ width:100%; }
+#result_id table tr td:hover{background-color:#FF9999; cursor:pointer }
+
+</style>
+</head>
+<script type="text/javascript" src="/js/jquery.elastic-1.6.4/dependencies/jquery-1.3.2.js"></script>
+<script type="text/javascript"">
+
+$(function(){
+   var close = true ;
+   $("#searchkey_id").keyup(function(){
+    var nkey = $.trim($(this).val()) ;
+    if("" == nkey || null == nkey){
+     $("#result_id").hide() ;
+    }
+    else {
+    //html 为ajax请求 返回的 字符串
+     var html = '<table><tr><td>1dfdfdfdf</td></tr><tr><td>12dfdfdf2</td></tr><tr> <td>121212</td></tr></table>'
+     $("#result_id").show() ;
+     $("#result_id").html(html);
+     $("#result_id table tr td").click(function(){
+      $("#searchkey_id").val($(this).html()) ;
+      $("#result_id").hide() ;
+     }).hover(
+      function () {
+          //$("#searchkey_id").blur(function(){});
+       //alert(123) ;
+       close = false ;
+      },
+      function () {
+          //$("#searchkey_id").blur(function(){
+        //$("#result_id").hide() ; 
+       //});
+       //alert(312) ;
+       close = true ;
+      }
+     ); ;
+    }
+   }).blur(function(){
+    if(close) {
+     $("#result_id").hide() ; 
+    } 
+   });
+
+   $("#botton_id input").click(function(){
+    alert(232323) ;
+   });
+});
+</script>
+<body>
+
+<div id="search_id">
+   <div id="search_body">
+    <input name="searchkey" type="text" id="searchkey_id" size="30" />
+     <div id="result_id">
+    </div>
+   </div>
+   <div id="botton_id">&nbsp;<input type="button" value="搜索" /></div>
+
+
+</div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!-- auto generated -->
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+		<td class="line">您现在的位置： 班级 -> 查看班级</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<form name="zfptClassUpdateForm" id="zfptClassUpdateForm" method="POST" action="" onsubmit="return zfptClassUpdateCheck(2);">
+<#include "../../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="update_tbl">
+	<tr>
+		<td align="right" class="tdLeft" width="20%">镇区： </td>
+		<td align="left" valign="top" class="tdRight">
+			${zfptClass.school.agency.city.name!}
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="20%">机构： </td>
+		<td align="left" valign="top" class="tdRight">
+			${zfptClass.school.getAgency().agency_name!}
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="20%">学校： </td>
+		<td align="left" valign="top" class="tdRight">
+			${zfptClass.school.school_name!}
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="20%">班级名称： </td>
+		<td align="left" valign="top" class="tdRight">
+			${zfptClass.class_name!}
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="20%">班级所在年级： </td>
+		<td align="left" valign="top" class="tdRight">
+			${zfptClass.gradeValue()!}
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="20%">班级描述： </td>
+		<td align="left" valign="top" class="tdRight">
+	     <label>
+		    <textarea name="classDesc" id="classDesc" cols="45" rows="5" readonly="readonly" onchange="checkMaxLength(event,255)" onpropertychange="checkMaxLength(event,255)">${zfptClass.classDesc?default("")}</textarea>
+		  </label>
+		</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td height="5">&nbsp;</td>
+	</tr>
+	<tr>
+		<td height="5" align="center">
+			<input name="btn01" type="button" class="btn01" onclick="pag.back('zfptClass_index','zfptClass_update');" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="返 回" />
+		</td>
+	</tr>
+</table>
+</form>

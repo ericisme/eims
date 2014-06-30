@@ -1,0 +1,193 @@
+body{
+	scrollbar-face-color:#E0E0E0;
+	scrollbar-3dlight-color:#C4C4C4;
+	scrollbar-darkshadow-color:#C4C4C4;
+	}
+body {
+	margin-left: 0px;
+	margin-top: 16px;
+	margin-right: 0px;
+	margin-bottom: 6px;	
+}
+.bg1 {
+	background-image: url(black\bg3.gif);
+}
+#img1 {
+	background-image: url(black\b01.gif);
+	background-repeat: repeat-x;
+	height: 25px;
+}
+#img2 {
+	background-image: url(black\b02.gif);	
+       background-repeat: repeat-x;
+	height: 25px;
+}
+#img3 {
+	background-image: url(black\b03.gif);	
+       background-repeat: repeat-x;
+	height: 25px;
+}
+body,td,th {
+	font-size: 12px;
+}
+.newsbox03{
+ 
+	border-bottom: 1px dashed #000;	
+	}
+
+.font1 {
+	font-size: 12px;
+	line-height: 150%;
+	color: #000000;
+}
+.font_b {
+	font-weight: bold;
+	font-size: 14px;
+	color: #398ECF;
+}
+
+.font2 {
+	font-size: 12px;
+	line-height: 20px;
+	color: #006699;
+	letter-spacing: normal;
+	font-weight: bold;
+}
+.title {
+	font-size: 16px;
+	font-weight: bold;
+	color: #319AEB;
+}
+
+.font3{
+	color:#FF0000;
+	line-height:150%;
+	}
+.box1{
+	height: 20px;
+	width: 70%;
+	border: 1px solid #000000;
+}
+.box2{
+	height: 20px;
+	width: 15%;
+	border: 1px solid #000000;
+}
+.box3{
+	height: 20px;
+	width: 40%;
+	border: 1px solid #000000;
+}
+.box4{
+	width:98%;
+	border:1px solid #000000;}
+.box5{ height: 20px;
+	border:1px solid #666666;}
+.tbale01{
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-top-color: #398ECF;
+	border-right-color: #398ECF;
+	border-left-color: #398ECF;
+	background-color: #FFFFFF;
+	}
+input.btn01 {
+	font-size: 12px;
+	color: #000000;
+	background-image: url(../../images/btn01.gif);
+	background-repeat: repeat-x;
+	background-position: center;
+	height: 22px;
+	border: 1px solid #398ECF;
+	CURSOR: hand;
+	padding-right: 6px;
+	padding-left: 6px;
+	text-align: center;
+	vertical-align: text-bottom;
+	line-height: 130%;
+	font-family: Arial, "宋体";
+}
+input.btn02 {
+	font-size: 12px;
+	color: #000000;
+	background-image: url(../../images/btn02.gif);
+	background-repeat: repeat-x;
+	background-position: center;
+	height: 22px;
+	border: 1px solid #585858;
+	CURSOR: hand;
+	padding-right:6px;
+	padding-left: 6px;
+	text-align: center;
+	vertical-align: text-bottom;
+	line-height: 130%;
+	font-family: Arial, "宋体";
+}
+a:link {
+	font-size: 12px;
+	line-height: 150%;
+	color: #0000FF;
+	text-decoration: none;
+}
+a:visited {
+	font-size: 12px;
+	line-height: 150%;
+	color: #0000FF;
+	text-decoration: none;
+}
+a:hover {
+	font-size: 12px;
+	line-height: 150%;
+	color: #9D0038;
+	text-decoration: none;
+}
+.tb_bd {
+	background-color: #607586;
+	margin: 1px;
+}
+.tbtitle_bg1 {
+	background-color: #BABABA;
+}
+.tbtitle_bg2 {
+	background-color: #EAEAEA;
+}
+.tbtitle_bg3 {
+	background-color: #ffffff;
+}
+
+.selectDate02{
+font-size: 12px;
+	color: #66CCFF;
+	background-repeat: repeat-x;
+	background-position: center;
+	height: 22px;
+	border: 1px solid #585858;
+	CURSOR: hand;
+	padding-right:6px;
+	padding-left: 6px;
+	text-align: center;
+	vertical-align: text-bottom;
+	line-height: 130%;
+	font-family: Arial, "宋体";
+}
+
+.selectDate01{
+font-size: 12px;
+	color: #000000;
+	background-repeat: repeat-x;
+	background-position: center;
+	height: 22px;
+	border: 1px solid #398ECF;
+	CURSOR: hand;
+	padding-right: 6px;
+	padding-left: 6px;
+	text-align: center;
+	vertical-align: text-bottom;
+	line-height: 130%;
+	font-family: Arial, "宋体";
+}
+	

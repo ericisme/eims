@@ -1,0 +1,27 @@
+<html>
+<body>
+<#setting datetime_format="yyyy-MM-dd"/> 
+<#assign summarySize=list?size />
+<table width="100%" border="0" cellpadding="5" cellspacing="0" class="list_table" style="word-break:break-all">
+	<tr class="list_title">
+    	<td align="center">学校</td>
+    	<td align="center">班级</td>
+    	<td align="center">学生数</td>
+    	<td align="center">借阅量</td>
+	</tr>
+	<#if summarySize = 0>
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+		<td align="center" colspan="6"><font color="red">没有符合条件的记录！</font></td>
+	</tr>
+	</#if>
+	<#list list as summary >
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+    	<td align="center">${summary.school_name!}</td>
+    	<td align="center">${summary.class_name!}</td>
+    	<td align="center">${summary.usertotal!}</td>
+    	<td align="center">${summary.total!}</td>
+	</tr>
+	</#list>
+</table>
+</body>
+</html>

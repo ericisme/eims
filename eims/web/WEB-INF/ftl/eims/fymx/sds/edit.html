@@ -1,0 +1,54 @@
+<!-- auto generated -->
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+		<td class="line">您现在的位置： 费用明细>> 所得税  -> <#if sds.id??>编辑<#else>添加</#if> 所得税 </td>
+	</tr>
+</table>
+<form name="theForm" id="theForm" method="POST" action="" onsubmit="return checkForm();">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td>
+			<input name="id" id="id" type="hidden" value="${sds.id!}" />	
+		</td>
+	</tr>
+</table>
+<#include "../../../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="update_tbl">
+		
+	<tr class="list_title">   	
+		<td width="4%" align="center">所得税日期</td>
+		<td width="6%" align="center">单号</td>
+		<td width="4%" align="center">当月报关金额</td>
+		<td width="4%" align="center">汇率</td>
+		<td width="4%" align="center">利润率</td>
+		<td width="4%" align="center">所得税税率(%)</td>
+		<!--<td width="4%" align="center">金额</td>-->
+	</tr>
+	<form name="theForm" id="theForm" method="POST" action="" onsubmit="return checkForm('');">
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+		<td align="right"><input type="text" name="fyrq"    id="fyrq"     value="<#if sds.id??>${sds.fyrq!}<#else></#if>"    maxlength="10" size="8" onclick="setday(this)" readonly style="font-size:12px;text-align:right;"/></td>
+		<td align="right"><input type="text" name="dh"      id="dh"       value="<#if sds.id??>${sds.dh!}<#else></#if>"    maxlength="33" size="33" style="font-size:12px;text-align:right;"/></td>
+		
+		<td align="right"><input type="text" name="dybgje"  id="dybgje"   value="<#if sds.id??>${sds.dybgje?string("0.##")}<#else></#if>"    maxlength="10" size="9" style="font-size:12px;text-align:right;"/></td>
+		<td align="right"><input type="text" name="hl"      id="hl"       value="<#if sds.id??>${sds.hl?string("0.########")}<#else></#if>"    maxlength="10" size="9" style="font-size:12px;text-align:right;"  onkeyup="clearNoNum(this)" onbeforepaste="clearNoNum(this)"/></td>
+		
+		<td align="right"><input type="text" name="by1"      id="by1"       value="<#if sds.id??>${sds.by1?string("0.########")}<#else>0.045</#if>"    maxlength="10" size="9" style="font-size:12px;text-align:right;"  onkeyup="clearNoNum(this)" onbeforepaste="clearNoNum(this)"/></td>
+		<td align="right"><input type="text" name="by2"      id="by2"       value="<#if sds.id??>${sds.by2?string("0.########")}<#else>25</#if>"    maxlength="10" size="9" style="font-size:12px;text-align:right;"  onkeyup="clearNoNum(this)" onbeforepaste="clearNoNum(this)"/>%</td>		
+		
+		<!-- <td align="right"><input type="text" name="je"      id="je"       value="<#if sds.id??>${sds.je?string("0.##")}<#else></#if>"    maxlength="10" size="9" style="font-size:12px;text-align:right;"/></td> -->
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td height="5">&nbsp;</td>
+	</tr>
+	<tr>
+		<td height="5" align="center">
+			<font color="red">注：金额=当月报关金额*汇率*备用1*备用2%</font><br/><br/>
+			<input name="btn01" id="sys_update_btn" type="submit" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="提 交" />&nbsp;&nbsp;&nbsp;&nbsp;
+			<input name="btn01" type="button" class="btn01" onclick="pag.back('_index','_update');" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="返 回" />
+		</td>
+	</tr>
+</table>
+
+</form>

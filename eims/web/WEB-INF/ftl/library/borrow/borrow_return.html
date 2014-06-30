@@ -1,0 +1,187 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>借还管理</title>
+<link href="/html/syspurview/skins/default/body.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="/html/syspurview/js/base.js?load(page_exe.js,/html/library/borrow.js)"></script>
+<script language="javascript" src="/js/common/prototype.js"></script>
+<script language="javascript" src="/js/common/log/log4javascript.js"></script>
+
+</head>
+<body class="body_bg">
+<#include "../../common_loading.ftl" />
+<form name="borrowForm" id="borrowForm" method="POST" action="" >
+<div id="book_index">
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+    	<td class="line">您现在的位置： 借还管理 -> 还书管理</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<#include "../../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_query">
+	<tr  height="12">
+		<td width="100%" align="center" colspan="8" bgcolor="#FFFFFF" >图书录入
+		</td>
+	</tr>
+	<tr height="12">
+		<td  align="right" height="12">
+			图书编号：
+		</td>
+		<td align="left" bgcolor="#FFFFFF" >
+			<input type="text" name="bookNo" id="bookNo" size="12" onkeypress="if(event.keyCode==13){returnSubmit();return false;}"  />
+			<input type="hidden" name="borrowkId" id="borrowkId" value="" />
+		</td>
+		<td  align="right">
+			出借时间：
+		</td>
+		<td align="left" bgcolor="#FFFFFF" >
+		<input type="text" name="borrowTime" id="borrowTime" size="12" disabled/>
+		</td>
+		<td   align="right">
+			价格：
+		</td>
+		<td align="left" bgcolor="#FFFFFF">
+			<input type="text" name="bookPrice" id="bookPrice" size="12" disabled/>
+		</td>
+			
+		<td  align="right">
+			位置：
+		</td>
+		<td align="left" bgcolor="#FFFFFF" >
+		<input type="text" name="bookPlace" id="bookPlace" size="12" disabled/>
+		</td>
+		</tr>
+	<tr  height="12">
+		<td  align="right">
+			名称：
+		</td>
+		<td align="left" bgcolor="#FFFFFF" >
+			<input type="text" name="bookName" id="bookName" size="12" disabled/>
+		</td>
+		<td  align="right">
+			索书号：
+		</td>
+		<td align="left" bgcolor="#FFFFFF" >
+			<input type="text" name="bookIndex" id="bookIndex" size="12" disabled/>
+		</td>
+		
+		<td   align="right">
+			分类：
+		</td>
+		<td align="left" bgcolor="#FFFFFF">
+			<input type="text" name="categoryName" id="categoryName" size="12" disabled/>
+		</td>
+		<td   align="right">
+			作者：
+		</td>
+		<td align="left" bgcolor="#FFFFFF">
+			<input type="text" name="bookAuthor" id="bookAuthor" size="12" disabled/>
+		</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_query">
+	<tr  height="12">
+		<td width="100%" align="center" colspan="8" bgcolor="#FFFFFF" >读者信息
+		</td>
+	</tr>
+	<tr height="12">
+		<td  align="right" height="12" >
+			读者卡号：
+		</td>
+		<td align="left" bgcolor="#FFFFFF"  >
+			<input type="text" name="id_card" id="id_card" size="12" disabled/>
+			
+		</td>
+		
+		<td  align="right">
+			编号：
+		</td>
+		<td align="left" bgcolor="#FFFFFF" >
+		<input type="text" name="loginName" id="loginName" size="12" disabled/>
+		</td>
+		
+		
+		<td  align="right">
+			姓别：
+		</td>
+		<td align="left" bgcolor="#FFFFFF" >
+		<input type="text" name="gender" id="gender" size="12" disabled/>
+		</td>	
+			
+		<td   align="right">
+			可借数量：
+		</td>
+		<td align="left" bgcolor="#FFFFFF">
+			<input type="text" name="book_limit" id="book_limit" size="12" disabled/>
+		</td>	
+		
+			
+		</tr>
+	<tr  height="12">
+		<td  align="right">
+			姓名：
+		</td>
+		<td align="left" bgcolor="#FFFFFF" >
+			<input type="text" name="realName" id="realName" size="12" disabled/>
+		</td>
+		
+		<td  align="right">
+			类型：
+		</td>
+		<td align="left" bgcolor="#FFFFFF" >
+			<input type="text" name="user_type" id="user_type" size="12" disabled/>
+		</td>
+		
+		<td   align="right">
+			未还：
+		</td>
+		<td align="left" bgcolor="#FFFFFF">
+			<input type="text" name="unreturn" id="unreturn" size="12"  disabled/>
+		</td>
+		
+		<td   align="right">
+			可借天数：
+		</td>
+		<td align="left" bgcolor="#FFFFFF">
+			<input type="text" name="day_limit" id="day_limit" size="12" disabled/>
+		</td>
+		
+	</tr>
+	<tr>
+		<td colspan="8" align=center>
+		<span id="userMsg" style="color:red;" ></span>
+		</td>
+	</tr>
+</table>
+
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<span id="borrow_list">
+
+</span>
+</div>
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_query">
+	<tr bgcolor="#FFFFFF" ><td ><div id="msg" align="center" style="font-size:20px;color:red;">
+
+</div></td></tr>
+</table>
+
+</form>
+</body>
+</html>
+<script type="text/javascript">
+document.getElementById("bookNo").focus();
+</script>
+
+
+
+

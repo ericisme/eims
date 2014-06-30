@@ -1,0 +1,60 @@
+<!-- 子系统编辑页面 -->
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+		<td class="line">您现在的位置： 子系统管理 -> 编辑子系统</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<form name="sysUpdateForm" id="sysUpdateForm" method="POST" action="" onsubmit="return sysUpdateCheck(2);">
+<#include "../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="update_tbl">
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 子系统名称： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="systemId" id="systemId" type="hidden" value="${system.systemId}" />
+			<input name="sysName" id="sysName" value="${system.sysName}" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px">子系统标记： </td>
+		<td align="left" valign="top" class="tdRight">${system.sysFlag}</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font>子系统地址： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="sysUrl" id="sysUrl" value="${system.sysUrl}" type="text" maxlength="200" size="60" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 子系统排序： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="sysSequence" id="sysSequence" value="${system.sysSequence}" type="text" maxlength="3" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px">窗口特性： </td>
+		<td align="left" valign="top" class="tdRight">
+			<#if system.sysTarget = '_blank'>
+				<input name="sysTarget" id="sysTarget_1" type="radio" value="default"/> 默认窗口 
+				<input name="sysTarget" id="sysTarget_2" type="radio" value="_blank" checked/> 新窗口
+			<#else>
+				<input name="sysTarget" id="sysTarget_1" type="radio" value="default" checked/> 默认窗口 
+				<input name="sysTarget" id="sysTarget_2" type="radio" value="_blank"/> 新窗口
+			</#if>
+		</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td height="5">&nbsp;</td>
+	</tr>
+	<tr>
+		<td height="5" align="center">
+			<input name="btn01" id="sys_update_btn" type="submit" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="提 交" />&nbsp;&nbsp;&nbsp;&nbsp;
+			<input name="btn01" type="button" class="btn01" onclick="pag.back('sys_index','sys_update');" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="返 回" />
+		</td>
+	</tr>
+</table>
+</form>

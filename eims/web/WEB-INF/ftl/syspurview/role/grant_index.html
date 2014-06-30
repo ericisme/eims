@@ -1,0 +1,56 @@
+<#-- 角色授权的首页显示 -->
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+		<td class="line">您现在的位置： 角色管理 -> 角色【 <font color="red">${roleName}</font> 】授权</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+<#-- 左侧子系统和菜单列表 -->
+<div id="div_left" class="grant_left_div">
+<#-- 如果子系统的数目只有一个则不显示 -->
+<table width="100%" border="0" cellspacing="1">
+	<tr>
+		<td style="padding-left:6px;padding-top:6px;" >
+			子系统： 
+			<select name="sysId" id="sysId" onchange="roleGetMenuList()">
+				<#list systems as sys>
+					<option value="${sys.systemId}">${sys.sysName}</option>
+				</#list>
+			</select>
+		</td>
+	</tr>
+</table>
+<#-- 该span用来显示菜单列表 -->
+<span id="menu_list">
+<table width="100%" border="0" cellspacing="1">
+	<tr>
+		<td align="center" height="120" valign="middle" class="tdLeft">正在获取菜单列表……</td>
+	</tr>
+</table>
+</span>
+</div>
+
+<#-- 右侧指定菜单下的所有模块和其功能区域 -->
+<div id="div_right" class="grant_right_div">
+<form name="roleGrantForm" id="roleGrantForm" method="POST" action="" onsubmit="return roleGrantCheck(1);">
+<#include "../common_tips.ftl" />
+<#-- 角色的唯一ID -->
+<input type="hidden" value="${roleId}" id="grantRoleId" name="grantRoleId" />
+<#-- 操作区域 -->
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="grant_right_span">
+	<tr>
+		<td align="center" valign="middle">
+			<input name="btn01" id="grant_btn_submit" type="button" onclick="roleGrantSubmit()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="提交授权" />&nbsp;&nbsp;
+			<input name="btn01" id="grant_btn_cancle" type="button" onclick="pag.back('role_index','role_update');" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="返回列表" />&nbsp;&nbsp;
+			<input name="btn01" id="grant_btn_delete" type="button" onclick="roleDeletePurview()" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="删除角色所有授权" />
+		</td>
+	</tr>
+	<tr>
+		<#-- 该td区域是用来显示指定菜单下的模块和其功能的区域 -->
+		<td id="menu_module"></td>
+	</tr>
+</table>
+</form>
+</div>

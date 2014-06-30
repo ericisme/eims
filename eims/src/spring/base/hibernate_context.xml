@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans default-autowire="byName" default-lazy-init="true">
+
+	<!--author:贺少辉-->
+	<!--Hibernate SessionFatory-->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="base_dataSource"/>
+		<property name="annotatedClasses">
+			<list>
+				 	<value>cn.qtone.library.school.domain.School</value>
+					<value>cn.qtone.library.xxptclass.domain.ZfptClass</value>
+					<value>cn.qtone.library.city.domain.City</value>
+					<value>cn.qtone.common.components.syspurview.core.user.domain.IUser</value>
+				    <value>cn.qtone.library.agency.domain.Agency</value>
+				   <!--  
+				    <value>cn.qtone.library.parent.domain.Parent</value>
+				    <value>cn.qtone.library.xxptparam.domain.XxptParam</value>
+				    <value>cn.qtone.library.xxptnews.domain.XxptNews</value>
+				    <value>cn.qtone.library.newslog.sendnewslog.domain.SendNewsLog</value>
+				    <value>cn.qtone.library.newslog.usersendnewslog.domain.UserSendNewsLog</value>
+				    <value>cn.qtone.library.parenttmp.domain.ParentTmp</value>
+				    <value>cn.qtone.crda.subscribe.domain.Subscribe</value>
+				    <value>cn.qtone.crda.classstudent.domain.ClassStudent</value>
+				    <value>cn.qtone.crda.chargeback.domain.Chargeback</value>
+				     -->
+				    <value>cn.qtone.library.category.domain.Category</value>
+				    <value>cn.qtone.library.book.domain.Book</value>
+				    <value>cn.qtone.library.borrow.domain.Borrow</value>
+				     
+				     
+				     
+				     
+				     
+				     
+					<!-- eims企业信息管理系统  -->
+					<!-- eims企业信息管理系统  -->
+					
+						<!-- 费用明细 -->
+							<!-- 员工工资 -->					     
+				    			<value>cn.qtone.eims.fymx.yggz.domain.Yggz</value>
+				    		<!-- 管理费用明细 -->
+				    			<value>cn.qtone.eims.fymx.glfymx.domain.Glfymx</value>
+				    		<!-- 固定资产 -->
+				    			<value>cn.qtone.eims.fymx.gdzc.domain.Gdzc</value>
+				    		<!-- 所得税 -->
+				    			<value>cn.qtone.eims.fymx.sds.domain.Sds</value>
+				    		<!-- 财务费用明细或营业外支出 -->
+				    			<value>cn.qtone.eims.fymx.cwfy.domain.Cwfy</value>				    
+				    
+				    
+				    	<!-- 收借款管理 -->
+				    		<!-- 公司借出-->
+				    			<value>cn.qtone.eims.sjhgl.gsjc.domain.Gsjc</value>
+				    		<!-- 公司借入-->
+				    			<value>cn.qtone.eims.sjhgl.gsjr.domain.Gsjr</value>
+				    
+				    
+				    
+				    <!-- 国家退税明细 -->
+				    <value>cn.qtone.eims.khmx.domain.Gjts</value>
+				    <!-- 客户退税 -->
+				    <value>cn.qtone.eims.khmx.domain.Khts</value>
+				    <!-- 付款支付 -->
+				    <value>cn.qtone.eims.khmx.domain.Fkzf</value>
+				    <!-- 客户欠款明细 -->
+				    <value>cn.qtone.eims.khmx.domain.Khqk</value>
+				    <!-- 营业外收入 -->
+				    <value>cn.qtone.eims.khmx.domain.Yywsr</value>
+				    <!-- 拖车支出 -->
+				    <value>cn.qtone.eims.khmx.domain.Tczc</value>
+				    <!-- 损益表 -->
+				    <value>cn.qtone.eims.lb.domain.Syb</value>
+				    
+					<!-- eims企业信息管理系统  -->
+					<!-- eims企业信息管理系统  -->	
+					
+						
+					
+							    
+				    				    
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+				<prop key="hibernate.cache.use_query_cache">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- 配置事务管理器 -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+	  <property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+</beans>

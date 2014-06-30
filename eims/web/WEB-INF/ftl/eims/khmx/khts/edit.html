@@ -1,0 +1,103 @@
+<!-- auto generated -->
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+		<td class="line">您现在的位置： 客户明细>> 应付客户退税  -> <#if khts.id??>编辑<#else>添加</#if> 应付客户退税</td>
+	</tr>
+</table>
+<form name="theForm" id="theForm" method="POST" action="" onsubmit="return checkForm();">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td>
+			<input name="id" id="id" type="hidden" value="${khts.id!}" />	
+			<input name="_id" id="_id" type="hidden" value="${khts.id!}" />	
+		</td>
+	</tr>
+</table>
+<#include "../../../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="update_tbl">
+		
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 报关单号： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="bgdh" id="bgdh"  value="${khts.bgdh!}" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0';getGhdhTips();"/>
+			<div id="ghdhTips"> </div>
+		</td>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 客户名称： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="khmc" id="khmc"  value="${khts.khmc!}" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+		</td>
+	</tr>		
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 报关日期： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="_bgrq" id="_bgrq"  value="<#if khts.bgrq??>${khts.bgrq?if_exists?string('yyyy-MM-dd')}</#if>" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'" onclick="setday(this)" readonly/>
+		</td>		
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 单号： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="dh" id="dh"  value="${khts.dh!}" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'" />
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 报关金额： </td>
+		<td align="left" valign="top" class="tdRight">
+			USD<input name="bgje" id="bgje"  value="<#if khts.bgje??>${khts.bgje?string('0.##')}</#if>" type="text" maxlength="50" size="26" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+		</td>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 发票金额： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="fpje" id="fpje"  value="<#if khts.fpje??>${khts.fpje?string('0.##')}</#if>" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px"> 收发票日期： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="sfprq" id="sfprq"  value="${khts.sfprq!}" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'" onclick="setday(this)" readonly/>
+		</td>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 退税金额： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="tsje" id="tsje"  value="<#if khts.tsje??>${khts.tsje?string('0.##')}</#if>" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0';carWfje();"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px"> 支付退税日期： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="zftsrq" id="zftsrq"  value="${khts.zftsrq!}" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'" onclick="setday(this)" readonly/>
+		</td>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 已付金额： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="yfje" id="yfje"  value="<#if khts.yfje??>${khts.yfje?string('0.##')}</#if>" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0';carWfje();"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px"> 付款单号： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="fkdh" id="fkdh"  value="${khts.fkdh!}" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+		</td>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 未付金额： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="wfje" id="wfje"  value="<#if khts.wfje??>${khts.wfje?string('0.##')}</#if>" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'" readonly/>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 业务员： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="ywy" id="ywy"  value="${khts.ywy!}" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+		</td>
+		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 代理费标准： </td>
+		<td align="left" valign="top" class="tdRight">
+			<input name="dlfbz" id="dlfbz"  value="${khts.dlfbz!}" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+		</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td height="5">&nbsp;</td>
+	</tr>
+	<tr>
+		<td height="5" align="center">
+			<input name="btn01" id="sys_update_btn" type="submit" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="提 交" />&nbsp;&nbsp;&nbsp;&nbsp;
+			<input name="btn01" type="button" class="btn01" onclick="pag.back('_index','_edit');" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="返 回" />
+		</td>
+	</tr>
+</table>
+
+</form>

@@ -1,0 +1,53 @@
+﻿/* 页面整体的字体样式控制 */
+body,td,th {font-size: 12px;line-height:150%;}
+/* 你当前的位置的TD的class */
+.line{border-bottom:1px dashed #000000;}
+/* 添加或编辑页面的表格样式 */
+.update_tbl{background-color:#607586;}
+/* 添加或编辑页面每一行的左右TD的样式 */
+.tdLeft{background-color:#EAEAEA;}
+.tdRight{background-color:#ffffff;}
+/* 输入框的样式获的焦点(box1)和失去焦点(box0)的样式 */
+.box1{border:1px solid #94ba00;}
+.box0{border:1px solid #7cafff;}
+/* 按钮的样式 */
+input.btn01 {font-size: 12px;color: #000000;background-image: url(btn1.gif);background-repeat: repeat-x;
+background-position: center;height: 24px;border: 1px solid #202C55;CURSOR: pointer;padding-right: 2px;padding-left: 2px;text-align: center;
+}
+input.btn02 {font-size: 12px;color: #581D28;background-image: url(btn2.gif);background-repeat: repeat-x;
+background-position: center;height: 24px;border: 1px solid #581D28;CURSOR: pointer;padding-right: 2px;padding-left: 2px;text-align: center;
+}
+
+/* 列表的表格样式 */
+.list_table{background-color:#607586;}
+/* 列表页面的查询区域的table的样式 */
+.list_query{background-color:#BABABA;border:1px solid #607586;}
+/* 列表页面表格的头行的TR的样式 */
+.list_title{background-color:#BABABA;}
+/* 列表页面的行的鼠标out和over的样式 */
+.list_over{background-color:#fcfdf2;}
+.list_out{background-color:#FFFFFF;}
+
+/* 角色授权区域的左边菜单div样式和右边模块功能区域div样式 */
+.grant_left_div{background-color:#EAEAEA;margin:0 auto;width:260px;float:left;border:1px solid #607586;}
+.grant_right_div{left:208px;float:left;padding-left:6px;}
+.grant_right_span{background-color:#FFFFFF;width:100%;border:1px solid #398ECF;}
+
+
+/* 后台管理任务栏中按钮的激活和非激活的样式 */
+.win_passive {font-size: 12px;color: #16387C;height:24px;
+padding-left: 3px;}
+.win_active  {font-size: 12px;color: #16387C;font-weight: bold;height:24px;
+padding-left: 3px;}
+
+/* 控制面板页面的CSS控制 */
+.control_head{background-color:#EAEAEA;}
+.control_body{background-color:#ffffff;border:1px solid #607586;}
+
+/* 提示区域的高亮度显示 */
+.normal{font-size:12px;border:2px solid #ccc;color:red;width:100%;line-height:28px;background-color:#ffffe1;
+overflow:auto;padding:6px;padding-left:5px;margin:2px;background-position:7px 10px;background-repeat:no-repeat;}
+.highlight {border:2px solid green}
+
+/* 页面的背景 */
+.body_bg {background-image: url(./black_bg.gif);}
