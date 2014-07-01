@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans default-autowire="byName" default-lazy-init="true">
+	<!-- 公司借入 -->	
+	<bean id="gsjrController" parent="mvc_parentController" class="cn.qtone.eims.sjhgl.gsjr.controller.GsjrController">
+	    <property name="listPage"  value="/eims/sjhgl/gsjr/list"></property>
+		<property name="editPage"  value="/eims/sjhgl/gsjr/edit"></property>
+		<property name="showPage"  value="/eims/sjhgl/gsjr/show"></property>
+		<property name="indexPage" value="/eims/sjhgl/gsjr/index"></property>
+		<property name="service"     ref="gsjrService"></property>
+	</bean>
+	<bean id="gsjrService" class="cn.qtone.eims.sjhgl.gsjr.service.GsjrService" />
+</beans>
+

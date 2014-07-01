@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans default-autowire="byName" default-lazy-init="true">
+
+	<bean id="mainController" parent="mvc_parentController" class="cn.qtone.library.main.controller.MainController">
+		<property name="unReturnPage" value="/library/main/unreturn_list"></property>
+		<property name="bookTotalPage" value="/library/main/booktotal_list"></property>
+		<property name="bookService" ref="bookService"></property>
+		<property name="mainService" ref="mainService"></property>
+	</bean>
+	<bean id="mainService" class="cn.qtone.library.main.service.MainService"/>
+</beans>
+

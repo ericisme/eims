@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans default-autowire="byName" default-lazy-init="true">
+
+	<bean id="schoolController" parent="mvc_parentController" class="cn.qtone.library.school.controller.SchoolController">
+		<property name="listPage" value="/library/school/school_list"></property>
+		<property name="editPage" value="/library/school/school_edit"></property>
+		<property name="showPage" value="/library/school/school_show"></property>
+		<property name="indexPage" value="/library/school/school_index"></property>
+		<property name="importPage" value="/library/school/school_importPage"></property>
+		<property name="schoolService" ref="schoolService"></property>
+		<property name="cityService" ref="cityService"></property>
+		<property name="agencyService" ref="agencyService"></property>
+		<property name="classService" ref="zfptClassService"></property>
+	</bean>
+	<bean id="schoolService" class="cn.qtone.library.school.service.SchoolService"> 
+	</bean>
+</beans>

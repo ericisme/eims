@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans default-autowire="byName" default-lazy-init="true">
+	<!-- 员工工资 -->	
+	<bean id="yggzController" parent="mvc_parentController" class="cn.qtone.eims.fymx.yggz.controller.YggzController">
+	    <property name="listPage" value="/eims/fymx/yggz/list"></property>
+		<property name="editPage" value="/eims/fymx/yggz/edit"></property>
+		<property name="showPage" value="/eims/fymx/yggz/show"></property>
+		<property name="indexPage" value="/eims/fymx/yggz/index"></property>
+		<property name="service" ref="yggzService"></property>
+	</bean>
+	<bean id="yggzService" class="cn.qtone.eims.fymx.yggz.service.YggzService" />
+
+</beans>
+

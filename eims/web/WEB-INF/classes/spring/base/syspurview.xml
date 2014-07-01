@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	
+	<!-- 事务配置，设置JDBC的事物管理配置 -->
+	<bean id="syspurview_trans_manager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="base_dataSource"></property>
+	</bean>
+	<bean id="syspurview_trans_tpl" class="org.springframework.transaction.support.TransactionTemplate">
+		<property name="transactionManager" ref="syspurview_trans_manager"></property>
+	</bean>
+	
+	
+	<!-- 所有采用MultiActionController的controller的Bean配置应该继承此类，使用方法名称解析 -->
+	<bean id="syspurview_controller" abstract="true" parent="syspurview_parentController">
+		<property name="configer" ref="syspurview_configer"></property>
+	</bean>
+	
+	
+	<!-- 权限系统的全局配置对象,设置资源文件的路径信息等 -->
+	<bean id="syspurview_configer" factory-method="getInstance" class="cn.qtone.common.components.syspurview.base.PurviewConfiger">
+		<property name="prefix" value="${syspurview.resourcePath}"></property>
+		<property name="systemName" value="企业信息管理系统"></property>
+		<property name="moduleTree" value="false"></property>
+	</bean>
+	
+	
+	<!-- 所有DAO的工厂方法配置，可以实现多数据库的方便切换 -->
+	<bean id="syspurview_daoFactory" factory-method="getDAOFactory" 
+			class="cn.qtone.common.components.syspurview.base.dao.AbstractDAOFactory">
+		<constructor-arg>
+			<value>${syspurview.dbType}</value>
+		</constructor-arg>
+	</bean>
+	
+	
+	<!-- 角色管理的controller、业务类service和数据库访问DAO配置 -->
+	<bean id="syspurview_roleController" parent="syspurview_controller" 
+			class="cn.qtone.common.components.syspurview.core.role.controller.RoleController">
+		<property name="indexPage" value="/syspurview/role/role_index"></property>
+		<property name="listTplPage" value="/syspurview/role/role_list"></property>
+		<property name="createPage" value="/syspurview/role/role_create"></property>
+		<property name="editPage" value="/syspurview/role/role_edit"></property>
+		<property name="grantIndex" value="/syspurview/role/grant_index"></property>
+		<property name="grantLeft" value="/syspurview/role/grant_left"></property>
+		<property name="grantRight" value="/syspurview/role/grant_right"></property>
+		<property name="serviceBean" ref="syspurview_roleService"></property>
+		<property name="moduleService" ref="syspurview_moduleService"></property>
+	</bean>
+	
+	<bean id="syspurview_roleService" class="cn.qtone.common.components.syspurview.core.role.service.RoleService">
+		<property name="dao" ref="syspurview_roleDAO"></property>
+		<property name="transactionTpl" ref="syspurview_trans_tpl"></property>
+	</bean>
+	
+	<bean id="syspurview_roleDAO" parent="syspurview_baseDAO" factory-bean="syspurview_daoFactory" factory-method="getRoleDAO"/>
+	
+	
+	<!-- 用户组管理的controller、业务类service和数据库访问DAO配置 -->
+	<bean id="syspurview_userGroupController" parent="syspurview_controller" 
+			class="cn.qtone.common.components.syspurview.core.group.controller.UserGroupController">
+		<property name="indexPage" value="/syspurview/group/group_index"></property>
+		<property name="listTplPage" value="/syspurview/group/group_list"></property>
+		<property name="createPage" value="/syspurview/group/group_create"></property>
+		<property name="editPage" value="/syspurview/group/group_edit"></property>
+		<property name="serviceBean" ref="syspurview_userGroupService"></property>
+	</bean>
+	
+	<bean id="syspurview_userGroupService" class="cn.qtone.common.components.syspurview.core.group.service.UserGroupService">
+		<property name="dao" ref="syspurview_userGroupDAO"></property>
+		<property name="roleDAO" ref="syspurview_roleDAO"></property>
+	</bean>
+	
+	<bean id="syspurview_userGroupDAO" parent="syspurview_baseDAO" factory-bean="syspurview_daoFactory" factory-method="getUserGroupDAO"/>
+	
+	
+	<!-- 子系统管理设置的controller、业务类和DAO配置 -->
+	<bean id="syspurview_systemController" parent="syspurview_controller" 
+			class="cn.qtone.common.components.syspurview.core.system.controller.SystemController">
+		<property name="indexPage" value="/syspurview/system/system_index"></property>
+		<property name="listTplPage" value="/syspurview/system/system_list"></property>
+		<property name="createPage" value="/syspurview/system/system_create"></property>
+		<property name="editPage" value="/syspurview/system/system_edit"></property>
+		<property name="serviceBean" ref="syspurview_systemService"></property>
+	</bean>
+	
+	<bean id="syspurview_systemService" class="cn.qtone.common.components.syspurview.core.system.service.SystemService">
+		<property name="dao" ref="syspurview_systemDAO"></property>
+	</bean>
+	
+	<bean id="syspurview_systemDAO" parent="syspurview_baseDAO" factory-bean="syspurview_daoFactory" factory-method="getSystemDAO"/>
+	
+	<bean id="syspurview_systemCache" parent="syspurview_baseDAO" factory-method="getInstance" 
+			class="cn.qtone.common.components.syspurview.core.system.SystemCache"/>
+	
+	
+	<!-- 模块管理设置的controller、业务类和DAO配置 -->
+	<bean id="syspurview_moduleController" parent="syspurview_controller" 
+			class="cn.qtone.common.components.syspurview.core.module.controller.ModuleController">
+		<property name="indexPage" value="/syspurview/module/module_index"></property>
+		<property name="listTplPage" value="/syspurview/module/module_list"></property>
+		<property name="createPage" value="/syspurview/module/module_create"></property>
+		<property name="editPage" value="/syspurview/module/module_edit"></property>
+		<property name="moduleFuncIndex" value="/syspurview/module/module_func_index"></property>
+		<property name="serviceBean" ref="syspurview_moduleService"></property>
+	</bean>
+	
+	<bean id="syspurview_moduleService" class="cn.qtone.common.components.syspurview.core.module.service.ModuleService">
+		<property name="dao" ref="syspurview_moduleDAO"></property>
+		<property name="transactionTpl" ref="syspurview_trans_tpl"></property>
+	</bean>
+	
+	<bean id="syspurview_moduleDAO" parent="syspurview_baseDAO" factory-bean="syspurview_daoFactory" factory-method="getModuleDAO"/>
+	
+	
+	<!-- 用户管理的controller、业务类和DAO配置 -->
+	<bean id="syspurview_userController" parent="syspurview_controller" 
+			class="cn.qtone.common.components.syspurview.core.user.controller.UserController">
+		<property name="indexPage" value="/syspurview/user/user_index"></property>
+		<property name="listTplPage" value="/syspurview/user/user_list"></property>
+  		<property name="createPage" value="/syspurview/user/user_create"></property>
+  		<property name="editPage" value="/syspurview/user/user_edit"></property>
+		<property name="yhxzPage" value="/pm/yhxz/yhxz"></property>
+		<property name="yhlbPage" value="/pm/yhxz/user_list"></property>
+		<property name="serviceBean" ref="syspurview_userService"></property>
+		<property name="schoolService" ref="schoolService"></property>
+		<property name="cityService" ref="cityService"></property>
+		<property name="agencyService" ref="agencyService"></property>
+		<property name="zfptClassService" ref="zfptClassService"></property>
+	</bean>
+	
+	<bean id="syspurview_userService" class="cn.qtone.common.components.syspurview.core.user.service.UserService">
+		<property name="dao" ref="syspurview_userDAO"></property>
+		<property name="groupDao" ref="syspurview_userGroupDAO"></property>
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<bean id="syspurview_userDAO" parent="syspurview_baseDAO" factory-bean="syspurview_daoFactory" factory-method="getUserDAO"/>
+
+	<!-- 登陆设置 -->
+	<bean id="syspurview_loginController" parent="syspurview_controller" 
+			class="cn.qtone.common.components.syspurview.login.controller.LoginController">
+		<property name="loginPage" value="/syspurview/login"></property>
+		<property name="serviceBean" ref="syspurview_loginService"></property>
+	</bean>
+	
+	<bean id="syspurview_loginService" class="cn.qtone.common.components.syspurview.login.service.LoginService">
+		<property name="dao" ref="syspurview_loginDAO"></property>
+		<property name="controlPanelDAO" ref="syspurview_controlPanelDAO"></property>
+	</bean>
+	
+	<bean id="syspurview_loginDAO" parent="syspurview_baseDAO" factory-bean="syspurview_daoFactory" factory-method="getLoginDAO"/>
+	
+	
+	<!-- 后台首页管理控制 -->
+	<bean id="syspurview_adminController" parent="syspurview_controller" 
+			class="cn.qtone.common.components.syspurview.admin.controller.AdminIndexController">
+		<property name="desktopIndex" value="/syspurview/admin/desktop/default/all"></property>
+		<property name="desktopLeftMenu" value="/syspurview/admin/desktop/default/left_menu"></property>
+		<property name="taskbarPage" value="/syspurview/admin/desktop/default/taskbar"></property>
+		<property name="serviceBean" ref="syspurview_adminService"></property>
+	</bean>
+	
+	<bean id="syspurview_adminService" class="cn.qtone.common.components.syspurview.admin.service.AdminService">
+		<property name="dao" ref="syspurview_adminDAO"></property>
+	</bean>
+
+	<bean id="syspurview_adminDAO" parent="syspurview_baseDAO" factory-bean="syspurview_daoFactory" factory-method="getAdminDAO" />
+	
+	
+	<!-- 控制面板-->
+	<bean id="syspurview_controlPanelController" parent="syspurview_controller"
+			class="cn.qtone.common.components.syspurview.controlpanel.controller.ControlPanelController">
+		<property name="controlPanelIndex" value="/syspurview/controlpanel/control_index"></property>
+		<property name="editPersonalInfo" value="/syspurview/controlpanel/personal_info"></property>
+		<property name="editPassword" value="/syspurview/controlpanel/personal_pwd"></property>
+		<property name="userCryptoguard" value="/syspurview/controlpanel/user_cryptoguard"></property>
+		<property name="serviceBean" ref="syspurview_controlPanelService"></property>
+		<property name="getPwdService" ref="syspurview_getPwdService"></property>
+	</bean>
+	
+	<bean id="syspurview_controlPanelService" class="cn.qtone.common.components.syspurview.controlpanel.service.ControlPanelService">
+		<property name="dao" ref="syspurview_controlPanelDAO"></property>
+	</bean>
+	
+	<bean id="syspurview_controlPanelDAO" parent="syspurview_baseDAO" factory-bean="syspurview_daoFactory" 
+			factory-method="getControlPanelDAO" />
+			
+			
+	<!-- 用户密码保护取回密码控制 -->
+	<bean id="syspurview_getPwdController" parent="syspurview_controller"
+			class="cn.qtone.common.components.syspurview.cryptoguard.controller.GetPwdController">
+		<property name="stepOnePage" value="/syspurview/cryptoguard/get_pwd_step1"></property>
+		<property name="stepTwoPage" value="/syspurview/cryptoguard/get_pwd_step2"></property>
+		<property name="stepThreePage" value="/syspurview/cryptoguard/get_pwd_step3"></property>
+		<property name="smsCodePage" value="/syspurview/cryptoguard/get_pwd_step4"></property>
+		<property name="smsResetPwdPage" value="/syspurview/cryptoguard/get_pwd_step5"></property>
+		<property name="emailResetPwdPage" value="/syspurview/cryptoguard/get_pwd_step6"></property>
+		<property name="tipsPage" value="/syspurview/cryptoguard/get_pwd_tips"></property>
+		<property name="serviceBean" ref="syspurview_getPwdService"></property>
+	</bean>
+	
+	<bean id="syspurview_getPwdService" class="cn.qtone.common.components.syspurview.cryptoguard.service.GetPwdService">
+		<property name="dao" ref="syspurview_getPwdDAO"></property>
+		<property name="emailResetPwdUrl" value="/common/getpwd.do?action=emailResetPwdInit"></property>
+		<property name="smsSender">
+			<bean class="cn.qtone.common.components.syspurview.cryptoguard.send.sms.MySMSSender"></bean>
+		</property>
+	</bean>
+	
+	<bean id="syspurview_getPwdDAO" parent="syspurview_baseDAO" factory-bean="syspurview_daoFactory" 
+			factory-method="getCryptoguardDAO" />
+</beans>

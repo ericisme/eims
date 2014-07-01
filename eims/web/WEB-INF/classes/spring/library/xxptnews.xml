@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans default-autowire="byName" default-lazy-init="true">
+
+	<bean id="xxptNewsController" parent="mvc_parentController" class="cn.qtone.library.xxptnews.controller.XxptNewsController">
+		<property name="listPage" value="/library/xxptnews/xxptnews_list"></property>
+		<property name="editPage" value="/library/xxptnews/xxptnews_edit"></property>
+		<property name="showPage" value="/library/xxptnews/xxptnews_show"></property>
+		<property name="indexPage" value="/library/xxptnews/xxptnews_index"></property>
+		<property name="xxptNewsService" ref="xxptNewsService"></property>
+		<property name="studentService" ref="studentService"></property>
+		<property name="parentService" ref="parentService"></property>
+		<property name="schoolService" ref="schoolService"></property>
+		<property name="agencyService" ref="agencyService"></property>
+		<property name="xxptParamService" ref="xxptParamService"></property>
+		<property name="zfptClassService" ref="zfptClassService"></property>
+		<property name="userSendNewsLogService" ref="userSendNewsLogService"></property>
+		<property name="sendNewsLogService" ref="sendNewsLogService"></property>
+	</bean>
+	<bean id="xxptNewsService" class="cn.qtone.library.xxptnews.service.XxptNewsService"></bean>
+	<bean id="importSendingService" parent="xxptNewsService"
+		class="cn.qtone.library.xxptnews.newsimportsend.service.ImportSendingService"></bean>
+</beans>
+

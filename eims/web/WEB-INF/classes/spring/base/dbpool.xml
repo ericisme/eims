@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+	
+	<!--author:贺少辉-->
+	<!-- 主从数据库的公用设置 -->
+	<bean id="base_dataSource_common" abstract="true">
+		<property name="driverClass" value="${db.driver}" />
+        <property name="minPoolSize" value="${db.minPoolSize}" />
+        <property name="maxPoolSize" value="${db.maxPoolSize}" />
+        <property name="maxStatements" value="${db.maxStatement}" />
+        <property name="maxIdleTime" value="${db.maxIdleTime}" />
+        <property name="preferredTestQuery" value="${db.preferredTestQuery}" />
+        <property name="idleConnectionTestPeriod" value="${db.idleConnectionTestPeriod}" />
+        <property name="testConnectionOnCheckout" value="${db.testConnectionOnCheckout}" />
+	</bean>
+	
+	<!-- 全局数据源配置-主数据库配置 -->
+	<bean id="base_dataSource" parent="base_dataSource_common" destroy-method="close"
+			 class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="jdbcUrl" value="${db_master.url}" />
+        <property name="user" value="${db_master.user}" />
+        <property name="password" value="${db_master.password}" />
+        <property name="autoCommitOnClose" value="true"></property>
+        <property name="acquireIncrement" value="5"></property>
+	</bean>
+	
+	
+	<!-- 配置全局的JdbcTemplate、SimpleJdbcTemplate和NamedParameterJdbcTemplate-主数据库，负责更新 -->
+	<bean id="base_jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg ref="base_dataSource"></constructor-arg>
+	</bean>
+	<bean id="base_simpleJdbcTemplate" class="org.springframework.jdbc.core.simple.SimpleJdbcTemplate">
+		<constructor-arg ref="base_dataSource"></constructor-arg>
+	</bean>
+	<bean id="base_namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+		<constructor-arg ref="base_dataSource"></constructor-arg>
+	</bean>
+	
+	<!-- 全局数据源配置-从数据库配置 -->
+	<bean id="base_dataSource_slave" parent="base_dataSource_common" destroy-method="close"
+			 class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="jdbcUrl" value="${db_slave.url}" />
+        <property name="user" value="${db_slave.user}" />
+        <property name="password" value="${db_slave.password}" />
+	</bean>
+	
+	
+	<!-- 配置全局的JdbcTemplate、SimpleJdbcTemplate和NamedParameterJdbcTemplate-主数据库，负责更新 -->
+	<bean id="base_jdbcTemplate_slave" class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg ref="base_dataSource_slave"></constructor-arg>
+	</bean>
+	<bean id="base_simpleJdbcTemplate_slave" class="org.springframework.jdbc.core.simple.SimpleJdbcTemplate">
+		<constructor-arg ref="base_dataSource_slave"></constructor-arg>
+	</bean>
+	<bean id="base_namedParameterJdbcTemplate_slave" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+		<constructor-arg ref="base_dataSource_slave"></constructor-arg>
+	</bean>
+	
+	
+	<!-- 所有DAO的直接抽象父类，设置数据源和JdbcTemplate等 -->
+	<bean id="base_dao" abstract="true">
+		<property name="masterDataSource" ref="base_dataSource"></property>
+		<property name="slaveDataSource" ref="base_dataSource_slave"></property>
+		<property name="jdbcTemplate" ref="base_jdbcTemplate"></property>
+		<property name="simpleJdbcTemplate" ref="base_simpleJdbcTemplate"></property>
+		<property name="namedJdbcTemplate" ref="base_namedParameterJdbcTemplate"></property>
+		<property name="jdbcTplForQuery" ref="base_jdbcTemplate_slave"></property>
+		<property name="simpleTplForQuery" ref="base_simpleJdbcTemplate_slave"></property>
+		<property name="namedTplForQuery" ref="base_namedParameterJdbcTemplate_slave"></property>
+	</bean>
+	
+	
+	<!-- 设置base_dao的别名 -->
+	<alias name="base_dao" alias="syspurview_baseDAO"/>
+	<alias name="base_dao" alias="log_baseDAO"/>
+	
+<!-- 	
+ <bean id="txManager"  
+        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">  
+        <property name="dataSource" ref="base_dataSource" />  
+    </bean>  
+       
+   
+    <tx:advice id="txAdvice" transaction-manager="txManager">  
+        <tx:attributes>  
+            <tx:method name="query*" propagation="NOT_SUPPORTED" read-only="true"/>  
+            <tx:method name="*" propagation="REQUIRED"/>  
+        </tx:attributes>  
+    </tx:advice>  
+       
+    <aop:config>  
+        <aop:pointcut id="transactionPointCut" expression="execution(* cn.qtone.zfpt.manage.school.dao.mysql..*.*(..))"/>  
+        <aop:advisor pointcut-ref="transactionPointCut" advice-ref="txAdvice"/>  
+    </aop:config>  
+ -->	
+</beans>
