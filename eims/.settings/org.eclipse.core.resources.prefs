@@ -1,5 +1,7 @@
 eclipse.preferences.version=1
 encoding//src/cn/qtone=UTF-8
+encoding//src/resources/syspurview/sys_page_purview.properties=UTF-8
+encoding//src/resources/syspurview/syspurview.properties=UTF-8
 encoding//src/\u4EE3\u7801\u89C4\u8303.txt=GBK
 encoding//web/WEB-INF/ftl=UTF-8
 encoding//web/WEB-INF/ftl/eims/bbgl/khmxb/list.html=UTF-8
