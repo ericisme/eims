@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans default-autowire="byName" default-lazy-init="true">
+
+	<bean id="subscribeController" parent="mvc_parentController" class="cn.qtone.crda.subscribe.controller.SubscribeController">
+		<property name="listPage" value="/crda/subscribe/subscribe_list"></property>
+		<property name="editPage" value="/crda/subscribe/subscribe_edit"></property>
+		<property name="showPage" value="/crda/subscribe/subscribe_show"></property>
+		<property name="indexPage" value="/crda/subscribe/subscribe_index"></property>
+		<property name="subscribeService" ref="subscribeService"></property>
+	</bean>
+	<bean id="subscribeService" class="cn.qtone.crda.subscribe.service.SubscribeService">
+	</bean>
+	<!-- newBeanConfig -->
+
+</beans>
+

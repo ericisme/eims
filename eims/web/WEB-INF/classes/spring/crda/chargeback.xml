@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans default-autowire="byName" default-lazy-init="true">
+
+	<bean id="chargebackController" parent="mvc_parentController" class="cn.qtone.crda.chargeback.controller.ChargebackController">
+		<property name="listPage" value="/crda/chargeback/chargeback_list"></property>
+		<property name="editPage" value="/crda/chargeback/chargeback_edit"></property>
+		<property name="showPage" value="/crda/chargeback/chargeback_show"></property>
+		<property name="indexPage" value="/crda/chargeback/chargeback_index"></property>
+		<property name="subscribeService" ref="subscribeService"></property>
+		<property name="chargebackService" ref="chargebackService"></property>
+	</bean>
+	<bean id="chargebackService" class="cn.qtone.crda.chargeback.service.ChargebackService">
+	    <property name="chargeBackDao" ref="chargeBackDao"></property>
+	</bean>
+	<bean id="chargeBackDao" parent="base_dao" class="cn.qtone.crda.chargeback.dao.mysql.ChargeBackDaoImpl"/>
+</beans>
+

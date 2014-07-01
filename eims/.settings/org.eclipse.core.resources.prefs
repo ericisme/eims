@@ -1,5 +1,7 @@
 eclipse.preferences.version=1
 encoding//src/cn/qtone=UTF-8
+encoding//src/resources/syspurview/sys_page_purview.properties=UTF-8
+encoding//src/resources/syspurview/syspurview.properties=UTF-8
 encoding//src/\u4EE3\u7801\u89C4\u8303.txt=GBK
 encoding//web/WEB-INF/ftl=UTF-8
 encoding//web/WEB-INF/ftl/eims/bbgl/khmxb/list.html=UTF-8
@@ -27,6 +29,5 @@ encoding//web/WEB-INF/ftl/eims/khmx/tczc/show.html=UTF-8
 encoding//web/WEB-INF/ftl/eims/khmx/yywsr/edit.html=UTF-8
 encoding//web/WEB-INF/ftl/eims/khmx/yywsr/list.html=UTF-8
 encoding//web/WEB-INF/ftl/eims/lb/syb/list.html=UTF-8
-encoding/<project>=UTF-8
 encoding/src=UTF-8
 encoding/web=UTF-8

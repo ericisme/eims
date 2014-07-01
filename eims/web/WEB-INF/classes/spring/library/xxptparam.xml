@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans default-autowire="byName" default-lazy-init="true">
+
+	<bean id="xxptParamController" parent="mvc_parentController" class="cn.qtone.library.xxptparam.controller.XxptParamController">
+		<property name="listPage" value="/library/xxptparam/xxptparam_list"></property>
+		<property name="editPage" value="/library/xxptparam/xxptparam_edit"></property>
+		<property name="showPage" value="/library/xxptparam/xxptparam_show"></property>
+		<property name="indexPage" value="/library/xxptparam/xxptparam_index"></property>
+		<property name="xxptParamService" ref="xxptParamService"></property>
+	</bean>
+	<bean id="xxptParamService" class="cn.qtone.library.xxptparam.service.XxptParamService">
+	</bean>
+	<!-- newBeanConfig -->
+
+</beans>
+

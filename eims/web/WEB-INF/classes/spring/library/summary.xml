@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans default-autowire="byName" default-lazy-init="true">
+
+	<bean id="summaryController" parent="mvc_parentController" class="cn.qtone.library.summary.controller.SummaryController">
+		<property name="bookIndexPage" value="/library/summary/summary_book_index"></property>
+		<property name="bookListPage" value="/library/summary/summary_book_list"></property>
+		<property name="bookDetailPage" value="/library/summary/summary_book_detail_index"></property>
+		<property name="bookDetailListPage" value="/library/summary/summary_book_detail_list"></property>
+		<property name="classIndexPage" value="/library/summary/summary_class_index"></property>
+		<property name="classListPage" value="/library/summary/summary_class_list"></property>
+		<property name="studentIndexPage" value="/library/summary/summary_student_index"></property>
+		<property name="studentListPage" value="/library/summary/summary_student_list"></property>
+		
+		<!-- (提供给东区教育信息网的页面) -->
+		<property name="zsdqeduSummaryIndexPage" value="/library/summary/zsdqedu_summary_index"></property>
+		<property name="zsdqeduClassListPage" value="/library/summary/zsdqedu_summary_class_list"></property>
+		<property name="zsdqeduStudentListPage" value="/library/summary/zsdqedu_summary_student_list"></property>
+		
+		<property name="summaryService" ref="summaryService"></property>
+		<property name="zfptClassService" ref="zfptClassService"></property>
+		<property name="schoolService" ref="schoolService"></property>
+		<property name="cityService" ref="cityService"></property>
+		<property name="agencyService" ref="agencyService"></property>
+	</bean>
+	<bean id="summaryService" class="cn.qtone.library.summary.service.SummaryService"/>
+</beans>
+

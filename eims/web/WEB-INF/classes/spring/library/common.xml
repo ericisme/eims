@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans default-autowire="byName" default-lazy-init="true">
+
+	<bean id="commonController" parent="mvc_parentController" class="cn.qtone.library.common.controller.CommonController">
+		<property name="checkLoginPage" value="/library/student/student_check"></property>
+		<property name="checkTeacherLoginPage" value="/library/techer/techer_check"></property>
+		<property name="categorySelectPage" value="/library/book/categorySelect"></property>
+		<property name="userSelectPage" value="/library/common/userselect_index"></property>
+		<property name="userListPage" value="/library/common/userselect_list"></property>
+		<property name="bookSelectPage" value="/library/common/bookselect_index"></property>
+		<property name="bookListPage" value="/library/common/bookselect_list"></property>
+		<property name="borrowListPage" value="/library/common/borrow_list"></property>
+		<property name="ajaxPage" value="/library/common/ajax"></property>
+		<property name="zfptClassService" ref="zfptClassService"></property>
+		<property name="studentService" ref="studentService"></property>
+		<property name="techerService" ref="techerService"></property>
+		<property name="bookService" ref="bookService"></property>
+		<property name="commonService" ref="commonService"></property>
+		<property name="cityService" ref="cityService"></property>
+		<property name="agencyService" ref="agencyService"></property>
+		<property name="schoolService" ref="schoolService"></property>
+		<property name="userGroupService" ref="syspurview_userGroupService"></property>
+	</bean>
+	<bean id="commonService" class="cn.qtone.library.common.service.CommonService"/>
+</beans>
+

@@ -79,5 +79,6 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/json-lib-2.2.3-jdk15.jar"/>
 	<classpathentry kind="output" path="web/WEB-INF/classes"/>
 </classpath>

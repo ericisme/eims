@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans default-autowire="byName" default-lazy-init="true">
+
+	<bean id="categoryController" parent="mvc_parentController" class="cn.qtone.library.category.controller.CategoryController">
+		<property name="listPage" value="/library/category/category_list"></property>
+		<property name="editPage" value="/library/category/category_edit"></property>
+		<property name="showPage" value="/library/category/category_show"></property>
+		<property name="indexPage" value="/library/category/category_index"></property>
+		<property name="childrenPage" value="/library/category/children_list"></property>
+		<property name="categoryService" ref="categoryService"></property>
+	</bean>
+	<bean id="categoryService" class="cn.qtone.library.category.service.CategoryService">
+	</bean>
+	<!-- newBeanConfig -->
+
+</beans>
+

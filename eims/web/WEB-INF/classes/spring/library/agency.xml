@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans default-autowire="byName" default-lazy-init="true">
+
+	<bean id="agencyController" parent="mvc_parentController" class="cn.qtone.library.agency.controller.AgencyController">
+		<property name="listPage" value="/library/agency/agency_list"></property>
+		<property name="editPage" value="/library/agency/agency_edit"></property>
+		<property name="showPage" value="/library/agency/agency_show"></property>
+		<property name="indexPage" value="/library/agency/agency_index"></property>
+		<property name="agencyService" ref="agencyService"></property>
+		<property name="cityService" ref="cityService"></property>
+		<property name="schoolService" ref="schoolService"></property>
+	</bean>
+	<bean id="agencyService" class="cn.qtone.library.agency.service.AgencyService">
+	</bean>
+	<!-- newBeanConfig -->
+
+</beans>
+

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans default-autowire="byName" default-lazy-init="true">
+	
+	<bean id="khtsController" parent="mvc_parentController" class="cn.qtone.eims.khmx.controller.KhtsController">
+	    <property name="listPage"  value="/eims/khmx/khts/list"></property>
+		<property name="editPage"  value="/eims/khmx/khts/edit"></property>
+		<property name="showPage"  value="/eims/khmx/khts/show"></property>
+		<property name="indexPage" value="/eims/khmx/khts/index"></property>
+		<property name="service" ref="khtsService"></property>
+	</bean>
+	<bean id="khtsService" class="cn.qtone.eims.khmx.service.KhtsService">
+	    <property name="dao" ref="khtsDAO"></property>
+	</bean>
+
+	<bean id="khtsDAO" parent="base_dao" class="cn.qtone.eims.khmx.dao.impl.KhtsDAOImpl"></bean>
+</beans>
+

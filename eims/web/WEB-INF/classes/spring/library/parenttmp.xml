@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans default-autowire="byName" default-lazy-init="true">
+
+	<bean id="parentTmpController" parent="mvc_parentController" class="cn.qtone.library.parenttmp.controller.ParentTmpController">
+		<property name="listPage" value="/library/parenttmp/parenttmp_list"></property>
+		<property name="editPage" value="/library/parenttmp/parenttmp_edit"></property>
+		<property name="showPage" value="/library/parenttmp/parenttmp_show"></property>
+		<property name="indexPage" value="/library/parenttmp/parenttmp_importindex"></property>
+		<property name="schoolListPage" value="/library/parenttmp/importschool_list"></property>
+		<property name="schoolEditPage" value="/library/parenttmp/importschool_edit"></property>
+		<property name="parentEditPage" value="/library/parenttmp/importparent_edit"></property>
+		<property name="parentTmpService" ref="parentTmpService"></property>
+		<property name="parentService" ref="parentService"></property>
+		<property name="xxptParamService" ref="xxptParamService"></property>
+		<property name="schoolService" ref="schoolService"></property>
+		<property name="agencyService" ref="agencyService"></property>
+		<property name="zfptClassService" ref="zfptClassService"></property>
+	</bean>
+	<bean id="parentTmpService" class="cn.qtone.library.parenttmp.service.ParentTmpService">
+	 <property name="studentQueryDao" ref="studentQueryDao"></property>
+	  <property name="parentImportDao" ref="parentImportDao"></property>
+	</bean>
+     <bean id="parentImportDao" parent="base_dao" class="cn.qtone.library.parenttmp.dao.mysql.ParentImportDaoImpl"/>
+    
+</beans>
+
