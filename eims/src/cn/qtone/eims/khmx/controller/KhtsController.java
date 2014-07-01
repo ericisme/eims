@@ -33,7 +33,6 @@ import cn.qtone.common.utils.base.StringUtil;
 import cn.qtone.eims.khmx.domain.Khts;
 import cn.qtone.eims.khmx.service.KhtsService;
 import cn.qtone.eims.util.EimsUtil;
-import cn.qtone.qtoneframework.web.servlet.ServletUtil;
 
 public class KhtsController extends SimpleManageController<Khts, KhtsService>{
 
