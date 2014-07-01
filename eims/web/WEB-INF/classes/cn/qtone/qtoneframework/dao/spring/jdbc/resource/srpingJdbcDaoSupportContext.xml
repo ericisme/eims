@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans SYSTEM "../../../../../../../../webs/security/WEB-INF/lib/spring-beans-2.0.dtd">
+<!--AbstractJdbcSupportBaseDao 的配置模板-->
+<beans default-autowire="byName">
+	<!--配置数据源连接接口-->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="toWrite"/>
+		<property name="url" value="toWrite"/>
+		<property name="username" value="toWrite"/>
+		<property name="password" value="toWrite"/>
+		<property name="maxActive" value="toWrite"/>
+		<property name="maxIdle" value="toWrite"/>
+	</bean>
+	<!--配置JDBC核心实现类JdbcTemplate-->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+	 	<property name="dataSource" ref="dataSource"/>
+	</bean>
+	<!--配置NamedParameterJdbcTemplate类-->
+	<bean id="namedJdbcTemplate"
+		class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+		<constructor-arg ref="dataSource"/>
+	</bean>
+	<!--配置SimpleJdbcTemplate类-->
+	<bean id="simpleJdbcTemplate"
+		class="org.springframework.jdbc.core.simple.SimpleJdbcTemplate">
+		<constructor-arg ref="dataSource"/>
+	</bean>
+	<!--配置DbMethod实现类，根据不同的数据库实现可配置不同的类-->
+	<bean id="dbMethod" class="toWrite" />
+</beans>

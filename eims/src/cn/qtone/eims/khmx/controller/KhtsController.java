@@ -16,6 +16,8 @@ import jxl.write.WritableFont;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
+import net.sf.json.JSONObject;
+import net.sf.json.util.JSONUtils;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
@@ -31,11 +33,38 @@ import cn.qtone.common.utils.base.StringUtil;
 import cn.qtone.eims.khmx.domain.Khts;
 import cn.qtone.eims.khmx.service.KhtsService;
 import cn.qtone.eims.util.EimsUtil;
+import cn.qtone.qtoneframework.web.servlet.ServletUtil;
 
 public class KhtsController extends SimpleManageController<Khts, KhtsService>{
 
 	private KhtsService service;
 
+	public ModelAndView findByBgdh(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		//String id_str = request.getParameter("id");
+		//Khts khts = service.get(Integer.parseInt(id_str));
+		String bgdh = request.getParameter("bgdh");
+		Khts khts = service.findUniqueBy("bgdh", bgdh);
+		Map<String,Object> map = new HashMap<String,Object>();		
+		map.put("id", khts.getId());		
+		map.put("bgdh", khts.getBgdh());
+		map.put("dh", khts.getDh());
+		map.put("khmc", khts.getKhmc());
+		map.put("bgrq", DateUtil.formatDate(khts.getBgrq(),"yyyy-MM-dd"));
+		map.put("bgje", khts.getBgje());
+		map.put("fpje", khts.getFpje());
+		map.put("sfprq", khts.getSfprq());
+		map.put("tsje", khts.getTsje());
+		map.put("zftsrq", khts.getZftsrq());
+		map.put("yfje", khts.getYfje());
+		map.put("wfje", khts.getWfje());
+		map.put("fkdh", khts.getFkdh());
+		map.put("ywy", khts.getYwy());
+		map.put("dlfbz", khts.getDlfbz());
+		map.put("lrsj", DateUtil.formatDate(khts.getLrsj(),"yyyy-MM-dd"));		
+		JSONObject khtsJson = JSONObject.fromObject(map);
+		return new ModelAndView(new TextView(khtsJson.toString()));
+	}
+	
 	public ModelAndView list(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Map<String, Object> map = this.getMapWithUser(request);
 		int curPage = this.getCurrentPage(request); // 当前查询页数
@@ -112,17 +141,17 @@ public class KhtsController extends SimpleManageController<Khts, KhtsService>{
 	 */
 	public ModelAndView getKhts(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String bgdh = request.getParameter("bgdh");
-		Khts entity = service.findUniqueBy("bgdh", bgdh);
+		Khts khts = service.findUniqueBy("bgdh", bgdh);
 		String flag = "success";
-		if(entity == null) flag = "fail";
+		if(khts == null) flag = "fail";
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		if(entity != null){
-			map.put("bgdh", entity.getBgdh());
-			map.put("dh", entity.getDh());
-			map.put("khmc", entity.getKhmc());
-			map.put("bgrq", DateUtil.formatDate(entity.getBgrq(), "yyyy-MM-dd"));
-			map.put("bgje", StringUtil.formatFloat(entity.getBgje()));
+		if(khts != null){
+			map.put("bgdh", khts.getBgdh());
+			map.put("dh", khts.getDh());
+			map.put("khmc", khts.getKhmc());
+			map.put("bgrq", DateUtil.formatDate(khts.getBgrq(), "yyyy-MM-dd"));
+			map.put("bgje", StringUtil.formatFloat(khts.getBgje()));
 		}
 				
 		AjaxView view = new AjaxView(flag);

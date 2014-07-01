@@ -21,16 +21,17 @@
 		<td align="left" valign="top" class="tdRight">
 			<input name="bgdh" id="bgdh"  value="${gjts.bgdh!}" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0';getGhdhTips();getKhts();"/>
 			<div id="ghdhTips"> </div>
+			<!-- <input type="button" value="注入信息" onclick="injectKhtsMessageByBgdh(document.getElementById('bgdh').value)"> -->
 		</td>
 		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 客户名称： </td>
 		<td align="left" valign="top" class="tdRight">
-			<input name="khmc" id="khmc"  value="${gjts.khmc!}" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'" />
+			<input name="khmc" id="khmc"  value="${gjts.khmc!}" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'" readonly />
 		</td>
 	</tr>		
 	<tr>
 		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 单号： </td>
 		<td align="left" valign="top" class="tdRight">
-			<input name="dh" id="dh"  value="${gjts.dh!}" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'"/>
+			<input name="dh" id="dh"  value="${gjts.dh!}" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'" readonly/>
 		</td>		
 		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 增值税率： </td>
 		<td align="left" valign="top" class="tdRight">
