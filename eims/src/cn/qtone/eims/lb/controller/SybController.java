@@ -1,6 +1,7 @@
 package cn.qtone.eims.lb.controller;
 
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -64,6 +65,63 @@ public class SybController extends SimpleManageController<Syb, SybService>{
 		map.put("entity",getSybReportByRq(_ksrq_str, _jsrq_str));
 		return new ModelAndView(getReportPage(), map);
 	}
+	
+	/**
+	 * 报表Xls
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public ModelAndView reportXls(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String _ksrq_str = request.getParameter("_ksrq");
+		String _jsrq_str = request.getParameter("_jsrq");	
+		if(StringUtil.isNullAndBlank(_ksrq_str))
+			_ksrq_str = "1900-01-01 00:00:00";
+		if(StringUtil.isNullAndBlank(_jsrq_str))
+			_jsrq_str = "2099-12-31 23:59:59";		
+		SybReport sybReport = getSybReportByRq(_ksrq_str, _jsrq_str);
+		
+		OutputStream os = response.getOutputStream();// 取得输出流 		
+		String filename = new String(("损益表"+"("+_ksrq_str.substring(0, 10)+"~"+_jsrq_str.substring(0, 10)+")").getBytes("GB2312"), "ISO_8859_1");
+		response.setHeader("Content-Disposition","attachment;filename=" + filename + ".xls");
+		response.setContentType("application/msexcel");			
+		WritableWorkbook wwb = Workbook.createWorkbook(os);		
+		
+		WritableSheet wsheet = wwb.createSheet("损益表"+"("+_ksrq_str.substring(0, 10)+"~"+_jsrq_str.substring(0, 10)+")", 0); // sheet名称
+		wsheet.getSettings().setDefaultColumnWidth(10);	
+		
+		String[] titles = {"日期","主营业务利润","管理费用","财务费用","经营费用","营业外收入","营业外支出","所得税","净利润"};
+		wsheet.addCell(new Label(0,0,"损益表", setCellFormat())); //第一行
+		wsheet.mergeCells(0, 0, titles.length, 0);
+		wsheet.addCell(new Label(0,1,DateUtil.formatDate(new Date(), "yyyy-MM-dd"), setCellFormat())); //第二行
+		wsheet.mergeCells(0, 1, titles.length, 1);
+		for(int i=0;i<titles.length;i++){
+			wsheet.addCell(new Label(i,2,titles[i], setCellFormat()));
+		}		
+		wsheet.setColumnView(0, 25);
+		List<SybReport> list = new ArrayList<SybReport>();
+		list.add(sybReport);
+		int i = 3;
+		for(SybReport syb : list){
+			wsheet.addCell(new Label(0,i,_ksrq_str.substring(0, 10)+"~"+_jsrq_str.substring(0, 10), setCellFormat()));
+			wsheet.addCell(new Label(1,i,StringUtil.formatDouble(syb.getZyywlr()), setCellFormat()));
+			wsheet.addCell(new Label(2,i,StringUtil.formatDouble(syb.getGlfy()), setCellFormat()));
+			wsheet.addCell(new Label(3,i,StringUtil.formatDouble(syb.getCwfy()), setCellFormat()));
+			wsheet.addCell(new Label(4,i,StringUtil.formatDouble(syb.getJyfy()), setCellFormat()));
+			wsheet.addCell(new Label(5,i,StringUtil.formatDouble(syb.getYywsr()), setCellFormat()));
+			wsheet.addCell(new Label(6,i,StringUtil.formatDouble(syb.getYywzc()), setCellFormat()));
+			wsheet.addCell(new Label(7,i,StringUtil.formatDouble(syb.getSds()), setCellFormat()));
+			wsheet.addCell(new Label(8,i,StringUtil.formatDouble(syb.getJlr()), setCellFormat()));
+			i++;
+		}
+		
+		wwb.write();
+		wwb.close();		
+		os.close(); 
+		return null;
+	}
+	 
 	
 	private SybReport getSybReportByRq(String _ksrq_str, String _jsrq_str){
 		SybReport sybReport = new SybReport();

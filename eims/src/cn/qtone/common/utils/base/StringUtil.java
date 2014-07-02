@@ -398,6 +398,17 @@ public class StringUtil
 	}
 	
 	/**
+	 * 格式化double数据，保留二位小数
+	 */
+	public final static String formatDouble(Double f){
+		if( f== null) return "";
+		if(f == 0) return "0";
+		
+		DecimalFormat df = new DecimalFormat(".00");
+		return df.format(f);
+	}
+	
+	/**
 	 * 测试.
 	 * @param args
 	 */

@@ -21,7 +21,7 @@ function indexOnLoad(){
 	report();
 }
 
-//查询
+//reportHtml
 function report(){	
 	if (pag == null) pag = new PageExe();
 	var qv = '_temp='+Math.random();
@@ -37,7 +37,21 @@ function report(){
 		qv
 	);
 }
-
+//reportXls
+function reportXls(){
+	if (pag == null) pag = new PageExe();
+	var qv = '_temp='+Math.random();
+	if($F('_ksrq') != ''){
+		qv += '&_ksrq=' + $F('_ksrq') +' 00:00:00';
+	}
+	if($F('_jsrq') != ''){
+		qv += '&_jsrq=' + $F('_jsrq') + ' 23:59:59';
+	}
+	base.confirm('您确信要导出EXCEL数据吗？', function() {
+		window.target="_self";
+		window.open(baseUrl + "?action=reportXls&" + qv );
+	});
+}
 //查询
 function query(){	
 	if (pag == null) pag = new PageExe();
@@ -221,7 +235,8 @@ function checkPrice(price){
 		
 	<tr>		
 		<td width="100%" align="center" colspan="6" bgcolor="#FFFFFF">
-			<input name="sub"                  type="button" onclick="report()"  class="btn01" value="报 表" />&nbsp;
+			<input name="sub"                  type="button" onclick="report()"  class="btn01" value="查 询" />&nbsp;
+			<input name="sub" sys_opt="exportXls"   type="button" onclick="reportXls()" class="btn01" value="导出xls" />			
 			<!-- <input name="sub"                  type="button" onclick="query()"  class="btn01" value="查 询" />&nbsp;
 			<input name="sub" sys_opt="save"   type="button" onclick="insert()" class="btn01" value="添 加" />&nbsp;
 			<input name="sub" sys_opt="edit"   type="button" onclick="edit()"   class="btn01" value="修 改" />&nbsp;
