@@ -72,6 +72,9 @@ function exportXls(){
 	if($F('_gsmc') != ''){
 		qv += '&gsmc__like__string=' + new BaseClass().encode($F('_gsmc'),true);
 	}
+	if($F('_khmc') != ''){
+		qv += '&khmc__like__string=' + new BaseClass().encode($F('_khmc'),true);
+	}
 	if($F('_ksrq') != ''){
 		qv += '&bgrq__gte__date=' + $F('_ksrq') +' 00:00:00';
 	}
