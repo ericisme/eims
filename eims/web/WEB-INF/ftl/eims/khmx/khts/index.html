@@ -41,6 +41,9 @@ function query(){
 	if($F('_jsrq') != ''){
 		qv += '&bgrq__lte__date=' + $F('_jsrq') + ' 23:59:59';
 	}
+	if($F('_wf') == '1'){
+		qv += '&wfje__gt__float=0.0';
+	}
 	
 	pag.query(
 		baseUrl + '?action=list',
@@ -280,6 +283,15 @@ function carTsje(rate){
 		<td align="left" bgcolor="#FFFFFF" width="8"><input type="text" name="_khmc" id="_khmc" size="12" />  </td>
 		<td  align="right" height="12" width="10%">报关单号 ：</td>
 		<td align="left" bgcolor="#FFFFFF" width="8%"><input type="text" name="_bgdh" id="_bgdh" size="12" />  </td>
+	</tr>		
+	<tr>	
+		<td  align="right" height="12" width="10%">筛选未付：</td>
+		<td align="left" bgcolor="#FFFFFF" width="8%">
+			<select id="_wf" name="_wf">
+				<option value="">---请选择---</option>
+				<option value="1">未付状态</option>
+			</select>
+		</td>	
 		<td  align="right" height="12" width="13%">
 			 报关开始日期 ：
 		</td>

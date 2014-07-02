@@ -141,6 +141,9 @@ public class SimpleManageController<T, M extends HibernateSimpleDao<T>> extends 
 				case INT:
 					value = Integer.parseInt(v);
 					break;
+				case FLOAT:
+					value = Float.parseFloat(v);
+					break;
 				case DATE:
 					value = DateUtil.parseSimpleDateTime(v);
 					break;

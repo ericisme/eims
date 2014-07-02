@@ -35,6 +35,7 @@ public class SqlExpression {
 	 * 数据类型
 	 */
 	public enum DataType {
+		FLOAT,
 		INT,
 		STRING,
 		DATE
