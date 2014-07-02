@@ -106,10 +106,10 @@ function checkForm(){
  		base.alert('请输入报关单号！',function(){$('bgdh').focus();});
  		return false;
  	}
-	if(!checkBgdh()){
+/* 	if(!checkBgdh()){
 		base.alert('您输入的报关单号已存在！',function(){$('bgdh').focus();});
 		return false;
-	}
+	} */
 	if (!$('_bgrq') || $('_bgrq').value.strip() == '') {
  		base.alert('请输入报关日期！',function(){$('_bgrq').focus();});
  		return false;

@@ -242,14 +242,18 @@ function getKhts(){
 				if(obj.message=="success"){
 					var data = obj.data;
 					document.getElementById("khmc").value = data.khmc;
+					document.getElementById("tsje").value = data.tsje;
+					cauWsje();
 				}else{
 					document.getElementById("khmc").value = "";
+					document.getElementById("tsje").value = "";
+					cauWsje();
 				}
 			}
 		}
 	);
 }
-//注入客户退税信息
+/* //注入客户退税信息
 function injectKhtsMessageByBgdh(bgdh){
 	new Ajax.Request(
 		'/eims/khmx/khts.do?action=findByBgdh', 
@@ -264,7 +268,7 @@ function injectKhtsMessageByBgdh(bgdh){
 			}
 		}
 	);
-}
+} */
 
 //计算未收金额
 function cauWsje(){

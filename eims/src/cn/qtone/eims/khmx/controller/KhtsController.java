@@ -38,31 +38,31 @@ public class KhtsController extends SimpleManageController<Khts, KhtsService>{
 
 	private KhtsService service;
 
-	public ModelAndView findByBgdh(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		//String id_str = request.getParameter("id");
-		//Khts khts = service.get(Integer.parseInt(id_str));
-		String bgdh = request.getParameter("bgdh");
-		Khts khts = service.findUniqueBy("bgdh", bgdh);
-		Map<String,Object> map = new HashMap<String,Object>();		
-		map.put("id", khts.getId());		
-		map.put("bgdh", khts.getBgdh());
-		map.put("dh", khts.getDh());
-		map.put("khmc", khts.getKhmc());
-		map.put("bgrq", DateUtil.formatDate(khts.getBgrq(),"yyyy-MM-dd"));
-		map.put("bgje", khts.getBgje());
-		map.put("fpje", khts.getFpje());
-		map.put("sfprq", khts.getSfprq());
-		map.put("tsje", khts.getTsje());
-		map.put("zftsrq", khts.getZftsrq());
-		map.put("yfje", khts.getYfje());
-		map.put("wfje", khts.getWfje());
-		map.put("fkdh", khts.getFkdh());
-		map.put("ywy", khts.getYwy());
-		map.put("dlfbz", khts.getDlfbz());
-		map.put("lrsj", DateUtil.formatDate(khts.getLrsj(),"yyyy-MM-dd"));		
-		JSONObject khtsJson = JSONObject.fromObject(map);
-		return new ModelAndView(new TextView(khtsJson.toString()));
-	}
+//	public ModelAndView findByBgdh(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//		//String id_str = request.getParameter("id");
+//		//Khts khts = service.get(Integer.parseInt(id_str));
+//		String bgdh = request.getParameter("bgdh");
+//		Khts khts = service.findUniqueBy("bgdh", bgdh);
+//		Map<String,Object> map = new HashMap<String,Object>();		
+//		map.put("id", khts.getId());		
+//		map.put("bgdh", khts.getBgdh());
+//		map.put("dh", khts.getDh());
+//		map.put("khmc", khts.getKhmc());
+//		map.put("bgrq", DateUtil.formatDate(khts.getBgrq(),"yyyy-MM-dd"));
+//		map.put("bgje", khts.getBgje());
+//		map.put("fpje", khts.getFpje());
+//		map.put("sfprq", khts.getSfprq());
+//		map.put("tsje", khts.getTsje());
+//		map.put("zftsrq", khts.getZftsrq());
+//		map.put("yfje", khts.getYfje());
+//		map.put("wfje", khts.getWfje());
+//		map.put("fkdh", khts.getFkdh());
+//		map.put("ywy", khts.getYwy());
+//		map.put("dlfbz", khts.getDlfbz());
+//		map.put("lrsj", DateUtil.formatDate(khts.getLrsj(),"yyyy-MM-dd"));		
+//		JSONObject khtsJson = JSONObject.fromObject(map);
+//		return new ModelAndView(new TextView(khtsJson.toString()));
+//	}
 	
 	public ModelAndView list(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Map<String, Object> map = this.getMapWithUser(request);
@@ -151,6 +151,7 @@ public class KhtsController extends SimpleManageController<Khts, KhtsService>{
 			map.put("khmc", khts.getKhmc());
 			map.put("bgrq", DateUtil.formatDate(khts.getBgrq(), "yyyy-MM-dd"));
 			map.put("bgje", StringUtil.formatFloat(khts.getBgje()));
+			map.put("tsje", StringUtil.formatFloat(khts.getTsje()));
 		}
 				
 		AjaxView view = new AjaxView(flag);

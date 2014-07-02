@@ -116,10 +116,10 @@ function checkForm(){
  		base.alert('请输入报关单号！',function(){$('bgdh').focus();});
  		return false;
  	}	
-	if(!checkBgdh()){
+/* 	if(!checkBgdh()){
 		base.alert('您输入的报关单号已存在！',function(){$('bgdh').focus();});
 		return false;
-	}
+	} */
 	if (!$('khmc') || $('khmc').value.strip() == '') {
  		base.alert('请输入客户名称！',function(){$('khmc').focus();});
  		return false;

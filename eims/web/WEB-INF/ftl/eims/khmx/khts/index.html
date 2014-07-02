@@ -253,6 +253,15 @@ function carWfje(){
 	var wfje = (tsje-yfje).toFixed(2);
 	document.getElementById("wfje").value = wfje;
 }
+
+function carTsje(rate){
+	var fpje = 0;//发票金额
+	if($F('fpje') != '') fpje = parseFloat($F('fpje'));
+	var tsje = 0;//退税金额
+	tsje = (fpje/1.17*rate).toFixed(2);
+	document.getElementById("tsje").value = tsje;
+	carWfje();
+}
 </script>
 <script type="text/javascript">
 	BaseClass.addOnLoad(indexOnLoad);
