@@ -52,7 +52,9 @@ function query(){
 	if($F('_jsrq') != ''){
 		qv += '&bgrq__lte__date=' + $F('_jsrq') + ' 23:59:59';
 	}
-	
+	if($F('_wf') == '1'){
+		qv += '&wfje__gt__float=0.0';
+	}	
 	pag.query(
 		baseUrl + '?action=list',
 		'_list',
@@ -81,7 +83,9 @@ function exportXls(){
 	if($F('_jsrq') != ''){
 		qv += '&bgrq__lte__date=' + $F('_jsrq') + ' 23:59:59';
 	}
-	
+	if($F('_wf') == '1'){
+		qv += '&wfje__gt__float=0.0';
+	}	
 	base.confirm('您确信要导出EXCEL数据吗？', function() {
 		window.target="_self";
 		window.open(baseUrl + "?action=exportXls&" + qv + '&orders=id__desc');
@@ -439,7 +443,23 @@ function keyDown(){
 			<input type="text" name="_jsrq" id="_jsrq" size="10" onclick="setday(this)" readonly/>
 		</td>
 	</tr>
-		
+	<tr>
+		<td  align="right" height="12" width="10%">筛选未付：</td>
+		<td align="left" bgcolor="#FFFFFF" width="8%">
+			<select id="_wf" name="_wf">
+				<option value="">---请选择---</option>
+				<option value="1">未付状态</option>
+			</select>
+		</td>	
+		<td  align="right" height="12" width="14%">
+		</td>
+		<td align="left" bgcolor="#FFFFFF" width="6%">
+		</td>			
+		<td  align="right" width="14%">
+		</td>
+		<td align="left" bgcolor="#FFFFFF" width="6%">
+		</td>
+	</tr>		
 	<tr>		
 		<td width="100%" align="center" colspan="10" bgcolor="#FFFFFF">
 			<input name="sub"                  type="button" onclick="query()"  class="btn01" value="查 询" />&nbsp;

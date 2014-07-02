@@ -70,7 +70,9 @@ function exportXls(){
 	if($F('_jsrq') != ''){
 		qv += '&bgrq__lte__date=' + $F('_jsrq') + ' 23:59:59';
 	}
-	
+	if($F('_wf') == '1'){
+		qv += '&wfje__gt__float=0.0';
+	}	
 	base.confirm('您确信要导出EXCEL数据吗？', function() {
 		window.target="_self";
 		window.open(baseUrl + "?action=exportXls&" + qv + '&orders=id__desc');

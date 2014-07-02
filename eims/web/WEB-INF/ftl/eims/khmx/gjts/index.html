@@ -40,7 +40,9 @@ function query(){
 	if($F('_jsrq') != ''){
 		qv += '&tsrq__lte__date=' + $F('_jsrq') + ' 23:59:59';
 	}
-	
+	if($F('_ws') == '1'){
+		qv += '&wsje__gt__float=0.0';
+	}	
 	pag.query(
 		baseUrl + '?action=list',
 		'_list',
@@ -66,7 +68,9 @@ function exportXls(){
 	if($F('_jsrq') != ''){
 		qv += '&tsrq__lte__date=' + $F('_jsrq') + ' 23:59:59';
 	}
-	
+	if($F('_ws') == '1'){
+		qv += '&wsje__gt__float=0.0';
+	}		
 	base.confirm('您确信要导出EXCEL数据吗？', function() {
 		window.target="_self";
 		window.open(baseUrl + "?action=exportXls&" + qv + '&orders=id__desc');
@@ -299,6 +303,15 @@ function cauWsje(){
 		<td align="left" bgcolor="#FFFFFF"><input type="text" name="_khmc" id="_khmc" size="12" /></td>
 		<td  align="right" height="12" width="8%">单号 ：</td>
 		<td align="left" bgcolor="#FFFFFF"><input type="text" name="_dh" id="_dh" size="12" />  </td>
+	</tr>		
+	<tr>
+		<td  align="right" height="12" width="10%">筛选未收：</td>
+		<td align="left" bgcolor="#FFFFFF" width="8%">
+			<select id="_ws" name="_ws">
+				<option value="">---请选择---</option>
+				<option value="1">未收状态</option>
+			</select>
+		</td>	
 		<td  align="right" height="12" width="14%">
 			 收退税开始日期 ：
 		</td>
