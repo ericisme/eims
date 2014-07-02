@@ -18,6 +18,7 @@ import jxl.write.WriteException;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Projections;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -26,14 +27,132 @@ import cn.qtone.common.mvc.view.spring.AjaxView;
 import cn.qtone.common.simplemvc.controller.SimpleManageController;
 import cn.qtone.common.utils.base.DateUtil;
 import cn.qtone.common.utils.base.StringUtil;
+import cn.qtone.eims.fymx.cwfy.domain.Cwfy;
+import cn.qtone.eims.fymx.sds.domain.Sds;
+import cn.qtone.eims.fymx.yggz.domain.Yggz;
+import cn.qtone.eims.khmx.domain.Fkzf;
+import cn.qtone.eims.khmx.domain.Khqk;
+import cn.qtone.eims.khmx.domain.Tczc;
+import cn.qtone.eims.khmx.domain.Yywsr;
 import cn.qtone.eims.lb.domain.Syb;
+import cn.qtone.eims.lb.domain.SybReport;
 import cn.qtone.eims.lb.service.SybService;
 import cn.qtone.eims.util.EimsUtil;
 
 public class SybController extends SimpleManageController<Syb, SybService>{
 
 	private SybService service;
-
+	private String reportPage;
+	
+	/**
+	 * 报表html
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public ModelAndView report(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Map<String, Object> map = this.getMapWithUser(request);
+		String _ksrq_str = request.getParameter("_ksrq");
+		String _jsrq_str = request.getParameter("_jsrq");	
+		if(StringUtil.isNullAndBlank(_ksrq_str))
+			_ksrq_str = "1900-01-01 00:00:00";
+		if(StringUtil.isNullAndBlank(_jsrq_str))
+			_jsrq_str = "2099-12-31 23:59:59";		
+		map.put("ksrq",_ksrq_str.substring(0, 10));
+		map.put("jsrq",_jsrq_str.substring(0, 10));
+		map.put("entity",getSybReportByRq(_ksrq_str, _jsrq_str));
+		return new ModelAndView(getReportPage(), map);
+	}
+	
+	private SybReport getSybReportByRq(String _ksrq_str, String _jsrq_str){
+		SybReport sybReport = new SybReport();
+		//主营业务费用
+		Float zyywlr = (Float) getDomainService().createCriteria(Khqk.class)
+				.add(Expression.ge("bgrq", DateUtil.parseSimpleDateTime(_ksrq_str)))
+				.add(Expression.le("bgrq", DateUtil.parseSimpleDateTime(_jsrq_str)))
+				.setProjection(Projections.sum("hj")).uniqueResult();
+		System.out.println("zyywlr:"+zyywlr);
+		sybReport.setZyywlr(Double.parseDouble(String.valueOf(zyywlr)));
+		//管理费用
+		Double glfymx = (Double) getDomainService().createCriteria(Cwfy.class)
+				.add(Expression.ge("fyrq", _ksrq_str.substring(0, 10)))
+				.add(Expression.le("fyrq", _jsrq_str.substring(0, 10)))
+				.add(Expression.like("type", "30%"))
+				.setProjection(Projections.sum("je")).uniqueResult();	
+		Double yggz = (Double) getDomainService().createCriteria(Yggz.class)
+				.add(Expression.ge("gzrq", _ksrq_str.substring(0, 10)))
+				.add(Expression.le("gzrq", _jsrq_str.substring(0, 10)))
+				.setProjection(Projections.sum("yfgz")).uniqueResult();	
+		System.out.println("glfymx:"+glfymx);		 
+		System.out.println("yggz:"+yggz);	
+		sybReport.setGlfy(glfymx+yggz);
+		//财务费用
+		Double cwfy101 = (Double) getDomainService().createCriteria(Cwfy.class)
+				.add(Expression.ge("fyrq", _ksrq_str.substring(0, 10)))
+				.add(Expression.le("fyrq", _jsrq_str.substring(0, 10)))
+				.add(Expression.like("type", "101"))
+				.setProjection(Projections.sum("je")).uniqueResult();	
+		Double cwfy102 = (Double) getDomainService().createCriteria(Cwfy.class)
+				.add(Expression.ge("fyrq", _ksrq_str.substring(0, 10)))
+				.add(Expression.le("fyrq", _jsrq_str.substring(0, 10)))
+				.add(Expression.like("type", "102"))
+				.setProjection(Projections.sum("je")).uniqueResult();	
+		Double cwfy103 = (Double) getDomainService().createCriteria(Cwfy.class)
+				.add(Expression.ge("fyrq", _ksrq_str.substring(0, 10)))
+				.add(Expression.le("fyrq", _jsrq_str.substring(0, 10)))
+				.add(Expression.like("type", "103"))
+				.setProjection(Projections.sum("je")).uniqueResult();	
+		Double cwfy104 = (Double) getDomainService().createCriteria(Cwfy.class)
+				.add(Expression.ge("fyrq", _ksrq_str.substring(0, 10)))
+				.add(Expression.le("fyrq", _jsrq_str.substring(0, 10)))
+				.add(Expression.like("type", "104"))
+				.setProjection(Projections.sum("je")).uniqueResult();	
+		System.out.println("cwfy:"+(cwfy101-cwfy102+cwfy103+cwfy104));
+		sybReport.setCwfy(cwfy101-cwfy102+cwfy103+cwfy104);
+		//经营费用
+		Float fkzf = (Float) getDomainService().createCriteria(Fkzf.class)
+				.add(Expression.ge("bgrq", DateUtil.parseSimpleDateTime(_ksrq_str)))
+				.add(Expression.le("bgrq", DateUtil.parseSimpleDateTime(_jsrq_str)))
+				.setProjection(Projections.sum("hj")).uniqueResult();
+		System.out.println("fkzf:"+fkzf);
+		Float tczc = (Float) getDomainService().createCriteria(Tczc.class)
+				.add(Expression.ge("bgrq", DateUtil.parseSimpleDateTime(_ksrq_str)))
+				.add(Expression.le("bgrq", DateUtil.parseSimpleDateTime(_jsrq_str)))
+				.setProjection(Projections.sum("fyjehj")).uniqueResult();
+		System.out.println("fkzf:"+fkzf);
+		System.out.println("tczc:"+tczc);
+		sybReport.setJyfy(Double.parseDouble(String.valueOf(fkzf))+Double.parseDouble(String.valueOf(tczc)));
+		//营业外收入
+		Float yywsr = (Float) getDomainService().createCriteria(Yywsr.class)
+				.add(Expression.ge("ny", DateUtil.parseSimpleDateTime(_ksrq_str)))
+				.add(Expression.le("ny", DateUtil.parseSimpleDateTime(_jsrq_str)))
+				.setProjection(Projections.sum("je")).uniqueResult();
+		System.out.println("yywsr:"+yywsr);
+		sybReport.setYywsr(Double.parseDouble(String.valueOf(yywsr)));
+		//营业外支出
+		Double yywzc = (Double) getDomainService().createCriteria(Cwfy.class)
+				.add(Expression.ge("fyrq", _ksrq_str.substring(0, 10)))
+				.add(Expression.le("fyrq", _jsrq_str.substring(0, 10)))
+				.add(Expression.like("type", "20%"))
+				.setProjection(Projections.sum("je")).uniqueResult();	
+		System.out.println("yywzc:"+yywzc);
+		sybReport.setYywzc(yywzc);
+		//所得税
+		Double sds = (Double) getDomainService().createCriteria(Sds.class)
+				.add(Expression.ge("fyrq", _ksrq_str.substring(0, 10)))
+				.add(Expression.le("fyrq", _jsrq_str.substring(0, 10)))
+				.setProjection(Projections.sum("je")).uniqueResult();	
+		System.out.println("sds:"+sds);
+		sybReport.setSds(sds);
+		//净利润
+		//主营业务利润-管理费用-财务费用-经营费用+营业外收入-营业外支出-所得税=净利润
+		sybReport.setJlr(sybReport.getZyywlr()-sybReport.getGlfy()-sybReport.getCwfy()-sybReport.getJyfy()+sybReport.getYywsr()-sybReport.getYywzc()-sybReport.getSds());
+		//return
+		return sybReport;
+	}
+	
+	
 	public ModelAndView list(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Map<String, Object> map = this.getMapWithUser(request);
 		int curPage = this.getCurrentPage(request); // 当前查询页数
@@ -161,5 +280,14 @@ public class SybController extends SimpleManageController<Syb, SybService>{
 		cell.setVerticalAlignment(jxl.format.VerticalAlignment.CENTRE);
 		
 		return cell;
+	}
+
+	public String getReportPage() {
+		return reportPage;
+	}
+
+
+	public void setReportPage(String reportPage) {
+		this.reportPage = reportPage;
 	}
 }

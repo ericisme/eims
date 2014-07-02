@@ -1,0 +1,41 @@
+<!-- auto generated -->
+<html>
+<body id="main_body">
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_table" style="word-break:break-all">
+	<tr class="list_title">
+    	<td width="10%" align="center">日期</td>    	
+    	<td width="4%" align="center">主营业务利润</td>
+    	<td width="4%" align="center">管理费用</td>
+    	<td width="4%" align="center">财务费用</td>
+    	<td width="4%" align="center">经营费用</td>
+    	<td width="4%" align="center">营业外收入</td>
+    	<td width="4%" align="center">营业外支出</td> 
+    	<td width="4%" align="center">所得税</td>
+    	<td width="4%" align="center">净利润</td>
+    	<!-- <td width="4%" align="center">录入时间</td> -->
+	</tr>
+
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+	  	<td align="center">
+	  	${ksrq!}~${jsrq}
+	  	</td>
+	  	<td align="center">${entity.zyywlr?string("0.##")}</td>
+	  	<td align="center">${entity.glfy?string("0.##")}</td>
+	  	<td align="center">${entity.cwfy?string("0.##")}</td>
+	  	<td align="center">${entity.jyfy?string("0.##")}</td>
+	  	<td align="center">${entity.yywsr?string("0.##")}</td>
+	  	<td align="center">${entity.yywzc?string("0.##")}</td>
+	  	<td align="center">${entity.sds?string("0.##")}</td>
+	  	<td align="center">${entity.jlr?string("0.##")}</td>
+	</tr>
+
+
+</table>
+<table width="100%" border="0" cellpadding="5" cellspacing="1">
+	<tr>
+		<td width="60%">&nbsp;</td>
+		<td align="right"></td>
+	</tr>
+</table>
+</body>
+</html>

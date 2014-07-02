@@ -18,7 +18,24 @@ var baseUrl = '/eims/lb/syb.do';
 
 //初始化index
 function indexOnLoad(){	
-	query();
+	report();
+}
+
+//查询
+function report(){	
+	if (pag == null) pag = new PageExe();
+	var qv = '_temp='+Math.random();
+	if($F('_ksrq') != ''){
+		qv += '&_ksrq=' + $F('_ksrq') +' 00:00:00';
+	}
+	if($F('_jsrq') != ''){
+		qv += '&_jsrq=' + $F('_jsrq') + ' 23:59:59';
+	}
+	pag.query(
+		baseUrl + '?action=report',
+		'_list',
+		qv
+	);
 }
 
 //查询
@@ -204,11 +221,12 @@ function checkPrice(price){
 		
 	<tr>		
 		<td width="100%" align="center" colspan="6" bgcolor="#FFFFFF">
-			<input name="sub"                  type="button" onclick="query()"  class="btn01" value="查 询" />&nbsp;
+			<input name="sub"                  type="button" onclick="report()"  class="btn01" value="报 表" />&nbsp;
+			<!-- <input name="sub"                  type="button" onclick="query()"  class="btn01" value="查 询" />&nbsp;
 			<input name="sub" sys_opt="save"   type="button" onclick="insert()" class="btn01" value="添 加" />&nbsp;
 			<input name="sub" sys_opt="edit"   type="button" onclick="edit()"   class="btn01" value="修 改" />&nbsp;
 			<input name="sub" sys_opt="remove" type="button" onclick="remove()" class="btn01" value="删 除">&nbsp;
-			<input name="sub" sys_opt="exportXls"   type="button" onclick="exportXls()" class="btn01" value="导出xls" />&nbsp;
+			<input name="sub" sys_opt="exportXls"   type="button" onclick="exportXls()" class="btn01" value="导出xls" />&nbsp; -->
 		</td>
 	</tr>
 </table>
