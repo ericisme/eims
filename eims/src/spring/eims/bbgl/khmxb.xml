@@ -4,6 +4,7 @@
 	
 	<bean id="khmxbController" parent="mvc_parentController" class="cn.qtone.eims.bbgl.khmxb.controller.KhmxbController">
 	    <property name="listPage" value="/eims/bbgl/khmxb/list"></property>
+	    <property name="list2Page" value="/eims/bbgl/khmxb/list2"></property>
 		<property name="indexPage" value="/eims/bbgl/khmxb/index"></property>
 		<property name="printPage" value="/eims/bbgl/khmxb/print"></property>
 		

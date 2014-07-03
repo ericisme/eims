@@ -72,48 +72,49 @@ public class KhmxbController extends BaseManageController{
 		if(StringUtil.isNullAndBlank(jsrq))
 			jsrq = "2099-12-31 23:59:59";			
 		Criteria criteria = khtsService.createCriteria(Khts.class);
+		Criteria criteria_sum = khtsService.createCriteria(Khts.class);
 		if(!StringUtil.isNullAndBlank(bgdh)){
 			criteria.add(Expression.like("bgdh", "%"+bgdh+"%"));
+			criteria_sum.add(Expression.like("bgdh", "%"+bgdh+"%"));
 		}
 		if(!StringUtil.isNullAndBlank(khmc)){
 			criteria.add(Expression.like("khmc", "%"+khmc+"%"));
+			criteria_sum.add(Expression.like("khmc", "%"+khmc+"%"));
 		}
 		if(!StringUtil.isNullAndBlank(ywy)){
 			criteria.add(Expression.like("ywy", "%"+ywy+"%"));
+			criteria_sum.add(Expression.like("ywy", "%"+ywy+"%"));
 		}
 		criteria.add(Expression.ge("bgrq", DateUtil.parseSimpleDateTime(ksrq)));
+		criteria_sum.add(Expression.ge("bgrq", DateUtil.parseSimpleDateTime(ksrq)));
 		criteria.add(Expression.le("bgrq", DateUtil.parseSimpleDateTime(jsrq)));
-		if(!StringUtil.isNullAndBlank(gsmc)){		
-			List<Fkzf> _fkzf = fkzfService.createCriteria(Fkzf.class).add(Expression.like("gsmc","%"+gsmc+"%")).list();
-			List<String> bgdh_list = new ArrayList<String>();
-			for(Fkzf fkzf : _fkzf){
-				bgdh_list.add(fkzf.getBgdh());
-			}
-			if(_fkzf.size()>0){
-				criteria.add(Expression.in("bgdh", bgdh_list));
-			}			
-		}		
-		System.out.println("bgdh:"+bgdh);
-		System.out.println("khmc:"+khmc);
-		System.out.println("ywy:"+ywy);
-		System.out.println("ksrq:"+ksrq);
-		System.out.println("jsrq:"+jsrq);
-		System.out.println("gsmc:"+gsmc);
+		criteria_sum.add(Expression.le("bgrq", DateUtil.parseSimpleDateTime(jsrq)));
+		if(!StringUtil.isNullAndBlank(gsmc)){	
+			criteria.add(Expression.in("bgdh", fkzfService.createCriteria(Fkzf.class).add(Expression.like("gsmc","%"+gsmc+"%")).setProjection(Projections.property("bgdh")).list()));
+			criteria_sum.add(Expression.in("bgdh", fkzfService.createCriteria(Fkzf.class).add(Expression.like("gsmc","%"+gsmc+"%")).setProjection(Projections.property("bgdh")).list()));
+		}
 		int curPage = this.getCurrentPage(request); // 当前查询页数
 		Page page = khtsService.pagedQuery(criteria, curPage, Page.DEFAULT_PAGE_SIZE);
 		//TODO 完善page对象
-		page.setPaginate(this.getAjaxPage(request, curPage, page, "jump"));
-		//map.put("page", page);
-		List<Khts> khts_list = (List<Khts>) page.getResult();
+		page.setPaginate(this.getAjaxPage(request, curPage, page, "jump"));		
 		List<KhmxbDto> KhmxbDto_list = new ArrayList<KhmxbDto>();
-		for(Khts khts : khts_list){
-			System.out.println("bgdh:"+khts.getBgdh()+" khmc:"+khts.getKhmc()+" ywy:"+khts.getYwy());
+		for(Khts khts : (List<Khts>) page.getResult()){
 			KhmxbDto_list.add(getKhmxbDtoBykhts(khts));
 		}
+		page.setResult(KhmxbDto_list);
 		
-		
-		
-		
+		boolean lastPage = EimsUtil.ifLastPage(curPage, page);
+		if(lastPage){			
+			Page pageAll = khtsService.pagedQuery(criteria_sum, curPage, 999999999);
+			List<KhmxbDto> KhmxbDto_list_all = new ArrayList<KhmxbDto>();
+			for(Khts khts : (List<Khts>) pageAll.getResult()){
+				KhmxbDto_list_all.add(getKhmxbDtoBykhts(khts));
+			}
+			KhmxbSumDto KhmxbDto_sum = sumKhmxbDto(KhmxbDto_list_all);
+			map.put("hj", KhmxbDto_sum);
+		}		
+		map.put("page", page);	
+		map.put("ifLastPage",lastPage);	
 		return new ModelAndView(this.getList2Page(), map);
 	}
 	
@@ -126,6 +127,8 @@ public class KhmxbController extends BaseManageController{
 		khmxbDto.setHzdw(getStrByStrList(_gsmc));
 		//报关日期
 		khmxbDto.setBgrq(DateUtil.formatDate(khts.getBgrq(),"yyyy-MM-dd"));
+		//报关单号
+		khmxbDto.setBgdh(khts.getBgdh());
 		//报关金额
 		khmxbDto.setBgje(khts.getBgje());
 		//发票金额
@@ -141,9 +144,333 @@ public class KhmxbController extends BaseManageController{
 		khmxbDto.setSdgstsrq(getStrByDateList(_sdgstsrq));
 		//代理费
 		Float dlf = (Float) khqkService.createCriteria(Khqk.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("dlf")).uniqueResult();
-		khmxbDto.setDlf(dlf);
+		khmxbDto.setDlf(nullToZero(dlf));
+		
+		//报关费 收入
+		Float bgf_sr = (Float) khqkService.createCriteria(Khqk.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("bgf")).uniqueResult();
+		khmxbDto.setBgf_sr(nullToZero(bgf_sr));
+		//报关费 成本
+		Float bgf_cb = (Float) fkzfService.createCriteria(Fkzf.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("bgf")).uniqueResult();
+		khmxbDto.setBgf_cb(nullToZero(bgf_cb));
+		//广建费  收入
+		Float guangjf_sr = (Float) khqkService.createCriteria(Khqk.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("gjf")).uniqueResult();
+		khmxbDto.setGuangjf_sr(nullToZero(guangjf_sr));
+		//广建费  成本
+		Float guangjf_cb = (Float) fkzfService.createCriteria(Fkzf.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("gjf")).uniqueResult();
+		khmxbDto.setGuangjf_cb(nullToZero(guangjf_cb));
+		//国检费  收入
+		Float goujf_sr = (Float) khqkService.createCriteria(Khqk.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("gj")).uniqueResult();
+		khmxbDto.setGoujf_sr(nullToZero(goujf_sr));
+		//国检费  成本
+		Float goujf_cb = (Float) fkzfService.createCriteria(Fkzf.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("gj")).uniqueResult();
+		khmxbDto.setGoujf_cb(nullToZero(goujf_cb));
+		//商检费  收入
+		Float sjf_sr = (Float) khqkService.createCriteria(Khqk.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("sjf")).uniqueResult();
+		khmxbDto.setSjf_sr(nullToZero(sjf_sr));
+		//商检费  成本
+		Float sjf_cb = (Float) fkzfService.createCriteria(Fkzf.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("sjf")).uniqueResult();
+		khmxbDto.setSjf_cb(nullToZero(sjf_cb));
+		//续页费  收入
+		Float xyf_sr = (Float) khqkService.createCriteria(Khqk.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("xyf")).uniqueResult();
+		khmxbDto.setXyf_sr(nullToZero(xyf_sr));
+		//续页费  成本
+		Float xyf_cb = (Float) fkzfService.createCriteria(Fkzf.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("xyf")).uniqueResult();
+		khmxbDto.setXyf_cb(nullToZero(xyf_cb));
+		//连柜费  收入
+		Float lgf_sr = (Float) khqkService.createCriteria(Khqk.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("lgf")).uniqueResult();
+		khmxbDto.setLgf_sr(nullToZero(lgf_sr));
+		//连柜费  成本
+		Float lgf_cb = (Float) fkzfService.createCriteria(Fkzf.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("lgf")).uniqueResult();
+		khmxbDto.setLgf_cb(nullToZero(lgf_cb));
+		//拖车费  收入
+		Float tcf_sr = (Float) khqkService.createCriteria(Khqk.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("tcf")).uniqueResult();
+		khmxbDto.setTcf_sr(nullToZero(tcf_sr));
+		//拖车费  成本
+		Float tcf_cb = (Float) fkzfService.createCriteria(Fkzf.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("tcf")).uniqueResult();
+		khmxbDto.setTcf_cb(nullToZero(tcf_cb));
+		//扫描费  收入
+		Float smf_sr = (Float) khqkService.createCriteria(Khqk.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("smf")).uniqueResult();
+		khmxbDto.setSmf_sr(nullToZero(smf_sr));
+		//扫描费  成本
+		Float smf_cb = (Float) fkzfService.createCriteria(Fkzf.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("smf")).uniqueResult();
+		khmxbDto.setSmf_cb(nullToZero(smf_cb));
+		//查柜费  收入
+		Float cgf_sr = (Float) khqkService.createCriteria(Khqk.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("cgf")).uniqueResult();
+		khmxbDto.setCgf_sr(nullToZero(cgf_sr));
+		//查柜费  成本
+		Float cgf_cb = (Float) fkzfService.createCriteria(Fkzf.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("cgf")).uniqueResult();
+		khmxbDto.setCgf_cb(nullToZero(cgf_cb));
+		//熏蒸费  收入
+		Float xzf_sr = (Float) khqkService.createCriteria(Khqk.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("xzf")).uniqueResult();
+		khmxbDto.setXzf_sr(nullToZero(xzf_sr));
+		//熏蒸费  成本
+		Float xzf_cb = (Float) fkzfService.createCriteria(Fkzf.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("xzf")).uniqueResult();
+		khmxbDto.setXzf_cb(nullToZero(xzf_cb));
+		//加签  收入
+		Float jq_sr = (Float) khqkService.createCriteria(Khqk.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("jq")).uniqueResult();
+		khmxbDto.setJq_sr(nullToZero(jq_sr));
+		//加签  成本
+		Float jq_cb = (Float) fkzfService.createCriteria(Fkzf.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("jq")).uniqueResult();
+		khmxbDto.setJq_cb(nullToZero(jq_cb));
+		//信用证费  收入
+		Float xyzf_sr = (Float) khqkService.createCriteria(Khqk.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("xyzf")).uniqueResult();
+		khmxbDto.setXyzf_sr(nullToZero(xyzf_sr));
+		//信用证费  成本
+		Float xyzf_cb = (Float) fkzfService.createCriteria(Fkzf.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("xyzf")).uniqueResult();
+		khmxbDto.setXyzf_cb(nullToZero(xyzf_cb));
+		//产地证费  收入
+		Float cdzf_sr = (Float) khqkService.createCriteria(Khqk.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("cdzf")).uniqueResult();
+		khmxbDto.setCdzf_sr(nullToZero(cdzf_sr));
+		//产地证费  成本
+		Float cdzf_cb = (Float) fkzfService.createCriteria(Fkzf.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("cdzf")).uniqueResult();
+		khmxbDto.setCdzf_cb(nullToZero(cdzf_cb));
+		//空白单证费  收入
+		Float kbdzf_sr = (Float) khqkService.createCriteria(Khqk.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("kbdzf")).uniqueResult();
+		khmxbDto.setKbdzf_sr(nullToZero(kbdzf_sr));
+		//空白单证费  成本
+		Float kbdzf_cb = (Float) fkzfService.createCriteria(Fkzf.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("kbdzf")).uniqueResult();
+		khmxbDto.setKbdzf_cb(nullToZero(kbdzf_cb));
+		//快递费  收入
+		Float kdf_sr = (Float) khqkService.createCriteria(Khqk.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("kdf")).uniqueResult();
+		khmxbDto.setKdf_sr(nullToZero(kdf_sr));
+		//快递费  成本
+		Float kdf_cb = (Float) fkzfService.createCriteria(Fkzf.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("kdf")).uniqueResult();
+		khmxbDto.setKdf_cb(nullToZero(kdf_cb));
+		//驳船费  收入
+		Float bcf_sr = (Float) khqkService.createCriteria(Khqk.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("bcf")).uniqueResult();
+		khmxbDto.setBcf_sr(nullToZero(bcf_sr));
+		//驳船费  成本
+		Float bcf_cb = (Float) fkzfService.createCriteria(Fkzf.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("bcf")).uniqueResult();
+		khmxbDto.setBcf_cb(nullToZero(bcf_cb));
+		//封条费  收入
+		Float ftf_sr = (Float) khqkService.createCriteria(Khqk.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("ftf")).uniqueResult();
+		khmxbDto.setFtf_sr(nullToZero(ftf_sr));
+		//封条费  成本
+		Float ftf_cb = (Float) fkzfService.createCriteria(Fkzf.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("ftf")).uniqueResult();
+		khmxbDto.setFtf_cb(nullToZero(ftf_cb));
+		//仓单费  收入
+		Float cdf_sr = (Float) khqkService.createCriteria(Khqk.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("cdf")).uniqueResult();
+		khmxbDto.setCdf_sr(nullToZero(cdf_sr));
+		//仓单费  成本
+		Float cdf_cb = (Float) fkzfService.createCriteria(Fkzf.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("cdf")).uniqueResult();
+		khmxbDto.setCdf_cb(nullToZero(cdf_cb));
+		//过磅费  收入
+		Float gpf_sr = (Float) khqkService.createCriteria(Khqk.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("gpf")).uniqueResult();
+		khmxbDto.setGpf_sr(nullToZero(gpf_sr));
+		//过磅费  成本
+		Float gpf_cb = (Float) fkzfService.createCriteria(Fkzf.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("gpf")).uniqueResult();
+		khmxbDto.setGpf_cb(nullToZero(gpf_cb));
+		//换证凭条费  收入
+		Float hzptf_sr = (Float) khqkService.createCriteria(Khqk.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("hzptf")).uniqueResult();
+		khmxbDto.setHzptf_sr(nullToZero(hzptf_sr));
+		//换证凭条费  成本
+		Float hzptf_cb = (Float) fkzfService.createCriteria(Fkzf.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("hzptf")).uniqueResult();
+		khmxbDto.setHzptf_cb(nullToZero(hzptf_cb));
+		//其他  收入
+		Float qt_sr = (Float) khqkService.createCriteria(Khqk.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("qt")).uniqueResult();
+		khmxbDto.setQt_sr(nullToZero(qt_sr));
+		//其他  成本
+		Float qt_cb = (Float) fkzfService.createCriteria(Fkzf.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("qt")).uniqueResult();
+		khmxbDto.setQt_cb(nullToZero(qt_cb));
+		
+		//合计  收入
+		Float hj_sr = (Float) khqkService.createCriteria(Khqk.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("hj")).uniqueResult();
+		khmxbDto.setHj_sr(nullToZero(hj_sr));
+		//拖车  成本
+		Float tczc_fyjehj = (Float) tczcService.createCriteria(Tczc.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("fyjehj")).uniqueResult();
+		Float hj_cb = (Float) fkzfService.createCriteria(Fkzf.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("hj")).uniqueResult();
+		//总成本，成本合计+拖车成本
+		Float sum_cb = (hj_cb==null?0L:hj_cb) + (tczc_fyjehj==null?0L:tczc_fyjehj);
+		//合计  成本
+		khmxbDto.setHj_cb(sum_cb);
+
+		//毛利
+		Float ml = (hj_sr==null?0L:hj_sr)-sum_cb;
+		khmxbDto.setMl(ml);
+		//利润, 毛利+代理费
+		Float lr = ml + (dlf==null?0L:dlf);
+		khmxbDto.setLr(lr);
+		//业务员
+		khmxbDto.setYwy(khts.getYwy());
+		//代理费标准
+		khmxbDto.setDlfbz(khts.getDlfbz());
 		
 		return khmxbDto;
+	}
+	
+	private KhmxbSumDto sumKhmxbDto(List<KhmxbDto> _khmxbDto){
+		KhmxbSumDto ks = new KhmxbSumDto();
+		for(KhmxbDto k : _khmxbDto){
+			//报关金额
+			ks.setBgje(ks.getBgje().add((new BigDecimal(String.valueOf(k.getBgje())))));
+			//发票金额
+			ks.setFpje(ks.getFpje().add(new BigDecimal(String.valueOf(k.getFpje()))));
+			//退税金额
+			ks.setTsje(ks.getTsje().add(new BigDecimal(String.valueOf(k.getTsje()))));
+			//代理费
+			ks.setDlf(ks.getDlf().add((new BigDecimal(String.valueOf(k.getDlf())))));
+			//报关费 	
+			ks.setBgf_sr(ks.getBgf_sr().add((new BigDecimal(String.valueOf(k.getBgf_sr())))));
+			ks.setBgf_cb(ks.getBgf_cb().add((new BigDecimal(String.valueOf(k.getBgf_cb())))));
+			//广建费 
+			ks.setGuangjf_sr(ks.getGuangjf_sr().add((new BigDecimal(String.valueOf(k.getGuangjf_sr())))));
+			ks.setGuangjf_cb(ks.getGuangjf_cb().add((new BigDecimal(String.valueOf(k.getGuangjf_cb())))));
+			//国检费 
+			ks.setGoujf_sr(ks.getGoujf_sr().add((new BigDecimal(String.valueOf(k.getGoujf_sr())))));
+			ks.setGoujf_cb(ks.getGoujf_cb().add((new BigDecimal(String.valueOf(k.getGoujf_cb())))));
+			//商检费 
+			ks.setSjf_sr(ks.getSjf_sr().add((new BigDecimal(String.valueOf(k.getSjf_sr())))));
+			ks.setSjf_cb(ks.getSjf_cb().add((new BigDecimal(String.valueOf(k.getSjf_cb())))));
+			//续页费 
+			ks.setXyf_sr(ks.getXyf_sr().add((new BigDecimal(String.valueOf(k.getXyf_sr())))));
+			ks.setXyf_cb(ks.getXyf_cb().add((new BigDecimal(String.valueOf(k.getXyf_cb())))));
+			//连柜费 
+			ks.setLgf_sr(ks.getLgf_sr().add((new BigDecimal(String.valueOf(k.getLgf_sr())))));
+			ks.setLgf_cb(ks.getLgf_cb().add((new BigDecimal(String.valueOf(k.getLgf_cb())))));
+			//拖车费 
+			ks.setTcf_sr(ks.getTcf_sr().add((new BigDecimal(String.valueOf(k.getTcf_sr())))));
+			ks.setTcf_cb(ks.getTcf_cb().add((new BigDecimal(String.valueOf(k.getTcf_cb())))));
+			//扫描费
+			ks.setSmf_sr(ks.getSmf_sr().add((new BigDecimal(String.valueOf(k.getSmf_sr())))));
+			ks.setSmf_cb(ks.getSmf_cb().add((new BigDecimal(String.valueOf(k.getSmf_cb())))));
+			//查柜费
+			ks.setCgf_sr(ks.getCgf_sr().add((new BigDecimal(String.valueOf(k.getCgf_sr())))));
+			ks.setCgf_cb(ks.getCgf_cb().add((new BigDecimal(String.valueOf(k.getCgf_cb())))));
+			//熏蒸费 
+			ks.setXzf_sr(ks.getXzf_sr().add((new BigDecimal(String.valueOf(k.getXzf_sr())))));
+			ks.setXzf_cb(ks.getXzf_cb().add((new BigDecimal(String.valueOf(k.getXzf_cb())))));
+			//加签 
+			ks.setJq_sr(ks.getJq_sr().add((new BigDecimal(String.valueOf(k.getJq_sr())))));
+			ks.setJq_cb(ks.getJq_cb().add((new BigDecimal(String.valueOf(k.getJq_cb())))));
+			//信用证费 
+			ks.setXyzf_sr(ks.getXyzf_sr().add((new BigDecimal(String.valueOf(k.getXyzf_sr())))));
+			ks.setXyzf_cb(ks.getXyzf_cb().add((new BigDecimal(String.valueOf(k.getXyzf_cb())))));
+			//产地证费 
+			ks.setCdzf_sr(ks.getCdzf_sr().add((new BigDecimal(String.valueOf(k.getCdzf_sr())))));
+			ks.setCdzf_cb(ks.getCdzf_cb().add((new BigDecimal(String.valueOf(k.getCdzf_cb())))));
+			//空白单证费 
+			ks.setKbdzf_sr(ks.getKbdzf_sr().add((new BigDecimal(String.valueOf(k.getKbdzf_sr())))));
+			ks.setKbdzf_cb(ks.getKbdzf_cb().add((new BigDecimal(String.valueOf(k.getKbdzf_cb())))));
+			//快递费 
+			ks.setKdf_sr(ks.getKdf_sr().add((new BigDecimal(String.valueOf(k.getKdf_sr())))));
+			ks.setKdf_cb(ks.getKdf_cb().add((new BigDecimal(String.valueOf(k.getKdf_cb())))));
+			//驳船费 
+			ks.setBcf_sr(ks.getBcf_sr().add((new BigDecimal(String.valueOf(k.getBcf_sr())))));
+			ks.setBcf_cb(ks.getBcf_cb().add((new BigDecimal(String.valueOf(k.getBcf_cb())))));
+			//封条费 
+			ks.setFtf_sr(ks.getFtf_sr().add((new BigDecimal(String.valueOf(k.getFtf_sr())))));
+			ks.setFtf_cb(ks.getFtf_cb().add((new BigDecimal(String.valueOf(k.getFtf_cb())))));
+			//仓单费 
+			ks.setCdf_sr(ks.getCdf_sr().add((new BigDecimal(String.valueOf(k.getCdf_sr())))));
+			ks.setCdf_cb(ks.getCdf_cb().add((new BigDecimal(String.valueOf(k.getCdf_cb())))));
+			//过磅费 
+			ks.setGpf_sr(ks.getGpf_sr().add((new BigDecimal(String.valueOf(k.getGpf_sr())))));
+			ks.setGpf_cb(ks.getGpf_cb().add((new BigDecimal(String.valueOf(k.getGpf_cb())))));
+			//换证凭条费 
+			ks.setHzptf_sr(ks.getHzptf_sr().add((new BigDecimal(String.valueOf(k.getHzptf_sr())))));
+			ks.setHzptf_cb(ks.getHzptf_cb().add((new BigDecimal(String.valueOf(k.getHzptf_cb())))));
+			//其他 
+			ks.setQt_sr(ks.getQt_sr().add((new BigDecimal(String.valueOf(k.getQt_sr())))));
+			ks.setQt_cb(ks.getQt_cb().add((new BigDecimal(String.valueOf(k.getQt_cb())))));
+			//合计 
+			ks.setHj_sr(ks.getHj_sr().add((new BigDecimal(String.valueOf(k.getHj_sr())))));
+			ks.setHj_cb(ks.getHj_cb().add((new BigDecimal(String.valueOf(k.getHj_cb())))));
+			//毛利 
+			ks.setMl(ks.getMl().add((new BigDecimal(String.valueOf(k.getMl())))));
+			//利润 
+			ks.setLr(ks.getLr().add((new BigDecimal(String.valueOf(k.getLr())))));	
+		}
+		return ks;
+	}
+	
+	private KhmxbSumStrDto getKhmxbSumStrDtoByKhmxbSumDto(KhmxbSumDto ks){
+		KhmxbSumStrDto kss = new KhmxbSumStrDto();
+		//报关金额
+		kss.setBgje(ks.getBgje().toString());
+		//发票金额
+		kss.setFpje(ks.getFpje().toString());
+		//退税金额
+		kss.setTsje(ks.getTsje().toString());
+		//代理费
+		kss.setDlf(ks.getDlf().toString());
+		//报关费 	
+		kss.setBgf_sr(ks.getBgf_sr().toString());
+		kss.setBgf_cb(ks.getBgf_cb().toString());
+		//广建费 
+		kss.setGuangjf_sr(ks.getGuangjf_sr().toString());
+		kss.setGuangjf_cb(ks.toString());
+		//国检费 
+		kss.setGoujf_sr(ks.getGoujf_sr().toString());
+		kss.setGoujf_cb(ks.getGoujf_cb().toString());
+		//商检费 
+		kss.setSjf_sr(ks.getSjf_sr().toString());
+		kss.setSjf_cb(ks.getSjf_cb().toString());
+		//续页费 
+		kss.setXyf_sr(ks.getXyf_sr().toString());
+		kss.setXyf_cb(ks.getXyf_cb().toString());
+		//连柜费 
+		kss.setLgf_sr(ks.getLgf_sr().toString());
+		kss.setLgf_cb(ks.getLgf_cb().toString());
+		//拖车费 
+		kss.setTcf_sr(ks.getTcf_sr().toString());
+		kss.setTcf_cb(ks.getTcf_cb().toString());
+		//扫描费
+		kss.setSmf_sr(ks.getSmf_sr().toString());
+		kss.setSmf_cb(ks.getSmf_cb().toString());
+		//查柜费
+		kss.setCgf_sr(ks.getCgf_sr().toString());
+		kss.setCgf_cb(ks.getCgf_cb().toString());
+		//熏蒸费 
+		kss.setXzf_sr(ks.getXzf_sr().toString());
+		kss.setXzf_cb(ks.getXzf_cb().toString());
+		//加签 
+		kss.setJq_sr(ks.getJq_sr().toString());
+		kss.setJq_cb(ks.getJq_cb().toString());
+		//信用证费 
+		kss.setXyzf_sr(ks.getXyzf_sr().toString());
+		kss.setXyzf_cb(ks.getXyzf_cb().toString());
+		//产地证费 
+		kss.setCdzf_sr(ks.getCdzf_sr().toString());
+		kss.setCdzf_cb(ks.getCdzf_cb().toString());
+		//空白单证费 
+		kss.setKbdzf_sr(ks.getKbdzf_sr().toString());
+		kss.setKbdzf_cb(ks.getKbdzf_cb().toString());
+		//快递费 
+		kss.setKdf_sr(ks.getKdf_sr().toString());
+		kss.setKdf_cb(ks.getKdf_cb().toString());
+		//驳船费 
+		kss.setBcf_sr(ks.getBcf_sr().toString());
+		kss.setBcf_cb(ks.getBcf_cb().toString());
+		//封条费 
+		kss.setFtf_sr(ks.getFtf_sr().toString());
+		kss.setFtf_cb(ks.getFtf_cb().toString());
+		//仓单费 
+		kss.setCdf_sr(ks.getCdf_sr().toString());
+		kss.setCdf_cb(ks.getCdf_cb().toString());
+		//过磅费 
+		kss.setGpf_sr(ks.getGpf_sr().toString());
+		kss.setGpf_cb(ks.getGpf_cb().toString());
+		//换证凭条费 
+		kss.setHzptf_sr(ks.getHzptf_sr().toString());
+		kss.setHzptf_cb(ks.getHzptf_cb().toString());
+		//其他 
+		kss.setQt_sr(ks.getQt_sr().toString());
+		kss.setQt_cb(ks.getQt_cb().toString());
+		//合计 
+		kss.setHj_sr(ks.getHj_sr().toString());
+		kss.setHj_cb(ks.getHj_cb().toString());
+		//毛利 
+		kss.setMl(ks.getMl().toString());
+		//利润 
+		kss.setLr(ks.getLr().toString());	
+		
+		return kss;
+	}
+	
+	private Float nullToZero(Float f){
+		if(f==null)
+			return 0F;
+		return f;
 	}
 	
 	private String getStrByStrList(List<String> str_list){
@@ -151,14 +478,14 @@ public class KhmxbController extends BaseManageController{
 		for(String s : str_list){
 			str+=s+",";
 		}
-		return str.substring(0, str.length()-1);		
+		return str.length()>0?str.substring(0, str.length()-1):"";		
 	}
 	private String getStrByDateList(List<Date> date_list){
 		String str = "";
 		for(Date d : date_list){
 			str+=DateUtil.formatDate(d,"yyyy-MM-dd")+",";
 		}
-		return str.substring(0, str.length()-1);		
+		return  str.length()>0?str.substring(0, str.length()-1):"";		
 	}
 	@Override
 	public ModelAndView list(HttpServletRequest request, HttpServletResponse response) throws Exception {

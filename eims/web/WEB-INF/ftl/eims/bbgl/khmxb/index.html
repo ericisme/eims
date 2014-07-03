@@ -27,7 +27,7 @@ function indexOnLoad(){
 //	$('_ksrq').value=new XDate(firstDate).toString('yyyy-MM-dd');
 //	$('_jsrq').value=new XDate(endDate).toString('yyyy-MM-dd');
 	
-	query();
+	query('2');
 }
 
 //输出xls
@@ -60,7 +60,7 @@ function exportXls(){
 
 
 //查询
-function query(){	
+function query(num){	
 	if (pag == null) pag = new PageExe();
 	var qv = '_temp='+Math.random();
 	if($F('_bgdh') != ''){
@@ -83,7 +83,7 @@ function query(){
 	}
 	
 	pag.query(
-		baseUrl + '?action=list2',
+		baseUrl + '?action=list'+num,
 		'_list',
 		qv
 	);
@@ -145,7 +145,8 @@ function print()
 	</tr>	
 	<tr>		
 		<td width="100%" align="center" colspan="10" bgcolor="#FFFFFF">
-			<input name="sub" type="button" onclick="query()"  class="btn01" value="查 询" />&nbsp;
+			<input name="sub" type="button" onclick="query('')"  class="btn01" value="查 询" />&nbsp;
+			<input name="sub" type="button" onclick="query('2')"  class="btn01" value="查 询" />&nbsp;
 			<input name="sub" sys_opt="exportXls"   type="button" onclick="exportXls()" class="btn01" value="导出xls" />&nbsp;
 			<!-- <input name="sub" sys_opt="print"   type="button" onclick="print()" class="btn01" value="打印" /> -->
 		</td>
