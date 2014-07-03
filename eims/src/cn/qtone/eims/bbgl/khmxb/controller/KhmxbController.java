@@ -1,6 +1,7 @@
 package cn.qtone.eims.bbgl.khmxb.controller;
 
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -30,6 +31,7 @@ import cn.qtone.common.utils.base.StringUtil;
 import cn.qtone.eims.khmx.domain.Fkzf;
 import cn.qtone.eims.khmx.domain.Gjts;
 import cn.qtone.eims.khmx.domain.Khqk;
+import cn.qtone.eims.khmx.domain.Khts;
 import cn.qtone.eims.khmx.domain.Tczc;
 import cn.qtone.eims.khmx.service.FkzfService;
 import cn.qtone.eims.khmx.service.GjtsService;
@@ -43,6 +45,7 @@ public class KhmxbController extends BaseManageController{
 
 	private String indexPage; 
 	private String listPage;
+	private String list2Page;
 	private String printPage;
 	
 	private KhtsService khtsService;
@@ -56,6 +59,107 @@ public class KhmxbController extends BaseManageController{
 		return new ModelAndView(this.getIndexPage(), map);
 	}
 	
+	public ModelAndView list2(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		Map<String,Object> map = this.getMapWithUser(request);	
+		String bgdh = ServletUtil.removeSpace(request, "bgdh"); //报关单号
+		String khmc = ServletUtil.removeSpace(request, "khmc"); //客户名称
+		String ywy =  ServletUtil.removeSpace(request, "ywy"); //业务员
+		String ksrq = ServletUtil.removeSpace(request, "ksrq"); //开始时间
+		String jsrq = ServletUtil.removeSpace(request, "jsrq"); //结束时间
+		String gsmc = ServletUtil.removeSpace(request, "gsmc"); //公司名称		
+		if(StringUtil.isNullAndBlank(ksrq))
+			ksrq = "1900-01-01 00:00:00";
+		if(StringUtil.isNullAndBlank(jsrq))
+			jsrq = "2099-12-31 23:59:59";			
+		Criteria criteria = khtsService.createCriteria(Khts.class);
+		if(!StringUtil.isNullAndBlank(bgdh)){
+			criteria.add(Expression.like("bgdh", "%"+bgdh+"%"));
+		}
+		if(!StringUtil.isNullAndBlank(khmc)){
+			criteria.add(Expression.like("khmc", "%"+khmc+"%"));
+		}
+		if(!StringUtil.isNullAndBlank(ywy)){
+			criteria.add(Expression.like("ywy", "%"+ywy+"%"));
+		}
+		criteria.add(Expression.ge("bgrq", DateUtil.parseSimpleDateTime(ksrq)));
+		criteria.add(Expression.le("bgrq", DateUtil.parseSimpleDateTime(jsrq)));
+		if(!StringUtil.isNullAndBlank(gsmc)){		
+			List<Fkzf> _fkzf = fkzfService.createCriteria(Fkzf.class).add(Expression.like("gsmc","%"+gsmc+"%")).list();
+			List<String> bgdh_list = new ArrayList<String>();
+			for(Fkzf fkzf : _fkzf){
+				bgdh_list.add(fkzf.getBgdh());
+			}
+			if(_fkzf.size()>0){
+				criteria.add(Expression.in("bgdh", bgdh_list));
+			}			
+		}		
+		System.out.println("bgdh:"+bgdh);
+		System.out.println("khmc:"+khmc);
+		System.out.println("ywy:"+ywy);
+		System.out.println("ksrq:"+ksrq);
+		System.out.println("jsrq:"+jsrq);
+		System.out.println("gsmc:"+gsmc);
+		int curPage = this.getCurrentPage(request); // 当前查询页数
+		Page page = khtsService.pagedQuery(criteria, curPage, Page.DEFAULT_PAGE_SIZE);
+		//TODO 完善page对象
+		page.setPaginate(this.getAjaxPage(request, curPage, page, "jump"));
+		//map.put("page", page);
+		List<Khts> khts_list = (List<Khts>) page.getResult();
+		List<KhmxbDto> KhmxbDto_list = new ArrayList<KhmxbDto>();
+		for(Khts khts : khts_list){
+			System.out.println("bgdh:"+khts.getBgdh()+" khmc:"+khts.getKhmc()+" ywy:"+khts.getYwy());
+			KhmxbDto_list.add(getKhmxbDtoBykhts(khts));
+		}
+		
+		
+		
+		
+		return new ModelAndView(this.getList2Page(), map);
+	}
+	
+	private KhmxbDto getKhmxbDtoBykhts(Khts khts){
+		KhmxbDto khmxbDto = new KhmxbDto();
+		//客户名称
+		khmxbDto.setKhmc(khts.getKhmc());
+		//合作单位
+		List<String> _gsmc = fkzfService.createCriteria(Fkzf.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.property("gsmc")).list();
+		khmxbDto.setHzdw(getStrByStrList(_gsmc));
+		//报关日期
+		khmxbDto.setBgrq(DateUtil.formatDate(khts.getBgrq(),"yyyy-MM-dd"));
+		//报关金额
+		khmxbDto.setBgje(khts.getBgje());
+		//发票金额
+		khmxbDto.setFpje(khts.getFpje());
+		//收发票日期
+		khmxbDto.setSfprq(khts.getSfprq());
+		//退税金额
+		khmxbDto.setTsje(khts.getTsje());
+		//支付退税日期
+		khmxbDto.setZftsrq(khts.getZftsrq());
+		//收到国税退税日期
+		List<Date> _sdgstsrq = gjtsService.createCriteria(Gjts.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.property("tsrq")).list();
+		khmxbDto.setSdgstsrq(getStrByDateList(_sdgstsrq));
+		//代理费
+		Float dlf = (Float) khqkService.createCriteria(Khqk.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("dlf")).uniqueResult();
+		khmxbDto.setDlf(dlf);
+		
+		return khmxbDto;
+	}
+	
+	private String getStrByStrList(List<String> str_list){
+		String str = "";
+		for(String s : str_list){
+			str+=s+",";
+		}
+		return str.substring(0, str.length()-1);		
+	}
+	private String getStrByDateList(List<Date> date_list){
+		String str = "";
+		for(Date d : date_list){
+			str+=DateUtil.formatDate(d,"yyyy-MM-dd")+",";
+		}
+		return str.substring(0, str.length()-1);		
+	}
 	@Override
 	public ModelAndView list(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Map<String,Object> map = this.getMapWithUser(request);	
@@ -249,61 +353,61 @@ public class KhmxbController extends BaseManageController{
 			wsheet.addCell(new Label(1,i,(String)map.get("gsmc"), setCellFormat()));
 			wsheet.addCell(new Label(2,i,DateUtil.formatDate((Date)map.get("bgrq"), "yyyy-MM-dd"), setCellFormat()));
 			wsheet.addCell(new Label(3,i,(String)map.get("bgdh"), setCellFormat()));
-			wsheet.addCell(new Label(4,i,StringUtil.formatFloat((Float)map.get("bgje")), setCellFormat()));
-			wsheet.addCell(new Label(5,i,StringUtil.formatFloat((Float)map.get("fpje")), setCellFormat()));
+			wsheet.addCell(new Label(4,i,objectToString(map.get("bgje")), setCellFormat()));
+			wsheet.addCell(new Label(5,i,objectToString(map.get("fpje")), setCellFormat()));
 			wsheet.addCell(new Label(6,i,(String)map.get("sfprq"), setCellFormat()));
-			wsheet.addCell(new Label(7,i,StringUtil.formatFloat((Float)map.get("tsje")), setCellFormat()));
+			wsheet.addCell(new Label(7,i,objectToString(map.get("tsje")), setCellFormat()));
 			wsheet.addCell(new Label(8,i,(String)map.get("zftsrq"), setCellFormat()));
 			wsheet.addCell(new Label(9,i,DateUtil.formatDate((Date)map.get("tsrq"), "yyyy-MM-dd"), setCellFormat()));
-			wsheet.addCell(new Label(10,i,StringUtil.formatFloat((Float)map.get("sum_dlf")), setCellFormat()));
+			wsheet.addCell(new Label(10,i,objectToString(map.get("sum_dlf")), setCellFormat()));
 			
-			wsheet.addCell(new Label(11,i,StringUtil.formatFloat((Float)map.get("sr_bgf")), setCellFormat()));
-			wsheet.addCell(new Label(12,i,StringUtil.formatFloat((Float)map.get("cb_bgf")), setCellFormat()));
-			wsheet.addCell(new Label(13,i,StringUtil.formatFloat((Float)map.get("sr_gjf")), setCellFormat()));
-			wsheet.addCell(new Label(14,i,StringUtil.formatFloat((Float)map.get("cb_gjf")), setCellFormat()));
-			wsheet.addCell(new Label(15,i,StringUtil.formatFloat((Float)map.get("sr_gj")), setCellFormat()));
-			wsheet.addCell(new Label(16,i,StringUtil.formatFloat((Float)map.get("cb_gj")), setCellFormat()));
-			wsheet.addCell(new Label(17,i,StringUtil.formatFloat((Float)map.get("sr_sjf")), setCellFormat()));
-			wsheet.addCell(new Label(18,i,StringUtil.formatFloat((Float)map.get("cb_sjf")), setCellFormat()));
-			wsheet.addCell(new Label(19,i,StringUtil.formatFloat((Float)map.get("sr_xyf")), setCellFormat()));
-			wsheet.addCell(new Label(20,i,StringUtil.formatFloat((Float)map.get("cb_xyf")), setCellFormat()));
-			wsheet.addCell(new Label(21,i,StringUtil.formatFloat((Float)map.get("sr_lgf")), setCellFormat()));
-			wsheet.addCell(new Label(22,i,StringUtil.formatFloat((Float)map.get("cb_lgf")), setCellFormat()));
-			wsheet.addCell(new Label(23,i,StringUtil.formatFloat((Float)map.get("sr_tcf")), setCellFormat()));
-			wsheet.addCell(new Label(24,i,StringUtil.formatFloat((Float)map.get("cb_tcf")), setCellFormat()));
-			wsheet.addCell(new Label(25,i,StringUtil.formatFloat((Float)map.get("sr_smf")), setCellFormat()));
-			wsheet.addCell(new Label(26,i,StringUtil.formatFloat((Float)map.get("cb_smf")), setCellFormat()));
-			wsheet.addCell(new Label(27,i,StringUtil.formatFloat((Float)map.get("sr_cgf")), setCellFormat()));
-			wsheet.addCell(new Label(28,i,StringUtil.formatFloat((Float)map.get("cb_cgf")), setCellFormat()));
-			wsheet.addCell(new Label(29,i,StringUtil.formatFloat((Float)map.get("sr_xzf")), setCellFormat()));
-			wsheet.addCell(new Label(30,i,StringUtil.formatFloat((Float)map.get("cb_xzf")), setCellFormat()));
-			wsheet.addCell(new Label(31,i,StringUtil.formatFloat((Float)map.get("sr_jq")), setCellFormat()));
-			wsheet.addCell(new Label(32,i,StringUtil.formatFloat((Float)map.get("cb_jq")), setCellFormat()));
-			wsheet.addCell(new Label(33,i,StringUtil.formatFloat((Float)map.get("sr_xyzf")), setCellFormat()));
-			wsheet.addCell(new Label(34,i,StringUtil.formatFloat((Float)map.get("cb_xyzf")), setCellFormat()));
-			wsheet.addCell(new Label(35,i,StringUtil.formatFloat((Float)map.get("sr_cdzf")), setCellFormat()));
-			wsheet.addCell(new Label(36,i,StringUtil.formatFloat((Float)map.get("cb_cdzf")), setCellFormat()));
-			wsheet.addCell(new Label(37,i,StringUtil.formatFloat((Float)map.get("sr_kbdzf")), setCellFormat()));
-			wsheet.addCell(new Label(38,i,StringUtil.formatFloat((Float)map.get("cb_kbdzf")), setCellFormat()));
-			wsheet.addCell(new Label(39,i,StringUtil.formatFloat((Float)map.get("sr_kdf")), setCellFormat()));
-			wsheet.addCell(new Label(40,i,StringUtil.formatFloat((Float)map.get("cb_kdf")), setCellFormat()));
-			wsheet.addCell(new Label(41,i,StringUtil.formatFloat((Float)map.get("sr_bcf")), setCellFormat()));
-			wsheet.addCell(new Label(42,i,StringUtil.formatFloat((Float)map.get("cb_bcf")), setCellFormat()));
-			wsheet.addCell(new Label(43,i,StringUtil.formatFloat((Float)map.get("sr_ftf")), setCellFormat()));
-			wsheet.addCell(new Label(44,i,StringUtil.formatFloat((Float)map.get("cb_ftf")), setCellFormat()));
-			wsheet.addCell(new Label(45,i,StringUtil.formatFloat((Float)map.get("sr_cdf")), setCellFormat()));
-			wsheet.addCell(new Label(46,i,StringUtil.formatFloat((Float)map.get("cb_cdf")), setCellFormat()));
-			wsheet.addCell(new Label(47,i,StringUtil.formatFloat((Float)map.get("sr_gpf")), setCellFormat()));
-			wsheet.addCell(new Label(48,i,StringUtil.formatFloat((Float)map.get("cb_gpf")), setCellFormat()));
-			wsheet.addCell(new Label(49,i,StringUtil.formatFloat((Float)map.get("sr_hzptf")), setCellFormat()));
-			wsheet.addCell(new Label(50,i,StringUtil.formatFloat((Float)map.get("cb_hzptf")), setCellFormat()));
-			wsheet.addCell(new Label(51,i,StringUtil.formatFloat((Float)map.get("sr_qt")), setCellFormat()));
-			wsheet.addCell(new Label(52,i,StringUtil.formatFloat((Float)map.get("cb_qt")), setCellFormat()));
-			wsheet.addCell(new Label(53,i,StringUtil.formatFloat((Float)map.get("sum_sr")), setCellFormat()));
-			wsheet.addCell(new Label(54,i,StringUtil.formatFloat((Float)map.get("sum_cb")), setCellFormat()));
+			wsheet.addCell(new Label(11,i,objectToString(map.get("sr_bgf")), setCellFormat()));
+			wsheet.addCell(new Label(12,i,objectToString(map.get("cb_bgf")), setCellFormat()));
+			wsheet.addCell(new Label(13,i,objectToString(map.get("sr_gjf")), setCellFormat()));
+			wsheet.addCell(new Label(14,i,objectToString(map.get("cb_gjf")), setCellFormat()));
+			wsheet.addCell(new Label(15,i,objectToString(map.get("sr_gj")), setCellFormat()));
+			wsheet.addCell(new Label(16,i,objectToString(map.get("cb_gj")), setCellFormat()));
+			wsheet.addCell(new Label(17,i,objectToString(map.get("sr_sjf")), setCellFormat()));
+			wsheet.addCell(new Label(18,i,objectToString(map.get("cb_sjf")), setCellFormat()));
+			wsheet.addCell(new Label(19,i,objectToString(map.get("sr_xyf")), setCellFormat()));
+			wsheet.addCell(new Label(20,i,objectToString(map.get("cb_xyf")), setCellFormat()));
+			wsheet.addCell(new Label(21,i,objectToString(map.get("sr_lgf")), setCellFormat()));
+			wsheet.addCell(new Label(22,i,objectToString(map.get("cb_lgf")), setCellFormat()));
+			wsheet.addCell(new Label(23,i,objectToString(map.get("sr_tcf")), setCellFormat()));
+			wsheet.addCell(new Label(24,i,objectToString(map.get("cb_tcf")), setCellFormat()));
+			wsheet.addCell(new Label(25,i,objectToString(map.get("sr_smf")), setCellFormat()));
+			wsheet.addCell(new Label(26,i,objectToString(map.get("cb_smf")), setCellFormat()));
+			wsheet.addCell(new Label(27,i,objectToString(map.get("sr_cgf")), setCellFormat()));
+			wsheet.addCell(new Label(28,i,objectToString(map.get("cb_cgf")), setCellFormat()));
+			wsheet.addCell(new Label(29,i,objectToString(map.get("sr_xzf")), setCellFormat()));
+			wsheet.addCell(new Label(30,i,objectToString(map.get("cb_xzf")), setCellFormat()));
+			wsheet.addCell(new Label(31,i,objectToString(map.get("sr_jq")), setCellFormat()));
+			wsheet.addCell(new Label(32,i,objectToString(map.get("cb_jq")), setCellFormat()));
+			wsheet.addCell(new Label(33,i,objectToString(map.get("sr_xyzf")), setCellFormat()));
+			wsheet.addCell(new Label(34,i,objectToString(map.get("cb_xyzf")), setCellFormat()));
+			wsheet.addCell(new Label(35,i,objectToString(map.get("sr_cdzf")), setCellFormat()));
+			wsheet.addCell(new Label(36,i,objectToString(map.get("cb_cdzf")), setCellFormat()));
+			wsheet.addCell(new Label(37,i,objectToString(map.get("sr_kbdzf")), setCellFormat()));
+			wsheet.addCell(new Label(38,i,objectToString(map.get("cb_kbdzf")), setCellFormat()));
+			wsheet.addCell(new Label(39,i,objectToString(map.get("sr_kdf")), setCellFormat()));
+			wsheet.addCell(new Label(40,i,objectToString(map.get("cb_kdf")), setCellFormat()));
+			wsheet.addCell(new Label(41,i,objectToString(map.get("sr_bcf")), setCellFormat()));
+			wsheet.addCell(new Label(42,i,objectToString(map.get("cb_bcf")), setCellFormat()));
+			wsheet.addCell(new Label(43,i,objectToString(map.get("sr_ftf")), setCellFormat()));
+			wsheet.addCell(new Label(44,i,objectToString(map.get("cb_ftf")), setCellFormat()));
+			wsheet.addCell(new Label(45,i,objectToString(map.get("sr_cdf")), setCellFormat()));
+			wsheet.addCell(new Label(46,i,objectToString(map.get("cb_cdf")), setCellFormat()));
+			wsheet.addCell(new Label(47,i,objectToString(map.get("sr_gpf")), setCellFormat()));
+			wsheet.addCell(new Label(48,i,objectToString(map.get("cb_gpf")), setCellFormat()));
+			wsheet.addCell(new Label(49,i,objectToString(map.get("sr_hzptf")), setCellFormat()));
+			wsheet.addCell(new Label(50,i,objectToString(map.get("cb_hzptf")), setCellFormat()));
+			wsheet.addCell(new Label(51,i,objectToString(map.get("sr_qt")), setCellFormat()));
+			wsheet.addCell(new Label(52,i,objectToString(map.get("cb_qt")), setCellFormat()));
+			wsheet.addCell(new Label(53,i,objectToString(map.get("sum_sr")), setCellFormat()));
+			wsheet.addCell(new Label(54,i,objectToString(map.get("sum_cb")), setCellFormat()));
 			
-			wsheet.addCell(new Label(55,i,StringUtil.formatFloat((Float)map.get("ml")), setCellFormat()));
-			wsheet.addCell(new Label(56,i,StringUtil.formatFloat((Float)map.get("lr")), setCellFormat()));
+			wsheet.addCell(new Label(55,i,objectToString(map.get("ml")), setCellFormat()));
+			wsheet.addCell(new Label(56,i,objectToString(map.get("lr")), setCellFormat()));
 			wsheet.addCell(new Label(57,i,(String)map.get("ywy"), setCellFormat()));
 			wsheet.addCell(new Label(58,i,(String)map.get("dlfbz"), setCellFormat()));
 			
@@ -313,59 +417,59 @@ public class KhmxbController extends BaseManageController{
 		Map<String, Object> map = getHj(list);
 		wsheet.addCell(new Label(0,i,"合计", setCellFormat()));
 		wsheet.mergeCells(0, i, 3, i);
-		wsheet.addCell(new Label(4,i,StringUtil.formatFloat((Float)map.get("hj_bgje")), setCellFormat()));
-		wsheet.addCell(new Label(5,i,StringUtil.formatFloat((Float)map.get("hj_fpje")), setCellFormat()));
+		wsheet.addCell(new Label(4,i,objectToString(map.get("hj_bgje")), setCellFormat()));
+		wsheet.addCell(new Label(5,i,objectToString(map.get("hj_fpje")), setCellFormat()));
 		wsheet.addCell(new Label(6,i,"", setCellFormat()));
-		wsheet.addCell(new Label(7,i,StringUtil.formatFloat((Float)map.get("hj_tsje")), setCellFormat()));
+		wsheet.addCell(new Label(7,i,objectToString(map.get("hj_tsje")), setCellFormat()));
 		wsheet.addCell(new Label(8,i,"", setCellFormat()));
 		wsheet.addCell(new Label(9,i,"", setCellFormat()));
-		wsheet.addCell(new Label(10,i,StringUtil.formatFloat((Float)map.get("hj_dlf")), setCellFormat()));
-		wsheet.addCell(new Label(11,i,StringUtil.formatFloat((Float)map.get("hj_sr_bgf")), setCellFormat()));
-		wsheet.addCell(new Label(12,i,StringUtil.formatFloat((Float)map.get("hj_cb_bgf")), setCellFormat()));
-		wsheet.addCell(new Label(13,i,StringUtil.formatFloat((Float)map.get("hj_sr_gjf")), setCellFormat()));
-		wsheet.addCell(new Label(14,i,StringUtil.formatFloat((Float)map.get("hj_cb_gjf")), setCellFormat()));
-		wsheet.addCell(new Label(15,i,StringUtil.formatFloat((Float)map.get("hj_sr_gj")), setCellFormat()));
-		wsheet.addCell(new Label(16,i,StringUtil.formatFloat((Float)map.get("hj_cb_gj")), setCellFormat()));
-		wsheet.addCell(new Label(17,i,StringUtil.formatFloat((Float)map.get("hj_sr_sjf")), setCellFormat()));
-		wsheet.addCell(new Label(18,i,StringUtil.formatFloat((Float)map.get("hj_cb_sjf")), setCellFormat()));
-		wsheet.addCell(new Label(19,i,StringUtil.formatFloat((Float)map.get("hj_sr_xyf")), setCellFormat()));
-		wsheet.addCell(new Label(20,i,StringUtil.formatFloat((Float)map.get("hj_cb_xyf")), setCellFormat()));
-		wsheet.addCell(new Label(21,i,StringUtil.formatFloat((Float)map.get("hj_sr_lgf")), setCellFormat()));
-		wsheet.addCell(new Label(22,i,StringUtil.formatFloat((Float)map.get("hj_cb_lgf")), setCellFormat()));
-		wsheet.addCell(new Label(23,i,StringUtil.formatFloat((Float)map.get("hj_sr_tcf")), setCellFormat()));
-		wsheet.addCell(new Label(24,i,StringUtil.formatFloat((Float)map.get("hj_cb_tcf")), setCellFormat()));
-		wsheet.addCell(new Label(25,i,StringUtil.formatFloat((Float)map.get("hj_sr_smf")), setCellFormat()));
-		wsheet.addCell(new Label(26,i,StringUtil.formatFloat((Float)map.get("hj_cb_smf")), setCellFormat()));
-		wsheet.addCell(new Label(27,i,StringUtil.formatFloat((Float)map.get("hj_sr_cgf")), setCellFormat()));
-		wsheet.addCell(new Label(28,i,StringUtil.formatFloat((Float)map.get("hj_cb_cgf")), setCellFormat()));
-		wsheet.addCell(new Label(29,i,StringUtil.formatFloat((Float)map.get("hj_sr_xzf")), setCellFormat()));
-		wsheet.addCell(new Label(30,i,StringUtil.formatFloat((Float)map.get("hj_cb_xzf")), setCellFormat()));
-		wsheet.addCell(new Label(31,i,StringUtil.formatFloat((Float)map.get("hj_sr_jq")), setCellFormat()));
-		wsheet.addCell(new Label(32,i,StringUtil.formatFloat((Float)map.get("hj_cb_jq")), setCellFormat()));
-		wsheet.addCell(new Label(33,i,StringUtil.formatFloat((Float)map.get("hj_sr_xyzf")), setCellFormat()));
-		wsheet.addCell(new Label(34,i,StringUtil.formatFloat((Float)map.get("hj_cb_xyzf")), setCellFormat()));
-		wsheet.addCell(new Label(35,i,StringUtil.formatFloat((Float)map.get("hj_sr_cdzf")), setCellFormat()));
-		wsheet.addCell(new Label(36,i,StringUtil.formatFloat((Float)map.get("hj_cb_cdzf")), setCellFormat()));
-		wsheet.addCell(new Label(37,i,StringUtil.formatFloat((Float)map.get("hj_sr_kbdzf")), setCellFormat()));
-		wsheet.addCell(new Label(38,i,StringUtil.formatFloat((Float)map.get("hj_cb_kbdzf")), setCellFormat()));
-		wsheet.addCell(new Label(39,i,StringUtil.formatFloat((Float)map.get("hj_sr_kdf")), setCellFormat()));
-		wsheet.addCell(new Label(40,i,StringUtil.formatFloat((Float)map.get("hj_cb_kdf")), setCellFormat()));
-		wsheet.addCell(new Label(41,i,StringUtil.formatFloat((Float)map.get("hj_sr_bcf")), setCellFormat()));
-		wsheet.addCell(new Label(42,i,StringUtil.formatFloat((Float)map.get("hj_cb_bcf")), setCellFormat()));
-		wsheet.addCell(new Label(43,i,StringUtil.formatFloat((Float)map.get("hj_sr_ftf")), setCellFormat()));
-		wsheet.addCell(new Label(44,i,StringUtil.formatFloat((Float)map.get("hj_cb_ftf")), setCellFormat()));
-		wsheet.addCell(new Label(45,i,StringUtil.formatFloat((Float)map.get("hj_sr_cdf")), setCellFormat()));
-		wsheet.addCell(new Label(46,i,StringUtil.formatFloat((Float)map.get("hj_cb_cdf")), setCellFormat()));
-		wsheet.addCell(new Label(47,i,StringUtil.formatFloat((Float)map.get("hj_sr_gpf")), setCellFormat()));
-		wsheet.addCell(new Label(48,i,StringUtil.formatFloat((Float)map.get("hj_cb_gpf")), setCellFormat()));
-		wsheet.addCell(new Label(49,i,StringUtil.formatFloat((Float)map.get("hj_sr_hzptf")), setCellFormat()));
-		wsheet.addCell(new Label(50,i,StringUtil.formatFloat((Float)map.get("hj_cb_hzptf")), setCellFormat()));
-		wsheet.addCell(new Label(51,i,StringUtil.formatFloat((Float)map.get("hj_sr_qt")), setCellFormat()));
-		wsheet.addCell(new Label(52,i,StringUtil.formatFloat((Float)map.get("hj_cb_qt")), setCellFormat()));
-		wsheet.addCell(new Label(53,i,StringUtil.formatFloat((Float)map.get("hj_sum_sr")), setCellFormat()));
-		wsheet.addCell(new Label(54,i,StringUtil.formatFloat((Float)map.get("hj_sum_cb")), setCellFormat()));
-		wsheet.addCell(new Label(55,i,StringUtil.formatFloat((Float)map.get("hj_ml")), setCellFormat()));
-		wsheet.addCell(new Label(56,i,StringUtil.formatFloat((Float)map.get("hj_lr")), setCellFormat()));
+		wsheet.addCell(new Label(10,i,objectToString(map.get("hj_dlf")), setCellFormat()));
+		wsheet.addCell(new Label(11,i,objectToString(map.get("hj_sr_bgf")), setCellFormat()));
+		wsheet.addCell(new Label(12,i,objectToString(map.get("hj_cb_bgf")), setCellFormat()));
+		wsheet.addCell(new Label(13,i,objectToString(map.get("hj_sr_gjf")), setCellFormat()));
+		wsheet.addCell(new Label(14,i,objectToString(map.get("hj_cb_gjf")), setCellFormat()));
+		wsheet.addCell(new Label(15,i,objectToString(map.get("hj_sr_gj")), setCellFormat()));
+		wsheet.addCell(new Label(16,i,objectToString(map.get("hj_cb_gj")), setCellFormat()));
+		wsheet.addCell(new Label(17,i,objectToString(map.get("hj_sr_sjf")), setCellFormat()));
+		wsheet.addCell(new Label(18,i,objectToString(map.get("hj_cb_sjf")), setCellFormat()));
+		wsheet.addCell(new Label(19,i,objectToString(map.get("hj_sr_xyf")), setCellFormat()));
+		wsheet.addCell(new Label(20,i,objectToString(map.get("hj_cb_xyf")), setCellFormat()));
+		wsheet.addCell(new Label(21,i,objectToString(map.get("hj_sr_lgf")), setCellFormat()));
+		wsheet.addCell(new Label(22,i,objectToString(map.get("hj_cb_lgf")), setCellFormat()));
+		wsheet.addCell(new Label(23,i,objectToString(map.get("hj_sr_tcf")), setCellFormat()));
+		wsheet.addCell(new Label(24,i,objectToString(map.get("hj_cb_tcf")), setCellFormat()));
+		wsheet.addCell(new Label(25,i,objectToString(map.get("hj_sr_smf")), setCellFormat()));
+		wsheet.addCell(new Label(26,i,objectToString(map.get("hj_cb_smf")), setCellFormat()));
+		wsheet.addCell(new Label(27,i,objectToString(map.get("hj_sr_cgf")), setCellFormat()));
+		wsheet.addCell(new Label(28,i,objectToString(map.get("hj_cb_cgf")), setCellFormat()));
+		wsheet.addCell(new Label(29,i,objectToString(map.get("hj_sr_xzf")), setCellFormat()));
+		wsheet.addCell(new Label(30,i,objectToString(map.get("hj_cb_xzf")), setCellFormat()));
+		wsheet.addCell(new Label(31,i,objectToString(map.get("hj_sr_jq")), setCellFormat()));
+		wsheet.addCell(new Label(32,i,objectToString(map.get("hj_cb_jq")), setCellFormat()));
+		wsheet.addCell(new Label(33,i,objectToString(map.get("hj_sr_xyzf")), setCellFormat()));
+		wsheet.addCell(new Label(34,i,objectToString(map.get("hj_cb_xyzf")), setCellFormat()));
+		wsheet.addCell(new Label(35,i,objectToString(map.get("hj_sr_cdzf")), setCellFormat()));
+		wsheet.addCell(new Label(36,i,objectToString(map.get("hj_cb_cdzf")), setCellFormat()));
+		wsheet.addCell(new Label(37,i,objectToString(map.get("hj_sr_kbdzf")), setCellFormat()));
+		wsheet.addCell(new Label(38,i,objectToString(map.get("hj_cb_kbdzf")), setCellFormat()));
+		wsheet.addCell(new Label(39,i,objectToString(map.get("hj_sr_kdf")), setCellFormat()));
+		wsheet.addCell(new Label(40,i,objectToString(map.get("hj_cb_kdf")), setCellFormat()));
+		wsheet.addCell(new Label(41,i,objectToString(map.get("hj_sr_bcf")), setCellFormat()));
+		wsheet.addCell(new Label(42,i,objectToString(map.get("hj_cb_bcf")), setCellFormat()));
+		wsheet.addCell(new Label(43,i,objectToString(map.get("hj_sr_ftf")), setCellFormat()));
+		wsheet.addCell(new Label(44,i,objectToString(map.get("hj_cb_ftf")), setCellFormat()));
+		wsheet.addCell(new Label(45,i,objectToString(map.get("hj_sr_cdf")), setCellFormat()));
+		wsheet.addCell(new Label(46,i,objectToString(map.get("hj_cb_cdf")), setCellFormat()));
+		wsheet.addCell(new Label(47,i,objectToString(map.get("hj_sr_gpf")), setCellFormat()));
+		wsheet.addCell(new Label(48,i,objectToString(map.get("hj_cb_gpf")), setCellFormat()));
+		wsheet.addCell(new Label(49,i,objectToString(map.get("hj_sr_hzptf")), setCellFormat()));
+		wsheet.addCell(new Label(50,i,objectToString(map.get("hj_cb_hzptf")), setCellFormat()));
+		wsheet.addCell(new Label(51,i,objectToString(map.get("hj_sr_qt")), setCellFormat()));
+		wsheet.addCell(new Label(52,i,objectToString(map.get("hj_cb_qt")), setCellFormat()));
+		wsheet.addCell(new Label(53,i,objectToString(map.get("hj_sum_sr")), setCellFormat()));
+		wsheet.addCell(new Label(54,i,objectToString(map.get("hj_sum_cb")), setCellFormat()));
+		wsheet.addCell(new Label(55,i,objectToString(map.get("hj_ml")), setCellFormat()));
+		wsheet.addCell(new Label(56,i,objectToString(map.get("hj_lr")), setCellFormat()));
 		wsheet.addCell(new Label(57,i,"", setCellFormat()));
 		wsheet.addCell(new Label(58,i,"", setCellFormat()));
 		
@@ -617,110 +721,132 @@ public class KhmxbController extends BaseManageController{
 		float hj_sr_cdzf = 0, hj_cb_cdzf = 0, hj_sr_kbdzf = 0, hj_cb_kbdzf = 0, hj_sr_kdf = 0, hj_cb_kdf = 0, hj_sr_bcf = 0, hj_cb_bcf = 0, hj_sr_ftf = 0;
 		float hj_cb_ftf = 0, hj_sr_cdf = 0, hj_cb_cdf = 0, hj_sr_gpf = 0, hj_cb_gpf = 0, hj_sr_hzptf = 0, hj_cb_hzptf = 0, hj_sr_qt = 0, hj_cb_qt = 0;
 		float hj_sum_sr = 0, hj_sum_cb = 0, hj_ml = 0, hj_lr = 0;
-		for(Map<String, Object> m : list){				
-			hj_bgje += (Float)m.get("bgje");
+		for(Map<String, Object> m : list){			
+			System.out.println(Float.parseFloat(((BigDecimal)m.get("bgje")).toString()));
+			hj_bgje += objectToFloat(m.get("bgje"));
 			map.put("hj_bgje", hj_bgje);
-			hj_fpje += (Float)m.get("fpje");
+			hj_fpje += objectToFloat(m.get("fpje"));
 			map.put("hj_fpje", hj_fpje);
-			hj_tsje += (Float)m.get("tsje");
+			hj_tsje += objectToFloat(m.get("tsje"));
 			map.put("hj_tsje", hj_tsje);
-			hj_dlf += (Float)m.get("sum_dlf");
+			hj_dlf += objectToFloat(m.get("sum_dlf"));
 			map.put("hj_dlf", hj_dlf);
-			hj_sr_bgf += (Float)m.get("sr_bgf");
+			hj_sr_bgf += objectToFloat(m.get("sr_bgf"));
 			map.put("hj_sr_bgf", hj_sr_bgf);
-			hj_cb_bgf += (Float)m.get("cb_bgf");
+			hj_cb_bgf += objectToFloat(m.get("cb_bgf"));
 			map.put("hj_cb_bgf", hj_cb_bgf);
-			hj_sr_gjf += (Float)m.get("sr_gjf");
+			hj_sr_gjf += objectToFloat(m.get("sr_gjf"));
 			map.put("hj_sr_gjf", hj_sr_gjf);
-			hj_cb_gjf += (Float)m.get("cb_gjf");
+			hj_cb_gjf += objectToFloat(m.get("cb_gjf"));
 			map.put("hj_cb_gjf", hj_cb_gjf);
-			hj_sr_gj += (Float)m.get("sr_gj");
+			hj_sr_gj += objectToFloat(m.get("sr_gj"));
 			map.put("hj_sr_gj", hj_sr_gj);
-			hj_cb_gj += (Float)m.get("cb_gj");
+			hj_cb_gj += objectToFloat(m.get("cb_gj"));
 			map.put("hj_cb_gj", hj_cb_gj);
-			hj_sr_sjf += (Float)m.get("sr_sjf");
+			hj_sr_sjf += objectToFloat(m.get("sr_sjf"));
 			map.put("hj_sr_sjf", hj_sr_sjf);
-			hj_cb_sjf += (Float)m.get("cb_sjf");
+			hj_cb_sjf += objectToFloat(m.get("cb_sjf"));
 			map.put("hj_cb_sjf", hj_cb_sjf);
-			hj_sr_xyf += (Float)m.get("sr_xyf");
+			hj_sr_xyf += objectToFloat(m.get("sr_xyf"));
 			map.put("hj_sr_xyf", hj_sr_xyf);
-			hj_cb_xyf += (Float)m.get("cb_xyf");
+			hj_cb_xyf += objectToFloat(m.get("cb_xyf"));
 			map.put("hj_cb_xyf", hj_cb_xyf);
-			hj_sr_lgf += (Float)m.get("sr_lgf");
+			hj_sr_lgf += objectToFloat(m.get("sr_lgf"));
 			map.put("hj_sr_lgf", hj_sr_lgf);
-			hj_cb_lgf += (Float)m.get("cb_lgf");
+			hj_cb_lgf += objectToFloat(m.get("cb_lgf"));
 			map.put("hj_cb_lgf", hj_cb_lgf);
-			hj_sr_tcf += (Float)m.get("sr_tcf");
+			hj_sr_tcf += objectToFloat(m.get("sr_tcf"));
 			map.put("hj_sr_tcf", hj_sr_tcf);
-			hj_cb_tcf += (Float)m.get("cb_tcf");
+			hj_cb_tcf += objectToFloat(m.get("cb_tcf"));
 			map.put("hj_cb_tcf", hj_cb_tcf);
-			hj_sr_smf += (Float)m.get("sr_smf");
+			hj_sr_smf += objectToFloat(m.get("sr_smf"));
 			map.put("hj_sr_smf", hj_sr_smf);
-			hj_cb_smf += (Float)m.get("cb_smf");
+			hj_cb_smf += objectToFloat(m.get("cb_smf"));
 			map.put("hj_cb_smf", hj_cb_smf);
-			hj_sr_cgf += (Float)m.get("sr_cgf");
+			hj_sr_cgf += objectToFloat(m.get("sr_cgf"));
 			map.put("hj_sr_cgf", hj_sr_cgf);
-			hj_cb_cgf += (Float)m.get("cb_cgf");
+			hj_cb_cgf += objectToFloat(m.get("cb_cgf"));
 			map.put("hj_cb_cgf", hj_cb_cgf);
-			hj_sr_xzf += (Float)m.get("sr_xzf");
+			hj_sr_xzf += objectToFloat(m.get("sr_xzf"));
 			map.put("hj_sr_xzf", hj_sr_xzf);
-			hj_cb_xzf += (Float)m.get("cb_xzf");
+			hj_cb_xzf += objectToFloat(m.get("cb_xzf"));
 			map.put("hj_cb_xzf", hj_cb_xzf);
-			hj_sr_jq += (Float)m.get("sr_jq");
+			hj_sr_jq += objectToFloat(m.get("sr_jq"));
 			map.put("hj_sr_jq", hj_sr_jq);
-			hj_cb_jq += (Float)m.get("cb_jq");
+			hj_cb_jq += objectToFloat(m.get("cb_jq"));
 			map.put("hj_cb_jq", hj_cb_jq);
-			hj_sr_xyzf += (Float)m.get("sr_xyzf");
+			hj_sr_xyzf += objectToFloat(m.get("sr_xyzf"));
 			map.put("hj_sr_xyzf", hj_sr_xyzf);
-			hj_cb_xyzf += (Float)m.get("cb_xyzf");
+			hj_cb_xyzf += objectToFloat(m.get("cb_xyzf"));
 			map.put("hj_cb_xyzf", hj_cb_xyzf);
-			hj_sr_cdzf += (Float)m.get("sr_cdzf");
+			hj_sr_cdzf += objectToFloat(m.get("sr_cdzf"));
 			map.put("hj_sr_cdzf", hj_sr_cdzf);
-			hj_cb_cdzf += (Float)m.get("cb_cdzf");
+			hj_cb_cdzf += objectToFloat(m.get("cb_cdzf"));
 			map.put("hj_cb_cdzf", hj_cb_cdzf);
-			hj_sr_kbdzf += (Float)m.get("sr_kbdzf");
+			hj_sr_kbdzf += objectToFloat(m.get("sr_kbdzf"));
 			map.put("hj_sr_kbdzf", hj_sr_kbdzf);
-			hj_cb_kbdzf += (Float)m.get("cb_kbdzf");
+			hj_cb_kbdzf += objectToFloat(m.get("cb_kbdzf"));
 			map.put("hj_cb_kbdzf", hj_cb_kbdzf);
-			hj_sr_kdf += (Float)m.get("sr_kdf");
+			hj_sr_kdf += objectToFloat(m.get("sr_kdf"));
 			map.put("hj_sr_kdf", hj_sr_kdf);
-			hj_cb_kdf += (Float)m.get("cb_kdf");
+			hj_cb_kdf += objectToFloat(m.get("cb_kdf"));
 			map.put("hj_cb_kdf", hj_cb_kdf);
-			hj_sr_bcf += (Float)m.get("sr_bcf");
+			hj_sr_bcf += objectToFloat(m.get("sr_bcf"));
 			map.put("hj_sr_bcf", hj_sr_bcf);
-			hj_cb_bcf += (Float)m.get("cb_bcf");
+			hj_cb_bcf += objectToFloat(m.get("cb_bcf"));
 			map.put("hj_cb_bcf", hj_cb_bcf);
-			hj_sr_ftf += (Float)m.get("sr_ftf");
+			hj_sr_ftf += objectToFloat(m.get("sr_ftf"));
 			map.put("hj_sr_ftf", hj_sr_ftf);
-			hj_cb_ftf += (Float)m.get("cb_ftf");
+			hj_cb_ftf += objectToFloat(m.get("cb_ftf"));
 			map.put("hj_cb_ftf", hj_cb_ftf);
-			hj_sr_cdf += (Float)m.get("sr_cdf");
+			hj_sr_cdf += objectToFloat(m.get("sr_cdf"));
 			map.put("hj_sr_cdf", hj_sr_cdf);
-			hj_cb_cdf += (Float)m.get("cb_cdf");
+			hj_cb_cdf += objectToFloat(m.get("cb_cdf"));
 			map.put("hj_cb_cdf", hj_cb_cdf);
-			hj_sr_gpf += (Float)m.get("sr_gpf");
+			hj_sr_gpf += objectToFloat(m.get("sr_gpf"));
 			map.put("hj_sr_gpf", hj_sr_gpf);
-			hj_cb_gpf += (Float)m.get("cb_gpf");
+			hj_cb_gpf += objectToFloat(m.get("cb_gpf"));
 			map.put("hj_cb_gpf", hj_cb_gpf);
-			hj_sr_hzptf += (Float)m.get("sr_hzptf");
+			hj_sr_hzptf += objectToFloat(m.get("sr_hzptf"));
 			map.put("hj_sr_hzptf", hj_sr_hzptf);
-			hj_cb_hzptf += (Float)m.get("cb_hzptf");
+			hj_cb_hzptf += objectToFloat(m.get("cb_hzptf"));
 			map.put("hj_cb_hzptf", hj_cb_hzptf);
-			hj_sr_qt += (Float)m.get("sr_qt");
+			hj_sr_qt += objectToFloat(m.get("sr_qt"));
 			map.put("hj_sr_qt", hj_sr_qt);
-			hj_cb_qt += (Float)m.get("cb_qt");
+			hj_cb_qt += objectToFloat(m.get("cb_qt"));
 			map.put("hj_cb_qt", hj_cb_qt);
-			hj_sum_sr += (Float)m.get("sum_sr");
+			hj_sum_sr += objectToFloat(m.get("sum_sr"));
 			map.put("hj_sum_sr", hj_sum_sr);
-			hj_sum_cb +=(Float)m.get("sum_cb");
+			hj_sum_cb +=objectToFloat(m.get("sum_cb"));
 			map.put("hj_sum_cb", hj_sum_cb);
-			hj_ml += (Float)m.get("ml");
+			hj_ml += objectToFloat(m.get("ml"));
 			map.put("hj_ml", hj_ml);
-			hj_lr += (Float)m.get("lr");
+			hj_lr += objectToFloat(m.get("lr"));
 			map.put("hj_lr", hj_lr);
 		}
 		
 		return map;
+	}
+	
+	private Float objectToFloat(Object o){
+		Float returns = null;
+		try{
+			returns = Float.parseFloat(((BigDecimal)o).toString());
+		}catch(ClassCastException classcastException){
+			returns = (Float)o;
+		}
+		return returns;		
+	}
+	
+	private String objectToString(Object o){
+		String returns = "";
+		try{
+			Float float_num = Float.parseFloat(((BigDecimal)o).toString());
+			returns = float_num.toString();
+		}catch(ClassCastException classcastException){
+			returns = ((Float)o).toString();
+		}
+		return returns;		
 	}
 	
 	private WritableCellFormat setCellFormat() throws WriteException{
@@ -823,6 +949,14 @@ public class KhmxbController extends BaseManageController{
 
 	public void setTczcService(TczcService tczcService) {
 		this.tczcService = tczcService;
+	}
+
+	public String getList2Page() {
+		return list2Page;
+	}
+
+	public void setList2Page(String list2Page) {
+		this.list2Page = list2Page;
 	}
 
 }
