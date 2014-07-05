@@ -31,7 +31,7 @@ function indexOnLoad(){
 }
 
 //输出xls
-function exportXls(){
+function exportXls(num){
 	var qv = '_temp='+Math.random();	
 	if($F('_bgdh') != ''){
 		qv += '&bgdh=' + new BaseClass().encode($F('_bgdh'),true);
@@ -54,7 +54,7 @@ function exportXls(){
 	
 	base.confirm('您确信要导出EXCEL数据吗？', function() {
 		window.target="_self";
-		window.open(baseUrl + "?action=exportXls&" + qv + '&orders=id__desc');
+		window.open(baseUrl + "?action=exportXls"+num+"&" + qv + '&orders=id__desc');
 	});
 }
 
@@ -92,9 +92,9 @@ function query(num){
 
 // 分页查询方法
 function jump(/*string*/_url, /*int*/curPage)
-{
+{	
 	pag.query(
-		_url + curPage,
+			_url + curPage,
 		'_list'
 	);
 }
@@ -147,7 +147,8 @@ function print()
 		<td width="100%" align="center" colspan="10" bgcolor="#FFFFFF">
 			<!-- <input name="sub" type="button" onclick="query('')"  class="btn01" value="查 询" />&nbsp; -->
 			<input name="sub" type="button" onclick="query('2')"  class="btn01" value="查 询" />&nbsp;
-			<input name="sub" sys_opt="exportXls"   type="button" onclick="exportXls()" class="btn01" value="导出xls" />&nbsp;
+			<!-- <input name="sub" sys_opt="exportXls"   type="button" onclick="exportXls('')" class="btn01" value="导出xls" />&nbsp; -->
+			<input name="sub" sys_opt="exportXls"   type="button" onclick="exportXls('2')" class="btn01" value="导出xls" />&nbsp;
 			<!-- <input name="sub" sys_opt="print"   type="button" onclick="print()" class="btn01" value="打印" /> -->
 		</td>
 	</tr>

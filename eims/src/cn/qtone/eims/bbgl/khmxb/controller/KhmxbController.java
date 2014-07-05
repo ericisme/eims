@@ -59,6 +59,18 @@ public class KhmxbController extends BaseManageController{
 		return new ModelAndView(this.getIndexPage(), map);
 	}
 	
+	/**
+	 * list2
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 * 	ALTER TABLE `eims_fkzf` ADD INDEX `index_fkzf_index` (`BGDH`) ;
+		ALTER TABLE `eims_gjts` ADD INDEX `index_gjts_index` (`BGDH`) ;
+		ALTER TABLE `eims_khqk` ADD INDEX `index_khqk_index` (`BGDH`) ;
+		ALTER TABLE `eims_khts` ADD INDEX `index_khts_index` (`BGDH`) ;
+		ALTER TABLE `eims_tczc` ADD INDEX `index_tczc_index` (`BGDH`) ;
+	 */
 	public ModelAndView list2(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		Map<String,Object> map = this.getMapWithUser(request);	
 		String bgdh = ServletUtil.removeSpace(request, "bgdh"); //报关单号
@@ -67,6 +79,7 @@ public class KhmxbController extends BaseManageController{
 		String ksrq = ServletUtil.removeSpace(request, "ksrq"); //开始时间
 		String jsrq = ServletUtil.removeSpace(request, "jsrq"); //结束时间
 		String gsmc = ServletUtil.removeSpace(request, "gsmc"); //公司名称		
+		
 		if(StringUtil.isNullAndBlank(ksrq))
 			ksrq = "1900-01-01 00:00:00";
 		if(StringUtil.isNullAndBlank(jsrq))
@@ -105,7 +118,7 @@ public class KhmxbController extends BaseManageController{
 		
 		boolean lastPage = EimsUtil.ifLastPage(curPage, page);
 		if(lastPage){			
-			Page pageAll = khtsService.pagedQuery(criteria_sum, curPage, 999999999);
+			Page pageAll = khtsService.pagedQuery(criteria_sum, 1, 999999999);
 			List<KhmxbDto> KhmxbDto_list_all = new ArrayList<KhmxbDto>();
 			for(Khts khts : (List<Khts>) pageAll.getResult()){
 				KhmxbDto_list_all.add(getKhmxbDtoBykhts(khts));
@@ -116,6 +129,314 @@ public class KhmxbController extends BaseManageController{
 		map.put("page", page);	
 		map.put("ifLastPage",lastPage);	
 		return new ModelAndView(this.getList2Page(), map);
+	}
+	
+	
+	/**
+	 * 导出EXCEL2
+	 */
+	public ModelAndView exportXls2(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String bgdh = ServletUtil.removeSpace(request, "bgdh"); //报关单号
+		String khmc = ServletUtil.removeSpace(request, "khmc"); //客户名称
+		String ywy =  ServletUtil.removeSpace(request, "ywy"); //业务员
+		String ksrq = ServletUtil.removeSpace(request, "ksrq"); //开始时间
+		String jsrq = ServletUtil.removeSpace(request, "jsrq"); //结束时间
+		String gsmc = ServletUtil.removeSpace(request, "gsmc"); //公司名称		
+		
+		if(StringUtil.isNullAndBlank(ksrq))
+			ksrq = "1900-01-01 00:00:00";
+		if(StringUtil.isNullAndBlank(jsrq))
+			jsrq = "2099-12-31 23:59:59";			
+		Criteria criteria = khtsService.createCriteria(Khts.class);
+		if(!StringUtil.isNullAndBlank(bgdh)){
+			criteria.add(Expression.like("bgdh", "%"+bgdh+"%"));
+		}
+		if(!StringUtil.isNullAndBlank(khmc)){
+			criteria.add(Expression.like("khmc", "%"+khmc+"%"));
+		}
+		if(!StringUtil.isNullAndBlank(ywy)){
+			criteria.add(Expression.like("ywy", "%"+ywy+"%"));
+		}
+		criteria.add(Expression.ge("bgrq", DateUtil.parseSimpleDateTime(ksrq)));
+		criteria.add(Expression.le("bgrq", DateUtil.parseSimpleDateTime(jsrq)));
+		if(!StringUtil.isNullAndBlank(gsmc)){	
+			criteria.add(Expression.in("bgdh", fkzfService.createCriteria(Fkzf.class).add(Expression.like("gsmc","%"+gsmc+"%")).setProjection(Projections.property("bgdh")).list()));
+		}
+		Page page = khtsService.pagedQuery(criteria, 1, 999999999);
+		List<KhmxbDto> KhmxbDto_list = new ArrayList<KhmxbDto>();
+		for(Khts khts : (List<Khts>) page.getResult()){
+			KhmxbDto_list.add(getKhmxbDtoBykhts(khts));
+		}
+		//合计
+		KhmxbSumDto k_sum = sumKhmxbDto(KhmxbDto_list);
+		KhmxbSumStrDto ks = getKhmxbSumStrDtoByKhmxbSumDto(k_sum);
+		
+		
+		
+		
+		OutputStream os = response.getOutputStream();// 取得输出流 		
+		String filename = new String("客户费用明细报表".getBytes("GB2312"), "ISO_8859_1");
+		response.setHeader("Content-Disposition","attachment;filename=" + filename + ".xls");
+		response.setContentType("application/msexcel");			
+		WritableWorkbook wwb = Workbook.createWorkbook(os);		
+		
+		WritableSheet wsheet = wwb.createSheet("客户费用明细报表", 0); // sheet名称
+		wsheet.getSettings().setDefaultColumnWidth(10);	
+		
+		wsheet.addCell(new Label(0,0,"客户名称", setCellFormat()));
+		wsheet.mergeCells(0, 0, 0, 1);
+		wsheet.addCell(new Label(1,0,"合作单位", setCellFormat()));
+		wsheet.mergeCells(1, 0, 1, 1);
+		wsheet.addCell(new Label(2,0,"报关日期", setCellFormat()));
+		wsheet.mergeCells(2, 0, 2, 1);
+		wsheet.addCell(new Label(3,0,"报关单号", setCellFormat()));
+		wsheet.mergeCells(3, 0, 3, 1);
+		wsheet.addCell(new Label(4,0,"报关金额", setCellFormat()));
+		wsheet.mergeCells(4, 0, 4, 1);
+		wsheet.addCell(new Label(5,0,"发票金额", setCellFormat()));
+		wsheet.mergeCells(5, 0, 5, 1);
+		wsheet.addCell(new Label(6,0,"收发票日期", setCellFormat()));
+		wsheet.mergeCells(6, 0, 6, 1);
+		wsheet.addCell(new Label(7,0,"退税金额", setCellFormat()));
+		wsheet.mergeCells(7, 0, 7, 1);
+		wsheet.addCell(new Label(8,0,"支付退税日期", setCellFormat()));
+		wsheet.mergeCells(8, 0, 8, 1);
+		wsheet.addCell(new Label(9,0,"收到国税退税日期", setCellFormat()));
+		wsheet.mergeCells(9, 0, 9, 1);
+		wsheet.addCell(new Label(10,0,"代理费", setCellFormat()));
+		wsheet.mergeCells(10, 0, 10, 1);
+		
+		wsheet.addCell(new Label(11,0,"报关费", setCellFormat()));
+		wsheet.mergeCells(11, 0, 12, 0);
+		wsheet.addCell(new Label(13,0,"广建费", setCellFormat()));
+		wsheet.mergeCells(13, 0, 14, 0);
+		wsheet.addCell(new Label(15,0,"国检费", setCellFormat()));
+		wsheet.mergeCells(15, 0, 16, 0);
+		wsheet.addCell(new Label(17,0,"商检费", setCellFormat()));
+		wsheet.mergeCells(17, 0, 18, 0);
+		wsheet.addCell(new Label(19,0,"续页费", setCellFormat()));
+		wsheet.mergeCells(19, 0, 20, 0);
+		wsheet.addCell(new Label(21,0,"连柜费", setCellFormat()));
+		wsheet.mergeCells(21, 0, 22, 0);
+		wsheet.addCell(new Label(23,0,"拖车费", setCellFormat()));
+		wsheet.mergeCells(23, 0, 24, 0);
+		wsheet.addCell(new Label(25,0,"扫描费", setCellFormat()));
+		wsheet.mergeCells(25, 0, 26, 0);
+		wsheet.addCell(new Label(27,0,"查柜费", setCellFormat()));
+		wsheet.mergeCells(27, 0, 28, 0);
+		wsheet.addCell(new Label(29,0,"熏蒸费", setCellFormat()));
+		wsheet.mergeCells(29, 0, 30, 0);
+		wsheet.addCell(new Label(31,0,"加签", setCellFormat()));
+		wsheet.mergeCells(31, 0, 32, 0);
+		wsheet.addCell(new Label(33,0,"信用证费", setCellFormat()));
+		wsheet.mergeCells(33, 0, 34, 0);
+		wsheet.addCell(new Label(35,0,"产地证费", setCellFormat()));
+		wsheet.mergeCells(35, 0, 36, 0);
+		wsheet.addCell(new Label(37,0,"空白单证费", setCellFormat()));
+		wsheet.mergeCells(37, 0, 38, 0);
+		wsheet.addCell(new Label(39,0,"快递费", setCellFormat()));
+		wsheet.mergeCells(39, 0, 40, 0);
+		wsheet.addCell(new Label(41,0,"驳船费", setCellFormat()));
+		wsheet.mergeCells(41, 0, 42, 0);
+		wsheet.addCell(new Label(43,0,"封条费", setCellFormat()));
+		wsheet.mergeCells(43, 0, 44, 0);
+		wsheet.addCell(new Label(45,0,"仓单费", setCellFormat()));
+		wsheet.mergeCells(45, 0, 46, 0);
+		wsheet.addCell(new Label(47,0,"过磅费", setCellFormat()));
+		wsheet.mergeCells(47, 0, 48, 0);
+		wsheet.addCell(new Label(49,0,"换证凭条费", setCellFormat()));
+		wsheet.mergeCells(49, 0, 50, 0);
+		wsheet.addCell(new Label(51,0,"其他", setCellFormat()));
+		wsheet.mergeCells(51, 0, 52, 0);
+		wsheet.addCell(new Label(53,0,"合计", setCellFormat()));
+		wsheet.mergeCells(53, 0, 54, 0);
+		wsheet.addCell(new Label(55,0,"毛利", setCellFormat()));
+		wsheet.mergeCells(55, 0, 55, 1);
+		wsheet.addCell(new Label(56,0,"利润", setCellFormat()));
+		wsheet.mergeCells(56, 0, 56, 1);
+		wsheet.addCell(new Label(57,0,"业务员", setCellFormat()));
+		wsheet.mergeCells(57, 0, 57, 1);
+		wsheet.addCell(new Label(58,0,"代理费标准", setCellFormat()));
+		wsheet.mergeCells(58, 0, 58, 1);
+		
+		wsheet.addCell(new Label(11,1,"收入", setCellFormat()));
+		wsheet.addCell(new Label(12,1,"成本", setCellFormat()));
+		wsheet.addCell(new Label(13,1,"收入", setCellFormat()));
+		wsheet.addCell(new Label(14,1,"成本", setCellFormat()));
+		wsheet.addCell(new Label(15,1,"收入", setCellFormat()));
+		wsheet.addCell(new Label(16,1,"成本", setCellFormat()));
+		wsheet.addCell(new Label(17,1,"收入", setCellFormat()));
+		wsheet.addCell(new Label(18,1,"成本", setCellFormat()));
+		wsheet.addCell(new Label(19,1,"收入", setCellFormat()));
+		wsheet.addCell(new Label(20,1,"成本", setCellFormat()));
+		wsheet.addCell(new Label(21,1,"收入", setCellFormat()));
+		wsheet.addCell(new Label(22,1,"成本", setCellFormat()));
+		wsheet.addCell(new Label(23,1,"收入", setCellFormat()));
+		wsheet.addCell(new Label(24,1,"成本", setCellFormat()));
+		wsheet.addCell(new Label(25,1,"收入", setCellFormat()));
+		wsheet.addCell(new Label(26,1,"成本", setCellFormat()));
+		wsheet.addCell(new Label(27,1,"收入", setCellFormat()));
+		wsheet.addCell(new Label(28,1,"成本", setCellFormat()));
+		wsheet.addCell(new Label(29,1,"收入", setCellFormat()));
+		wsheet.addCell(new Label(30,1,"成本", setCellFormat()));
+		wsheet.addCell(new Label(31,1,"收入", setCellFormat()));
+		wsheet.addCell(new Label(32,1,"成本", setCellFormat()));
+		wsheet.addCell(new Label(33,1,"收入", setCellFormat()));
+		wsheet.addCell(new Label(34,1,"成本", setCellFormat()));
+		wsheet.addCell(new Label(35,1,"收入", setCellFormat()));
+		wsheet.addCell(new Label(36,1,"成本", setCellFormat()));
+		wsheet.addCell(new Label(37,1,"收入", setCellFormat()));
+		wsheet.addCell(new Label(38,1,"成本", setCellFormat()));
+		wsheet.addCell(new Label(39,1,"收入", setCellFormat()));
+		wsheet.addCell(new Label(40,1,"成本", setCellFormat()));
+		wsheet.addCell(new Label(41,1,"收入", setCellFormat()));
+		wsheet.addCell(new Label(42,1,"成本", setCellFormat()));
+		wsheet.addCell(new Label(43,1,"收入", setCellFormat()));
+		wsheet.addCell(new Label(44,1,"成本", setCellFormat()));
+		wsheet.addCell(new Label(45,1,"收入", setCellFormat()));
+		wsheet.addCell(new Label(46,1,"成本", setCellFormat()));
+		wsheet.addCell(new Label(47,1,"收入", setCellFormat()));
+		wsheet.addCell(new Label(48,1,"成本", setCellFormat()));
+		wsheet.addCell(new Label(49,1,"收入", setCellFormat()));
+		wsheet.addCell(new Label(50,1,"成本", setCellFormat()));
+		wsheet.addCell(new Label(51,1,"收入", setCellFormat()));
+		wsheet.addCell(new Label(52,1,"成本", setCellFormat()));
+		wsheet.addCell(new Label(53,1,"收入", setCellFormat()));
+		wsheet.addCell(new Label(54,1,"成本", setCellFormat()));
+		
+		int i = 2;
+		//List<Map<String, Object>> list = getList(results);
+		//for(Map<String, Object> map : list){
+		for(KhmxbDto k : KhmxbDto_list){
+			wsheet.addCell(new Label(0,i,k.getKhmc(), setCellFormat()));
+			wsheet.addCell(new Label(1,i,k.getHzdw(), setCellFormat()));
+			wsheet.addCell(new Label(2,i,k.getBgrq(), setCellFormat()));
+			wsheet.addCell(new Label(3,i,k.getBgdh(), setCellFormat()));
+			wsheet.addCell(new Label(4,i,objectToString2(k.getBgje()), setCellFormat()));
+			wsheet.addCell(new Label(5,i,objectToString2(k.getFpje()), setCellFormat()));
+			wsheet.addCell(new Label(6,i,k.getSfprq(), setCellFormat()));
+			wsheet.addCell(new Label(7,i,objectToString2(k.getTsje()), setCellFormat()));
+			wsheet.addCell(new Label(8,i,k.getZftsrq(), setCellFormat()));
+			wsheet.addCell(new Label(9,i,k.getSdgstsrq(), setCellFormat()));
+			wsheet.addCell(new Label(10,i,objectToString2(k.getDlf()), setCellFormat()));
+			
+			wsheet.addCell(new Label(11,i,objectToString2(k.getBgf_sr()), setCellFormat()));
+			wsheet.addCell(new Label(12,i,objectToString2(k.getBgf_cb()), setCellFormat()));
+			wsheet.addCell(new Label(13,i,objectToString2(k.getGuangjf_sr()), setCellFormat()));
+			wsheet.addCell(new Label(14,i,objectToString2(k.getGuangjf_cb()), setCellFormat()));
+			wsheet.addCell(new Label(15,i,objectToString2(k.getGoujf_sr()), setCellFormat()));
+			wsheet.addCell(new Label(16,i,objectToString2(k.getGoujf_cb()), setCellFormat()));
+			wsheet.addCell(new Label(17,i,objectToString2(k.getSjf_sr()), setCellFormat()));
+			wsheet.addCell(new Label(18,i,objectToString2(k.getSjf_cb()), setCellFormat()));
+			wsheet.addCell(new Label(19,i,objectToString2(k.getXyf_sr()), setCellFormat()));
+			wsheet.addCell(new Label(20,i,objectToString2(k.getXyf_cb()), setCellFormat()));
+			wsheet.addCell(new Label(21,i,objectToString2(k.getLgf_sr()), setCellFormat()));
+			wsheet.addCell(new Label(22,i,objectToString2(k.getLgf_cb()), setCellFormat()));
+			wsheet.addCell(new Label(23,i,objectToString2(k.getTcf_sr()), setCellFormat()));
+			wsheet.addCell(new Label(24,i,objectToString2(k.getTcf_cb()), setCellFormat()));
+			wsheet.addCell(new Label(25,i,objectToString2(k.getSmf_sr()), setCellFormat()));
+			wsheet.addCell(new Label(26,i,objectToString2(k.getSmf_cb()), setCellFormat()));
+			wsheet.addCell(new Label(27,i,objectToString2(k.getCgf_sr()), setCellFormat()));
+			wsheet.addCell(new Label(28,i,objectToString2(k.getCgf_cb()), setCellFormat()));
+			wsheet.addCell(new Label(29,i,objectToString2(k.getXzf_sr()), setCellFormat()));
+			wsheet.addCell(new Label(30,i,objectToString2(k.getXzf_cb()), setCellFormat()));
+			wsheet.addCell(new Label(31,i,objectToString2(k.getJq_sr()), setCellFormat()));
+			wsheet.addCell(new Label(32,i,objectToString2(k.getJq_cb()), setCellFormat()));
+			wsheet.addCell(new Label(33,i,objectToString2(k.getXyzf_sr()), setCellFormat()));
+			wsheet.addCell(new Label(34,i,objectToString2(k.getXyzf_cb()), setCellFormat()));
+			wsheet.addCell(new Label(35,i,objectToString2(k.getCdzf_sr()), setCellFormat()));
+			wsheet.addCell(new Label(36,i,objectToString2(k.getCdzf_cb()), setCellFormat()));
+			wsheet.addCell(new Label(37,i,objectToString2(k.getKbdzf_sr()), setCellFormat()));
+			wsheet.addCell(new Label(38,i,objectToString2(k.getKbdzf_cb()), setCellFormat()));
+			wsheet.addCell(new Label(39,i,objectToString2(k.getKdf_sr()), setCellFormat()));
+			wsheet.addCell(new Label(40,i,objectToString2(k.getKdf_cb()), setCellFormat()));
+			wsheet.addCell(new Label(41,i,objectToString2(k.getBcf_sr()), setCellFormat()));
+			wsheet.addCell(new Label(42,i,objectToString2(k.getBcf_cb()), setCellFormat()));
+			wsheet.addCell(new Label(43,i,objectToString2(k.getFtf_sr()), setCellFormat()));
+			wsheet.addCell(new Label(44,i,objectToString2(k.getFtf_cb()), setCellFormat()));
+			wsheet.addCell(new Label(45,i,objectToString2(k.getCdf_sr()), setCellFormat()));
+			wsheet.addCell(new Label(46,i,objectToString2(k.getCdf_cb()), setCellFormat()));
+			wsheet.addCell(new Label(47,i,objectToString2(k.getGpf_sr()), setCellFormat()));
+			wsheet.addCell(new Label(48,i,objectToString2(k.getGpf_cb()), setCellFormat()));
+			wsheet.addCell(new Label(49,i,objectToString2(k.getHzptf_sr()), setCellFormat()));
+			wsheet.addCell(new Label(50,i,objectToString2(k.getHzptf_cb()), setCellFormat()));
+			wsheet.addCell(new Label(51,i,objectToString2(k.getQt_sr()), setCellFormat()));
+			wsheet.addCell(new Label(52,i,objectToString2(k.getQt_cb()), setCellFormat()));
+			wsheet.addCell(new Label(53,i,objectToString2(k.getHj_sr()), setCellFormat()));
+			wsheet.addCell(new Label(54,i,objectToString2(k.getHj_cb()), setCellFormat()));
+			
+			wsheet.addCell(new Label(55,i,objectToString2(k.getMl()), setCellFormat()));
+			wsheet.addCell(new Label(56,i,objectToString2(k.getLr()), setCellFormat()));
+			wsheet.addCell(new Label(57,i,k.getYwy(), setCellFormat()));
+			wsheet.addCell(new Label(58,i,k.getDlfbz(), setCellFormat()));			
+			i++;
+		}
+		
+//		Map<String, Object> map = getHj(list);
+		wsheet.addCell(new Label(0,i,"合计", setCellFormat()));
+		wsheet.mergeCells(0, i, 3, i);
+		wsheet.addCell(new Label(4,i,(ks.getBgje()), setCellFormat()));
+		wsheet.addCell(new Label(5,i,(ks.getFpje()), setCellFormat()));
+		wsheet.addCell(new Label(6,i,"", setCellFormat()));
+		wsheet.addCell(new Label(7,i,(ks.getTsje()), setCellFormat()));
+		wsheet.addCell(new Label(8,i,"", setCellFormat()));
+		wsheet.addCell(new Label(9,i,"", setCellFormat()));
+		wsheet.addCell(new Label(10,i,(ks.getDlf()), setCellFormat()));
+		
+		wsheet.addCell(new Label(11,i,(ks.getBgf_sr()), setCellFormat()));
+		wsheet.addCell(new Label(12,i,(ks.getBgf_cb()), setCellFormat()));
+		wsheet.addCell(new Label(13,i,(ks.getGuangjf_sr()), setCellFormat()));
+		wsheet.addCell(new Label(14,i,(ks.getGuangjf_cb()), setCellFormat()));
+		wsheet.addCell(new Label(15,i,(ks.getGoujf_sr()), setCellFormat()));
+		wsheet.addCell(new Label(16,i,(ks.getGoujf_cb()), setCellFormat()));
+		wsheet.addCell(new Label(17,i,(ks.getSjf_sr()), setCellFormat()));
+		wsheet.addCell(new Label(18,i,(ks.getSjf_cb()), setCellFormat()));
+		wsheet.addCell(new Label(19,i,(ks.getXyf_sr()), setCellFormat()));
+		wsheet.addCell(new Label(20,i,(ks.getXyf_cb()), setCellFormat()));
+		wsheet.addCell(new Label(21,i,(ks.getLgf_sr()), setCellFormat()));
+		wsheet.addCell(new Label(22,i,(ks.getLgf_cb()), setCellFormat()));
+		wsheet.addCell(new Label(23,i,(ks.getTcf_sr()), setCellFormat()));
+		wsheet.addCell(new Label(24,i,(ks.getTcf_cb()), setCellFormat()));
+		wsheet.addCell(new Label(25,i,(ks.getSmf_sr()), setCellFormat()));
+		wsheet.addCell(new Label(26,i,(ks.getSmf_cb()), setCellFormat()));
+		wsheet.addCell(new Label(27,i,(ks.getCgf_sr()), setCellFormat()));
+		wsheet.addCell(new Label(28,i,(ks.getCgf_cb()), setCellFormat()));
+		wsheet.addCell(new Label(29,i,(ks.getXzf_sr()), setCellFormat()));
+		wsheet.addCell(new Label(30,i,(ks.getXzf_cb()), setCellFormat()));
+		wsheet.addCell(new Label(31,i,(ks.getJq_sr()), setCellFormat()));
+		wsheet.addCell(new Label(32,i,(ks.getJq_cb()), setCellFormat()));
+		wsheet.addCell(new Label(33,i,(ks.getXyzf_sr()), setCellFormat()));
+		wsheet.addCell(new Label(34,i,(ks.getXyzf_cb()), setCellFormat()));
+		wsheet.addCell(new Label(35,i,(ks.getCdzf_sr()), setCellFormat()));
+		wsheet.addCell(new Label(36,i,(ks.getCdzf_cb()), setCellFormat()));
+		wsheet.addCell(new Label(37,i,(ks.getKbdzf_sr()), setCellFormat()));
+		wsheet.addCell(new Label(38,i,(ks.getKbdzf_cb()), setCellFormat()));
+		wsheet.addCell(new Label(39,i,(ks.getKdf_sr()), setCellFormat()));
+		wsheet.addCell(new Label(40,i,(ks.getKdf_cb()), setCellFormat()));
+		wsheet.addCell(new Label(41,i,(ks.getBcf_sr()), setCellFormat()));
+		wsheet.addCell(new Label(42,i,(ks.getBcf_cb()), setCellFormat()));
+		wsheet.addCell(new Label(43,i,(ks.getFtf_sr()), setCellFormat()));
+		wsheet.addCell(new Label(44,i,(ks.getFtf_cb()), setCellFormat()));
+		wsheet.addCell(new Label(45,i,(ks.getCdf_sr()), setCellFormat()));
+		wsheet.addCell(new Label(46,i,(ks.getCdf_cb()), setCellFormat()));
+		wsheet.addCell(new Label(47,i,(ks.getGpf_sr()), setCellFormat()));
+		wsheet.addCell(new Label(48,i,(ks.getGpf_cb()), setCellFormat()));
+		wsheet.addCell(new Label(49,i,(ks.getHzptf_sr()), setCellFormat()));
+		wsheet.addCell(new Label(50,i,(ks.getHzptf_cb()), setCellFormat()));
+		wsheet.addCell(new Label(51,i,(ks.getQt_sr()), setCellFormat()));
+		wsheet.addCell(new Label(52,i,(ks.getQt_cb()), setCellFormat()));
+		wsheet.addCell(new Label(53,i,(ks.getHj_sr()), setCellFormat()));
+		wsheet.addCell(new Label(54,i,(ks.getHj_cb()), setCellFormat()));
+		
+		wsheet.addCell(new Label(55,i,(ks.getMl()), setCellFormat()));
+		wsheet.addCell(new Label(56,i,(ks.getLr()), setCellFormat()));
+		wsheet.addCell(new Label(57,i,"", setCellFormat()));
+		wsheet.addCell(new Label(58,i,"", setCellFormat()));
+		
+		wwb.write();
+		wwb.close();		
+		os.close(); 
+		return null;
 	}
 	
 	private KhmxbDto getKhmxbDtoBykhts(Khts khts){
@@ -1166,6 +1487,17 @@ public class KhmxbController extends BaseManageController{
 	}
 	
 	private String objectToString(Object o){
+		String returns = "";
+		try{
+			Float float_num = Float.parseFloat(((BigDecimal)o).toString());
+			returns = float_num.toString();
+		}catch(ClassCastException classcastException){
+			returns = ((Float)o).toString();
+		}
+		return returns;		
+	}
+	
+	private String objectToString2(Object o){
 		String returns = "";
 		try{
 			Float float_num = Float.parseFloat(((BigDecimal)o).toString());
