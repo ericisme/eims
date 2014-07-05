@@ -65,6 +65,11 @@ public class KhmxbController extends BaseManageController{
 	 * @param response
 	 * @return
 	 * @throws Exception
+	 * 	ALTER TABLE `eims_fkzf` ADD INDEX `index_fkzf_index` (`BGDH`) ;
+		ALTER TABLE `eims_gjts` ADD INDEX `index_gjts_index` (`BGDH`) ;
+		ALTER TABLE `eims_khqk` ADD INDEX `index_khqk_index` (`BGDH`) ;
+		ALTER TABLE `eims_khts` ADD INDEX `index_khts_index` (`BGDH`) ;
+		ALTER TABLE `eims_tczc` ADD INDEX `index_tczc_index` (`BGDH`) ;
 	 */
 	public ModelAndView list2(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		Map<String,Object> map = this.getMapWithUser(request);	
