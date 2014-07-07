@@ -101,7 +101,7 @@
 	<tr>
 		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 合计： </td>
 		<td align="left" valign="top" class="tdRight">
-			<input name="hj" id="hj"  value="" type="text" maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'" readonly/>
+			<input name="hj" id="hj"   type="text"  value="<#if tczc.fyjehj??>${tczc.fyjehj?string('0.##')}</#if>"maxlength="50" size="30" class="box0" onFocus="this.className='box1'" onBlur="this.className='box0'" readonly/>
 		</td>
 		<td align="right" class="tdLeft" width="120px"><font color="red"><B>*</B></font> 未付金额： </td>
 		<td align="left" valign="top" class="tdRight">

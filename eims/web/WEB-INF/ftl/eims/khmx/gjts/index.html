@@ -247,10 +247,12 @@ function getKhts(){
 					var data = obj.data;
 					document.getElementById("khmc").value = data.khmc;
 					document.getElementById("tsje").value = data.tsje;
+					document.getElementById("dh").value = data.dh;
 					cauWsje();
 				}else{
 					document.getElementById("khmc").value = "";
 					document.getElementById("tsje").value = "";
+					document.getElementById("dh").value = "";
 					cauWsje();
 				}
 			}
