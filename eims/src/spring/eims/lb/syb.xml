@@ -9,6 +9,7 @@
 		<property name="showPage"  value="/eims/lb/syb/show"></property>
 		<property name="indexPage" value="/eims/lb/syb/index"></property>
 		<property name="service" ref="sybService"></property>
+		<property name="fymxbDao"         ref="fymxbDao"></property>
 	</bean>
 	<bean id="sybService" class="cn.qtone.eims.lb.service.SybService" />
 

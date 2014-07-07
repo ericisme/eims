@@ -23,20 +23,20 @@ public class Tczc {
 	private String dh; //单号
 	private String khmc; //客户名称
 	private Date bgrq; //报关日期	
-	private Float bgje; //报关金额
+	private Float bgje = 0f; //报关金额
 	private String tcgsmc; //拖车公司名称
 	private String gh; //柜号
 	private String qyg; //起运港
-	private Float tcf; //拖车费
-	private Float ydtgf; //异地提柜费
-	private Float gpf; //过磅费
-	private Float ldzgf; //两地装柜费
-	private Float ddf; //打单费
-	private Float zgf; //重柜费
-	private Float fyjehj; //费用金额合计
+	private Float tcf = 0f; //拖车费
+	private Float ydtgf = 0f; //异地提柜费
+	private Float gpf = 0f; //过磅费
+	private Float ldzgf = 0f; //两地装柜费
+	private Float ddf = 0f; //打单费
+	private Float zgf = 0f; //重柜费
+	private Float fyjehj = 0f; //费用金额合计
 	private String zfrq; //支付日期
-	private Float zfje; //支付金额
-	private Float wfje; //未付金额
+	private Float zfje = 0f; //支付金额
+	private Float wfje = 0f; //未付金额
 	
 	private Date lrsj;	    //录入时间
 

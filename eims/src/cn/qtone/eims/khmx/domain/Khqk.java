@@ -23,34 +23,34 @@ public class Khqk {
 	private String dh; //单号
 	private String khmc; //客户名称
 	private Date bgrq; //报关日期	
-	private Float bgje; //报关金额
-	private Float dlf; //代理费
-	private Float bgf; //报关费
-	private Float gjf; //港建费
-	private Float sjf; //商检费
-	private Float gj; //国检
-	private Float xyf; //续页费
-	private Float lgf; //包柜费
-	private Float tcf; //拖车费
-	private Float smf; //扫描费
-	private Float cgf; //查柜费
-	private Float xzf; //熏蒸费
-	private Float jq; //加签
-	private Float qt; //其他
+	private Float bgje = 0f; //报关金额
+	private Float dlf = 0f; //代理费
+	private Float bgf = 0f; //报关费
+	private Float gjf = 0f; //港建费
+	private Float sjf = 0f; //商检费
+	private Float gj = 0f; //国检
+	private Float xyf = 0f; //续页费
+	private Float lgf = 0f; //包柜费
+	private Float tcf = 0f; //拖车费
+	private Float smf = 0f; //扫描费
+	private Float cgf = 0f; //查柜费
+	private Float xzf = 0f; //熏蒸费
+	private Float jq = 0f; //加签
+	private Float qt = 0f; //其他
 	private String skrq; //收款日期
-	private Float ysje; //已收金额
-	private Float wsje; //未收金额
-	private Float hj; //合计
+	private Float ysje = 0f; //已收金额
+	private Float wsje = 0f; //未收金额
+	private Float hj = 0f; //合计
 	
-	private Float xyzf; //信用证费
-	private Float cdzf; //产地证费
-	private Float kbdzf; //空白单证费
-	private Float kdf; //快递费
-	private Float bcf; //驳船费
-	private Float ftf; //封条费
-	private Float cdf; //仓单费
-	private Float gpf; //过磅费
-	private Float hzptf; //换证凭条费
+	private Float xyzf = 0f; //信用证费
+	private Float cdzf = 0f; //产地证费
+	private Float kbdzf = 0f; //空白单证费
+	private Float kdf = 0f; //快递费
+	private Float bcf = 0f; //驳船费
+	private Float ftf = 0f; //封条费
+	private Float cdf = 0f; //仓单费
+	private Float gpf = 0f; //过磅费
+	private Float hzptf = 0f; //换证凭条费
 	
 	private Date lrsj;	    //录入时间
 

@@ -18,6 +18,14 @@ var baseUrl = '/eims/lb/syb.do';
 
 //初始化index
 function indexOnLoad(){	
+	var firstDate = new Date();
+	firstDate.setDate(1); //第一天
+	var endDate = new Date(firstDate);
+	endDate.setMonth(firstDate.getMonth()+1);
+	endDate.setDate(0);
+	$('_ksrq').value=new XDate(firstDate).toString('yyyy-MM-dd');
+	$('_jsrq').value=new XDate(endDate).toString('yyyy-MM-dd');
+	//query();
 	report();
 }
 
