@@ -1,0 +1,7 @@
+/target
+/.classpath
+/.DS_Store
+/.idea
+/logs
+/testFolder
+/jdbclogs
