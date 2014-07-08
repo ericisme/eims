@@ -1,0 +1,51 @@
+<!-- auto generated -->
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	<tr>
+		<td class="line">您现在的位置： 会计凭证>> 科目管理  -> <#if kmgl.id??>编辑<#else>添加</#if> 科目 </td>
+	</tr>
+</table>
+<form name="theForm" id="theForm" method="POST" action="" onsubmit="return checkForm();">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td>
+			<input name="id" id="id" type="hidden" value="${kmgl.id!}" />	
+		</td>
+	</tr>
+</table>
+<#include "../../../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="update_tbl">		
+	<tr class="list_title">   			
+		<td width="4%" align="center">科目代号</td>
+		<td width="4%" align="center">科目名称</td>
+		<td width="4%" align="center">去年余额</td>
+		<td width="4%" align="center">历史余额</td>
+		<td width="4%" align="center">状态</td>
+	</tr>
+	<form name="theForm" id="theForm" method="POST" action="" onsubmit="return checkForm('');">
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+		<td align="right"><input type="text" name="kmdh"      id="kmdh"       value="<#if kmgl.kmdh??>${kmgl.kmdh!}<#else></#if>"    maxlength="33" size="33" style="font-size:12px;text-align:right;"/></td>
+		<td align="right"><input type="text" name="kmmc"      id="kmmc"       value="<#if kmgl.kmmc??>${kmgl.kmmc!}<#else></#if>"    maxlength="33" size="33" style="font-size:12px;text-align:right;"/></td>
+		<td align="right"><input type="text" name="qnye"  id="qnye"   value="<#if kmgl.qnye??>${kmgl.qnye?string('0.##')}<#else></#if>"    maxlength="11" size="9" style="font-size:12px;text-align:right;"/></td>
+		<td align="right"><input type="text" name="lsye"  id="lsye"   value="<#if kmgl.lsye??>${kmgl.lsye?string('0.##')}<#else></#if>"    maxlength="11" size="9" style="font-size:12px;text-align:right;"/></td>
+		<td align="right">
+			<select name="zt" id="zt">
+				<option value="1" <#if kmgl.zt =1 >selected<#else></#if> >启用</option>
+				<option value="0" <#if kmgl.zt =0 >selected<#else></#if> >停用</option>
+			</select>
+		</td>		
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td height="5">&nbsp;</td>
+	</tr>
+	<tr>
+		<td height="5" align="center">
+			<!-- <font color="red">注：金额=当月报关金额*汇率*备用1*备用2%</font><br/><br/> -->
+			<input name="btn01" id="sys_update_btn" type="submit" class="btn01" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="提 交" />&nbsp;&nbsp;&nbsp;&nbsp;
+			<input name="btn01" type="button" class="btn01" onclick="pag.back('_index','_update');" onmouseover="this.className='btn02'" onMouseOut="this.className='btn01'" value="返 回" />
+		</td>
+	</tr>
+</table>
+
+</form>

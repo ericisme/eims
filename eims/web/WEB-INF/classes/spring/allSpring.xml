@@ -74,6 +74,10 @@
 	<!-- 损益表 -->
 	<import resource="./eims/lb/syb.xml"/>
 	
+	<!-- 会计凭证 -->
+	<!-- 科目管理 -->
+	<import resource="./eims/kjpz/kmgl.xml"/>
+	
 	<!-- eims企业信息管理系统  -->
 	<!-- eims企业信息管理系统  -->	
 	
