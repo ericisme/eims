@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans default-autowire="byName" default-lazy-init="true">
+	<!-- 科目管理 -->	
+	<bean id="kmglController" parent="mvc_parentController" class="cn.qtone.eims.kjpz.controller.KmglController">
+	    <property name="listPage"  value="/eims/kjpz/kmgl/list"></property>
+		<property name="editPage"  value="/eims/kjpz/kmgl/edit"></property>
+		<property name="showPage"  value="/eims/kjpz/kmgl/show"></property>
+		<property name="indexPage" value="/eims/kjpz/kmgl/index"></property>
+		<property name="kmglService"     ref="kmglService"></property>
+	</bean>
+	<bean id="kmglService" class="cn.qtone.eims.kjpz.service.KmglService" />
+</beans>
+
