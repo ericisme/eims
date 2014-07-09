@@ -1,5 +1,7 @@
 package cn.qtone.eims.kjpz.domain;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,9 +25,11 @@ public class Kmgl {
 	
 	private Integer zt=1;//状态
 	
-	private Float qnye=0f;//去年余额;
+	private BigDecimal qnye_jf= new BigDecimal(0f);//去年余额,借方;
+	private BigDecimal qnye_df= new BigDecimal(0f);//去年余额,贷方;
 	
-	private Float lsye=0f;//历史余额;
+	private BigDecimal lsye_jf= new BigDecimal(0f);//历史余额,借方;
+	private BigDecimal lsye_df= new BigDecimal(0f);//历史余额,贷方;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -61,21 +65,41 @@ public class Kmgl {
 		this.zt = zt;
 	}
 
-	public Float getQnye() {
-		return qnye;
+	public BigDecimal getQnye_jf() {
+		return qnye_jf;
 	}
 
-	public void setQnye(Float qnye) {
-		this.qnye = qnye;
+	public void setQnye_jf(BigDecimal qnye_jf) {
+		this.qnye_jf = qnye_jf;
 	}
 
-	public Float getLsye() {
-		return lsye;
+	public BigDecimal getQnye_df() {
+		return qnye_df;
 	}
 
-	public void setLsye(Float lsye) {
-		this.lsye = lsye;
+	public void setQnye_df(BigDecimal qnye_df) {
+		this.qnye_df = qnye_df;
 	}
+
+	public BigDecimal getLsye_jf() {
+		return lsye_jf;
+	}
+
+	public void setLsye_jf(BigDecimal lsye_jf) {
+		this.lsye_jf = lsye_jf;
+	}
+
+	public BigDecimal getLsye_df() {
+		return lsye_df;
+	}
+
+	public void setLsye_df(BigDecimal lsye_df) {
+		this.lsye_df = lsye_df;
+	}
+
+
+
+
 
 
 	

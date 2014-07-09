@@ -5,11 +5,14 @@ package cn.qtone.common.simplemvc.controller;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
@@ -20,6 +23,7 @@ import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.web.servlet.ModelAndView;
+
 import cn.qtone.common.mvc.dao.Page;
 import cn.qtone.common.mvc.view.spring.AjaxView;
 import cn.qtone.common.simplemvc.dao.HibernateSimpleDao;
@@ -147,6 +151,8 @@ public class SimpleManageController<T, M extends HibernateSimpleDao<T>> extends 
 				case DATE:
 					value = DateUtil.parseSimpleDateTime(v);
 					break;
+				case BIGDECIMAL:
+					value = new BigDecimal(v);
 				default:
 					break;
 				}

@@ -8,16 +8,18 @@
 		<input type="checkbox" name="ckbox" value="checkbox" onclick="base.checkAll('id',this.checked)" />
 		</td>
 		
-		<td width="4%" align="center">科目代号</td>
+		<td width="3%" align="center"><a href="javascript:queryByKmdh('')">科目代号</a></td>
 		<td width="8%" align="center">科目名称</td>
-		<td width="4%" align="center">去年余额</td>
-		<td width="4%" align="center">历史余额</td>
-		<td width="4%" align="center">状态</td>
+		<td width="3%" align="center">去年余额_借方</td>
+		<td width="3%" align="center">去年余额_贷方</td>
+		<td width="3%" align="center">历史余额_借方</td>
+		<td width="3%" align="center">历史余额_贷方</td>
+		<td width="2%" align="center">状态</td>
 		
 	</tr>
 	<#if entitySize = 0>
 	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
-		<td align="center" colspan="6"><font color="red">没有符合条件的记录！</font></td>
+		<td align="center" colspan="8"><font color="red">没有符合条件的记录！</font></td>
 	</tr>
 	<#else>	
 
@@ -26,10 +28,18 @@
 	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
 	  	<td align="center"><input type="checkbox" name="id" value="${entity.id}" /></td>	  
 	  	
-	  	<td align="center"><strong>${entity.kmdh!}</font></td>
-	  	<td align="center"><strong>${entity.kmmc!}</font></td>
-	  	<td align="center">${entity.qnye?string("0.##")}</td>
-	  	<td align="center">${entity.lsye?string("0.##")}</td>
+	  	<td align="left"><strong><a href="javascript:queryByKmdh('${entity.kmdh!}')">${entity.kmdh!}</a></strong></td>
+	  	<td align="left">
+	  		<strong>
+	  			<#if entity.kmdh?length gt 3 >&nbsp;&nbsp;&nbsp;&nbsp;</#if>
+	  			<#if entity.kmdh?length gt 6 >&nbsp;&nbsp;&nbsp;&nbsp;</#if>
+	  			${entity.kmmc!}
+	  		</strong>
+	  	</td>
+	  	<td align="center">${entity.qnye_jf?string("0.##")}</td>
+	  	<td align="center">${entity.qnye_df?string("0.##")}</td>
+	  	<td align="center">${entity.lsye_jf?string("0.##")}</td>
+	  	<td align="center">${entity.lsye_df?string("0.##")}</td>
 	  	<td align="center"><#if entity.zt =1 >启用<#else></#if><#if entity.zt =0 >停用<#else></#if></td>
 	  	
 	</tr>

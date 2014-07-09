@@ -15,18 +15,22 @@
 <#include "../../../common_tips.ftl" />
 <table width="100%" border="0" cellpadding="5" cellspacing="1" class="update_tbl">		
 	<tr class="list_title">   			
-		<td width="4%" align="center">科目代号</td>
-		<td width="4%" align="center">科目名称</td>
-		<td width="4%" align="center">去年余额</td>
-		<td width="4%" align="center">历史余额</td>
-		<td width="4%" align="center">状态</td>
+		<td width="2%" align="center">科目代号</td>
+		<td width="10%" align="center">科目名称</td>
+		<td width="10%" align="center">去年余额_借方</td>
+		<td width="10%" align="center">去年余额_贷方</td>
+		<td width="10%" align="center">历史余额_借方</td>
+		<td width="10%" align="center">历史余额_贷方</td>
+		<td width="10%" align="center">状态</td>
 	</tr>
 	<form name="theForm" id="theForm" method="POST" action="" onsubmit="return checkForm('');">
 	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
-		<td align="right"><input type="text" name="kmdh"      id="kmdh"       value="<#if kmgl.kmdh??>${kmgl.kmdh!}<#else></#if>"    maxlength="33" size="33" style="font-size:12px;text-align:right;"/></td>
-		<td align="right"><input type="text" name="kmmc"      id="kmmc"       value="<#if kmgl.kmmc??>${kmgl.kmmc!}<#else></#if>"    maxlength="33" size="33" style="font-size:12px;text-align:right;"/></td>
-		<td align="right"><input type="text" name="qnye"  id="qnye"   value="<#if kmgl.qnye??>${kmgl.qnye?string('0.##')}<#else></#if>"    maxlength="11" size="9" style="font-size:12px;text-align:right;"/></td>
-		<td align="right"><input type="text" name="lsye"  id="lsye"   value="<#if kmgl.lsye??>${kmgl.lsye?string('0.##')}<#else></#if>"    maxlength="11" size="9" style="font-size:12px;text-align:right;"/></td>
+		<td align="right"><input type="text" name="kmdh"      id="kmdh"       value="<#if kmgl.kmdh??>${kmgl.kmdh!}<#else></#if>"    maxlength="20" size="10" style="font-size:12px;text-align:right;"/></td>
+		<td align="right"><input type="text" name="kmmc"      id="kmmc"       value="<#if kmgl.kmmc??>${kmgl.kmmc!}<#else></#if>"    maxlength="80" size="35" style="font-size:12px;text-align:right;"/></td>
+		<td align="right"><input type="text" name="qnye_jf"  id="qnye_jf"   value="<#if kmgl.qnye_jf??>${kmgl.qnye_jf?string('0.##')}<#else></#if>"    maxlength="11" size="9" style="font-size:12px;text-align:right;"/></td>
+		<td align="right"><input type="text" name="qnye_df"  id="qnye_df"   value="<#if kmgl.qnye_df??>${kmgl.qnye_df?string('0.##')}<#else></#if>"    maxlength="11" size="9" style="font-size:12px;text-align:right;"/></td>
+		<td align="right"><input type="text" name="lsye_jf"  id="lsye_jf"   value="<#if kmgl.lsye_jf??>${kmgl.lsye_jf?string('0.##')}<#else></#if>"    maxlength="11" size="9" style="font-size:12px;text-align:right;"/></td>
+		<td align="right"><input type="text" name="lsye_df"  id="lsye_df"   value="<#if kmgl.lsye_df??>${kmgl.lsye_df?string('0.##')}<#else></#if>"    maxlength="11" size="9" style="font-size:12px;text-align:right;"/></td>
 		<td align="right">
 			<select name="zt" id="zt">
 				<option value="1" <#if kmgl.zt =1 >selected<#else></#if> >启用</option>

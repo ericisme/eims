@@ -38,33 +38,55 @@ function indexOnLoad(){
 	//$('_jsrq').value=new XDate(endDate).toString('yyyy-MM-dd');
 	query();
 }
+function queryByKmdh(kmdh){
+	document.getElementById('_kmdh').value=kmdh;
+	query();
+}
 //查询
 function query(){	
 	if (pag == null) pag = new PageExe();
 	var qv = 'a=a';
 	if($F('_kmdh') != ''){
-		qv += '&kmdh__like__string=' + new BaseClass().encode($F('_kmdh'),true);
+		qv += '&kmdh__leftlike__string=' + new BaseClass().encode($F('_kmdh'),true);
 	}
 	if($F('_kmmc') != ''){
 		qv += '&kmmc__like__string=' + new BaseClass().encode($F('_kmmc'),true);
 	}
 	
-	if($F('_qnye') != ''){
-		if($F('_qnye') == '1')
-			qv += '&qnye__gt__float=0';
-		if($F('_qnye') == '0')
-			qv += '&qnye__eq__float=0';
-		if($F('_qnye') == '-1')
-			qv += '&qnye__lt__float=0';
+	if($F('_qnye_jf') != ''){
+		if($F('_qnye_jf') == '1')
+			qv += '&qnye_jf__gt__bigdecimal=0';
+		if($F('_qnye_jf') == '0')
+			qv += '&qnye_jf__eq__bigdecimal=0';
+		if($F('_qnye_jf') == '-1')
+			qv += '&qnye_jf__lt__bigdecimal=0';
 	}
 	
-	if($F('_lsye') != ''){
-		if($F('_lsye') == '1')
-			qv += '&lsye__gt__float=0';
-		if($F('_lsye') == '0')
-			qv += '&lsye__eq__float=0';
-		if($F('_lsye') == '-1')
-			qv += '&lsye__lt__float=0';
+	if($F('_lsye_jf') != ''){
+		if($F('_lsye_jf') == '1')
+			qv += '&lsye_jf__gt__bigdecimal=0';
+		if($F('_lsye_jf') == '0')
+			qv += '&lsye_jf__eq__bigdecimal=0';
+		if($F('_lsye_jf') == '-1')
+			qv += '&lsye_jf__lt__bigdecimal=0';
+	}
+	
+	if($F('_qnye_df') != ''){
+		if($F('_qnye_df') == '1')
+			qv += '&qnye_df__gt__bigdecimal=0';
+		if($F('_qnye_df') == '0')
+			qv += '&qnye_df__eq__bigdecimal=0';
+		if($F('_qnye_df') == '-1')
+			qv += '&qnye_df__lt__bigdecimal=0';
+	}
+	
+	if($F('_lsye_df') != ''){
+		if($F('_lsye_df') == '1')
+			qv += '&lsye_df__gt__bigdecimal=0';
+		if($F('_lsye_df') == '0')
+			qv += '&lsye_df__eq__bigdecimal=0';
+		if($F('_lsye_df') == '-1')
+			qv += '&lsye_df__lt__bigdecimal=0';
 	}
 	
 	if($F('_zt') != ''){
@@ -74,7 +96,7 @@ function query(){
 	pag.query(
 		baseUrl + '?action=list',
 		'_list',
-		qv + '&orders=id__desc'
+		qv + '&orders=kmdh__asc'
 	);
 }
 // 分页查询方法
@@ -122,13 +144,18 @@ function checkForm(){
  		base.alert('请输入 单号！',function(){$('kmmc').focus();});
  		return false;
  	}
-	if (!checkPrice($('qnye'))) {
-		base.alert(' 金额格式不正确，只允许数字带2位小数！',function(){$('qnye').focus();});return false;
+	if (!checkPrice($('qnye_jf'))) {
+		base.alert(' 金额格式不正确，只允许数字带2位小数！',function(){$('qnye_jf').focus();});return false;
  	}
-	if (!checkPrice($('lsye'))) {
-		base.alert(' 金额格式不正确，只允许数字带2位小数！',function(){$('lsye').focus();});return false;
+	if (!checkPrice($('lsye_jf'))) {
+		base.alert(' 金额格式不正确，只允许数字带2位小数！',function(){$('lsye_jf').focus();});return false;
  	}
-	
+	if (!checkPrice($('qnye_df'))) {
+		base.alert(' 金额格式不正确，只允许数字带2位小数！',function(){$('qnye_df').focus();});return false;
+ 	}
+	if (!checkPrice($('lsye_df'))) {
+		base.alert(' 金额格式不正确，只允许数字带2位小数！',function(){$('lsye_df').focus();});return false;
+ 	}	
 
 	//if (!checkPrice($('je'))) {
 	//	base.alert(' 金额格式不正确，只允许数据带2位小数！',function(){$('je').focus();});return false;
@@ -214,7 +241,7 @@ function clearNoNum(obj){
 			 科目名称 ：
 		</td>
 		<td align="left" bgcolor="#FFFFFF" >
-			<input type="text" name="_kmmc" id="_kmmc" size="12" maxlength="50"/> 
+			<input type="text" name="_kmmc" id="_kmmc" size="12" maxlength="80"/> 
 		</td>
 		<td  align="right">
 			状态
@@ -229,10 +256,10 @@ function clearNoNum(obj){
 	</tr>
 		<tr height="12" style="display:${areaSel!}">
 		<td  align="right" height="12">
-			 去年余额 ：
+			 去年余额_借方 ：
 		</td>
 		<td align="left" bgcolor="#FFFFFF">
-			<select name="_qnye" id="_qnye">
+			<select name="_qnye_jf" id="_qnye_jf">
 				<option value="">---请选择---</option>
 				<option value="1">大于0</option>
 				<option value="0">等于0</option>
@@ -240,10 +267,10 @@ function clearNoNum(obj){
 			</select>
 		</td>			
 		<td  align="right">
-			 历史余额 ：
+			 历史余额_借方 ：
 		</td>
 		<td align="left" bgcolor="#FFFFFF" >
-			<select name="_lsye" id="_lsye">
+			<select name="_lsye_jf" id="_lsye_jf">
 				<option value="">---请选择---</option>
 				<option value="1">大于0</option>
 				<option value="0">等于0</option>
@@ -255,7 +282,35 @@ function clearNoNum(obj){
 		<td align="left" bgcolor="#FFFFFF" >
 		</td>
 	</tr>
-	
+	</tr>
+		<tr height="12" style="display:${areaSel!}">
+		<td  align="right" height="12">
+			 去年余额_贷方 ：
+		</td>
+		<td align="left" bgcolor="#FFFFFF">
+			<select name="_qnye_df" id="_qnye_df">
+				<option value="">---请选择---</option>
+				<option value="1">大于0</option>
+				<option value="0">等于0</option>
+				<option value="-1">小于0</option>
+			</select>
+		</td>			
+		<td  align="right">
+			 历史余额_贷方 ：
+		</td>
+		<td align="left" bgcolor="#FFFFFF" >
+			<select name="_lsye_df" id="_lsye_df">
+				<option value="">---请选择---</option>
+				<option value="1">大于0</option>
+				<option value="0">等于0</option>
+				<option value="-1">小于0</option>
+			</select>
+		</td>
+		<td  align="right">			
+		</td>
+		<td align="left" bgcolor="#FFFFFF" >
+		</td>
+	</tr>	
 		
 	<tr>		
 		<td width="100%" align="center" colspan="6" bgcolor="#FFFFFF">
