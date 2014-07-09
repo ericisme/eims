@@ -72,6 +72,12 @@
 				    <!-- 损益表 -->
 				    <value>cn.qtone.eims.lb.domain.Syb</value>
 				    
+				    
+				    <!-- 会计凭证 -->
+				    <!-- 科目管理 -->
+				    <value>cn.qtone.eims.kjpz.domain.Kmgl</value>
+				    <!-- 会计凭证 -->
+				    
 					<!-- eims企业信息管理系统  -->
 					<!-- eims企业信息管理系统  -->	
 					
@@ -86,6 +92,7 @@
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
 				<prop key="hibernate.show_sql">false</prop>
 				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
 				<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
 				<prop key="hibernate.cache.use_query_cache">true</prop>
 			</props>

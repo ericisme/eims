@@ -21,7 +21,7 @@ public class Yywsr {
 	private Date ny; //年月
 	private String dh; //单号
 	private String zy; //摘要
-	private Float je; //金额
+	private Float je = 0f; //金额
 	
 	private Date lrsj;	    //录入时间
 	

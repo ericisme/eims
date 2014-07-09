@@ -6,6 +6,8 @@ import java.math.BigDecimal;
 import java.util.List;
 
 
+import java.util.Map;
+
 import jxl.Workbook;
 import jxl.format.Colour;
 import jxl.format.UnderlineStyle;
@@ -22,6 +24,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import cn.qtone.common.mvc.dao.BaseDAO;
+import cn.qtone.common.utils.base.StringUtil;
 import cn.qtone.eims.bbgl.fymxb.domain.Fymxb;
 import cn.qtone.eims.bbgl.fymxb.util.JXLReadExcel2;
 import cn.qtone.eims.fymx.cwfy.domain.Cwfy;
@@ -33,6 +36,23 @@ import cn.qtone.eims.fymx.yggz.domain.Yggz;
 
 public class FymxbDao extends BaseDAO {
 
+	/**
+	 * 根据 开始年月 和 结束年月 获得 月份列表
+	 * @return
+	 */
+	public List<Map<String,Object>> getRqListByKsnyAndJsny(String ksny, String jsny){
+		StringBuffer sb = new StringBuffer();
+		sb.append(" select rq from eims_rq where 1=1 ");
+		if(!StringUtil.isNullAndBlank(ksny)){
+			sb.append(" and rq >='").append(ksny).append("' ");
+		}
+		if(!StringUtil.isNullAndBlank(jsny)){
+			sb.append(" and rq <='").append(jsny).append("' ");
+		}
+		sb.append(" order by rq asc ");		
+		return getSimpleJdbcTemplate().queryForList(sb.toString());
+	}
+	
 	public List<Fymxb> getFymxbTotalListGroupByMonth(String ksrq, String jsrq) {
 		
 		

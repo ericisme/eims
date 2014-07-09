@@ -3,8 +3,8 @@ package cn.qtone.eims.bbgl.khmxb.controller;
 
 /**
  * 
- * 统计客户明细表Dto
- * @author:eric
+ * 统计客户明细表Dto2
+ * @author:eric 
  * @date:2014-07-03
  */
 public class KhmxbDto {

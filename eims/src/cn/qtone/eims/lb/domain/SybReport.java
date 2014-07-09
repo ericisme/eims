@@ -9,6 +9,8 @@ package cn.qtone.eims.lb.domain;
  */
 public class SybReport {
 
+	private String ny;//年月
+	
 	private Double zyywlr; //主营业务利润
 	private Double glfy; //管理费用
 	private Double cwfy; //财务费用
@@ -20,6 +22,14 @@ public class SybReport {
 	
 
 
+
+	public String getNy() {
+		return ny;
+	}
+
+	public void setNy(String ny) {
+		this.ny = ny;
+	}
 
 	public Double getZyywlr() {
 		return zyywlr;

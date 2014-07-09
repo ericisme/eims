@@ -28,6 +28,7 @@ import cn.qtone.common.mvc.view.spring.AjaxView;
 import cn.qtone.common.simplemvc.controller.SimpleManageController;
 import cn.qtone.common.utils.base.DateUtil;
 import cn.qtone.common.utils.base.StringUtil;
+import cn.qtone.eims.bbgl.fymxb.dao.FymxbDao;
 import cn.qtone.eims.fymx.cwfy.domain.Cwfy;
 import cn.qtone.eims.fymx.sds.domain.Sds;
 import cn.qtone.eims.fymx.yggz.domain.Yggz;
@@ -44,6 +45,7 @@ public class SybController extends SimpleManageController<Syb, SybService>{
 
 	private SybService service;
 	private String reportPage;
+	private FymxbDao fymxbDao;
 	
 	/**
 	 * 报表html
@@ -60,11 +62,33 @@ public class SybController extends SimpleManageController<Syb, SybService>{
 			_ksrq_str = "1900-01-01 00:00:00";
 		if(StringUtil.isNullAndBlank(_jsrq_str))
 			_jsrq_str = "2099-12-31 23:59:59";		
-		map.put("ksrq",_ksrq_str.substring(0, 10));
-		map.put("jsrq",_jsrq_str.substring(0, 10));
-		map.put("entity",getSybReportByRq(_ksrq_str, _jsrq_str));
+		
+		List<Map<String, Object>> rq_list = fymxbDao.getRqListByKsnyAndJsny(_ksrq_str.substring(0,7), _jsrq_str.substring(0, 7));
+		List<SybReport> sybReport_list = new ArrayList<SybReport>();
+		SybReport sumSybReport = new SybReport();
+		for(Map<String, Object> row : rq_list){
+			String ny = (String)row.get("rq");
+			SybReport sybReport = getSybReportByRq(ny+"-01 00:00:00", ny+"-32 23:59:59");
+			sumSybReport.setZyywlr(nullToZero(sumSybReport.getZyywlr())+nullToZero(sybReport.getZyywlr()));
+			sumSybReport.setGlfy(nullToZero(sumSybReport.getGlfy())+nullToZero(sybReport.getGlfy()));
+			sumSybReport.setCwfy(nullToZero(sumSybReport.getCwfy())+nullToZero(sybReport.getGlfy()));
+			sumSybReport.setJyfy(nullToZero(sumSybReport.getJyfy())+nullToZero(sybReport.getJyfy()));
+			sumSybReport.setYywsr(nullToZero(sumSybReport.getYywsr())+nullToZero(sybReport.getYywsr()));
+			sumSybReport.setYywzc(nullToZero(sumSybReport.getYywzc())+nullToZero(sybReport.getYywzc()));
+			sumSybReport.setSds(nullToZero(sumSybReport.getSds())+nullToZero(sybReport.getSds()));
+			sumSybReport.setJlr(nullToZero(sumSybReport.getJlr())+nullToZero(sybReport.getJlr()));
+			sybReport.setNy(ny);
+			sybReport_list.add(sybReport);	
+		}
+		
+		//map.put("ksrq",_ksrq_str.substring(0, 10));
+		//map.put("jsrq",_jsrq_str.substring(0, 10));
+		//map.put("entity",getSybReportByRq(_ksrq_str, _jsrq_str));
+		map.put("entity_list",sybReport_list);
+		map.put("sumSybReport",sumSybReport);
 		return new ModelAndView(getReportPage(), map);
 	}
+	
 	
 	/**
 	 * 报表Xls
@@ -80,7 +104,25 @@ public class SybController extends SimpleManageController<Syb, SybService>{
 			_ksrq_str = "1900-01-01 00:00:00";
 		if(StringUtil.isNullAndBlank(_jsrq_str))
 			_jsrq_str = "2099-12-31 23:59:59";		
-		SybReport sybReport = getSybReportByRq(_ksrq_str, _jsrq_str);
+		
+		List<Map<String, Object>> rq_list = fymxbDao.getRqListByKsnyAndJsny(_ksrq_str.substring(0,7), _jsrq_str.substring(0, 7));
+		List<SybReport> sybReport_list = new ArrayList<SybReport>();
+		SybReport sumSybReport = new SybReport();
+		for(Map<String, Object> row : rq_list){
+			String ny = (String)row.get("rq");
+			SybReport sybReport = getSybReportByRq(ny+"-01 00:00:00", ny+"-32 23:59:59");
+			sumSybReport.setZyywlr(nullToZero(sumSybReport.getZyywlr())+nullToZero(sybReport.getZyywlr()));
+			sumSybReport.setGlfy(nullToZero(sumSybReport.getGlfy())+nullToZero(sybReport.getGlfy()));
+			sumSybReport.setCwfy(nullToZero(sumSybReport.getCwfy())+nullToZero(sybReport.getGlfy()));
+			sumSybReport.setJyfy(nullToZero(sumSybReport.getJyfy())+nullToZero(sybReport.getJyfy()));
+			sumSybReport.setYywsr(nullToZero(sumSybReport.getYywsr())+nullToZero(sybReport.getYywsr()));
+			sumSybReport.setYywzc(nullToZero(sumSybReport.getYywzc())+nullToZero(sybReport.getYywzc()));
+			sumSybReport.setSds(nullToZero(sumSybReport.getSds())+nullToZero(sybReport.getSds()));
+			sumSybReport.setJlr(nullToZero(sumSybReport.getJlr())+nullToZero(sybReport.getJlr()));
+			sybReport.setNy(ny);
+			sybReport_list.add(sybReport);	
+		}
+		//SybReport sybReport = getSybReportByRq(_ksrq_str, _jsrq_str);
 		
 		OutputStream os = response.getOutputStream();// 取得输出流 		
 		String filename = new String(("损益表"+"("+_ksrq_str.substring(0, 10)+"~"+_jsrq_str.substring(0, 10)+")").getBytes("GB2312"), "ISO_8859_1");
@@ -100,11 +142,11 @@ public class SybController extends SimpleManageController<Syb, SybService>{
 			wsheet.addCell(new Label(i,2,titles[i], setCellFormat()));
 		}		
 		wsheet.setColumnView(0, 25);
-		List<SybReport> list = new ArrayList<SybReport>();
-		list.add(sybReport);
+		//List<SybReport> list = new ArrayList<SybReport>();
+		//list.add(sybReport);
 		int i = 3;
-		for(SybReport syb : list){
-			wsheet.addCell(new Label(0,i,_ksrq_str.substring(0, 10)+"~"+_jsrq_str.substring(0, 10), setCellFormat()));
+		for(SybReport syb : sybReport_list){
+			wsheet.addCell(new Label(0,i,syb.getNy(), setCellFormat()));
 			wsheet.addCell(new Label(1,i,StringUtil.formatDouble(syb.getZyywlr()), setCellFormat()));
 			wsheet.addCell(new Label(2,i,StringUtil.formatDouble(syb.getGlfy()), setCellFormat()));
 			wsheet.addCell(new Label(3,i,StringUtil.formatDouble(syb.getCwfy()), setCellFormat()));
@@ -115,6 +157,18 @@ public class SybController extends SimpleManageController<Syb, SybService>{
 			wsheet.addCell(new Label(8,i,StringUtil.formatDouble(syb.getJlr()), setCellFormat()));
 			i++;
 		}
+		
+		//sum
+		wsheet.addCell(new Label(0,i,"合计", setCellFormat()));
+		wsheet.addCell(new Label(1,i,StringUtil.formatDouble(sumSybReport.getZyywlr()), setCellFormat()));
+		wsheet.addCell(new Label(2,i,StringUtil.formatDouble(sumSybReport.getGlfy()), setCellFormat()));
+		wsheet.addCell(new Label(3,i,StringUtil.formatDouble(sumSybReport.getCwfy()), setCellFormat()));
+		wsheet.addCell(new Label(4,i,StringUtil.formatDouble(sumSybReport.getJyfy()), setCellFormat()));
+		wsheet.addCell(new Label(5,i,StringUtil.formatDouble(sumSybReport.getYywsr()), setCellFormat()));
+		wsheet.addCell(new Label(6,i,StringUtil.formatDouble(sumSybReport.getYywzc()), setCellFormat()));
+		wsheet.addCell(new Label(7,i,StringUtil.formatDouble(sumSybReport.getSds()), setCellFormat()));
+		wsheet.addCell(new Label(8,i,StringUtil.formatDouble(sumSybReport.getJlr()), setCellFormat()));
+		
 		
 		wwb.write();
 		wwb.close();		
@@ -130,6 +184,7 @@ public class SybController extends SimpleManageController<Syb, SybService>{
 				.add(Expression.ge("bgrq", DateUtil.parseSimpleDateTime(_ksrq_str)))
 				.add(Expression.le("bgrq", DateUtil.parseSimpleDateTime(_jsrq_str)))
 				.setProjection(Projections.sum("hj")).uniqueResult();
+		zyywlr = nullToZero(zyywlr);
 		System.out.println("zyywlr:"+zyywlr);
 		sybReport.setZyywlr(Double.parseDouble(String.valueOf(zyywlr)));
 		//管理费用
@@ -142,6 +197,8 @@ public class SybController extends SimpleManageController<Syb, SybService>{
 				.add(Expression.ge("gzrq", _ksrq_str.substring(0, 10)))
 				.add(Expression.le("gzrq", _jsrq_str.substring(0, 10)))
 				.setProjection(Projections.sum("yfgz")).uniqueResult();	
+		glfymx = nullToZero(glfymx);
+		yggz = nullToZero(yggz);
 		System.out.println("glfymx:"+glfymx);		 
 		System.out.println("yggz:"+yggz);	
 		sybReport.setGlfy(glfymx+yggz);
@@ -166,6 +223,10 @@ public class SybController extends SimpleManageController<Syb, SybService>{
 				.add(Expression.le("fyrq", _jsrq_str.substring(0, 10)))
 				.add(Expression.like("type", "104"))
 				.setProjection(Projections.sum("je")).uniqueResult();	
+		cwfy101 = nullToZero(cwfy101);
+		cwfy102 = nullToZero(cwfy102);
+		cwfy103 = nullToZero(cwfy103);
+		cwfy104 = nullToZero(cwfy104);
 		System.out.println("cwfy:"+(cwfy101-cwfy102+cwfy103+cwfy104));
 		sybReport.setCwfy(cwfy101-cwfy102+cwfy103+cwfy104);
 		//经营费用
@@ -178,6 +239,8 @@ public class SybController extends SimpleManageController<Syb, SybService>{
 				.add(Expression.ge("bgrq", DateUtil.parseSimpleDateTime(_ksrq_str)))
 				.add(Expression.le("bgrq", DateUtil.parseSimpleDateTime(_jsrq_str)))
 				.setProjection(Projections.sum("fyjehj")).uniqueResult();
+		fkzf = nullToZero(fkzf);
+		tczc = nullToZero(tczc);
 		System.out.println("fkzf:"+fkzf);
 		System.out.println("tczc:"+tczc);
 		sybReport.setJyfy(Double.parseDouble(String.valueOf(fkzf))+Double.parseDouble(String.valueOf(tczc)));
@@ -186,7 +249,8 @@ public class SybController extends SimpleManageController<Syb, SybService>{
 				.add(Expression.ge("ny", DateUtil.parseSimpleDateTime(_ksrq_str)))
 				.add(Expression.le("ny", DateUtil.parseSimpleDateTime(_jsrq_str)))
 				.setProjection(Projections.sum("je")).uniqueResult();
-		System.out.println("yywsr:"+yywsr);
+		yywsr = nullToZero(yywsr);
+		System.out.println("yywsr:"+yywsr);		
 		sybReport.setYywsr(Double.parseDouble(String.valueOf(yywsr)));
 		//营业外支出
 		Double yywzc = (Double) getDomainService().createCriteria(Cwfy.class)
@@ -194,6 +258,7 @@ public class SybController extends SimpleManageController<Syb, SybService>{
 				.add(Expression.le("fyrq", _jsrq_str.substring(0, 10)))
 				.add(Expression.like("type", "20%"))
 				.setProjection(Projections.sum("je")).uniqueResult();	
+		yywzc = nullToZero(yywzc);
 		System.out.println("yywzc:"+yywzc);
 		sybReport.setYywzc(yywzc);
 		//所得税
@@ -201,6 +266,7 @@ public class SybController extends SimpleManageController<Syb, SybService>{
 				.add(Expression.ge("fyrq", _ksrq_str.substring(0, 10)))
 				.add(Expression.le("fyrq", _jsrq_str.substring(0, 10)))
 				.setProjection(Projections.sum("je")).uniqueResult();	
+		sds = nullToZero(sds);
 		System.out.println("sds:"+sds);
 		sybReport.setSds(sds);
 		//净利润
@@ -348,4 +414,24 @@ public class SybController extends SimpleManageController<Syb, SybService>{
 	public void setReportPage(String reportPage) {
 		this.reportPage = reportPage;
 	}
+	public Double nullToZero(Double d){
+		if(d==null)
+			return 0d;
+		return d;
+	}
+	public Float nullToZero(Float f){
+		if(f==null)
+			return 0f;
+		return f;
+	}
+
+	public FymxbDao getFymxbDao() {
+		return fymxbDao;
+	}
+
+	public void setFymxbDao(FymxbDao fymxbDao) {
+		this.fymxbDao = fymxbDao;
+	}
+	
+	
 }

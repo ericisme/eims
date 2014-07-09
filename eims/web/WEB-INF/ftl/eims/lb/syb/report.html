@@ -1,9 +1,10 @@
 <!-- auto generated -->
 <html>
 <body id="main_body">
+<#assign entitySize=entity_list?size />
 <table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_table" style="word-break:break-all">
 	<tr class="list_title">
-    	<td width="10%" align="center">日期</td>    	
+    	<td width="10%" align="center">年月</td>    	
     	<td width="4%" align="center">主营业务利润</td>
     	<td width="4%" align="center">管理费用</td>
     	<td width="4%" align="center">财务费用</td>
@@ -14,10 +15,15 @@
     	<td width="4%" align="center">净利润</td>
     	<!-- <td width="4%" align="center">录入时间</td> -->
 	</tr>
-
+	<#if entitySize = 0>
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+		<td align="center" colspan="9"><font color="red">没有符合条件的记录！</font></td>
+	</tr>	
+	<#else>
+	<#list entity_list as entity >
 	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
 	  	<td align="center">
-	  	${ksrq!}~${jsrq}
+	  	${entity.ny!}
 	  	</td>
 	  	<td align="center">${entity.zyywlr?string("0.##")}</td>
 	  	<td align="center">${entity.glfy?string("0.##")}</td>
@@ -28,8 +34,19 @@
 	  	<td align="center">${entity.sds?string("0.##")}</td>
 	  	<td align="center">${entity.jlr?string("0.##")}</td>
 	</tr>
-
-
+	</#list>
+	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
+		<td align="right" colspan="1"><font color="red"><strong>合计</strong></font></td>	
+	  	<td align="center">${sumSybReport.zyywlr?string("0.##")}</td>
+	  	<td align="center">${sumSybReport.glfy?string("0.##")}</td>
+	  	<td align="center">${sumSybReport.cwfy?string("0.##")}</td>
+	  	<td align="center">${sumSybReport.jyfy?string("0.##")}</td>
+	  	<td align="center">${sumSybReport.yywsr?string("0.##")}</td>
+	  	<td align="center">${sumSybReport.yywzc?string("0.##")}</td>
+	  	<td align="center">${sumSybReport.sds?string("0.##")}</td>
+	  	<td align="center">${sumSybReport.jlr?string("0.##")}</td>
+	</tr>
+	</#if>
 </table>
 <table width="100%" border="0" cellpadding="5" cellspacing="1">
 	<tr>

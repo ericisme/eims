@@ -23,13 +23,13 @@ public class Khts {
 	private String dh; //单号
 	private String khmc; //客户名称
 	private Date bgrq; //报关日期	
-	private Float bgje; //报关金额
-	private Float fpje; //发票金额
+	private Float bgje = 0f; //报关金额
+	private Float fpje = 0f; //发票金额
 	private String sfprq; //收发票日期
-	private Float tsje; //退税金额
+	private Float tsje = 0f; //退税金额
 	private String zftsrq; //支付退税日期
-	private Float yfje; //已付金额
-	private Float wfje; //未付金额
+	private Float yfje = 0f; //已付金额
+	private Float wfje = 0f; //未付金额
 	private String fkdh; //付款单号
 	private String ywy; //业务员
 	private String dlfbz; //代理费标准

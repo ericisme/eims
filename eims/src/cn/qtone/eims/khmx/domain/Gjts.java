@@ -22,12 +22,12 @@ public class Gjts {
 	private String dh; // 单号
 	private String khmc; //客户名称
 	private String bgdh; //报关单号
-	private String zzsl; //增值税率
-	private String tsl; //退税率
-	private Float tsje; //退税金额
+	private String zzsl="17%"; //增值税率
+	private String tsl="15%"; //退税率
+	private Float tsje = 0f; //退税金额
 	private Date tsrq; //收退税日期
-	private Float ysje; //已收金额
-	private Float wsje; //未收金额
+	private Float ysje = 0f; //已收金额
+	private Float wsje = 0f; //未收金额
 	
 	private Date lrsj;	    //录入时间
 

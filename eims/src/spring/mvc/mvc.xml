@@ -95,6 +95,10 @@
 				<!-- 损益表 -->
 				<prop key="/eims/lb/syb.do">sybController</prop>
 				
+				<!-- 会计凭证 -->
+				<!-- 科目管理 -->
+				<prop key="/eims/kjpz/kmgl.do">kmglController</prop>
+				
 				<!-- eims企业信息管理系统  -->
 				<!-- eims企业信息管理系统  -->
 				

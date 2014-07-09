@@ -38,7 +38,8 @@ public class SqlExpression {
 		FLOAT,
 		INT,
 		STRING,
-		DATE
+		DATE,
+		BIGDECIMAL
 	}
 	
 	/**
