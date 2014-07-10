@@ -260,43 +260,6 @@ function checkForm(){
 			query();
 		}
 	);	 	
-	
-	
-	
-	
-/* 	if (!$('kmdh') || $('kmdh').value.strip() == '') {
- 		base.alert('请输入 单号！',function(){$('kmdh').focus();});
- 		return false;
- 	}
-	if (!$('kmmc') || $('kmmc').value.strip() == '') {
- 		base.alert('请输入 单号！',function(){$('kmmc').focus();});
- 		return false;
- 	}
-	if (!checkPrice($('qnye_jf'))) {
-		base.alert(' 金额格式不正确，只允许数字带2位小数！',function(){$('qnye_jf').focus();});return false;
- 	}
-	if (!checkPrice($('lsye_jf'))) {
-		base.alert(' 金额格式不正确，只允许数字带2位小数！',function(){$('lsye_jf').focus();});return false;
- 	}
-	if (!checkPrice($('qnye_df'))) {
-		base.alert(' 金额格式不正确，只允许数字带2位小数！',function(){$('qnye_df').focus();});return false;
- 	}
-	if (!checkPrice($('lsye_df'))) {
-		base.alert(' 金额格式不正确，只允许数字带2位小数！',function(){$('lsye_df').focus();});return false;
- 	}	 */
-
-	//if (!checkPrice($('je'))) {
-	//	base.alert(' 金额格式不正确，只允许数据带2位小数！',function(){$('je').focus();});return false;
- 	//}
-     	
-/* 	pag.update(
-		baseUrl + '?action=save',
-		'theForm',
-		function() {
-			pag.back('_index','_update');
-			query();
-		}
-	);	 */
 	return false;
 }
 // 编辑页面显示
@@ -350,10 +313,15 @@ function clearNoNum(obj){
 
 //删除分录
 function deleteOneFl(obj){
-	var table = document.getElementById('fl_table');
-	if(table.firstChild.childNodes.length>3){
-		table.firstChild.removeChild(obj.parentNode.parentNode);
-	}
+	base.confirm('您确信要 删除 该条 分录 吗？', function() {
+		var table = document.getElementById('fl_table');
+		if(table.firstChild.childNodes.length>3){
+			table.firstChild.removeChild(obj.parentNode.parentNode);
+		}else{
+			alert('最后一条不能删除');
+		}
+	});
+
 }
 //增加一条分录
 function addOneFl(){
