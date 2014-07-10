@@ -7,14 +7,14 @@
 		<td width="2%" align="center">
 		<input type="checkbox" name="ckbox" value="checkbox" onclick="base.checkAll('id',this.checked)" />
 		</td>
-		
-		<td width="3%" align="center"><a href="javascript:queryByKmdh('')">科目代号</a></td>
-		<td width="8%" align="center">科目名称</td>
-		<td width="3%" align="center">去年余额_借方</td>
-		<td width="3%" align="center">去年余额_贷方</td>
-		<td width="3%" align="center">历史余额_借方</td>
-		<td width="3%" align="center">历史余额_贷方</td>
-		<td width="2%" align="center">状态</td>
+		<td width="8%" align="center">凭证号</td>
+		<td width="8%" align="center">日期</td>
+		<td width="8%" align="center">附单据</td>
+		<td width="8%" align="center">借方金额</td>
+		<td width="8%" align="center">贷方金额</td>
+		<td width="8%" align="center">审核</td>
+		<td width="8%" align="center">过账</td>
+		<td width="8%" align="center">制单</td>
 		
 	</tr>
 	<#if entitySize = 0>
@@ -26,22 +26,15 @@
 
 	<#list page.result as entity >
 	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
-	  	<td align="center"><input type="checkbox" name="id" value="${entity.id}" /></td>	  
-	  	
-	  	<td align="left"><strong><a href="javascript:queryByKmdh('${entity.kmdh!}')">${entity.kmdh!}</a></strong></td>
-	  	<td align="left">
-	  		<strong>
-	  			<#if entity.kmdh?length gt 3 >&nbsp;&nbsp;&nbsp;&nbsp;</#if>
-	  			<#if entity.kmdh?length gt 6 >&nbsp;&nbsp;&nbsp;&nbsp;</#if>
-	  			${entity.kmmc!}
-	  		</strong>
-	  	</td>
-	  	<td align="center">${entity.qnye_jf?string("0.##")}</td>
-	  	<td align="center">${entity.qnye_df?string("0.##")}</td>
-	  	<td align="center">${entity.lsye_jf?string("0.##")}</td>
-	  	<td align="center">${entity.lsye_df?string("0.##")}</td>
-	  	<td align="center"><#if entity.zt =1 >启用<#else></#if><#if entity.zt =0 >停用<#else></#if></td>
-	  	
+	  	<td align="center"><input type="checkbox" name="id" value="${entity.id}" /></td>	  	  	
+	  	<td align="center">记${entity.pzh!}</td>
+	  	<td align="center">${entity.rq!}</td>
+	  	<td align="center">${entity.fdj}</td>
+	  	<td align="center">${entity.hj_jfje?string("0.##")}</td>
+	  	<td align="center">${entity.hj_dfje?string("0.##")}</td>
+	  	<td align="center">${entity.shr!}</td>
+	  	<td align="center">${entity.gzr!}</td>
+	  	<td align="center">${entity.zdr!}</td>
 	</tr>
 	</#list>
 	

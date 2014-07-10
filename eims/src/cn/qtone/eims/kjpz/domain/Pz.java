@@ -140,7 +140,10 @@ public class Pz {
 		this.flList = flList;
 	}
 	
-	
+	public void addFls(List<Fl> fls){
+		this.flList.clear();
+		this.flList = fls;
+	}
 	
 	
 }

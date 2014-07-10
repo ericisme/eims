@@ -36,7 +36,7 @@ function indexOnLoad(){
 	//endDate.setDate(0);
 	//$('_ksrq').value=new XDate(firstDate).toString('yyyy-MM-dd');
 	//$('_jsrq').value=new XDate(endDate).toString('yyyy-MM-dd');
-	//query();
+	query();
 }
 function queryByKmdh(kmdh){
 	document.getElementById('_kmdh').value=kmdh;
@@ -92,11 +92,11 @@ function query(){
 	if($F('_zt') != ''){
 		qv += '&zt__eq__int=' + $F('_zt');
 	}
-	
+	qv = "";
 	pag.query(
 		baseUrl + '?action=list',
 		'_list',
-		qv + '&orders=kmdh__asc'
+		qv + '&orders=rq__desc'
 	);
 }
 // 分页查询方法
@@ -150,10 +150,16 @@ function checkForm(){
  		base.alert('请输入 附单据！',function(){$('fdj').focus();});
  		return false;
  	}
+	var fl_id_array = document.getElementsByName('fl_id');
+	var fl_id_array_qv = new Array();
 	var fl_zy_array = document.getElementsByName('fl_zy');
+	var fl_zy_array_qv = new Array();
 	var fl_kmdh_array = document.getElementsByName('fl_kmdh');
+	var fl_kmdh_array_qv = new Array();
 	var fl_jfje_array = document.getElementsByName('fl_jfje');
+	var fl_jfje_array_qv = new Array();
 	var fl_dfje_array = document.getElementsByName('fl_dfje');
+	var fl_dfje_array_qv = new Array();
 	//摘要
 	for(var i=0; i<fl_zy_array.length; i++){
 		if(fl_zy_array[i].value.strip() == ''){
@@ -193,8 +199,7 @@ function checkForm(){
 				return false;
 			}
 		}
-	}
-	
+	}	
 	//计算合计
 	var sum_jfje = 0.00;
 	var sum_dfje = 0.00;
@@ -206,13 +211,55 @@ function checkForm(){
 			sum_dfje = sum_dfje + parseFloat(fl_dfje_array[i].value);
 		}
 	}
-	document.getElementById('hj_jfje').value = sum_jfje;
-	document.getElementById('hj_dfje').value = sum_dfje;	
+	document.getElementById('hj_jfje').value = sum_jfje.toFixed(2);
+	document.getElementById('hj_dfje').value = sum_dfje.toFixed(2);	
 	if(document.getElementById('hj_jfje').value.strip() != document.getElementById('hj_dfje').value.strip()){
 		base.alert('借方金额合计 与 贷方金额合计 不平！',function(){fl_dfje_array[0].focus();});
  		return false;
 	} 
 	
+	for(var i=0; i<fl_kmdh_array.length; i++){
+		if(fl_id_array[i].value.strip()==''){
+			fl_id_array_qv[i] = "null";
+		}else{
+			fl_id_array_qv[i] = fl_id_array[i].value;
+		}
+		if(fl_zy_array[i].value.strip()==''){
+			fl_zy_array_qv[i] = "null";
+		}else{
+			fl_zy_array_qv[i] =  new BaseClass().encode(fl_zy_array[i].value, true);
+		}
+		if(fl_kmdh_array[i].value.strip()==''){
+			fl_kmdh_array_qv[i] = "null";
+		}else{
+			fl_kmdh_array_qv[i] = fl_kmdh_array[i].value;
+		}
+		if(fl_jfje_array[i].value.strip()==''){
+			fl_jfje_array_qv[i] = "null";
+		}else{
+			fl_jfje_array_qv[i] = fl_jfje_array[i].value;
+		}
+		if(fl_dfje_array[i].value.strip()==''){
+			fl_dfje_array_qv[i] = "null";
+		}else{
+			fl_dfje_array_qv[i] = fl_dfje_array[i].value;
+		}		
+	}
+	//var qv = "";
+	var qv = "&fl_id_array=" +fl_id_array_qv.join(",") + 
+		      "&fl_zy_array="+fl_zy_array_qv.join(",") +
+		      "&fl_kmdh_array="+fl_kmdh_array_qv.join(",") +
+		      "&fl_jfje_array="+fl_jfje_array_qv.join(",") +
+		      "&fl_dfje_array="+fl_dfje_array_qv.join(",") ;
+	//alert(qv);
+	pag.update(
+		baseUrl + '?action=save'+qv,
+		'theForm',
+		function() {
+			pag.back('_index','_update');
+			query();
+		}
+	);	 	
 	
 	
 	

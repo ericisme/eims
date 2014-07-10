@@ -1,5 +1,7 @@
 package cn.qtone.eims.kjpz.controller;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -14,11 +16,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import cn.qtone.common.mvc.view.spring.AjaxView;
 import cn.qtone.common.simplemvc.controller.SimpleManageController;
+import cn.qtone.common.utils.base.StringUtil;
+import cn.qtone.eims.kjpz.domain.Fl;
 import cn.qtone.eims.kjpz.domain.Kmgl;
 import cn.qtone.eims.kjpz.domain.Pz;
 import cn.qtone.eims.kjpz.service.FlService;
 import cn.qtone.eims.kjpz.service.KmglService;
 import cn.qtone.eims.kjpz.service.PzService;
+import cn.qtone.qtoneframework.web.servlet.ServletUtil;
 
 public class PzController extends SimpleManageController<Pz, PzService>{
 
@@ -53,6 +58,34 @@ public class PzController extends SimpleManageController<Pz, PzService>{
 	 */
 	public ModelAndView save(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Pz pz = (Pz)getCommandObject(request, getDomainClass());
+		//request.getParameter("fl_id_array").split(",")
+		String[] fl_id_str_array = request.getParameter("fl_id_array").split(",");
+		String[] fl_zy_array = request.getParameter("fl_zy_array").split(",");
+		String[] fl_kmdh_array = request.getParameter("fl_kmdh_array").split(",");
+		String[] fl_jfje_str_array = request.getParameter("fl_jfje_array").split(",");
+		String[] fl_dfje_str_array = request.getParameter("fl_dfje_array").split(",");
+		System.out.println("request.getParameter(\"fl_id_array\"):"+request.getParameter("fl_id_array"));
+		System.out.println("fl_id_str_array:"+fl_id_str_array.length);
+		System.out.println("fl_zy_array:"+fl_zy_array.length);		
+		System.out.println("fl_kmdh_array:"+fl_kmdh_array.length);		
+		System.out.println("fl_jfje_str_array:"+fl_jfje_str_array.length);		
+		System.out.println("fl_dfje_str_array:"+fl_dfje_str_array.length);		
+		
+		List<Fl> fls = new ArrayList<Fl>();
+		for(int i = 0; i < fl_kmdh_array.length; i++){
+			if(!"".equals(StringUtil.trim(fl_kmdh_array[i]))){
+				Fl fl = new Fl();
+				fl.setId(fl_id_str_array[i].equals("null")?null:Integer.parseInt(fl_id_str_array[i]));
+				fl.setZy(StringUtil.trim(fl_zy_array[i]));
+				fl.setKmgl(kmglService.findUniqueBy("kmdh", fl_kmdh_array[i]));
+				fl.setJfje(fl_jfje_str_array[i].equals("null")?null:(new BigDecimal(fl_jfje_str_array[i])));
+				fl.setDfje(fl_dfje_str_array[i].equals("null")?null:(new BigDecimal(fl_dfje_str_array[i])));
+				fl.setPz(pz);
+				fls.add(fl);
+			}
+		}
+		pz.addFls(fls);
+		//Pz pz = (Pz)getCommandObject(request, getDomainClass());
 		if(isDomainIdBlank(request)){
 			getDomainService().save(pz);
 		}else{
