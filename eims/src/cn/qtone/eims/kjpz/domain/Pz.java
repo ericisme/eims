@@ -31,7 +31,7 @@ public class Pz {
 	
 	private Integer pzh;//凭证号
 	
-	private Integer fdj;//附单据
+	private Integer fdj=1;//附单据
 	
 	private BigDecimal hj_jfje;//合计_借方金额
 	

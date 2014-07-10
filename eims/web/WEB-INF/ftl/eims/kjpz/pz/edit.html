@@ -20,15 +20,15 @@
 		<td align="left" width="33%" >
 			凭证字:<select id="pzz" name="pzz" disabled="disabled" ><option value="记">记</option></select>
 			&nbsp;
-			凭证号:<input type="text" id="pzh" name="pzh" maxlength="10" size="3" />
+			凭证号:<input type="text" id="pzh" name="pzh" maxlength="10" size="3"  onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" />
 		</td>	
 		<td  align="center" width="33%" >
 			日期:<input type="text" id="rq" name="rq" maxlength="10" size="10" onclick="setday(this)"  readonly />
 		</td>	
 		<td align="right" width="33%" >
-			附单据:<input type="text" id="fdj" name="fdj" maxlength="10" size="2" />
-			&nbsp;
-			<a href="javascript:addOneFl()">增加一条分录</a>
+			附单据:<input type="text" id="fdj" name="fdj" maxlength="10" size="2"  onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" />
+			
+			
 		</td>
 	</tr>
 </table>
@@ -39,10 +39,11 @@
 		<td width="55%" align="center">会计科目</td>
 		<td width="5%" align="center">借方金额</td>
 		<td width="5%" align="center">贷方金额</td>
+		<td width="2%" align="center">操作</td>
 	</tr>
 	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
 		<td align="right">
-			<input type="text" name="fl_id" value=""/>
+			<input type="hidden" name="fl_id" value=""/>
 			<textarea name="fl_zy" rows="3" cols="19"></textarea>
 		</td>	
 		<td align="right">
@@ -60,16 +61,21 @@
 		<td align="right">
 			<input type="text" name="fl_dfje" maxlength="12" size="9">
 		</td>
+		<td align="right">
+			<a href="#" onclick="deleteOneFl(this);">删除</a>
+		</td>
 	</tr>
 	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
 		<td align="right" colspan="2">
-			合计:
+			<a href="javascript:addOneFl()">增加一条分录</a>&nbsp;合计:
 		</td>
 		<td align="right">
-			<input type="text" maxlength="14" size="9">
+			<input type="text" id="hj_jfje" name="hj_jfje" maxlength="14" size="9" readonly />
 		</td>
 		<td align="right">
-			<input type="text" maxlength="14" size="9">
+			<input type="text" id="hj_dfje" name="hj_dfje" maxlength="14" size="9" readonly />
+		</td>
+		<td align="right">
 		</td>
 	</tr>
 

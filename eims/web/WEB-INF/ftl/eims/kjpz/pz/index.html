@@ -134,9 +134,90 @@ function remove(id)
 }
 
 //保存
-function checkForm(){		
+function checkForm(){			
+	//凭证号
+	if (!$('pzh') || $('pzh').value.strip() == '') {
+ 		base.alert('请输入 凭证号！',function(){$('pzh').focus();});
+ 		return false;
+ 	}
+	//日期
+	if (!$('rq') || $('rq').value.strip() == '') {
+ 		base.alert('请选择 费用日期！',function(){$('rq').focus();});
+ 		return false;
+ 	}	
+	//附单据
+	if (!$('fdj') || $('fdj').value.strip() == '') {
+ 		base.alert('请输入 附单据！',function(){$('fdj').focus();});
+ 		return false;
+ 	}
+	var fl_zy_array = document.getElementsByName('fl_zy');
+	var fl_kmdh_array = document.getElementsByName('fl_kmdh');
+	var fl_jfje_array = document.getElementsByName('fl_jfje');
+	var fl_dfje_array = document.getElementsByName('fl_dfje');
+	//摘要
+	for(var i=0; i<fl_zy_array.length; i++){
+		if(fl_zy_array[i].value.strip() == ''){
+			base.alert('请输入 摘要！',function(){fl_zy_array[i].focus();});
+	 		return false;
+		}else if(fl_zy_array[i].value.length>80){
+			base.alert('摘要不能超过80字符！',function(){fl_zy_array[i].focus();});
+	 		return false;
+		}
+	}
+	//科目
+	for(var i=0; i<fl_kmdh_array.length; i++){
+		if(fl_kmdh_array[i].value.strip() == ''){
+			base.alert('请选择科目！',function(){fl_kmdh_array[i].focus();});
+	 		return false;
+		}
+	}
+	//借方或贷方至少填一个数，不能两个同时填
+	for(var i=0; i<fl_kmdh_array.length; i++){
+		if(fl_jfje_array[i].value.strip() == '' && fl_dfje_array[i].value.strip() == ''){
+			base.alert('借方金额 或 贷方金额 需要 填写其中一个！',function(){fl_jfje_array[i].focus();});
+	 		return false;
+		}
+		if(fl_jfje_array[i].value.strip() != '' && fl_dfje_array[i].value.strip() != ''){
+			base.alert('借方金额 或 贷方金额 不能同时有数！',function(){fl_dfje_array[i].focus();});
+	 		return false;
+		}
+		if(fl_jfje_array[i].value.strip() != ''){
+			if(!checkPrice(fl_jfje_array[i])){
+				base.alert(' 金额格式不正确，只允许数字带2位小数！',function(){fl_jfje_array[i].focus();});
+				return false;
+			}
+		}
+		if(fl_dfje_array[i].value.strip() != ''){
+			if(!checkPrice(fl_dfje_array[i])){
+				base.alert(' 金额格式不正确，只允许数字带2位小数！',function(){fl_dfje_array[i].focus();});
+				return false;
+			}
+		}
+	}
 	
-	if (!$('kmdh') || $('kmdh').value.strip() == '') {
+	//计算合计
+	var sum_jfje = 0.00;
+	var sum_dfje = 0.00;
+	for(var i=0; i<fl_kmdh_array.length; i++){		
+		if(fl_jfje_array[i].value.strip() != ''){
+			sum_jfje = sum_jfje + parseFloat(fl_jfje_array[i].value);
+		}
+		if(fl_dfje_array[i].value.strip() != ''){
+			sum_dfje = sum_dfje + parseFloat(fl_dfje_array[i].value);
+		}
+	}
+	document.getElementById('hj_jfje').value = sum_jfje;
+	document.getElementById('hj_dfje').value = sum_dfje;	
+	if(document.getElementById('hj_jfje').value.strip() != document.getElementById('hj_dfje').value.strip()){
+		base.alert('借方金额合计 与 贷方金额合计 不平！',function(){fl_dfje_array[0].focus();});
+ 		return false;
+	} 
+	
+	
+	
+	
+	
+/* 	if (!$('kmdh') || $('kmdh').value.strip() == '') {
  		base.alert('请输入 单号！',function(){$('kmdh').focus();});
  		return false;
  	}
@@ -155,20 +236,20 @@ function checkForm(){
  	}
 	if (!checkPrice($('lsye_df'))) {
 		base.alert(' 金额格式不正确，只允许数字带2位小数！',function(){$('lsye_df').focus();});return false;
- 	}	
+ 	}	 */
 
 	//if (!checkPrice($('je'))) {
 	//	base.alert(' 金额格式不正确，只允许数据带2位小数！',function(){$('je').focus();});return false;
  	//}
      	
-	pag.update(
+/* 	pag.update(
 		baseUrl + '?action=save',
 		'theForm',
 		function() {
 			pag.back('_index','_update');
 			query();
 		}
-	);	
+	);	 */
 	return false;
 }
 // 编辑页面显示
@@ -220,15 +301,23 @@ function clearNoNum(obj){
 }
 
 
+//删除分录
+function deleteOneFl(obj){
+	var table = document.getElementById('fl_table');
+	if(table.firstChild.childNodes.length>3){
+		table.firstChild.removeChild(obj.parentNode.parentNode);
+	}
+}
+//增加一条分录
 function addOneFl(){
 	var table = document.getElementById('fl_table');
-	//table.insertRow(0);
 	var cloneC = table.firstChild.childNodes[1];
-	table.firstChild.appendChild(cloneC.cloneNode(true));
-	table.firstChild.lastChild.firstChild.firstChild.value="";//去掉fl_id
-	table.firstChild.lastChild.childNodes[1].firstChild.value="";//去掉check_kmdh_id
-	table.firstChild.lastChild.childNodes[2].firstChild.value="";//去掉fl_jfje
-	table.firstChild.lastChild.childNodes[3].firstChild.value="";//去掉fl_dfje
+	table.firstChild.insertBefore(cloneC.cloneNode(true),table.firstChild.lastChild);
+	//table.firstChild.appendChild(cloneC.cloneNode(true));
+	table.firstChild.childNodes[table.firstChild.childNodes.length-2].firstChild.firstChild.value="";//去掉fl_id
+	table.firstChild.childNodes[table.firstChild.childNodes.length-2].childNodes[1].firstChild.value="";//去掉check_kmdh_id
+	table.firstChild.childNodes[table.firstChild.childNodes.length-2].childNodes[2].firstChild.value="";//去掉fl_jfje
+	table.firstChild.childNodes[table.firstChild.childNodes.length-2].childNodes[3].firstChild.value="";//去掉fl_dfje
 } 
 
 
