@@ -36,7 +36,15 @@ public class PzController extends SimpleManageController<Pz, PzService>{
 	 */
 	public ModelAndView create(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Map<String, Object> map = this.getMapWithUser(request);
-		map.put(getDomainName(), doNewDomain());
+		Pz pz = new Pz();
+		List<Fl> fls = new ArrayList<Fl>();
+		Fl fl1 = new Fl();
+		Fl fl2 = new Fl();
+		fls.add(fl1);
+		fls.add(fl2);
+		pz.addFls(fls);
+		//map.put(getDomainName(), doNewDomain());
+		map.put("pz", pz);
 		List<Kmgl> kmgl_list = kmglService.createCriteria(Kmgl.class).add(Expression.eq("zt", 1)).addOrder(Order.asc("kmdh")).list();
 		map.put("kmgl_list", kmgl_list);
 		return new ModelAndView(getEditPage(), map);
@@ -58,6 +66,7 @@ public class PzController extends SimpleManageController<Pz, PzService>{
 	 */
 	public ModelAndView save(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Pz pz = (Pz)getCommandObject(request, getDomainClass());
+		System.out.println("pz_id:"+pz.getId());
 		//request.getParameter("fl_id_array").split(",")
 		String[] fl_id_str_array = request.getParameter("fl_id_array").split(",");
 		String[] fl_zy_array = request.getParameter("fl_zy_array").split(",");

@@ -20,13 +20,13 @@
 		<td align="left" width="33%" >
 			凭证字:<select id="pzz" name="pzz" disabled="disabled" ><option value="记">记</option></select>
 			&nbsp;
-			凭证号:<input type="text" id="pzh" name="pzh" maxlength="10" size="3"  onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" />
+			凭证号:<input type="text" id="pzh" name="pzh" value="${pz.pzh!}" maxlength="10" size="3"  onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" />
 		</td>	
 		<td  align="center" width="33%" >
-			日期:<input type="text" id="rq" name="rq" maxlength="10" size="10" onclick="setday(this)"  readonly />
+			日期:<input type="text" id="rq" name="rq" value="${pz.rq!}" maxlength="10" size="10" onclick="setday(this)"  readonly />
 		</td>	
 		<td align="right" width="33%" >
-			附单据:<input type="text" id="fdj" name="fdj" maxlength="10" size="2"  onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" />
+			附单据:<input type="text" id="fdj" name="fdj" value="${pz.fdj!}" maxlength="10" size="2"  onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" />
 			
 			
 		</td>
@@ -41,39 +41,41 @@
 		<td width="5%" align="center">贷方金额</td>
 		<td width="2%" align="center">操作</td>
 	</tr>
+<#list pz.flList as fl >
 	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
 		<td align="right">
-			<input type="hidden" name="fl_id" value=""/>
-			<textarea name="fl_zy" rows="3" cols="19"></textarea>
+			<input type="hidden" name="fl_id" value="${fl.id!}"/>
+			<textarea name="fl_zy" rows="3" cols="19">${fl.zy!}</textarea>
 		</td>	
 		<td align="right">
 			<input type="text" maxlength="10" size="8" onkeyup="checkKmdh(this,this.value);" onbeforepaste="checkKmdh(this,clipboardData.getData('text'));">
 			<select name="fl_kmdh" >
 				<option value="">---请选择---</option>
 				<#list kmgl_list as kmgl >
-					<option value="${kmgl.kmdh}">${kmgl.kmdh} <#if kmgl.kmdh?length gt 3 >&nbsp;&nbsp;&nbsp;&nbsp;</#if><#if kmgl.kmdh?length gt 6 >&nbsp;&nbsp;&nbsp;&nbsp;</#if>${kmgl.kmmc}</option>
+					<option value="${kmgl.kmdh}" <#if fl.id??><#if fl.kmgl.kmdh = kmgl.kmdh>selected<#else></#if><#else></#if> >${kmgl.kmdh} <#if kmgl.kmdh?length gt 3 >&nbsp;&nbsp;&nbsp;&nbsp;</#if><#if kmgl.kmdh?length gt 6 >&nbsp;&nbsp;&nbsp;&nbsp;</#if>${kmgl.kmmc}</option>
 				</#list>				
 			</select>			
 		</td>
 		<td align="right">
-			<input type="text" name="fl_jfje" maxlength="12" size="9">
+			<input type="text" name="fl_jfje" value="<#if fl.jfje??>${fl.jfje?string('0.##')}<#else></#if>" maxlength="12" size="9">
 		</td>
 		<td align="right">
-			<input type="text" name="fl_dfje" maxlength="12" size="9">
+			<input type="text" name="fl_dfje" value="<#if fl.dfje??>${fl.dfje?string('0.##')}<#else></#if>" maxlength="12" size="9">
 		</td>
 		<td align="right">
 			<a href="#" onclick="deleteOneFl(this);">删除</a>
 		</td>
 	</tr>
+</#list>
 	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
 		<td align="right" colspan="2">
 			<a href="javascript:addOneFl()">增加一条分录</a>&nbsp;合计:
 		</td>
 		<td align="right">
-			<input type="text" id="hj_jfje" name="hj_jfje" maxlength="14" size="9" readonly />
+			<input type="text" id="hj_jfje" name="hj_jfje" value="<#if pz.id??>${pz.hj_jfje?string('0.##')}<#else></#if>" maxlength="14" size="9" readonly />
 		</td>
 		<td align="right">
-			<input type="text" id="hj_dfje" name="hj_dfje" maxlength="14" size="9" readonly />
+			<input type="text" id="hj_dfje" name="hj_dfje" value="<#if pz.id??>${pz.hj_dfje?string('0.##')}<#else></#if>" maxlength="14" size="9" readonly />
 		</td>
 		<td align="right">
 		</td>
@@ -87,13 +89,13 @@
 		<td height="5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 		<td height="5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 		<td height="5" align="right">
-			审核:<input type="text" id="shr" name="shr" maxlength="50" size="4">
+			审核:<input type="text" id="shr" name="shr" value="${pz.shr!}" maxlength="50" size="4">
 		</td>
 		<td height="5" align="right">
-			过帐:<input type="text" id="gzr" name="gzr" maxlength="50" size="4">
+			过帐:<input type="text" id="gzr" name="gzr" value="${pz.gzr!}" maxlength="50" size="4">
 		</td>
 		<td height="5" align="right">
-			制单:<input type="text" id="zdr" name="zdr" maxlength="50" size="4">
+			制单:<input type="text" id="zdr" name="zdr" value="${pz.zdr!}" maxlength="50" size="4">
 		</td>
 	</tr>
 </table>
