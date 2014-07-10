@@ -81,14 +81,14 @@ public class PzController extends SimpleManageController<Pz, PzService>{
 		System.out.println("fl_dfje_str_array:"+fl_dfje_str_array.length);		
 		
 		List<Fl> fls = new ArrayList<Fl>();
-//		if(pz.getId()>0){
+		if(pz.getId()>0){
 //			//List<Fl> _fl = flService.createCriteria(Fl.class).add(Expression.eq("pz.id", pz.getId())).list();
-//			List<Fl> _fl =pzService.get(pz.getId()).getFlList();
-//			System.out.println("_fl.size():"+_fl.size());	
-//			for(Fl fl : _fl){
-//				System.out.println("fl_id:"+fl.getId()+" fl_zy:"+fl.getZy());
-//			}
-//		}
+			List<Fl> _fl = pz.getFlList();
+			System.out.println("_fl.size():"+_fl.size());	
+			for(Fl fl : _fl){
+				System.out.println("fl_id:"+fl.getId()+" fl_zy:"+fl.getZy());
+			}
+		}
 		System.out.println("aaa:");	
 		for(int i = 0; i < fl_kmdh_array.length; i++){
 			if(!"".equals(StringUtil.trim(fl_kmdh_array[i]))){
