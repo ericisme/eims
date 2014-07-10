@@ -1,0 +1,387 @@
+<!-- auto generated -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>凭证管理</title>
+<link href="/html/syspurview/skins/default/body.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="/html/syspurview/js/base.js?load(page_exe.js)"></script>
+<script language="javascript" src="/js/common/prototype.js"></script>
+<script language="javascript" src="/js/common/log/log4javascript.js"></script>
+<script language="javascript" src="/js/calendar.js"></script>
+<script language="javascript" src="/js/xdate.js"></script><script language="javascript" src="/js/table2xls.js"></script>
+</head>
+<body class="body_bg">
+
+<script type="text/javascript">
+var pag = new PageExe();
+var baseUrl = '/eims/kjpz/pz.do';
+function AllAreaExcel()    
+{   
+ var oXL = new ActiveXObject("Excel.Application");    
+ var oWB = oXL.Workbooks.Add();    
+ var oSheet = oWB.ActiveSheet;     
+ var sel=document.body.createTextRange();   
+ sel.moveToElementText(eimsListTable);   
+ sel.select();   
+ sel.execCommand("Copy");   
+ oSheet.Paste();   
+ oXL.Visible = true;   
+}
+//初始化index
+function indexOnLoad(){
+	var firstDate = new Date();
+	//firstDate.setDate(1); //第一天
+	//var endDate = new Date(firstDate);
+	//endDate.setMonth(firstDate.getMonth()+1);
+	//endDate.setDate(0);
+	//$('_ksrq').value=new XDate(firstDate).toString('yyyy-MM-dd');
+	//$('_jsrq').value=new XDate(endDate).toString('yyyy-MM-dd');
+	//query();
+}
+function queryByKmdh(kmdh){
+	document.getElementById('_kmdh').value=kmdh;
+	query();
+}
+//查询
+function query(){	
+	if (pag == null) pag = new PageExe();
+	var qv = 'a=a';
+	if($F('_kmdh') != ''){
+		qv += '&kmdh__leftlike__string=' + new BaseClass().encode($F('_kmdh'),true);
+	}
+	if($F('_kmmc') != ''){
+		qv += '&kmmc__like__string=' + new BaseClass().encode($F('_kmmc'),true);
+	}
+	
+	if($F('_qnye_jf') != ''){
+		if($F('_qnye_jf') == '1')
+			qv += '&qnye_jf__gt__bigdecimal=0';
+		if($F('_qnye_jf') == '0')
+			qv += '&qnye_jf__eq__bigdecimal=0';
+		if($F('_qnye_jf') == '-1')
+			qv += '&qnye_jf__lt__bigdecimal=0';
+	}
+	
+	if($F('_lsye_jf') != ''){
+		if($F('_lsye_jf') == '1')
+			qv += '&lsye_jf__gt__bigdecimal=0';
+		if($F('_lsye_jf') == '0')
+			qv += '&lsye_jf__eq__bigdecimal=0';
+		if($F('_lsye_jf') == '-1')
+			qv += '&lsye_jf__lt__bigdecimal=0';
+	}
+	
+	if($F('_qnye_df') != ''){
+		if($F('_qnye_df') == '1')
+			qv += '&qnye_df__gt__bigdecimal=0';
+		if($F('_qnye_df') == '0')
+			qv += '&qnye_df__eq__bigdecimal=0';
+		if($F('_qnye_df') == '-1')
+			qv += '&qnye_df__lt__bigdecimal=0';
+	}
+	
+	if($F('_lsye_df') != ''){
+		if($F('_lsye_df') == '1')
+			qv += '&lsye_df__gt__bigdecimal=0';
+		if($F('_lsye_df') == '0')
+			qv += '&lsye_df__eq__bigdecimal=0';
+		if($F('_lsye_df') == '-1')
+			qv += '&lsye_df__lt__bigdecimal=0';
+	}
+	
+	if($F('_zt') != ''){
+		qv += '&zt__eq__int=' + $F('_zt');
+	}
+	
+	pag.query(
+		baseUrl + '?action=list',
+		'_list',
+		qv + '&orders=kmdh__asc'
+	);
+}
+// 分页查询方法
+function pzJump(/*string*/_url, /*int*/curPage)
+{
+	pag.query(
+		_url + curPage,
+		'_list'
+	);
+}
+
+// 删除
+function remove(id)
+{
+	var _id = base.getChecked('id', true);
+	if (!id && _id.length < 1) {
+		base.alert('请先选择要删除的记录！');
+		return;
+	}
+	base.log('要删除的员工工资记录ID为：' + (id || _id.join(',')));
+	base.confirm('您确信要删除选中的记录吗？', function() {
+		new Ajax.Request(
+				baseUrl + '?action=remove',
+				{
+					method : 'POST',
+					evalScripts : true,
+					parameters :	'id=' + (id || _id.join('&id=')),
+					onComplete : function(xmlHttp,error){
+						alert("删除成功");
+						query();
+					}
+				}
+			);		
+	});
+}
+
+//保存
+function checkForm(){		
+	
+	if (!$('kmdh') || $('kmdh').value.strip() == '') {
+ 		base.alert('请输入 单号！',function(){$('kmdh').focus();});
+ 		return false;
+ 	}
+	if (!$('kmmc') || $('kmmc').value.strip() == '') {
+ 		base.alert('请输入 单号！',function(){$('kmmc').focus();});
+ 		return false;
+ 	}
+	if (!checkPrice($('qnye_jf'))) {
+		base.alert(' 金额格式不正确，只允许数字带2位小数！',function(){$('qnye_jf').focus();});return false;
+ 	}
+	if (!checkPrice($('lsye_jf'))) {
+		base.alert(' 金额格式不正确，只允许数字带2位小数！',function(){$('lsye_jf').focus();});return false;
+ 	}
+	if (!checkPrice($('qnye_df'))) {
+		base.alert(' 金额格式不正确，只允许数字带2位小数！',function(){$('qnye_df').focus();});return false;
+ 	}
+	if (!checkPrice($('lsye_df'))) {
+		base.alert(' 金额格式不正确，只允许数字带2位小数！',function(){$('lsye_df').focus();});return false;
+ 	}	
+
+	//if (!checkPrice($('je'))) {
+	//	base.alert(' 金额格式不正确，只允许数据带2位小数！',function(){$('je').focus();});return false;
+ 	//}
+     	
+	pag.update(
+		baseUrl + '?action=save',
+		'theForm',
+		function() {
+			pag.back('_index','_update');
+			query();
+		}
+	);	
+	return false;
+}
+// 编辑页面显示
+function edit(id)
+{
+	var _id = base.getChecked('id', true);
+	if (!id && _id.length != 1) {
+		base.alert('请先选择要编辑的记录，编辑只能一次选择一条记录！');
+		return;
+	}
+	base.log('要编辑的记录ID为：' + (id || _id[0]));
+	pag.showEdit(
+		baseUrl + '?action=edit',
+		'_update',
+		'_index',
+		{
+			id : id || _id[0]
+		},
+		function() {}
+	);
+}
+// 添加页面显示
+function insert(){
+	pag.showAdd(
+		baseUrl + '?action=create',
+		'_update', 
+		'_index',
+		function() { }
+	);
+}
+
+
+//价格check,允许负数
+function checkPrice(price){  
+	var check_price = price.value;
+	//alert(check_price.substring(0,1));
+	if(check_price.substring(0,1) == '-'){
+		check_price = check_price.substring(1,check_price.length);
+		//alert(check_price.substring(1,check_price.length));
+	}		
+	return (/^(([1-9]\d*)|\d)(\.\d{1,2})?$/).test(check_price);
+}
+//check是否为数字，带一个小数点。汇率用
+function clearNoNum(obj){
+   obj.value = obj.value.replace(/[^\d.]/g,"");  //清除“数字”和“.”以外的字符
+   obj.value = obj.value.replace(/^\./g,"");  //验证第一个字符是数字而不是.
+   obj.value = obj.value.replace(/\.{2,}/g,"."); //只保留第一个. 清除多余的.
+   obj.value = obj.value.replace(".","$#$").replace(/\./g,"").replace("$#$",".");
+}
+
+
+function addOneFl(){
+	var table = document.getElementById('fl_table');
+	//table.insertRow(0);
+	var cloneC = table.firstChild.childNodes[1];
+	table.firstChild.appendChild(cloneC.cloneNode(true));
+	table.firstChild.lastChild.firstChild.firstChild.value="";//去掉fl_id
+	table.firstChild.lastChild.childNodes[1].firstChild.value="";//去掉check_kmdh_id
+	table.firstChild.lastChild.childNodes[2].firstChild.value="";//去掉fl_jfje
+	table.firstChild.lastChild.childNodes[3].firstChild.value="";//去掉fl_dfje
+} 
+
+
+function checkKmdh(obj, kmdh){
+	jsSelectItemByValue(getNextElement(obj), kmdh);
+}
+//下一个元素
+function getNextElement(node){    
+    if(node.nextSibling.nodeType == 1){    //判断下一个节点类型为1则是“元素”节点   
+        return node.nextSibling;    
+    }    
+    if(node.nextSibling.nodeType == 3){      //判断下一个节点类型为3则是“文本”节点  ，回调自身函数  
+        return getNextElement(node.nextSibling);    
+    }    
+    return null;
+}
+//设置select中value.indexOf(objItemValue)==0的第一个Item为选中        
+function jsSelectItemByValue(objSelect, objItemValue) {            
+    //判断是否存在        
+    var isExit = false;        
+    for (var i = 0; i < objSelect.options.length; i++) {
+    	var objSelectOptions_i_value = objSelect.options[i].value; 
+        if (objSelectOptions_i_value.indexOf(objItemValue)==0){
+            objSelect.options[i].selected = true;        
+            isExit = true;        
+            break;        
+        }        
+    }         
+}        
+</script>
+<script type="text/javascript">
+	BaseClass.addOnLoad(indexOnLoad);
+</script>
+<#include "../../../common_loading.ftl" />
+<div id="_index">
+<div class="position_line">您的位置是：会计凭证>> 凭证管理</div>
+
+<#include "../../../common_tips.ftl" />
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_query">
+
+	<tr height="12" style="display:${areaSel!}">
+		<td  align="right" height="12">
+			 科目代号 ：
+		</td>
+		<td align="left" bgcolor="#FFFFFF">
+			<input type="text" name="_kmdh" id="_kmdh" size="12" maxlength="20"/> 
+		</td>			
+		<td  align="right">
+			 科目名称 ：
+		</td>
+		<td align="left" bgcolor="#FFFFFF" >
+			<input type="text" name="_kmmc" id="_kmmc" size="12" maxlength="80"/> 
+		</td>
+		<td  align="right">
+			状态
+		</td>
+		<td align="left" bgcolor="#FFFFFF" >
+			<select name="_zt" id="_zt">
+				<option value="">---请选择---</option>
+				<option value="1">启用</option>
+				<option value="0">停用</option>
+			</select>
+		</td>
+	</tr>
+		<tr height="12" style="display:${areaSel!}">
+		<td  align="right" height="12">
+			 去年余额_借方 ：
+		</td>
+		<td align="left" bgcolor="#FFFFFF">
+			<select name="_qnye_jf" id="_qnye_jf">
+				<option value="">---请选择---</option>
+				<option value="1">大于0</option>
+				<option value="0">等于0</option>
+				<option value="-1">小于0</option>
+			</select>
+		</td>			
+		<td  align="right">
+			 历史余额_借方 ：
+		</td>
+		<td align="left" bgcolor="#FFFFFF" >
+			<select name="_lsye_jf" id="_lsye_jf">
+				<option value="">---请选择---</option>
+				<option value="1">大于0</option>
+				<option value="0">等于0</option>
+				<option value="-1">小于0</option>
+			</select>
+		</td>
+		<td  align="right">			
+		</td>
+		<td align="left" bgcolor="#FFFFFF" >
+		</td>
+	</tr>
+	</tr>
+		<tr height="12" style="display:${areaSel!}">
+		<td  align="right" height="12">
+			 去年余额_贷方 ：
+		</td>
+		<td align="left" bgcolor="#FFFFFF">
+			<select name="_qnye_df" id="_qnye_df">
+				<option value="">---请选择---</option>
+				<option value="1">大于0</option>
+				<option value="0">等于0</option>
+				<option value="-1">小于0</option>
+			</select>
+		</td>			
+		<td  align="right">
+			 历史余额_贷方 ：
+		</td>
+		<td align="left" bgcolor="#FFFFFF" >
+			<select name="_lsye_df" id="_lsye_df">
+				<option value="">---请选择---</option>
+				<option value="1">大于0</option>
+				<option value="0">等于0</option>
+				<option value="-1">小于0</option>
+			</select>
+		</td>
+		<td  align="right">			
+		</td>
+		<td align="left" bgcolor="#FFFFFF" >
+		</td>
+	</tr>	
+		
+	<tr>		
+		<td width="100%" align="center" colspan="6" bgcolor="#FFFFFF">
+			<input name="sub"                  type="button" onclick="query()"  class="btn01" value="查 询" />&nbsp;
+			<input name="sub" sys_opt="save"   type="button" onclick="insert()" class="btn01" value="添 加" />&nbsp;
+			<input name="sub" sys_opt="edit"   type="button" onclick="edit()"   class="btn01" value="修 改" />&nbsp;
+			<input name="sub" sys_opt="remove" type="button" onclick="remove()" class="btn01" value="删 除">&nbsp;
+			<!-- <input name="sub" type="button" onclick="AllAreaExcel2();" class="btn01" value="导出xls"> -->
+		</td>
+	</tr>
+</table>
+
+
+
+<table width="100%" border="0" cellpadding="5" cellspacing="1" class="list_query">
+
+
+	</form>
+</table>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr><td height="5"></td></tr>
+</table>
+
+<span id="_list"></span>
+</div>
+<div id="_update" >
+</div>
+<div id="_import" style="display:none">
+</div>
+
+<span id="_list"></span>
+
+</body>
+</html>
