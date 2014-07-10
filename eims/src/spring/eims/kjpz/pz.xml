@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans default-autowire="byName" default-lazy-init="true">
+	<!-- 凭证 -->	
+	<bean id="pzController" parent="mvc_parentController" class="cn.qtone.eims.kjpz.controller.PzController">
+	    <property name="listPage"  value="/eims/kjpz/pz/list"></property>
+		<property name="editPage"  value="/eims/kjpz/pz/edit"></property>
+		<property name="showPage"  value="/eims/kjpz/pz/show"></property>
+		<property name="indexPage" value="/eims/kjpz/pz/index"></property>
+		<property name="pzService"     ref="pzService"></property>
+		<property name="flService"     ref="flService"></property>
+		<property name="kmglService"     ref="kmglService"></property>
+	</bean>
+	<bean id="pzService" class="cn.qtone.eims.kjpz.service.PzService" />
+	<bean id="flService" class="cn.qtone.eims.kjpz.service.FlService" />
+</beans>
+

@@ -77,7 +77,8 @@
 	<!-- 会计凭证 -->
 	<!-- 科目管理 -->
 	<import resource="./eims/kjpz/kmgl.xml"/>
-	
+	<!-- 凭证 -->
+	<import resource="./eims/kjpz/pz.xml"/>
 	<!-- eims企业信息管理系统  -->
 	<!-- eims企业信息管理系统  -->	
 	

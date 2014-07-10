@@ -76,6 +76,10 @@
 				    <!-- 会计凭证 -->
 				    <!-- 科目管理 -->
 				    <value>cn.qtone.eims.kjpz.domain.Kmgl</value>
+				    <!-- 凭证 -->
+				    <value>cn.qtone.eims.kjpz.domain.Pz</value>
+				    <!-- 分录 -->
+				    <value>cn.qtone.eims.kjpz.domain.Fl</value>
 				    <!-- 会计凭证 -->
 				    
 					<!-- eims企业信息管理系统  -->
