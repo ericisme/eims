@@ -116,7 +116,7 @@ function remove(id)
 		base.alert('请先选择要删除的记录！');
 		return;
 	}
-	base.log('要删除的员工工资记录ID为：' + (id || _id.join(',')));
+	base.log('要删除的凭证记录ID为：' + (id || _id.join(',')));
 	base.confirm('您确信要删除选中的记录吗？', function() {
 		new Ajax.Request(
 				baseUrl + '?action=remove',
@@ -290,7 +290,22 @@ function insert(){
 		function() { }
 	);
 }
-
+function show(id){
+	//var _id = base.getChecked('id', true);
+	//base.log('要查看的ID为：' + (id || _id[0]));
+	window.open(baseUrl + "?action=show&id=" + id, "查看凭证");
+/* 	pag.showEdit(
+		baseUrl + '?action=show',
+		'_edit',
+		'_index',
+		{
+			id : id || _id[0]
+		},
+		function() {
+			
+		}
+	); */
+}
 
 //价格check,允许负数
 function checkPrice(price){  
@@ -317,6 +332,8 @@ function deleteOneFl(obj){
 		var table = document.getElementById('fl_table');
 		if(table.firstChild.childNodes.length>3){
 			table.firstChild.removeChild(obj.parentNode.parentNode);
+			document.getElementById('hj_jfje').value = "";
+			document.getElementById('hj_dfje').value = "";	
 		}else{
 			alert('最后一条不能删除');
 		}

@@ -25,6 +25,8 @@ public class Fl {
 	
 	private Pz pz;//所属凭证
 	
+	private String rq;//日期
+	
 	private String zy;//摘要
 	
 	private Kmgl kmgl;//所属科目 
@@ -45,7 +47,7 @@ public class Fl {
 		this.id = id;
 	}
 	
-	@ManyToOne(fetch=FetchType.LAZY, cascade = {CascadeType.ALL }, optional=false )
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="pz_id", nullable=true)
 	public Pz getPz() {
 		return pz;
@@ -61,6 +63,14 @@ public class Fl {
 
 	public void setZy(String zy) {
 		this.zy = zy;
+	}
+
+	public String getRq() {
+		return rq;
+	}
+
+	public void setRq(String rq) {
+		this.rq = rq;
 	}
 
 	@ManyToOne(fetch=FetchType.LAZY, cascade = {CascadeType.ALL }, optional=false )

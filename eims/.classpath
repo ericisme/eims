@@ -26,7 +26,6 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/FCKeditor-2.3.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/filterbuilder.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/freemarker.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/hibernate-3.2.0.ga.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/hibernate-annotations-3.2.0.ga.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/htmllexer.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/htmlparser.jar"/>
@@ -51,7 +50,6 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/mail-1.4.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/mysql-connector-java-5.0.4-bin.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/opensaml-1.0.1.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/persistence-api-1.0.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/plugin.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/poi-3.0.2-FINAL-20080204.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/quartz-1.6.0.jar"/>
@@ -80,5 +78,7 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/json-lib-2.2.3-jdk15.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/hibernate-3.2.0.ga.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/persistence-api-1.0.jar"/>
 	<classpathentry kind="output" path="web/WEB-INF/classes"/>
 </classpath>

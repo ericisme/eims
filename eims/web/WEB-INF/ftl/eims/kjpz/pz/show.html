@@ -1,172 +1,142 @@
-<div class="position_line">您的位置是：基础信息管理>> 教师信息 >> 查看教师信息</div>
-<#include "../../common_tips.ftl" />
-
-<table width="100%" cellspacing="0" cellpadding="0" bordercolor="#AAC7DD" border="1" class="m_t">
-	<tr>
-		<td width="15%" class="t_title t_r">学校：</td>
-		<td width="35%" class="t_right">${xx.mc!}</td>
-		<td width="15%" class="t_title t_r">学校代码： </td>
-		<td width="35%" class="t_right">${xx.xx_m!}</td>
-	</tr>
-	<tr>
-		<td width="15%" class="t_title t_r">姓名： </td>
-		<td width="35%" class="t_right">${js.xm!}</td>
-		<td width="15%" class="t_title t_r">性别： </td>
-		<td width="35%" class="t_right"><#if js.xb = 1>男</#if><#if js.xb = 2>女</#if></td>
-	</tr>
-	<tr>
-		<td width="15%" class="t_title t_r">民族： </td>
-		<td width="35%" class="t_right">${mzString!}</td>
-		<td width="15%" class="t_title t_r">出生日期： </td>
-		<td width="35%" class="t_right">
-		<#if js.csrq?exists>${js.csrq?date?string('yyyy-MM-dd')}</#if>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5"> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>查看凭证</title> 
+<!--media=print 这个属性可以在打印时有效--> 
+<style media=print> 
+.Noprint {display:none;} 
+.PageNext {page-break-after: always;} 
+</style> 
+<style type="text/css">
+<!--
+.T_Sample {
+border-collapse: collapse;
+border: none;
+background: #FFFFEE;
+}
+.T_Sample th {
+border: solid 1px #000000;
+  font-size:10pt;
+  font-family:"宋体";
+}
+.T_Sample td {
+  border: solid 1px #000000;
+  font-size:10pt;
+  font-family:"宋体";
+}
+.NOPRINT { 
+font-family: "宋体"; 
+font-size: 10pt; 
+} 
+td,tr,body{
+  font-size:10pt;
+  font-family:"宋体";
+}
+.STYLE1 {
+	font-size: 26pt;
+	font-weight: bold;
+	font-family: "宋体";
+	height:40px;
+	border-top:thin;
+	text-align:center;
+}
+-->
+</style>  
+</head> 
+<body> 
+	<center class="Noprint" > 
+		<p>
+			如不能打印，请设置IE浏览器，在"工具"-"Internet选项"-"安全"-"自定义级别",选择"启用"--对没有标记为安全的ActiveX控件进行初始化和脚本运行并在页面设计中设置页眉和页脚。
+		</p>
+		<p>
+			<OBJECT id=WebBrowser classid=CLSID:8856F961-340A-11D0-A96B-00C04FD705A2 height=0 width=0>
+			</OBJECT>
+		</p> 
+		<p>
+  			<input type=button value=页面设置 onclick=document.all.WebBrowser.ExecWB(8,1)>&nbsp; 
+  			<input type=button value=打印预览 onclick=document.all.WebBrowser.ExecWB(7,1)>&nbsp;
+  			<input type=button value=直接打印 onclick=document.all.WebBrowser.ExecWB(6,6)>&nbsp;
+			<br/> 
+		</p> 
+		<hr align="center" width="90%" size="1" > 
+	</center> 
+	
+<div align="center" class="STYLE1">记&nbsp;账&nbsp;凭&nbsp;证</div>
+<br/>
+<table align="center" width="800px" border="0" cellpadding="0" cellspacing="0" >	
+	<tr >
+		<td align="left" width="33%" >
+			凭证字:记
+			&nbsp;
+			凭证号:${pz.pzh!}
+		</td>	
+		<td  align="center" width="33%" >
+			日期:${pz.rq!}
+		</td>	
+		<td align="right" width="33%" >
+			附单据:${pz.fdj!}			
 		</td>
-	</tr>
-	<tr>
-		<td width="15%" class="t_title t_r">户籍： </td>
-		<td width="35%" class="t_right" colspan="3">
-		${dqlink!}
-		</td>
-	</tr>
-	<tr>
-		<td width="15%" class="t_title t_r">身份证号： </td>
-		<td width="35%" class="t_right">${js.sfzh!}</td>
-		<td width="15%" class="t_title t_r">证件类型： </td>
-		<td width="35%" class="t_right">${zjlxString!}</td>
-	</tr>
-	<tr>
-		<td width="15%" class="t_title t_r">政治面貌： </td>
-		<td width="35%" class="t_right">${zzmmString!}</td>
-		<td width="15%" class="t_title t_r">加入政治面貌日期： </td>
-		<td width="35%" class="t_right"><#if js.jrzzmmrq?exists>${js.jrzzmmrq?date?string('yyyy-MM-dd')}</#if></td>
-	</tr>
-	<tr>
-		<td width="15%" class="t_title t_r">教职工类别： </td>
-		<td width="35%" class="t_right">${jzglbString!}</td>
-		<td width="15%" class="t_title t_r">职称： </td>
-		<td width="35%" class="t_right">${zcString!}</td>
-	</tr>
-	<tr>
-		<td width="15%" class="t_title t_r">学位： </td>
-		<td width="35%" class="t_right">${xwString!}</td>
-		<td width="15%" class="t_title t_r">职务： </td>
-		<td width="35%" class="t_right">${zwString!}</td>
-	</tr>
-	<tr>
-		<td width="15%" class="t_title t_r">学历： </td>
-		<td width="35%" class="t_right">${xlString!}</td>
-		<td width="15%" class="t_title t_r">课程： </td>
-		<td width="35%" class="t_right">${kcString!}</td>
-	</tr>
-	<tr>
-		<td width="15%" class="t_title t_r">在编情况： </td>
-		<td width="35%" class="t_right">${zbqkString!}</td>
-		<td width="15%" class="t_title t_r">是否华桥： </td>
-		<td width="35%" class="t_right"><#if js.hq = 0>否</#if><#if js.hq = 1>是</#if></td>
-	</tr>
-	<tr>
-		<td width="15%" class="t_title t_r">教师特征： </td>
-		<td width="35%" class="t_right">${jstzString!}</td>
-		<td width="15%" class="t_title t_r">外籍国家： </td>
-		<td width="35%" class="t_right">${wjString!}</td>
-	</tr>
-	
-	
-	
-	
-			<#if xx.xxlb_m = '41' || xx.xxlb_m = '42' || xx.xxlb_m = '91' || xx.xxlb_m = '92'>			
-				<tr>
-			<td width="15%" class="t_title t_r">非教师职称： </td>
-			<td width="35%" class="t_right" >${fjszcString!}</td>
-			<td width="15%" class="t_title t_r">双师型： </td>
-			<td width="35%" class="t_right" >${ssxString!}</td>		
-		</tr>		
-		<tr>
-			<td width="15%" class="t_title t_r">研究生指导教师类别： </td>
-			<td width="35%" class="t_right" >${yjszdjslbString!}</td>
-			<td width="15%" class="t_title t_r">授课专业码（高校）6位数字： </td>
-			<td width="35%" class="t_right" >${js.zy!}</td>		
-		</tr>
-		<#else>
-			<#if xx.xxlb_m = '36' || xx.xxlb_m = '93'>
-				
-				<tr>
-			<td width="15%" class="t_title t_r">非教师职称： </td>
-			<td width="35%" class="t_right" >${fjszcString!}</td>
-			<td width="15%" class="t_title t_r">双师型： </td>
-			<td width="35%" class="t_right" >${ssxString!}</td>		
-		</tr>		
-		<tr>
-			<td width="15%" class="t_title t_r">研究生指导教师类别： </td>
-			<td width="35%" class="t_right" >${yjszdjslbString!}</td>
-			<td width="15%" class="t_title t_r">授课专业码（中职）6位数字： </td>
-			<td width="35%" class="t_right" >${js.zy!}</td>		
-		</tr>
-			<#else>
-				
-			<tr>
-			<td width="15%" class="t_title t_r">专任教师类别： </td>
-			<td width="35%" class="t_right" >
-			${zrjslbString!}
-			</td>
-			<td width="15%" class="t_title t_r"> </td>
-			<td width="35%" class="t_right"></td>		
-		</tr>
-			</#if>
-		</#if>	
-
-<!-- ------------------------------------------------------------------------------------- -->			
-		<#if xx.xxlb_m = '41' || xx.xxlb_m = '42' || xx.xxlb_m = '36' || xx.xxlb_m = '93' || xx.xxlb_m = '91' || xx.xxlb_m = '92'>
-		<#else>
-		<tr>
-			<td width="15%" class="t_title t_r">学前教育专业毕业： </td>
-			<td width="35%" class="t_right" >
-				<#if js.yrsfby?exists><#if js.yrsfby = '0'>否</#if><#if js.yrsfby = '1'>是</#if></#if>
-			</td>
-			<td width="15%" class="t_title t_r">受过特教专业培训： </td>
-			<td width="35%" class="t_right" >
-				<#if js.sgtjzypx?exists><#if js.sgtjzypx = '0'>否</#if><#if js.sgtjzypx = '1'>是</#if></#if>
-			</td>		
-		</tr>	
-		<tr>
-			<td width="15%" class="t_title t_r">是否毕业生： </td>
-			<td width="35%" class="t_right" >
-				<#if js.sfbys?exists><#if js.sfbys = '0'>否</#if><#if js.sfbys = '1'>是</#if></#if>
-			</td>
-			<td width="15%" class="t_title t_r">是否师范生： </td>
-			<td width="35%" class="t_right" >
-				<#if js.sfsfs?exists><#if js.sfsfs = '0'>否</#if><#if js.sfsfs = '1'>是</#if></#if>
-			</td>		
-		</tr>
-		</#if>
-<!-- ------------------------------------------------------------------------------------- -->	
-		<tr>
-			<td width="15%" class="t_title t_r">接受培训情况： </td>
-			<td width="35%" class="t_right" >
-					${jspxqk_mSelect!}
-			</td>
-			<td width="15%" class="t_title t_r">接受培训时间： </td>
-			<td width="35%" class="t_right" >
-					${jspxsj_mSelect!}
-			</td>
-		</tr>	
-		<!-- tr>
-			<td width="15%" class="t_title t_r">少数民族双语教学班： </td>
-			<td width="35%" class="t_right" >
-				<#if js.sxmzsyjxb?exists><#if js.sxmzsyjxb = '0'>否</#if><#if js.sxmzsyjxb = '1'>是</#if></#if>
-			</td>
-			<td width="15%" class="t_title t_r">模式： </td>
-			<td width="35%" class="t_right" >
-					${ms_mSelect!}
-			</td>		
-		</tr-->	
-
-	<tr>
-		<td width="15%" class="t_title t_r">简要备注： </td>
-		<td width="35%" class="t_right" colspan="3">${js.jybz!}</td>
-	</tr>
-	<tr>
-		<th colspan="4" class="t_title t_c">
-		<input type="button" class="sort_sub" onclick="pag.back('_index','_update');" value="返回" /></th>
 	</tr>
 </table>
+
+<table align="center" width="800px" border="1" cellpadding="-1" cellspacing="0" id="fl_table">	
+	<tr>   			
+		<td width="27%" align="center" height="25px">摘要</td>
+		<td width="47%" align="center">会计科目</td>
+		<td width="8%" align="center">借方金额</td>
+		<td width="8%" align="center">贷方金额</td>
+	</tr>
+<#list pz.flList as fl >
+	<tr>
+		<td align="left"  height="25px">
+			${fl.zy!}
+		</td>	
+		<td align="left">
+			<#if fl.id??>${fl.kmgl.kmdh}&nbsp;${fl.kmgl.kmmc}<#else></#if>					
+		</td>
+		<td align="right">
+			<#if fl.jfje??>${fl.jfje?string('0.##')}<#else></#if>		
+		</td>
+		<td align="right">
+			<#if fl.dfje??>${fl.dfje?string('0.##')}<#else></#if>
+		</td>
+	</tr>
+</#list>
+	<tr>
+		<td align="right" colspan="2"  height="25px">
+			合计:
+		</td>
+		<td align="right">
+			${pz.hj_jfje?string('0.##')}
+		</td>
+		<td align="right">
+			${pz.hj_dfje?string('0.##')}
+		</td>
+	</tr>
+
+</table>
+
+<table align="center" width="800px"  border="0" cellspacing="0" cellpadding="0">
+<tr>
+	<td colspan="6">&nbsp;</td>
+</tr>
+	<tr>
+		<td height="5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+		<td height="5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+		<td height="5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+		<td height="5" align="right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			审核:${pz.shr!}
+		</td>
+		<td height="5" align="right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			过帐:${pz.gzr!}
+		</td>
+		<td height="5" align="right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			制单:${pz.zdr!}
+		</td>
+	</tr>
+</table>
+		
+</body>
+</html>

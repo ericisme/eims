@@ -19,7 +19,7 @@
 	</tr>
 	<#if entitySize = 0>
 	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
-		<td align="center" colspan="8"><font color="red">没有符合条件的记录！</font></td>
+		<td align="center" colspan="9"><font color="red">没有符合条件的记录！</font></td>
 	</tr>
 	<#else>	
 
@@ -27,7 +27,7 @@
 	<#list page.result as entity >
 	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
 	  	<td align="center"><input type="checkbox" name="id" value="${entity.id}" /></td>	  	  	
-	  	<td align="center">记${entity.pzh!}</td>
+	  	<td align="center"><a href="javascript:void(0);" onclick="show(${entity.id})">记${entity.pzh!}</a></td>
 	  	<td align="center">${entity.rq!}</td>
 	  	<td align="center">${entity.fdj}</td>
 	  	<td align="center">${entity.hj_jfje?string("0.##")}</td>

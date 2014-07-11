@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 
 /**
@@ -43,6 +44,9 @@ public class Pz {
 	
 	private String zdr;//制单人
 
+	private Integer lx = 1; //类型，1普通凭证，2为结转凭证
+	
+	
 	/**
 	 * 包含分录
 	 */
@@ -130,8 +134,9 @@ public class Pz {
 		this.zdr = zdr;
 	}
 	
-	@OneToMany(cascade=CascadeType.ALL)
-	@JoinColumn(name="pz_id")
+	//@OneToMany(cascade={ CascadeType.ALL })
+	//@JoinColumn(name="pz_id")
+	@Transient
 	public List<Fl> getFlList() {
 		return flList;
 	}
@@ -139,11 +144,15 @@ public class Pz {
 	public void setFlList(List<Fl> flList) {
 		this.flList = flList;
 	}
-	
-	public void addFls(List<Fl> fls){
-		this.flList.clear();
-		this.flList = fls;
+
+	public Integer getLx() {
+		return lx;
 	}
+
+	public void setLx(Integer lx) {
+		this.lx = lx;
+	}	
+
 	
 	
 }

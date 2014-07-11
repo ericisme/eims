@@ -10,6 +10,7 @@
 	<tr>
 		<td>
 			<input name="id" id="id" type="hidden" value="${pz.id!}" />	
+			<input name="lx" id="lx" type="hidden" value="${pz.lx!}" />	
 		</td>
 	</tr>
 </table>
@@ -20,10 +21,10 @@
 		<td align="left" width="33%" >
 			凭证字:<select id="pzz" name="pzz" disabled="disabled" ><option value="记">记</option></select>
 			&nbsp;
-			凭证号:<input type="text" id="pzh" name="pzh" value="${pz.pzh!}" maxlength="10" size="3"  onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" />
+			凭证号:<input type="text" id="pzh" name="pzh" value="<#if pz.id??>${pz.pzh!}<#else>${last_pzh!}</#if>" maxlength="10" size="3"  onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" />
 		</td>	
 		<td  align="center" width="33%" >
-			日期:<input type="text" id="rq" name="rq" value="${pz.rq!}" maxlength="10" size="10" onclick="setday(this)"  readonly />
+			日期:<input type="text" id="rq" name="rq" value="<#if pz.id??>${pz.rq!}<#else>${today!}</#if>" maxlength="10" size="10" onclick="setday(this)"  readonly />
 		</td>	
 		<td align="right" width="33%" >
 			附单据:<input type="text" id="fdj" name="fdj" value="${pz.fdj!}" maxlength="10" size="2"  onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" />
@@ -63,7 +64,7 @@
 			<input type="text" name="fl_dfje" value="<#if fl.dfje??>${fl.dfje?string('0.##')}<#else></#if>" maxlength="12" size="9">
 		</td>
 		<td align="right">
-			<a href="#" onclick="deleteOneFl(this);">删除</a>
+			<a href="javascript:void(0);" onclick="deleteOneFl(this);">删除</a>
 		</td>
 	</tr>
 </#list>
@@ -89,13 +90,13 @@
 		<td height="5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 		<td height="5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 		<td height="5" align="right">
-			审核:<input type="text" id="shr" name="shr" value="${pz.shr!}" maxlength="50" size="4">
+			审核:<input type="text" id="shr" name="shr" value="<#if pz.id??>${pz.shr!}<#else>芬</#if>" maxlength="50" size="4">
 		</td>
 		<td height="5" align="right">
-			过帐:<input type="text" id="gzr" name="gzr" value="${pz.gzr!}" maxlength="50" size="4">
+			过帐:<input type="text" id="gzr" name="gzr" value="<#if pz.id??>${pz.gzr!}<#else>芬</#if>" maxlength="50" size="4">
 		</td>
 		<td height="5" align="right">
-			制单:<input type="text" id="zdr" name="zdr" value="${pz.zdr!}" maxlength="50" size="4">
+			制单:<input type="text" id="zdr" name="zdr" value="<#if pz.id??>${pz.zdr!}<#else>芬</#if>" maxlength="50" size="4">
 		</td>
 	</tr>
 </table>
