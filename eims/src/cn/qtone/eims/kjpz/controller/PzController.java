@@ -202,6 +202,7 @@ public class PzController extends SimpleManageController<Pz, PzService>{
 		String[] fl_kmdh_array = request.getParameter("fl_kmdh_array").split(",");
 		String[] fl_jfje_str_array = request.getParameter("fl_jfje_array").split(",");
 		String[] fl_dfje_str_array = request.getParameter("fl_dfje_array").split(",");
+		//判断凭证号是否已被使用
 		Integer count_pzh = (Integer)getDomainService().createCriteria(Pz.class).add(Expression.not(Expression.eq("id", pz.getId()==null?0:pz.getId()))).add(Expression.eq("pzh", pz.getPzh())).setProjection(Projections.count("pzh")).uniqueResult();
 		if(count_pzh>0){
 			AjaxView view = new AjaxView(false, "该凭证号已被使用！");
