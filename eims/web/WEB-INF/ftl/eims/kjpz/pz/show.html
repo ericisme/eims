@@ -126,13 +126,14 @@ function getPzDirectId(id, direct){
 		<td width="11%" align="center">借方金额</td>
 		<td width="11%" align="center">贷方金额</td>
 	</tr>
+<#assign flListSize=pz.flList?size />
 <#list pz.flList as fl >
 	<tr>
 		<td align="center"  height="20px">
 			${fl.zy!}
 		</td>	
 		<td align="left">
-			<#if fl.id??>${fl.kmgl.kmdh}&nbsp;${fl.kmgl.kmmc}<#else></#if>					
+			<#if fl.id??>${fl.kmgl.kmdh}&nbsp;${fl.kmqc}<#else></#if>					
 		</td>
 		<td align="right">
 			<#if fl.jfje??>${fl.jfje?string('0.##')}<#else></#if>		
@@ -142,6 +143,18 @@ function getPzDirectId(id, direct){
 		</td>
 	</tr>
 </#list>
+	<#if flListSize = 1>
+		<tr><td align="center"  height="20px"></td><td align="left"></td><td align="right"></td><td align="right"></td></tr>
+		<tr><td align="center"  height="20px"></td><td align="left"></td><td align="right"></td><td align="right"></td></tr>
+		<tr><td align="center"  height="20px"></td><td align="left"></td><td align="right"></td><td align="right"></td></tr>
+	<#else></#if>
+	<#if flListSize = 2>
+		<tr><td align="center"  height="20px"></td><td align="left"></td><td align="right"></td><td align="right"></td></tr>
+		<tr><td align="center"  height="20px"></td><td align="left"></td><td align="right"></td><td align="right"></td></tr>
+	<#else></#if>
+	<#if flListSize = 3>
+		<tr><td align="center"  height="20px"></td><td align="left"></td><td align="right"></td><td align="right"></td></tr>
+	<#else></#if>
 	<tr>
 		<td align="right" colspan="2"  height="20px">
 			合计:

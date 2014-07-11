@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * 分录
@@ -36,6 +37,8 @@ public class Fl {
 	private BigDecimal dfje;//贷方金额 
 	
 	private Integer lx=1;//类型，1为凭证分录，2为期末余额分录(2013年期末)，3为历史余额分录
+	
+	private String kmqc;//科目全称
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -105,6 +108,14 @@ public class Fl {
 
 	public void setLx(Integer lx) {
 		this.lx = lx;
+	}
+	@Transient
+	public String getKmqc() {
+		return kmqc;
+	}
+
+	public void setKmqc(String kmqc) {
+		this.kmqc = kmqc;
 	}
 	
 	

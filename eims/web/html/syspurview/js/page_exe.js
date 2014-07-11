@@ -112,7 +112,7 @@ PageExe.prototype = {
 			
 			var obj = base.json(returnVal);
 			if (obj == null) {
-				base.alert('系统发生异常2：\n' + returnVal);
+				base.alert('系统发生异常：\n' + returnVal);
 				return;
 			}
 			base.tips(obj.message, $(formId));

@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Transient;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -169,23 +170,22 @@ public class PzController extends SimpleManageController<Pz, PzService>{
 		Pz pz = doGetDomain(request);
 		List<Fl> fls = new ArrayList<Fl>();
 		fls = flService.createCriteria(Fl.class).add(Expression.eq("pz.id", pz.getId())).list();
-		if(fls.size()==0){
-			fls.add(new Fl());
-			fls.add(new Fl());
-			fls.add(new Fl());
-			fls.add(new Fl());
-		}
-		if(fls.size()==1){
-			fls.add(new Fl());
-			fls.add(new Fl());
-			fls.add(new Fl());
-		}
-		if(fls.size()==2){
-			fls.add(new Fl());
-			fls.add(new Fl());
-		}
-		if(fls.size()==3){
-			fls.add(new Fl());
+		for(Fl fl : fls){
+			String kmdh = fl.getKmgl().getKmdh();
+			if(kmdh.length()==8){
+				fl.setKmqc(kmglService.findUniqueBy("kmdh", kmdh.substring(0, 3)).getKmmc()
+							+" "+kmglService.findUniqueBy("kmdh", kmdh.substring(0, 6)).getKmmc()
+							+" "+fl.getKmgl().getKmmc()
+						);
+			}
+			if(kmdh.length()==6){
+				fl.setKmqc(kmglService.findUniqueBy("kmdh", kmdh.substring(0, 3)).getKmmc()
+							+" "+fl.getKmgl().getKmmc()
+						);
+			}
+			if(kmdh.length()==3){
+				fl.setKmqc(fl.getKmgl().getKmmc());
+			}			
 		}
 		pz.setFlList(fls);
 		map.put(getDomainName(), pz);
