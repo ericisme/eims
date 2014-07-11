@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -69,7 +70,7 @@ public class Pz {
 	public void setRq(String rq) {
 		this.rq = rq;
 	}
-
+	
 	public String getPzz() {
 		return pzz;
 	}
@@ -77,7 +78,7 @@ public class Pz {
 	public void setPzz(String pzz) {
 		this.pzz = pzz;
 	}
-
+	@Column(unique = true)
 	public Integer getPzh() {
 		return pzh;
 	}

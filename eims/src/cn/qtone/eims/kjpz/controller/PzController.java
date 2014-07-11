@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +24,7 @@ import cn.qtone.common.mvc.view.spring.AjaxView;
 import cn.qtone.common.simplemvc.controller.SimpleManageController;
 import cn.qtone.common.utils.base.DateUtil;
 import cn.qtone.common.utils.base.StringUtil;
+import cn.qtone.eims.khmx.domain.Khts;
 import cn.qtone.eims.kjpz.domain.Fl;
 import cn.qtone.eims.kjpz.domain.Kmgl;
 import cn.qtone.eims.kjpz.domain.Pz;
@@ -36,6 +38,81 @@ public class PzController extends SimpleManageController<Pz, PzService>{
 	private PzService pzService;
 	private FlService flService;
 	private KmglService kmglService;
+	
+	/**
+	 * 根据报关单号获取相应的值
+	 */
+	public ModelAndView getPzDirectId(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String id = request.getParameter("id");
+		String direct = request.getParameter("direct");
+		Map<String, Object> map = new HashMap<String, Object>();
+		AjaxView view = new AjaxView("系统出错");;
+		Pz pz = pzService.get(Integer.parseInt(id));
+		if("next".equals(direct)){
+			List<Integer> pz_id_list = pzService.createCriteria(Pz.class)
+					.add(Expression.not(Expression.eq("id", Integer.parseInt(id))))
+					.add(Expression.ge("pzh", pz.getPzh()))
+					.addOrder(Order.asc("pzh"))
+					.setProjection(Projections.property("id"))					
+					.setMaxResults(1)
+					.list();
+			if(pz_id_list.size()>0){
+				map.put("pz_id", pz_id_list.get(0));
+				view = new AjaxView("success");
+			}else{
+				view = new AjaxView("已经是最后一条了");
+			}			
+		}
+		if("prew".equals(direct)){
+			List<Integer> pz_id_list = pzService.createCriteria(Pz.class)
+					.add(Expression.not(Expression.eq("id", Integer.parseInt(id))))
+					.add(Expression.le("pzh", pz.getPzh()))
+					.addOrder(Order.desc("pzh"))
+					.setProjection(Projections.property("id"))					
+					.setMaxResults(1)
+					.list();
+			if(pz_id_list.size()>0){
+				map.put("pz_id", pz_id_list.get(0));
+				view = new AjaxView("success");
+			}else{
+				map.put("pz_id", null);
+				view = new AjaxView("已经是第一条了");
+			}	
+		}
+		if("first".equals(direct)){
+			List<Integer> pz_id_list = pzService.createCriteria(Pz.class)
+					.addOrder(Order.asc("pzh"))
+					.setProjection(Projections.property("id"))					
+					.setMaxResults(1)
+					.list();
+			if(pz_id_list.size()>0){
+				if(pz.getId().equals(pz_id_list.get(0))){
+					view = new AjaxView("已经是第一条了");					
+				}else{
+					map.put("pz_id", pz_id_list.get(0));
+					view = new AjaxView("success");
+				}
+			}
+		}
+		if("last".equals(direct)){
+			List<Integer> pz_id_list = pzService.createCriteria(Pz.class)
+					.addOrder(Order.desc("pzh"))
+					.setProjection(Projections.property("id"))					
+					.setMaxResults(1)
+					.list();
+			if(pz_id_list.size()>0){
+				if(pz.getId().equals(pz_id_list.get(0))){
+					view = new AjaxView("已经是最后一条了");					
+				}else{
+					map.put("pz_id", pz_id_list.get(0));
+					view = new AjaxView("success");
+				}
+			}
+		}
+		
+		view.setProperty("data", map);
+		return new ModelAndView(view);
+	}
 	
 	/**
 	 * 通用的新增对象的界面.
@@ -54,7 +131,6 @@ public class PzController extends SimpleManageController<Pz, PzService>{
 		if(last_pzh==null){
 			last_pzh=0;
 		}
-		System.out.println("last pzh:"+last_pzh);
 		map.put("pz", pz);
 		map.put("last_pzh", (last_pzh+1));
 		map.put("today", DateUtil.formatDate(new Date(), "yyyy-MM-dd"));
@@ -113,8 +189,6 @@ public class PzController extends SimpleManageController<Pz, PzService>{
 		}
 		pz.setFlList(fls);
 		map.put(getDomainName(), pz);
-		List<Kmgl> kmgl_list = kmglService.createCriteria(Kmgl.class).add(Expression.eq("zt", 1)).addOrder(Order.asc("kmdh")).list();
-		map.put("kmgl_list", kmgl_list);
 		return new ModelAndView(getShowPage(), map);
 	}
 	
@@ -128,12 +202,22 @@ public class PzController extends SimpleManageController<Pz, PzService>{
 		String[] fl_kmdh_array = request.getParameter("fl_kmdh_array").split(",");
 		String[] fl_jfje_str_array = request.getParameter("fl_jfje_array").split(",");
 		String[] fl_dfje_str_array = request.getParameter("fl_dfje_array").split(",");
-		//保证pz
+		Integer count_pzh = (Integer)getDomainService().createCriteria(Pz.class).add(Expression.not(Expression.eq("id", pz.getId()==null?0:pz.getId()))).add(Expression.eq("pzh", pz.getPzh())).setProjection(Projections.count("pzh")).uniqueResult();
+		if(count_pzh>0){
+			AjaxView view = new AjaxView(false, "该凭证号已被使用！");
+			view.setProperty("refresh", true);
+			return new ModelAndView(view);
+		}
+		//保存pz
 		if(isDomainIdBlank(request)){
 			getDomainService().save(pz);
+			getDomainService().flush();
+			getDomainService().clear();
 		}else{
 			getDomainService().saveOrUpdate(pz);
-		}		
+			getDomainService().flush();
+			getDomainService().clear();
+		}
 		//新增/更新fl list
 		List<Fl> fls_save_or_update_list = new ArrayList<Fl>();		
 		for(int i = 0; i < fl_kmdh_array.length; i++){

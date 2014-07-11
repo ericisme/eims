@@ -7,6 +7,7 @@
 		<td width="2%" align="center">
 		<input type="checkbox" name="ckbox" value="checkbox" onclick="base.checkAll('id',this.checked)" />
 		</td>
+		<td width="8%" align="center">类型</td>
 		<td width="8%" align="center">凭证号</td>
 		<td width="8%" align="center">日期</td>
 		<td width="8%" align="center">附单据</td>
@@ -26,7 +27,8 @@
 
 	<#list page.result as entity >
 	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
-	  	<td align="center"><input type="checkbox" name="id" value="${entity.id}" /></td>	  	  	
+	  	<td align="center"><input type="checkbox" name="id" value="${entity.id}" /></td>	
+	  	<td align="center"><#if entity.lx = 1>普通凭证<#else><#if entity.lx = 2>结转凭证<#else></#if></#if></td>  	  	
 	  	<td align="center"><a href="javascript:void(0);" onclick="show(${entity.id})">记${entity.pzh!}</a></td>
 	  	<td align="center">${entity.rq!}</td>
 	  	<td align="center">${entity.fdj}</td>

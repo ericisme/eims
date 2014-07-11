@@ -19,6 +19,7 @@
 <style type="text/css">
 <!--
 .table-print {
+	width:800px;
 }
 .T_Sample {
 border-collapse: collapse;
@@ -53,6 +54,28 @@ td,tr,body{
 }
 -->
 </style>  
+<script language="javascript" src="/js/common/prototype.js"></script>
+<script type="text/javascript">
+function getPzDirectId(id, direct){
+	new Ajax.Request(
+		'/eims/kjpz/pz.do?action=getPzDirectId', 
+		{
+			method : 'POST',
+			evalScripts : true,
+			parameters :'id='+id+'&direct='+direct,
+			onComplete : function(xmlHttp,error){
+				var obj = eval("("+xmlHttp.responseText+")");
+				if(obj.message=="success"){
+					var data = obj.data;
+					window.open('/eims/kjpz/pz.do' + "?action=show&id=" + data.pz_id, "查看凭证");
+				}else{
+					alert(obj.message);
+				}
+			}
+		}
+	);
+}
+</script>
 </head> 
 <body> 
 	<center class="Noprint" > 
@@ -68,6 +91,12 @@ td,tr,body{
   			<input type=button value=打印预览 onclick=document.all.WebBrowser.ExecWB(7,1)>&nbsp;
   			<input type=button value=直接打印 onclick=document.all.WebBrowser.ExecWB(6,6)>&nbsp;
 			<br/> 
+			<br/> 
+			<br/> 
+			<input type="button" value="第一条" onclick="getPzDirectId(${pz.id},'first')" />&nbsp; 
+			<input type="button" value="上一条" onclick="getPzDirectId(${pz.id},'prew')" />&nbsp; 
+			<input type="button" value="下一条" onclick="getPzDirectId(${pz.id},'next')" />&nbsp; 
+			<input type="button" value="最后一条" onclick="getPzDirectId(${pz.id},'last')" />&nbsp; 
 		</p> 
 		<hr align="center" width="90%" size="1" > 
 	</center> 
@@ -92,14 +121,14 @@ td,tr,body{
 
 <table align="center"  border="1" class="table-print" cellpadding="5" cellspacing="0" >	
 	<tr>   			
-		<td width="27%" align="center" height="25px">摘要</td>
-		<td width="47%" align="center">会计科目</td>
-		<td width="8%" align="center">借方金额</td>
-		<td width="8%" align="center">贷方金额</td>
+		<td width="23%" align="center" height="20px">摘要</td>
+		<td width="45%" align="center">会计科目</td>
+		<td width="11%" align="center">借方金额</td>
+		<td width="11%" align="center">贷方金额</td>
 	</tr>
 <#list pz.flList as fl >
 	<tr>
-		<td align="center"  height="25px">
+		<td align="center"  height="20px">
 			${fl.zy!}
 		</td>	
 		<td align="left">
@@ -114,7 +143,7 @@ td,tr,body{
 	</tr>
 </#list>
 	<tr>
-		<td align="right" colspan="2"  height="25px">
+		<td align="right" colspan="2"  height="20px">
 			合计:
 		</td>
 		<td align="right">
