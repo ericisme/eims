@@ -224,11 +224,11 @@ function checkForm(){
 		}		
 	}
 	//var qv = "";
-	var qv = "&fl_id_array=" +fl_id_array_qv.join(",") + 
-		      "&fl_zy_array="+fl_zy_array_qv.join(",") +
-		      "&fl_kmdh_array="+fl_kmdh_array_qv.join(",") +
-		      "&fl_jfje_array="+fl_jfje_array_qv.join(",") +
-		      "&fl_dfje_array="+fl_dfje_array_qv.join(",") ;
+	var qv = "&fl_id_array=" +fl_id_array_qv.join(",split_code,") + 
+		      "&fl_zy_array="+fl_zy_array_qv.join(",split_code,") +
+		      "&fl_kmdh_array="+fl_kmdh_array_qv.join(",split_code,") +
+		      "&fl_jfje_array="+fl_jfje_array_qv.join(",split_code,") +
+		      "&fl_dfje_array="+fl_dfje_array_qv.join(",split_code,") ;
 	//alert(qv);
 	pag.update(
 		baseUrl + '?action=save'+qv,

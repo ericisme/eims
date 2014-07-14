@@ -41,7 +41,7 @@ public class PzController extends SimpleManageController<Pz, PzService>{
 	private KmglService kmglService;
 	
 	/**
-	 * 根据报关单号获取相应的值
+	 * 根据凭证id,出下一条/上一条/第一条/最后一条
 	 */
 	public ModelAndView getPzDirectId(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String id = request.getParameter("id");
@@ -197,11 +197,11 @@ public class PzController extends SimpleManageController<Pz, PzService>{
 	 */
 	public ModelAndView save(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Pz pz = (Pz)getCommandObject(request, getDomainClass());
-		String[] fl_id_str_array = request.getParameter("fl_id_array").split(",");
-		String[] fl_zy_array = request.getParameter("fl_zy_array").split(",");
-		String[] fl_kmdh_array = request.getParameter("fl_kmdh_array").split(",");
-		String[] fl_jfje_str_array = request.getParameter("fl_jfje_array").split(",");
-		String[] fl_dfje_str_array = request.getParameter("fl_dfje_array").split(",");
+		String[] fl_id_str_array = request.getParameter("fl_id_array").split(",split_code,");
+		String[] fl_zy_array = request.getParameter("fl_zy_array").split(",split_code,");
+		String[] fl_kmdh_array = request.getParameter("fl_kmdh_array").split(",split_code,");
+		String[] fl_jfje_str_array = request.getParameter("fl_jfje_array").split(",split_code,");
+		String[] fl_dfje_str_array = request.getParameter("fl_dfje_array").split(",split_code,");
 		//判断凭证号是否已被使用
 		Integer count_pzh = (Integer)getDomainService().createCriteria(Pz.class).add(Expression.not(Expression.eq("id", pz.getId()==null?0:pz.getId()))).add(Expression.eq("pzh", pz.getPzh())).setProjection(Projections.count("pzh")).uniqueResult();
 		if(count_pzh>0){
