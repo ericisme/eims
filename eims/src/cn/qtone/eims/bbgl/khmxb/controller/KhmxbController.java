@@ -21,6 +21,7 @@ import jxl.write.WriteException;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Expression;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -106,6 +107,7 @@ public class KhmxbController extends BaseManageController{
 			criteria.add(Expression.in("bgdh", fkzfService.createCriteria(Fkzf.class).add(Expression.like("gsmc","%"+gsmc+"%")).setProjection(Projections.property("bgdh")).list()));
 			criteria_sum.add(Expression.in("bgdh", fkzfService.createCriteria(Fkzf.class).add(Expression.like("gsmc","%"+gsmc+"%")).setProjection(Projections.property("bgdh")).list()));
 		}
+		criteria.addOrder(Order.desc("bgrq"));
 		int curPage = this.getCurrentPage(request); // 当前查询页数
 		Page page = khtsService.pagedQuery(criteria, curPage, Page.DEFAULT_PAGE_SIZE);
 		//TODO 完善page对象
