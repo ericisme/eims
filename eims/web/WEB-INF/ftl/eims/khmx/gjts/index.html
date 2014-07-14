@@ -198,9 +198,15 @@ function detail(id){
 	);
 }
 
-//价格check
+//价格check,允许负数
 function checkPrice(price){  
-	return (/^(([1-9]\d*)|\d)(\.\d{1,2})?$/).test(price.value);
+	var check_price = price.value;
+	//alert(check_price.substring(0,1));
+	if(check_price.substring(0,1) == '-'){
+		check_price = check_price.substring(1,check_price.length);
+		//alert(check_price.substring(1,check_price.length));
+	}		
+	return (/^(([1-9]\d*)|\d)(\.\d{1,2})?$/).test(check_price);
 }
 
 function checkBgdh(){
