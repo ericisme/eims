@@ -76,7 +76,7 @@ public class Fl {
 		this.rq = rq;
 	}
 
-	@ManyToOne(fetch=FetchType.LAZY, cascade = {CascadeType.ALL }, optional=false )
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="kmgl_id", nullable=false)
 	public Kmgl getKmgl() {
 		return kmgl;

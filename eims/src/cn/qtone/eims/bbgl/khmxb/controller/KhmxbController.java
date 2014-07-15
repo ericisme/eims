@@ -261,9 +261,9 @@ public class KhmxbController extends BaseManageController{
 		wsheet.mergeCells(56, 0, 56, 1);
 		wsheet.addCell(new Label(57,0,"利润", setCellFormat()));
 		wsheet.mergeCells(57, 0, 57, 1);
-		wsheet.addCell(new Label(57,0,"业务员", setCellFormat()));
+		wsheet.addCell(new Label(58,0,"业务员", setCellFormat()));
 		wsheet.mergeCells(58, 0, 58, 1);
-		wsheet.addCell(new Label(58,0,"代理费标准", setCellFormat()));
+		wsheet.addCell(new Label(59,0,"代理费标准", setCellFormat()));
 		wsheet.mergeCells(59, 0, 59, 1);
 		
 		wsheet.addCell(new Label(11,1,"收入", setCellFormat()));
@@ -370,15 +370,15 @@ public class KhmxbController extends BaseManageController{
 			wsheet.addCell(new Label(51,i,objectToString2(k.getQt_sr()), setCellFormat()));
 			wsheet.addCell(new Label(52,i,objectToString2(k.getQt_cb()), setCellFormat()));
 			
-			wsheet.addCell(new Label(55,i,objectToString2(k.getTczc_fyje()), setCellFormat()));
+			wsheet.addCell(new Label(53,i,objectToString2(k.getTczc_fyje()), setCellFormat()));
 			
-			wsheet.addCell(new Label(53,i,objectToString2(k.getHj_sr()), setCellFormat()));
-			wsheet.addCell(new Label(54,i,objectToString2(k.getHj_cb()), setCellFormat()));
+			wsheet.addCell(new Label(54,i,objectToString2(k.getHj_sr()), setCellFormat()));
+			wsheet.addCell(new Label(55,i,objectToString2(k.getHj_cb()), setCellFormat()));
 			
-			wsheet.addCell(new Label(55,i,objectToString2(k.getMl()), setCellFormat()));
-			wsheet.addCell(new Label(56,i,objectToString2(k.getLr()), setCellFormat()));
-			wsheet.addCell(new Label(57,i,k.getYwy(), setCellFormat()));
-			wsheet.addCell(new Label(58,i,k.getDlfbz(), setCellFormat()));			
+			wsheet.addCell(new Label(56,i,objectToString2(k.getMl()), setCellFormat()));
+			wsheet.addCell(new Label(57,i,objectToString2(k.getLr()), setCellFormat()));
+			wsheet.addCell(new Label(58,i,k.getYwy(), setCellFormat()));
+			wsheet.addCell(new Label(59,i,k.getDlfbz(), setCellFormat()));			
 			i++;
 		}
 		
@@ -436,15 +436,15 @@ public class KhmxbController extends BaseManageController{
 		wsheet.addCell(new Label(51,i,(ks.getQt_sr()), setCellFormat()));
 		wsheet.addCell(new Label(52,i,(ks.getQt_cb()), setCellFormat()));
 		
-		wsheet.addCell(new Label(55,i,(ks.getTczc_fyje()), setCellFormat()));
+		wsheet.addCell(new Label(53,i,(ks.getTczc_fyje()), setCellFormat()));
 		
-		wsheet.addCell(new Label(53,i,(ks.getHj_sr()), setCellFormat()));
-		wsheet.addCell(new Label(54,i,(ks.getHj_cb()), setCellFormat()));
+		wsheet.addCell(new Label(54,i,(ks.getHj_sr()), setCellFormat()));
+		wsheet.addCell(new Label(55,i,(ks.getHj_cb()), setCellFormat()));
 		
-		wsheet.addCell(new Label(55,i,(ks.getMl()), setCellFormat()));
-		wsheet.addCell(new Label(56,i,(ks.getLr()), setCellFormat()));
-		wsheet.addCell(new Label(57,i,"", setCellFormat()));
+		wsheet.addCell(new Label(56,i,(ks.getMl()), setCellFormat()));
+		wsheet.addCell(new Label(57,i,(ks.getLr()), setCellFormat()));
 		wsheet.addCell(new Label(58,i,"", setCellFormat()));
+		wsheet.addCell(new Label(59,i,"", setCellFormat()));
 		
 		wwb.write();
 		wwb.close();		
@@ -794,6 +794,7 @@ public class KhmxbController extends BaseManageController{
 		//其他 
 		kss.setQt_sr(ks.getQt_sr().toString());
 		kss.setQt_cb(ks.getQt_cb().toString());
+		kss.setTczc_fyje(ks.getTczc_fyje().toString());
 		//合计 
 		kss.setHj_sr(ks.getHj_sr().toString());
 		kss.setHj_cb(ks.getHj_cb().toString());

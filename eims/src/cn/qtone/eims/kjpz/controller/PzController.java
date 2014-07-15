@@ -370,7 +370,6 @@ public class PzController extends SimpleManageController<Pz, PzService>{
 				fl1.setZy(DateUtil.formatDate(gjts.getTsrq(), "yyyy-MM-dd")+","+gjts.getKhmc()+",退税款及代理费收入 ");
 				//119001 其他应收款 国家退税
 				List<Kmgl> _kmgl = kmglService.createCriteria(Kmgl.class).add(Expression.like("kmdh", "119001%")).add(Expression.eq("kmmc", gjts.getKhmc())).list();
-				System.out.println("_kmgl.size():"+_kmgl.size());
 				if(_kmgl.size()>0){
 					fl1.setKmgl(_kmgl.get(0));
 				}else{
