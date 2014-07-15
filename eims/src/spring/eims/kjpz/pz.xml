@@ -10,6 +10,9 @@
 		<property name="pzService"     ref="pzService"></property>
 		<property name="flService"     ref="flService"></property>
 		<property name="kmglService"     ref="kmglService"></property>
+		<property name="khqkService"     ref="khqkService"></property>
+		<property name="khtsService"     ref="khtsService"></property>
+		<property name="gjtsService"     ref="gjtsService"></property>
 	</bean>
 	<bean id="pzService" class="cn.qtone.eims.kjpz.service.PzService" />
 	<bean id="flService" class="cn.qtone.eims.kjpz.service.FlService" />

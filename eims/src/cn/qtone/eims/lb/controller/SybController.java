@@ -68,7 +68,7 @@ public class SybController extends SimpleManageController<Syb, SybService>{
 		SybReport sumSybReport = new SybReport();
 		for(Map<String, Object> row : rq_list){
 			String ny = (String)row.get("rq");
-			SybReport sybReport = getSybReportByRq(ny+"-01 00:00:00", ny+"-32 23:59:59");
+			SybReport sybReport = getSybReportByRq(ny+"-01 00:00:00", ny+"-"+getLastDayByYearAndMonth(ny)+" 23:59:59");
 			sumSybReport.setZyywlr(nullToZero(sumSybReport.getZyywlr())+nullToZero(sybReport.getZyywlr()));
 			sumSybReport.setGlfy(nullToZero(sumSybReport.getGlfy())+nullToZero(sybReport.getGlfy()));
 			sumSybReport.setCwfy(nullToZero(sumSybReport.getCwfy())+nullToZero(sybReport.getGlfy()));
@@ -110,7 +110,7 @@ public class SybController extends SimpleManageController<Syb, SybService>{
 		SybReport sumSybReport = new SybReport();
 		for(Map<String, Object> row : rq_list){
 			String ny = (String)row.get("rq");
-			SybReport sybReport = getSybReportByRq(ny+"-01 00:00:00", ny+"-32 23:59:59");
+			SybReport sybReport = getSybReportByRq(ny+"-01 00:00:00", ny+"-"+getLastDayByYearAndMonth(ny)+" 23:59:59");
 			sumSybReport.setZyywlr(nullToZero(sumSybReport.getZyywlr())+nullToZero(sybReport.getZyywlr()));
 			sumSybReport.setGlfy(nullToZero(sumSybReport.getGlfy())+nullToZero(sybReport.getGlfy()));
 			sumSybReport.setCwfy(nullToZero(sumSybReport.getCwfy())+nullToZero(sybReport.getGlfy()));
@@ -179,13 +179,32 @@ public class SybController extends SimpleManageController<Syb, SybService>{
 	
 	private SybReport getSybReportByRq(String _ksrq_str, String _jsrq_str){
 		SybReport sybReport = new SybReport();
+		System.out.println("_ksrq_str:"+_ksrq_str);
+		System.out.println("_jsrq_str:"+_jsrq_str);
 		//主营业务费用
 		Float zyywlr = (Float) getDomainService().createCriteria(Khqk.class)
 				.add(Expression.ge("bgrq", DateUtil.parseSimpleDateTime(_ksrq_str)))
 				.add(Expression.le("bgrq", DateUtil.parseSimpleDateTime(_jsrq_str)))
 				.setProjection(Projections.sum("hj")).uniqueResult();
+		Integer zyywlr_count_row = (Integer) getDomainService().createCriteria(Khqk.class)
+		.add(Expression.ge("bgrq", DateUtil.parseSimpleDateTime(_ksrq_str)))
+		.add(Expression.le("bgrq", DateUtil.parseSimpleDateTime(_jsrq_str)))
+		.setProjection(Projections.count("hj")).uniqueResult();
+		
+		List<Integer> id_list = getDomainService().createCriteria(Khqk.class)
+		.add(Expression.ge("bgrq", DateUtil.parseSimpleDateTime(_ksrq_str)))
+		.add(Expression.le("bgrq", DateUtil.parseSimpleDateTime(_jsrq_str)))
+		.setProjection(Projections.property("id")).list();
+		
+		for(Integer id :id_list){
+			System.out.println();
+			System.out.print(id+",");
+			System.out.println();
+		}
+		
 		zyywlr = nullToZero(zyywlr);
 		System.out.println("zyywlr:"+zyywlr);
+		System.out.println("zyywlr_count_row:"+zyywlr_count_row);
 		sybReport.setZyywlr(Double.parseDouble(String.valueOf(zyywlr)));
 		//管理费用
 		Double glfymx = (Double) getDomainService().createCriteria(Cwfy.class)
@@ -431,6 +450,72 @@ public class SybController extends SimpleManageController<Syb, SybService>{
 
 	public void setFymxbDao(FymxbDao fymxbDao) {
 		this.fymxbDao = fymxbDao;
+	}
+	
+	
+	  public static void main(String args[]){
+		  SybController t = new SybController();
+		  t.getLastDayByYearAndMonth("2014-06");
+		    int year=2014;
+		    if((year%4==0&&year%100!=0)||year%400==0)
+		    System.out.println("2009是闰年。");
+		    else
+		    System.out.println("2009是平年。");
+		}
+	
+	public boolean isPingNian(int year){
+	    if((year%4==0&&year%100!=0)||year%400==0)
+	    	return false;
+	    	//System.out.println("2009是闰年。");
+	    else
+	    	return true;
+	    	//System.out.println("2009是平年。");
+	}	
+	public String getLastDayByYearAndMonth(String ny){
+		String year = ny.substring(0,4);
+		String month = ny.substring(5,7);
+		if("01".equals(month)){
+			return "31";
+		}
+		if("02".equals(month)){
+			if(isPingNian(Integer.parseInt(year))){
+				return "28";
+			}else{
+				return "29";
+			}
+			
+		}
+		if("03".equals(month)){
+			return "31";
+		}
+		if("04".equals(month)){
+			return "30";
+		}
+		if("05".equals(month)){
+			return "31";
+		}
+		if("06".equals(month)){
+			return "30";
+		}
+		if("07".equals(month)){
+			return "31";
+		}
+		if("08".equals(month)){
+			return "31";
+		}
+		if("09".equals(month)){
+			return "30";
+		}
+		if("10".equals(month)){
+			return "31";
+		}
+		if("11".equals(month)){
+			return "30";
+		}
+		if("12".equals(month)){
+			return "31";
+		}
+		return "";
 	}
 	
 	

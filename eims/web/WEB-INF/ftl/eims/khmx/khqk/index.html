@@ -16,6 +16,18 @@
 var pag = new PageExe();
 var baseUrl = '/eims/khmx/khqk.do';
 
+
+/**
+ * 自动生成凭证
+ */
+function genZp(type, id){
+	URL= '/eims/kjpz/pz.do?action=index'+"&type="+type+"&id="+id;
+	//loc_x=document.body.scrollLeft+event.clientX-event.offsetX+50;
+	//loc_y=document.body.scrollTop+event.clientY-event.offsetY+50;
+	//window.showModalDialog(URL,self,"edge:raised;scroll:yes;status:0;help:0;resizable:yes;dialogWidth:1000px;dialogHeight:600px;dialogTop:"+loc_y+"px;dialogLeft:"+loc_x+"px");
+	window.showModalDialog(URL,self,"edge:raised;scroll:yes;status:0;help:0;resizable:yes;dialogWidth:1000px;dialogHeight:600px;");
+}
+
 //初始化index
 function indexOnLoad(){
 	query();

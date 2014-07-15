@@ -15,6 +15,9 @@
 <script type="text/javascript">
 var pag = new PageExe();
 var baseUrl = '/eims/kjpz/pz.do';
+var autoGenZp = ${autoGenZp};
+var type = '${type}';
+var id = '${id}';
 function AllAreaExcel()    
 {   
  var oXL = new ActiveXObject("Excel.Application");    
@@ -29,14 +32,19 @@ function AllAreaExcel()
 }
 //初始化index
 function indexOnLoad(){
-	var firstDate = new Date();
-	//firstDate.setDate(1); //第一天
-	//var endDate = new Date(firstDate);
-	//endDate.setMonth(firstDate.getMonth()+1);
-	//endDate.setDate(0);
-	//$('_ksrq').value=new XDate(firstDate).toString('yyyy-MM-dd');
-	//$('_jsrq').value=new XDate(endDate).toString('yyyy-MM-dd');
-	query();
+ 	if (pag == null) 
+ 		pag = new PageExe();
+ 	//自动生成凭证
+	if(autoGenZp){
+		pag.showAdd(
+				baseUrl + '?action=autoGenZp&type='+type+"&id="+id,
+				'_update', 
+				'_index',
+				function() { }
+			);
+	}else{
+		query();
+	}	
 }
 function queryByKmdh(kmdh){
 	document.getElementById('_kmdh').value=kmdh;

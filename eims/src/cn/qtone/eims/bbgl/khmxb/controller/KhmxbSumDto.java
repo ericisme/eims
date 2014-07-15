@@ -258,6 +258,13 @@ public class KhmxbSumDto {
 	private BigDecimal qt_cb= new BigDecimal(0);//
 	
 	/**
+	 * 拖车费用金额 成本
+	 */
+	private BigDecimal tczc_fyje = new BigDecimal(0);		
+	public BigDecimal getTczc_fyje() {return tczc_fyje;}
+	public void setTczc_fyje(BigDecimal tczc_fyje) {this.tczc_fyje = tczc_fyje;}
+
+	/**
 	 * 合计 收入
 	 */	
 	private BigDecimal hj_sr= new BigDecimal(0);//

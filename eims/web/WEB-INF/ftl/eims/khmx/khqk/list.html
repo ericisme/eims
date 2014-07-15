@@ -15,6 +15,7 @@
     	<td width="4%" align="center">收款日期</td>
     	<td width="4%" align="center">已收金额</td>
     	<td width="4%" align="center">未收金额</td>
+    	<td width="4%" align="center">操作</td>
 	</tr>
 	<#if entitySize = 0>
 	<tr bgcolor="#FFFFFF" onMouseOver="this.className='list_over'" onMouseOut="this.className='list_out'">
@@ -33,6 +34,7 @@
 	  	<td align="center">${entity.skrq!}</td>
 	  	<td align="center">${entity.ysje?string("0.##")}</td>
 	  	<td align="center">${entity.wsje?string("0.##")}</td>
+	  	<td align="center"><input type="button" value="生成凭证" onclick="genZp('khqk',${entity.id})"  class="btn01"/></td>
 	</tr>
 	</#list>
 	

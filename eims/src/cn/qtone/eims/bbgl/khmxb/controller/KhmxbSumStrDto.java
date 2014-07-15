@@ -1,5 +1,7 @@
 package cn.qtone.eims.bbgl.khmxb.controller;
 
+import java.math.BigDecimal;
+
 
 /**
  * 
@@ -255,6 +257,13 @@ public class KhmxbSumStrDto {
 	 */
 	private String qt_cb;//
 	
+	/**
+	 * 拖车费用金额 成本
+	 */
+	private String tczc_fyje;			
+	public String getTczc_fyje() {return tczc_fyje;}
+	public void setTczc_fyje(String tczc_fyje) {this.tczc_fyje = tczc_fyje;}
+
 	/**
 	 * 合计 收入
 	 */	

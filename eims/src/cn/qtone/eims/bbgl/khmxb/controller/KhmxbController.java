@@ -164,6 +164,7 @@ public class KhmxbController extends BaseManageController{
 		if(!StringUtil.isNullAndBlank(gsmc)){	
 			criteria.add(Expression.in("bgdh", fkzfService.createCriteria(Fkzf.class).add(Expression.like("gsmc","%"+gsmc+"%")).setProjection(Projections.property("bgdh")).list()));
 		}
+		criteria.addOrder(Order.desc("bgrq"));
 		Page page = khtsService.pagedQuery(criteria, 1, 999999999);
 		List<KhmxbDto> KhmxbDto_list = new ArrayList<KhmxbDto>();
 		for(Khts khts : (List<Khts>) page.getResult()){
@@ -250,16 +251,20 @@ public class KhmxbController extends BaseManageController{
 		wsheet.mergeCells(49, 0, 50, 0);
 		wsheet.addCell(new Label(51,0,"其他", setCellFormat()));
 		wsheet.mergeCells(51, 0, 52, 0);
-		wsheet.addCell(new Label(53,0,"合计", setCellFormat()));
-		wsheet.mergeCells(53, 0, 54, 0);
-		wsheet.addCell(new Label(55,0,"毛利", setCellFormat()));
-		wsheet.mergeCells(55, 0, 55, 1);
-		wsheet.addCell(new Label(56,0,"利润", setCellFormat()));
+		
+		wsheet.addCell(new Label(53,0,"拖车成本", setCellFormat()));
+		wsheet.mergeCells(53, 0, 53, 1);
+		
+		wsheet.addCell(new Label(54,0,"合计", setCellFormat()));
+		wsheet.mergeCells(54, 0, 55, 0);
+		wsheet.addCell(new Label(56,0,"毛利", setCellFormat()));
 		wsheet.mergeCells(56, 0, 56, 1);
-		wsheet.addCell(new Label(57,0,"业务员", setCellFormat()));
+		wsheet.addCell(new Label(57,0,"利润", setCellFormat()));
 		wsheet.mergeCells(57, 0, 57, 1);
-		wsheet.addCell(new Label(58,0,"代理费标准", setCellFormat()));
+		wsheet.addCell(new Label(57,0,"业务员", setCellFormat()));
 		wsheet.mergeCells(58, 0, 58, 1);
+		wsheet.addCell(new Label(58,0,"代理费标准", setCellFormat()));
+		wsheet.mergeCells(59, 0, 59, 1);
 		
 		wsheet.addCell(new Label(11,1,"收入", setCellFormat()));
 		wsheet.addCell(new Label(12,1,"成本", setCellFormat()));
@@ -303,8 +308,8 @@ public class KhmxbController extends BaseManageController{
 		wsheet.addCell(new Label(50,1,"成本", setCellFormat()));
 		wsheet.addCell(new Label(51,1,"收入", setCellFormat()));
 		wsheet.addCell(new Label(52,1,"成本", setCellFormat()));
-		wsheet.addCell(new Label(53,1,"收入", setCellFormat()));
-		wsheet.addCell(new Label(54,1,"成本", setCellFormat()));
+		wsheet.addCell(new Label(54,1,"收入", setCellFormat()));
+		wsheet.addCell(new Label(55,1,"成本", setCellFormat()));
 		
 		int i = 2;
 		//List<Map<String, Object>> list = getList(results);
@@ -364,6 +369,9 @@ public class KhmxbController extends BaseManageController{
 			wsheet.addCell(new Label(50,i,objectToString2(k.getHzptf_cb()), setCellFormat()));
 			wsheet.addCell(new Label(51,i,objectToString2(k.getQt_sr()), setCellFormat()));
 			wsheet.addCell(new Label(52,i,objectToString2(k.getQt_cb()), setCellFormat()));
+			
+			wsheet.addCell(new Label(55,i,objectToString2(k.getTczc_fyje()), setCellFormat()));
+			
 			wsheet.addCell(new Label(53,i,objectToString2(k.getHj_sr()), setCellFormat()));
 			wsheet.addCell(new Label(54,i,objectToString2(k.getHj_cb()), setCellFormat()));
 			
@@ -427,6 +435,9 @@ public class KhmxbController extends BaseManageController{
 		wsheet.addCell(new Label(50,i,(ks.getHzptf_cb()), setCellFormat()));
 		wsheet.addCell(new Label(51,i,(ks.getQt_sr()), setCellFormat()));
 		wsheet.addCell(new Label(52,i,(ks.getQt_cb()), setCellFormat()));
+		
+		wsheet.addCell(new Label(55,i,(ks.getTczc_fyje()), setCellFormat()));
+		
 		wsheet.addCell(new Label(53,i,(ks.getHj_sr()), setCellFormat()));
 		wsheet.addCell(new Label(54,i,(ks.getHj_cb()), setCellFormat()));
 		
@@ -598,9 +609,11 @@ public class KhmxbController extends BaseManageController{
 		
 		//合计  收入
 		Float hj_sr = (Float) khqkService.createCriteria(Khqk.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("hj")).uniqueResult();
+		hj_sr = (hj_sr==null?0L:hj_sr)-(dlf==null?0L:dlf);//需要减去代理费
 		khmxbDto.setHj_sr(nullToZero(hj_sr));
-		//拖车  成本
+		//拖车成本 20140715
 		Float tczc_fyjehj = (Float) tczcService.createCriteria(Tczc.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("fyjehj")).uniqueResult();
+		khmxbDto.setTczc_fyje(tczc_fyjehj==null?0f:tczc_fyjehj);
 		Float hj_cb = (Float) fkzfService.createCriteria(Fkzf.class).add(Expression.eq("bgdh", khts.getBgdh())).setProjection(Projections.sum("hj")).uniqueResult();
 		//总成本，成本合计+拖车成本
 		Float sum_cb = (hj_cb==null?0L:hj_cb) + (tczc_fyjehj==null?0L:tczc_fyjehj);
@@ -695,6 +708,8 @@ public class KhmxbController extends BaseManageController{
 			//其他 
 			ks.setQt_sr(ks.getQt_sr().add((new BigDecimal(String.valueOf(k.getQt_sr())))));
 			ks.setQt_cb(ks.getQt_cb().add((new BigDecimal(String.valueOf(k.getQt_cb())))));
+			//拖车成本 20140715
+			ks.setTczc_fyje(ks.getTczc_fyje().add(new BigDecimal((String.valueOf(k.getTczc_fyje())))));			
 			//合计 
 			ks.setHj_sr(ks.getHj_sr().add((new BigDecimal(String.valueOf(k.getHj_sr())))));
 			ks.setHj_cb(ks.getHj_cb().add((new BigDecimal(String.valueOf(k.getHj_cb())))));

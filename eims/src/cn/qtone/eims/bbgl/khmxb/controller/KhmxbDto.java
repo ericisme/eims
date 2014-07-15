@@ -255,6 +255,14 @@ public class KhmxbDto {
 	 */
 	private Float qt_cb= 0F;//
 	
+	
+	/**
+	 * 拖车费用 成本
+	 */
+	private Float tczc_fyje = 0F;	
+	public Float getTczc_fyje() {return tczc_fyje;}
+	public void setTczc_fyje(Float tczc_fyje) {this.tczc_fyje = tczc_fyje;}
+
 	/**
 	 * 合计 收入
 	 */	

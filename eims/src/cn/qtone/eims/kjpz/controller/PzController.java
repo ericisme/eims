@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateUtils;
 import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Expression;
@@ -25,7 +26,12 @@ import cn.qtone.common.mvc.view.spring.AjaxView;
 import cn.qtone.common.simplemvc.controller.SimpleManageController;
 import cn.qtone.common.utils.base.DateUtil;
 import cn.qtone.common.utils.base.StringUtil;
+import cn.qtone.eims.khmx.domain.Gjts;
+import cn.qtone.eims.khmx.domain.Khqk;
 import cn.qtone.eims.khmx.domain.Khts;
+import cn.qtone.eims.khmx.service.GjtsService;
+import cn.qtone.eims.khmx.service.KhqkService;
+import cn.qtone.eims.khmx.service.KhtsService;
 import cn.qtone.eims.kjpz.domain.Fl;
 import cn.qtone.eims.kjpz.domain.Kmgl;
 import cn.qtone.eims.kjpz.domain.Pz;
@@ -39,6 +45,9 @@ public class PzController extends SimpleManageController<Pz, PzService>{
 	private PzService pzService;
 	private FlService flService;
 	private KmglService kmglService;
+	private KhqkService khqkService;
+	private KhtsService khtsService;
+	private GjtsService gjtsService;
 	
 	/**
 	 * 根据凭证id,出下一条/上一条/第一条/最后一条
@@ -254,6 +263,8 @@ public class PzController extends SimpleManageController<Pz, PzService>{
 		for(Fl fl : fls_save_or_update_list){
 			if(fl.getId()==null){
 				flService.save(fl);
+			}else if(fl.getId()==0){
+				flService.save(fl);
 			}else{
 				flService.saveOrUpdate(fl);		
 			}
@@ -287,6 +298,155 @@ public class PzController extends SimpleManageController<Pz, PzService>{
 		view.setProperty("refresh", true);
 		return new ModelAndView(view);
 	}
+	
+	
+	
+	/**
+	 * 通用的首页显示
+	 */
+	public ModelAndView index(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Map<String, Object> map = this.getMapWithUser(request);				
+		String type = ServletUtil.removeSpace(request, "type");		
+		System.out.println("type:"+type);
+		if(type!=null){
+			map.put("autoGenZp", "true");
+			map.put("type", type);
+			map.put("id", ServletUtil.removeSpace(request, "id"));
+		}else{
+			map.put("autoGenZp", "false");
+			map.put("type", "");
+			map.put("id", "");
+		}
+		return new ModelAndView(getIndexPage(), map);
+	}
+	
+	
+	/**
+	 * 自动生成凭证
+	 * @param request
+	 * @return
+	 */
+	public ModelAndView autoGenZp(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String type = ServletUtil.removeSpace(request, "type");	
+		Integer id = Integer.parseInt(ServletUtil.removeSpace(request, "id"));	
+		
+		System.out.println("autoGenZp type:"+type);
+		System.out.println("autoGenZp id:"+id);
+		
+		Map<String, Object> map = this.getMapWithUser(request);
+		Pz pz = new Pz();
+		pz.setRq(DateUtil.formatDate(new Date(), "yyyy-MM-dd"));
+		Integer last_pzh = (Integer)pzService.createCriteria(Pz.class).setProjection(Projections.max("pzh")).uniqueResult();
+		if(last_pzh==null){
+			last_pzh=0;
+		}
+		pz.setPzh((last_pzh+1));
+		pz.setHj_jfje(new BigDecimal(0f));
+		pz.setHj_dfje(new BigDecimal(0f));
+		pz.setGzr("芬");
+		pz.setShr("芬");
+		pz.setZdr("芬");
+		List<Fl> fls = new ArrayList<Fl>();
+		//空科目
+		Kmgl kmgl_blank = new Kmgl();
+		kmgl_blank.setKmdh("");
+		/**
+		 * 应收客户账款
+		 */
+		if("khqk".equals(type)){
+			Fl fl1 = new Fl();
+			Fl fl2 = new Fl();
+			Fl fl3 = new Fl();
+			Fl fl4 = new Fl();
+			Khqk khqk = khqkService.get(id);
+			String bgdh = khqk.getBgdh();
+			Float hj = khqk.getHj();
+			Gjts gjts = gjtsService.findUniqueBy("bgdh", bgdh);
+			Khts khts = khtsService.findUniqueBy("bgdh", bgdh);			
+			//fl1
+			if(gjts!=null){
+				fl1.setId(0);
+				//退税日期，客户名称，退税款及代理费收入
+				fl1.setZy(DateUtil.formatDate(gjts.getTsrq(), "yyyy-MM-dd")+","+gjts.getKhmc()+",退税款及代理费收入 ");
+				//119001 其他应收款 国家退税
+				List<Kmgl> _kmgl = kmglService.createCriteria(Kmgl.class).add(Expression.like("kmdh", "119001%")).add(Expression.eq("kmmc", gjts.getKhmc())).list();
+				System.out.println("_kmgl.size():"+_kmgl.size());
+				if(_kmgl.size()>0){
+					fl1.setKmgl(_kmgl.get(0));
+				}else{
+					fl1.setKmgl(kmgl_blank);
+				}
+				fl1.setJfje(new BigDecimal(gjts.getTsje()));
+			}			
+			//fl2
+			if(khts!=null){
+				fl2.setId(0);
+				//报关日期，客户名称，退税款及代理费收入
+				fl2.setZy(DateUtil.formatDate(khts.getBgrq(), "yyyy-MM-dd")+","+khts.getKhmc()+",退税款及代理费收入 ");
+				//209 其他应付款
+				List<Kmgl> _kmgl = kmglService.createCriteria(Kmgl.class).add(Expression.like("kmdh", "209%")).add(Expression.eq("kmmc", khts.getKhmc())).list();
+				if(_kmgl.size()>0){
+					fl2.setKmgl(_kmgl.get(0));
+				}else{
+					fl2.setKmgl(kmgl_blank);
+				}
+				fl2.setDfje(new BigDecimal(khts.getTsje()));
+			}
+			//fl3
+			fl3.setId(0);
+			//报关日期，客户名称，退税款及代理费收入
+			fl3.setZy(DateUtil.formatDate(khqk.getBgrq(), "yyyy-MM-dd")+","+khqk.getKhmc()+",退税款及代理费收入 ");
+			//209 其他应付款
+			List<Kmgl> _kmgl = kmglService.createCriteria(Kmgl.class).add(Expression.like("kmdh", "113%")).add(Expression.eq("kmmc", khts.getKhmc())).list();
+			if(_kmgl.size()>0){
+				fl3.setKmgl(_kmgl.get(0));
+			}else{
+				fl3.setKmgl(kmgl_blank);
+			}
+			fl3.setJfje(new BigDecimal(khqk.getHj()));
+			//fl4
+			fl4.setId(0);
+			//报关日期，客户名称，退税款及代理费收入
+			fl4.setZy(DateUtil.formatDate(khqk.getBgrq(), "yyyy-MM-dd")+","+khqk.getKhmc()+",退税款及代理费收入 ");
+			fl4.setKmgl(kmglService.findUniqueBy("kmdh", "501"));
+			fl4.setDfje(new BigDecimal(khqk.getHj()));
+			
+			//add入fls.
+			fls.add(fl1);
+			fls.add(fl2);
+			fls.add(fl3);
+			fls.add(fl4);
+		}
+		pz.setFlList(fls);
+		//hjJfOrDfje(pz);
+
+		map.put("pz", pz);
+		map.put("last_pzh", (last_pzh+1));
+		map.put("today", DateUtil.formatDate(new Date(), "yyyy-MM-dd"));
+		List<Kmgl> kmgl_list = kmglService.createCriteria(Kmgl.class).add(Expression.eq("zt", 1)).addOrder(Order.asc("kmdh")).list();
+		map.put("kmgl_list", kmgl_list);
+		return new ModelAndView(getEditPage(), map);
+	}
+	
+	
+	//合计凭证的 借方金额 和 贷方金额 
+	private void hjJfOrDfje(Pz pz){
+		BigDecimal hj_jfje = new BigDecimal(0f);
+		BigDecimal hj_dfje = new BigDecimal(0f);
+		for(Fl fl :pz.getFlList()){
+			hj_jfje.add((fl.getJfje()==null?(new BigDecimal(0f)):fl.getJfje()));
+			hj_dfje.add((fl.getDfje()==null?(new BigDecimal(0f)):fl.getDfje()));
+		}
+		pz.setHj_jfje(hj_jfje);
+		pz.setHj_dfje(hj_dfje);
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -329,6 +489,30 @@ public class PzController extends SimpleManageController<Pz, PzService>{
 
 	public void setKmglService(KmglService kmglService) {
 		this.kmglService = kmglService;
+	}
+
+	public KhqkService getKhqkService() {
+		return khqkService;
+	}
+
+	public void setKhqkService(KhqkService khqkService) {
+		this.khqkService = khqkService;
+	}
+
+	public KhtsService getKhtsService() {
+		return khtsService;
+	}
+
+	public void setKhtsService(KhtsService khtsService) {
+		this.khtsService = khtsService;
+	}
+
+	public GjtsService getGjtsService() {
+		return gjtsService;
+	}
+
+	public void setGjtsService(GjtsService gjtsService) {
+		this.gjtsService = gjtsService;
 	}
 	
 	
