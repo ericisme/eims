@@ -147,27 +147,27 @@ public class SybController extends SimpleManageController<Syb, SybService>{
 		int i = 3;
 		for(SybReport syb : sybReport_list){
 			wsheet.addCell(new Label(0,i,syb.getNy(), setCellFormat()));
-			wsheet.addCell(new Label(1,i,StringUtil.formatDouble(syb.getZyywlr()), setCellFormat()));
+			wsheet.addCell(new Label(1,i,StringUtil.formatFloat(syb.getZyywlr()), setCellFormat()));
 			wsheet.addCell(new Label(2,i,StringUtil.formatDouble(syb.getGlfy()), setCellFormat()));
 			wsheet.addCell(new Label(3,i,StringUtil.formatDouble(syb.getCwfy()), setCellFormat()));
-			wsheet.addCell(new Label(4,i,StringUtil.formatDouble(syb.getJyfy()), setCellFormat()));
-			wsheet.addCell(new Label(5,i,StringUtil.formatDouble(syb.getYywsr()), setCellFormat()));
+			wsheet.addCell(new Label(4,i,StringUtil.formatFloat(syb.getJyfy()), setCellFormat()));
+			wsheet.addCell(new Label(5,i,StringUtil.formatFloat(syb.getYywsr()), setCellFormat()));
 			wsheet.addCell(new Label(6,i,StringUtil.formatDouble(syb.getYywzc()), setCellFormat()));
 			wsheet.addCell(new Label(7,i,StringUtil.formatDouble(syb.getSds()), setCellFormat()));
-			wsheet.addCell(new Label(8,i,StringUtil.formatDouble(syb.getJlr()), setCellFormat()));
+			wsheet.addCell(new Label(8,i,StringUtil.formatFloat(syb.getJlr()), setCellFormat()));
 			i++;
 		}
 		
 		//sum
 		wsheet.addCell(new Label(0,i,"合计", setCellFormat()));
-		wsheet.addCell(new Label(1,i,StringUtil.formatDouble(sumSybReport.getZyywlr()), setCellFormat()));
+		wsheet.addCell(new Label(1,i,StringUtil.formatFloat(sumSybReport.getZyywlr()), setCellFormat()));
 		wsheet.addCell(new Label(2,i,StringUtil.formatDouble(sumSybReport.getGlfy()), setCellFormat()));
 		wsheet.addCell(new Label(3,i,StringUtil.formatDouble(sumSybReport.getCwfy()), setCellFormat()));
-		wsheet.addCell(new Label(4,i,StringUtil.formatDouble(sumSybReport.getJyfy()), setCellFormat()));
-		wsheet.addCell(new Label(5,i,StringUtil.formatDouble(sumSybReport.getYywsr()), setCellFormat()));
+		wsheet.addCell(new Label(4,i,StringUtil.formatFloat(sumSybReport.getJyfy()), setCellFormat()));
+		wsheet.addCell(new Label(5,i,StringUtil.formatFloat(sumSybReport.getYywsr()), setCellFormat()));
 		wsheet.addCell(new Label(6,i,StringUtil.formatDouble(sumSybReport.getYywzc()), setCellFormat()));
 		wsheet.addCell(new Label(7,i,StringUtil.formatDouble(sumSybReport.getSds()), setCellFormat()));
-		wsheet.addCell(new Label(8,i,StringUtil.formatDouble(sumSybReport.getJlr()), setCellFormat()));
+		wsheet.addCell(new Label(8,i,StringUtil.formatFloat(sumSybReport.getJlr()), setCellFormat()));
 		
 		
 		wwb.write();
@@ -186,26 +186,8 @@ public class SybController extends SimpleManageController<Syb, SybService>{
 				.add(Expression.ge("bgrq", DateUtil.parseSimpleDateTime(_ksrq_str)))
 				.add(Expression.le("bgrq", DateUtil.parseSimpleDateTime(_jsrq_str)))
 				.setProjection(Projections.sum("hj")).uniqueResult();
-		Integer zyywlr_count_row = (Integer) getDomainService().createCriteria(Khqk.class)
-		.add(Expression.ge("bgrq", DateUtil.parseSimpleDateTime(_ksrq_str)))
-		.add(Expression.le("bgrq", DateUtil.parseSimpleDateTime(_jsrq_str)))
-		.setProjection(Projections.count("hj")).uniqueResult();
-		
-		List<Integer> id_list = getDomainService().createCriteria(Khqk.class)
-		.add(Expression.ge("bgrq", DateUtil.parseSimpleDateTime(_ksrq_str)))
-		.add(Expression.le("bgrq", DateUtil.parseSimpleDateTime(_jsrq_str)))
-		.setProjection(Projections.property("id")).list();
-		
-		for(Integer id :id_list){
-			System.out.println();
-			System.out.print(id+",");
-			System.out.println();
-		}
-		
-		zyywlr = nullToZero(zyywlr);
 		System.out.println("zyywlr:"+zyywlr);
-		System.out.println("zyywlr_count_row:"+zyywlr_count_row);
-		sybReport.setZyywlr(Double.parseDouble(String.valueOf(zyywlr)));
+		sybReport.setZyywlr(nullToZero(zyywlr));
 		//管理费用
 		Double glfymx = (Double) getDomainService().createCriteria(Cwfy.class)
 				.add(Expression.ge("fyrq", _ksrq_str.substring(0, 10)))
@@ -218,8 +200,9 @@ public class SybController extends SimpleManageController<Syb, SybService>{
 				.setProjection(Projections.sum("yfgz")).uniqueResult();	
 		glfymx = nullToZero(glfymx);
 		yggz = nullToZero(yggz);
-		System.out.println("glfymx:"+glfymx);		 
-		System.out.println("yggz:"+yggz);	
+		//System.out.println("glfymx:"+glfymx);		 
+		//System.out.println("yggz:"+yggz);	
+		System.out.println("glfy:"+Float.parseFloat(StringUtil.formatDouble((glfymx+yggz))));
 		sybReport.setGlfy(glfymx+yggz);
 		//财务费用
 		Double cwfy101 = (Double) getDomainService().createCriteria(Cwfy.class)
@@ -246,7 +229,7 @@ public class SybController extends SimpleManageController<Syb, SybService>{
 		cwfy102 = nullToZero(cwfy102);
 		cwfy103 = nullToZero(cwfy103);
 		cwfy104 = nullToZero(cwfy104);
-		System.out.println("cwfy:"+(cwfy101-cwfy102+cwfy103+cwfy104));
+		System.out.println("cwfy:"+Float.parseFloat(StringUtil.formatDouble((cwfy101-cwfy102+cwfy103+cwfy104))));
 		sybReport.setCwfy(cwfy101-cwfy102+cwfy103+cwfy104);
 		//经营费用
 		Float fkzf = (Float) getDomainService().createCriteria(Fkzf.class)
@@ -262,7 +245,7 @@ public class SybController extends SimpleManageController<Syb, SybService>{
 		tczc = nullToZero(tczc);
 		System.out.println("fkzf:"+fkzf);
 		System.out.println("tczc:"+tczc);
-		sybReport.setJyfy(Double.parseDouble(String.valueOf(fkzf))+Double.parseDouble(String.valueOf(tczc)));
+		sybReport.setJyfy(fkzf+tczc);
 		//营业外收入
 		Float yywsr = (Float) getDomainService().createCriteria(Yywsr.class)
 				.add(Expression.ge("ny", DateUtil.parseSimpleDateTime(_ksrq_str)))
@@ -270,7 +253,7 @@ public class SybController extends SimpleManageController<Syb, SybService>{
 				.setProjection(Projections.sum("je")).uniqueResult();
 		yywsr = nullToZero(yywsr);
 		System.out.println("yywsr:"+yywsr);		
-		sybReport.setYywsr(Double.parseDouble(String.valueOf(yywsr)));
+		sybReport.setYywsr(yywsr);
 		//营业外支出
 		Double yywzc = (Double) getDomainService().createCriteria(Cwfy.class)
 				.add(Expression.ge("fyrq", _ksrq_str.substring(0, 10)))
@@ -278,7 +261,7 @@ public class SybController extends SimpleManageController<Syb, SybService>{
 				.add(Expression.like("type", "20%"))
 				.setProjection(Projections.sum("je")).uniqueResult();	
 		yywzc = nullToZero(yywzc);
-		System.out.println("yywzc:"+yywzc);
+		System.out.println("yywzc:"+Float.parseFloat(StringUtil.formatDouble(yywzc)));
 		sybReport.setYywzc(yywzc);
 		//所得税
 		Double sds = (Double) getDomainService().createCriteria(Sds.class)
@@ -286,11 +269,11 @@ public class SybController extends SimpleManageController<Syb, SybService>{
 				.add(Expression.le("fyrq", _jsrq_str.substring(0, 10)))
 				.setProjection(Projections.sum("je")).uniqueResult();	
 		sds = nullToZero(sds);
-		System.out.println("sds:"+sds);
+		System.out.println("sds:"+Float.parseFloat(StringUtil.formatDouble(sds)));
 		sybReport.setSds(sds);
 		//净利润
 		//主营业务利润-管理费用-财务费用-经营费用+营业外收入-营业外支出-所得税=净利润
-		sybReport.setJlr(sybReport.getZyywlr()-sybReport.getGlfy()-sybReport.getCwfy()-sybReport.getJyfy()+sybReport.getYywsr()-sybReport.getYywzc()-sybReport.getSds());
+		sybReport.setJlr(sybReport.getZyywlr()-Float.parseFloat(StringUtil.formatDouble(sybReport.getGlfy()))-Float.parseFloat(StringUtil.formatDouble(sybReport.getCwfy()))-sybReport.getJyfy()+sybReport.getYywsr()-Float.parseFloat(StringUtil.formatDouble(sybReport.getYywzc()))-Float.parseFloat(StringUtil.formatDouble(sybReport.getSds())));
 		//return
 		return sybReport;
 	}

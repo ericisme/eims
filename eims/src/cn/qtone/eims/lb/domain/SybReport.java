@@ -11,89 +11,71 @@ public class SybReport {
 
 	private String ny;//年月
 	
-	private Double zyywlr; //主营业务利润
+	private Float zyywlr; //主营业务利润
 	private Double glfy; //管理费用
 	private Double cwfy; //财务费用
-	private Double jyfy; //经营费用
-	private Double yywsr; //营业外收入
+	private Float jyfy; //经营费用
+	private Float yywsr; //营业外收入
 	private Double yywzc; //营业外支出
 	private Double sds; //所得税
-	private Double jlr; //净利润
-	
-
-
-
+	private Float jlr; //净利润
 	public String getNy() {
 		return ny;
 	}
-
 	public void setNy(String ny) {
 		this.ny = ny;
 	}
-
-	public Double getZyywlr() {
+	public Float getZyywlr() {
 		return zyywlr;
 	}
-
-	public void setZyywlr(Double zyywlr) {
+	public void setZyywlr(Float zyywlr) {
 		this.zyywlr = zyywlr;
 	}
-
 	public Double getGlfy() {
 		return glfy;
 	}
-
 	public void setGlfy(Double glfy) {
 		this.glfy = glfy;
 	}
-
 	public Double getCwfy() {
 		return cwfy;
 	}
-
 	public void setCwfy(Double cwfy) {
 		this.cwfy = cwfy;
 	}
-
-	public Double getJyfy() {
+	public Float getJyfy() {
 		return jyfy;
 	}
-
-	public void setJyfy(Double jyfy) {
+	public void setJyfy(Float jyfy) {
 		this.jyfy = jyfy;
 	}
-
-	public Double getYywsr() {
+	public Float getYywsr() {
 		return yywsr;
 	}
-
-	public void setYywsr(Double yywsr) {
+	public void setYywsr(Float yywsr) {
 		this.yywsr = yywsr;
 	}
-
 	public Double getYywzc() {
 		return yywzc;
 	}
-
 	public void setYywzc(Double yywzc) {
 		this.yywzc = yywzc;
 	}
-
 	public Double getSds() {
 		return sds;
 	}
-
 	public void setSds(Double sds) {
 		this.sds = sds;
 	}
-
-	public Double getJlr() {
+	public Float getJlr() {
 		return jlr;
 	}
-
-	public void setJlr(Double jlr) {
+	public void setJlr(Float jlr) {
 		this.jlr = jlr;
 	}
+
+
+
 
 	
 
