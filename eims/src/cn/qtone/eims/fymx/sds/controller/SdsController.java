@@ -1,6 +1,7 @@
 package cn.qtone.eims.fymx.sds.controller;
 
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Map;
 
@@ -44,7 +45,8 @@ public class SdsController extends SimpleManageController<Sds, SdsService> {
 		/**
 		 * 特殊需求，金额=当月报关金额*汇率*备用1*备用2%
 		 */
-		o.setJe(o.getDybgje()*o.getHl()*o.getBy1()*o.getBy2()/100);
+		//o.setJe(o.getDybgje()*o.getHl()*o.getBy1()*o.getBy2()/100);
+		o.setJe(o.getDybgje().multiply(o.getHl()).multiply(o.getBy1()).multiply(o.getBy2()).divide(new BigDecimal(100)));
 		
 		
 		if(isDomainIdBlank(request)){
@@ -70,8 +72,8 @@ public class SdsController extends SimpleManageController<Sds, SdsService> {
 		//统计总数行，2项金额。
 		Criteria criteria2 = getDomainService().createCriteria(domainClass);
 		setSqlExpression(request, criteria2);	
-		map.put("sum_dybgje",   (Double)criteria2.setProjection(Projections.sum("dybgje")).uniqueResult());
-		map.put("sum_je", 		(Double)criteria2.setProjection(Projections.sum("je")).uniqueResult());
+		map.put("sum_dybgje",   (BigDecimal)criteria2.setProjection(Projections.sum("dybgje")).uniqueResult());
+		map.put("sum_je", 		(BigDecimal)criteria2.setProjection(Projections.sum("je")).uniqueResult());
 		//是否为最后一页
 		map.put("ifLastPage",EimsUtil.ifLastPage(curPage, page));
 	

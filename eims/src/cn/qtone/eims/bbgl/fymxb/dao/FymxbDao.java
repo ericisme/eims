@@ -504,29 +504,29 @@ public class FymxbDao extends BaseDAO {
 		//wsheet.addCell(new Label(1,i,f.getJsrq(),					getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
 		wsheet.addCell(new Label(0,i,f.getRq(),					getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
 		//wsheet.addCell(new Label(1,i,f.getRq().substring(5,7),					getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
-		wsheet.addCell(new Label(1,i,String.valueOf(f.getGz()),		getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
-		wsheet.addCell(new Label(2,i,String.valueOf(f.getSbf()),	getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
-		wsheet.addCell(new Label(3,i,String.valueOf(f.getZjf()),	getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
-		wsheet.addCell(new Label(4,i,String.valueOf(f.getSdf()),	getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
-		wsheet.addCell(new Label(5,i,String.valueOf(f.getDhf()),	getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
-		wsheet.addCell(new Label(6,i,String.valueOf(f.getBgf()),	getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
-		wsheet.addCell(new Label(7,i,String.valueOf(f.getClf()),	getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
-		wsheet.addCell(new Label(8,i,String.valueOf(f.getKdf()),	getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
-		wsheet.addCell(new Label(9,i,String.valueOf(f.getZj()),	getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
-		wsheet.addCell(new Label(10,i,String.valueOf(f.getTwf()),	getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
-		wsheet.addCell(new Label(11,i,String.valueOf(f.getYhs()),	getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
-		wsheet.addCell(new Label(12,i,String.valueOf(f.getQyf()),	getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
-		wsheet.addCell(new Label(13,i,String.valueOf(f.getZcf()),	getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));	
+		wsheet.addCell(new Label(1,i,String.valueOf(nullTZero(f.getGz())),		getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
+		wsheet.addCell(new Label(2,i,String.valueOf(nullTZero(f.getSbf())),	getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
+		wsheet.addCell(new Label(3,i,String.valueOf(nullTZero(f.getZjf())),	getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
+		wsheet.addCell(new Label(4,i,String.valueOf(nullTZero(f.getSdf())),	getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
+		wsheet.addCell(new Label(5,i,String.valueOf(nullTZero(f.getDhf())),	getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
+		wsheet.addCell(new Label(6,i,String.valueOf(nullTZero(f.getBgf())),	getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
+		wsheet.addCell(new Label(7,i,String.valueOf(nullTZero(f.getClf())),	getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
+		wsheet.addCell(new Label(8,i,String.valueOf(nullTZero(f.getKdf())),	getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
+		wsheet.addCell(new Label(9,i,String.valueOf(nullTZero(f.getZj())),	getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
+		wsheet.addCell(new Label(10,i,String.valueOf(nullTZero(f.getTwf())),	getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
+		wsheet.addCell(new Label(11,i,String.valueOf(nullTZero(f.getYhs())),	getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
+		wsheet.addCell(new Label(12,i,String.valueOf(nullTZero(f.getQyf())),	getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
+		wsheet.addCell(new Label(13,i,String.valueOf(nullTZero(f.getZcf())),	getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));	
 
-		wsheet.addCell(new Label(14,i,String.valueOf(f.getJzf()),			getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
-		wsheet.addCell(new Label(15,i,String.valueOf(f.getQt()),				getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
-		wsheet.addCell(new Label(16,i,String.valueOf(f.getDklx()),			getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
-		wsheet.addCell(new Label(17,i,String.valueOf(f.getCklx()),			getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
-		wsheet.addCell(new Label(18,i,String.valueOf(f.getYhsxf()),			getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
-		wsheet.addCell(new Label(19,i,String.valueOf(f.getHdsy()),			getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
-		wsheet.addCell(new Label(20,i,String.valueOf(f.getYywzc()),			getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
-		wsheet.addCell(new Label(21,i,String.valueOf(f.getSds()),			getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
-		wsheet.addCell(new Label(22,i,String.valueOf(number2(f.getZbhj())),	getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
+		wsheet.addCell(new Label(14,i,String.valueOf(nullTZero(f.getJzf())),			getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
+		wsheet.addCell(new Label(15,i,String.valueOf(nullTZero(f.getQt())),				getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
+		wsheet.addCell(new Label(16,i,String.valueOf(nullTZero(f.getDklx())),			getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
+		wsheet.addCell(new Label(17,i,String.valueOf(nullTZero(f.getCklx())),			getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
+		wsheet.addCell(new Label(18,i,String.valueOf(nullTZero(f.getYhsxf())),			getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
+		wsheet.addCell(new Label(19,i,String.valueOf(nullTZero(f.getHdsy())),			getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
+		wsheet.addCell(new Label(20,i,String.valueOf(nullTZero(f.getYywzc())),			getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
+		wsheet.addCell(new Label(21,i,String.valueOf(nullTZero(f.getSds())),			getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
+		wsheet.addCell(new Label(22,i,String.valueOf(number2(nullTZero(f.getZbhj()))),	getStyle(jxl.format.Colour.BLACK ,jxl.format.Colour.WHITE,10)));
 		i++;
 		}
 		
@@ -639,7 +639,16 @@ public class FymxbDao extends BaseDAO {
 		return JXLReadExcel2.getExcelInfo(wwb);
 	};
 	
-	
+
+	private BigDecimal nullTZero(BigDecimal bd){
+		//System.out.println("bd:"+bd);
+		//System.out.println("String.valueOf(bd):"+String.valueOf(bd));
+		if(bd==null){
+			return new BigDecimal(0);
+		}else{
+			return bd;
+		}
+	}
 	/**
 	 * 打印xls报表                                                                                          2行
 	 * xlsOrHtml 1为输入 xls文件，2为输出html文本。
@@ -753,7 +762,7 @@ public class FymxbDao extends BaseDAO {
 		Fymxb f = new Fymxb();		
 		//工资
 		f.setGz(
-				(Double)service.createCriteria(Yggz.class)
+				(BigDecimal)service.createCriteria(Yggz.class)
 				.add(Expression.ge("gzrq", fyrq__gte__string))
 				.add(Expression.le("gzrq", fyrq__lte__string))
 				.setProjection(Projections.sum("yfgz"))
@@ -761,7 +770,7 @@ public class FymxbDao extends BaseDAO {
 		);
 		//社保费		
 //		f.setSbf(
-//				(Double)service.createCriteria(Yggz.class)
+//				(BigDecimal)service.createCriteria(Yggz.class)
 //				.add(Expression.ge("gzrq", fyrq__gte__string))
 //				.add(Expression.le("gzrq", fyrq__lte__string))
 //				.setProjection(Projections.sum("sbf"))
@@ -769,12 +778,12 @@ public class FymxbDao extends BaseDAO {
 //				
 //		);	
 		f.setSbf(
-//				(Double)service.createCriteria(Glfymx.class)
+//				(BigDecimal)service.createCriteria(Glfymx.class)
 //				.add(Expression.ge("fyrq", fyrq__gte__string))
 //				.add(Expression.le("fyrq", fyrq__lte__string))
 //				.setProjection(Projections.sum("sbf"))
 //				.uniqueResult()
-				(Double)service.createCriteria(Cwfy.class)
+				(BigDecimal)service.createCriteria(Cwfy.class)
 				.add(Expression.ge("fyrq", fyrq__gte__string))
 				.add(Expression.le("fyrq", fyrq__lte__string))
 				.add(Expression.eq("type", "3001"))
@@ -789,7 +798,7 @@ public class FymxbDao extends BaseDAO {
 //		int months = (end_year-begin_year)*12+(end_month-begin_month)+1;
 //		try{
 //		f.setZjf(
-//				((Double)service.createCriteria(Gdzc.class).add(Restrictions.gtProperty("zjyf", "yzjyf"))
+//				((BigDecimal)service.createCriteria(Gdzc.class).add(Restrictions.gtProperty("zjyf", "yzjyf"))
 //				.setProjection(Projections.sum("myzjje"))
 //				.uniqueResult())*months
 //		);	
@@ -797,7 +806,7 @@ public class FymxbDao extends BaseDAO {
 //			f.setZjf(0.00);
 //		}
 		f.setZjf(
-				(Double)service.createCriteria(Cwfy.class)
+				(BigDecimal)service.createCriteria(Cwfy.class)
 				.add(Expression.ge("fyrq", fyrq__gte__string))
 				.add(Expression.le("fyrq", fyrq__lte__string))
 				.add(Expression.eq("type", "3014"))
@@ -806,12 +815,12 @@ public class FymxbDao extends BaseDAO {
 		);	
 		//水电费
 		f.setSdf(
-//				(Double)service.createCriteria(Glfymx.class)
+//				(BigDecimal)service.createCriteria(Glfymx.class)
 //				.add(Expression.ge("fyrq", fyrq__gte__string))
 //				.add(Expression.le("fyrq", fyrq__lte__string))
 //				.setProjection(Projections.sum("sdf"))
 //				.uniqueResult()
-				(Double)service.createCriteria(Cwfy.class)
+				(BigDecimal)service.createCriteria(Cwfy.class)
 				.add(Expression.ge("fyrq", fyrq__gte__string))
 				.add(Expression.le("fyrq", fyrq__lte__string))
 				.add(Expression.eq("type", "3002"))
@@ -820,12 +829,12 @@ public class FymxbDao extends BaseDAO {
 		);			
 		//电话费
 		f.setDhf(
-//				(Double)service.createCriteria(Glfymx.class)
+//				(BigDecimal)service.createCriteria(Glfymx.class)
 //				.add(Expression.ge("fyrq", fyrq__gte__string))
 //				.add(Expression.le("fyrq", fyrq__lte__string))
 //				.setProjection(Projections.sum("dhf"))
 //				.uniqueResult()
-				(Double)service.createCriteria(Cwfy.class)
+				(BigDecimal)service.createCriteria(Cwfy.class)
 				.add(Expression.ge("fyrq", fyrq__gte__string))
 				.add(Expression.le("fyrq", fyrq__lte__string))
 				.add(Expression.eq("type", "3003"))
@@ -834,12 +843,12 @@ public class FymxbDao extends BaseDAO {
 		);	
 		//办公费
 		f.setBgf(
-//				(Double)service.createCriteria(Glfymx.class)
+//				(BigDecimal)service.createCriteria(Glfymx.class)
 //				.add(Expression.ge("fyrq", fyrq__gte__string))
 //				.add(Expression.le("fyrq", fyrq__lte__string))
 //				.setProjection(Projections.sum("bgf"))
 //				.uniqueResult()
-				(Double)service.createCriteria(Cwfy.class)
+				(BigDecimal)service.createCriteria(Cwfy.class)
 				.add(Expression.ge("fyrq", fyrq__gte__string))
 				.add(Expression.le("fyrq", fyrq__lte__string))
 				.add(Expression.eq("type", "3004"))
@@ -848,12 +857,12 @@ public class FymxbDao extends BaseDAO {
 		);		
 		//差旅费
 		f.setClf(
-//				(Double)service.createCriteria(Glfymx.class)
+//				(BigDecimal)service.createCriteria(Glfymx.class)
 //				.add(Expression.ge("fyrq", fyrq__gte__string))
 //				.add(Expression.le("fyrq", fyrq__lte__string))
 //				.setProjection(Projections.sum("clf"))
 //				.uniqueResult()
-				(Double)service.createCriteria(Cwfy.class)
+				(BigDecimal)service.createCriteria(Cwfy.class)
 				.add(Expression.ge("fyrq", fyrq__gte__string))
 				.add(Expression.le("fyrq", fyrq__lte__string))
 				.add(Expression.eq("type", "3005"))
@@ -862,12 +871,12 @@ public class FymxbDao extends BaseDAO {
 		);
 		//汽油费
 		f.setQyf(
-//				(Double)service.createCriteria(Glfymx.class)
+//				(BigDecimal)service.createCriteria(Glfymx.class)
 //				.add(Expression.ge("fyrq", fyrq__gte__string))
 //				.add(Expression.le("fyrq", fyrq__lte__string))
 //				.setProjection(Projections.sum("qyf"))
 //				.uniqueResult()
-				(Double)service.createCriteria(Cwfy.class)
+				(BigDecimal)service.createCriteria(Cwfy.class)
 				.add(Expression.ge("fyrq", fyrq__gte__string))
 				.add(Expression.le("fyrq", fyrq__lte__string))
 				.add(Expression.eq("type", "3006"))
@@ -876,12 +885,12 @@ public class FymxbDao extends BaseDAO {
 		);	
 		//堤围费
 		f.setTwf(
-//				(Double)service.createCriteria(Glfymx.class)
+//				(BigDecimal)service.createCriteria(Glfymx.class)
 //				.add(Expression.ge("fyrq", fyrq__gte__string))
 //				.add(Expression.le("fyrq", fyrq__lte__string))
 //				.setProjection(Projections.sum("twf"))
 //				.uniqueResult()
-				(Double)service.createCriteria(Cwfy.class)
+				(BigDecimal)service.createCriteria(Cwfy.class)
 				.add(Expression.ge("fyrq", fyrq__gte__string))
 				.add(Expression.le("fyrq", fyrq__lte__string))
 				.add(Expression.eq("type", "3007"))
@@ -890,12 +899,12 @@ public class FymxbDao extends BaseDAO {
 		);	
 		//快递费	
 		f.setKdf(
-//				(Double)service.createCriteria(Glfymx.class)
+//				(BigDecimal)service.createCriteria(Glfymx.class)
 //				.add(Expression.ge("fyrq", fyrq__gte__string))
 //				.add(Expression.le("fyrq", fyrq__lte__string))
 //				.setProjection(Projections.sum("kdf"))
 //				.uniqueResult()
-				(Double)service.createCriteria(Cwfy.class)
+				(BigDecimal)service.createCriteria(Cwfy.class)
 				.add(Expression.ge("fyrq", fyrq__gte__string))
 				.add(Expression.le("fyrq", fyrq__lte__string))
 				.add(Expression.eq("type", "3008"))
@@ -904,12 +913,12 @@ public class FymxbDao extends BaseDAO {
 		);
 		//印花税
 		f.setYhs(
-//				(Double)service.createCriteria(Glfymx.class)
+//				(BigDecimal)service.createCriteria(Glfymx.class)
 //				.add(Expression.ge("fyrq", fyrq__gte__string))
 //				.add(Expression.le("fyrq", fyrq__lte__string))
 //				.setProjection(Projections.sum("yhs"))
 //				.uniqueResult()
-				(Double)service.createCriteria(Cwfy.class)
+				(BigDecimal)service.createCriteria(Cwfy.class)
 				.add(Expression.ge("fyrq", fyrq__gte__string))
 				.add(Expression.le("fyrq", fyrq__lte__string))
 				.add(Expression.eq("type", "3009"))
@@ -918,12 +927,12 @@ public class FymxbDao extends BaseDAO {
 		);			
 		//租金
 		f.setZj(
-//				(Double)service.createCriteria(Glfymx.class)
+//				(BigDecimal)service.createCriteria(Glfymx.class)
 //				.add(Expression.ge("fyrq", fyrq__gte__string))
 //				.add(Expression.le("fyrq", fyrq__lte__string))
 //				.setProjection(Projections.sum("zj"))
 //				.uniqueResult()
-				(Double)service.createCriteria(Cwfy.class)
+				(BigDecimal)service.createCriteria(Cwfy.class)
 				.add(Expression.ge("fyrq", fyrq__gte__string))
 				.add(Expression.le("fyrq", fyrq__lte__string))
 				.add(Expression.eq("type", "3010"))
@@ -932,12 +941,12 @@ public class FymxbDao extends BaseDAO {
 		);			
 		//租车费
 		f.setZcf(
-//				(Double)service.createCriteria(Glfymx.class)
+//				(BigDecimal)service.createCriteria(Glfymx.class)
 //				.add(Expression.ge("fyrq", fyrq__gte__string))
 //				.add(Expression.le("fyrq", fyrq__lte__string))
 //				.setProjection(Projections.sum("zcf"))
 //				.uniqueResult()
-				(Double)service.createCriteria(Cwfy.class)
+				(BigDecimal)service.createCriteria(Cwfy.class)
 				.add(Expression.ge("fyrq", fyrq__gte__string))
 				.add(Expression.le("fyrq", fyrq__lte__string))
 				.add(Expression.eq("type", "3011"))
@@ -946,12 +955,12 @@ public class FymxbDao extends BaseDAO {
 		);
 		//建账费
 		f.setJzf(
-//				(Double)service.createCriteria(Glfymx.class)
+//				(BigDecimal)service.createCriteria(Glfymx.class)
 //				.add(Expression.ge("fyrq", fyrq__gte__string))
 //				.add(Expression.le("fyrq", fyrq__lte__string))
 //				.setProjection(Projections.sum("jzf"))
 //				.uniqueResult()
-				(Double)service.createCriteria(Cwfy.class)
+				(BigDecimal)service.createCriteria(Cwfy.class)
 				.add(Expression.ge("fyrq", fyrq__gte__string))
 				.add(Expression.le("fyrq", fyrq__lte__string))
 				.add(Expression.eq("type", "3012"))
@@ -960,12 +969,12 @@ public class FymxbDao extends BaseDAO {
 		);
 		//其他
 		f.setQt(
-//				(Double)service.createCriteria(Glfymx.class)
+//				(BigDecimal)service.createCriteria(Glfymx.class)
 //				.add(Expression.ge("fyrq", fyrq__gte__string))
 //				.add(Expression.le("fyrq", fyrq__lte__string))
 //				.setProjection(Projections.sum("qt"))
 //				.uniqueResult()
-				(Double)service.createCriteria(Cwfy.class)
+				(BigDecimal)service.createCriteria(Cwfy.class)
 				.add(Expression.ge("fyrq", fyrq__gte__string))
 				.add(Expression.le("fyrq", fyrq__lte__string))
 				.add(Expression.eq("type", "3013"))
@@ -974,7 +983,7 @@ public class FymxbDao extends BaseDAO {
 		);				
 		//贷款利息
 		f.setDklx(
-				(Double)service.createCriteria(Cwfy.class)
+				(BigDecimal)service.createCriteria(Cwfy.class)
 				.add(Expression.ge("fyrq", fyrq__gte__string))
 				.add(Expression.le("fyrq", fyrq__lte__string))
 				.add(Expression.eq("type", "101"))
@@ -983,7 +992,7 @@ public class FymxbDao extends BaseDAO {
 		);	
 		//存款利息
 		f.setCklx(
-				(Double)service.createCriteria(Cwfy.class)
+				(BigDecimal)service.createCriteria(Cwfy.class)
 				.add(Expression.ge("fyrq", fyrq__gte__string))
 				.add(Expression.le("fyrq", fyrq__lte__string))
 				.add(Expression.eq("type", "102"))
@@ -992,7 +1001,7 @@ public class FymxbDao extends BaseDAO {
 		);		
 		//银行手续费
 		f.setYhsxf(
-				(Double)service.createCriteria(Cwfy.class)
+				(BigDecimal)service.createCriteria(Cwfy.class)
 				.add(Expression.ge("fyrq", fyrq__gte__string))
 				.add(Expression.le("fyrq", fyrq__lte__string))
 				.add(Expression.eq("type", "103"))
@@ -1001,7 +1010,7 @@ public class FymxbDao extends BaseDAO {
 		);	
 		//汇兑损益
 		f.setHdsy(
-				(Double)service.createCriteria(Cwfy.class)
+				(BigDecimal)service.createCriteria(Cwfy.class)
 				.add(Expression.ge("fyrq", fyrq__gte__string))
 				.add(Expression.le("fyrq", fyrq__lte__string))
 				.add(Expression.eq("type", "104"))
@@ -1010,7 +1019,7 @@ public class FymxbDao extends BaseDAO {
 		);	
 		//营业外支出
 		f.setYywzc(
-				(Double)service.createCriteria(Cwfy.class)
+				(BigDecimal)service.createCriteria(Cwfy.class)
 				.add(Expression.ge("fyrq", fyrq__gte__string))
 				.add(Expression.le("fyrq", fyrq__lte__string))
 				.add(Expression.eq("type", "201"))
@@ -1019,7 +1028,7 @@ public class FymxbDao extends BaseDAO {
 		);	
 		//所得税
 		f.setSds(
-				(Double)service.createCriteria(Sds.class)
+				(BigDecimal)service.createCriteria(Sds.class)
 				.add(Expression.ge("fyrq", fyrq__gte__string))
 				.add(Expression.le("fyrq", fyrq__lte__string))
 				.setProjection(Projections.sum("je"))
@@ -1036,30 +1045,30 @@ public class FymxbDao extends BaseDAO {
 
 		
 		//null to 0.00;
-		if(f.gz==null)f.gz=0.00;
-		if(f.sbf==null)f.sbf=0.00;
-		if(f.zjf==null)f.zjf=0.00;
-		if(f.sdf==null)f.sdf=0.00;
-		if(f.dhf==null)f.dhf=0.00;
-		if(f.bgf==null)f.bgf=0.00;
-		if(f.clf==null)f.clf=0.00;
-		if(f.kdf==null)f.kdf=0.00;
-		if(f.zj==null)f.zj=0.00;
-		if(f.twf==null)f.twf=0.00;
-		if(f.yhs==null)f.yhs=0.00;
-		if(f.qyf==null)f.qyf=0.00;
-		if(f.zcf==null)f.zcf=0.00;
-		if(f.jzf==null)f.jzf=0.00;
-		if(f.qt==null)f.qt=0.00;
-		if(f.glfyhj==null)f.glfyhj=0.00;
-		if(f.dklx==null)f.dklx=0.00;
-		if(f.cklx==null)f.cklx=0.00;
-		if(f.yhsxf==null)f.yhsxf=0.00;
-		if(f.hdsy==null)f.hdsy=0.00;
-		if(f.cwfyhj==null)f.cwfyhj=0.00;
-		if(f.yywzc==null)f.yywzc=0.00;
-		if(f.sds==null)f.sds=0.00;
-		if(f.zbhj==null)f.zbhj=0.00;
+		if(f.gz==null)f.gz=(new BigDecimal(0));
+		if(f.sbf==null)f.sbf=(new BigDecimal(0));
+		if(f.zjf==null)f.zjf=(new BigDecimal(0));
+		if(f.sdf==null)f.sdf=(new BigDecimal(0));
+		if(f.dhf==null)f.dhf=(new BigDecimal(0));
+		if(f.bgf==null)f.bgf=(new BigDecimal(0));
+		if(f.clf==null)f.clf=(new BigDecimal(0));
+		if(f.kdf==null)f.kdf=(new BigDecimal(0));
+		if(f.zj==null)f.zj=(new BigDecimal(0));
+		if(f.twf==null)f.twf=(new BigDecimal(0));
+		if(f.yhs==null)f.yhs=(new BigDecimal(0));
+		if(f.qyf==null)f.qyf=(new BigDecimal(0));
+		if(f.zcf==null)f.zcf=(new BigDecimal(0));
+		if(f.jzf==null)f.jzf=(new BigDecimal(0));
+		if(f.qt==null)f.qt=(new BigDecimal(0));
+		if(f.glfyhj==null)f.glfyhj=(new BigDecimal(0));
+		if(f.dklx==null)f.dklx=(new BigDecimal(0));
+		if(f.cklx==null)f.cklx=(new BigDecimal(0));
+		if(f.yhsxf==null)f.yhsxf=(new BigDecimal(0));
+		if(f.hdsy==null)f.hdsy=(new BigDecimal(0));
+		if(f.cwfyhj==null)f.cwfyhj=(new BigDecimal(0));
+		if(f.yywzc==null)f.yywzc=(new BigDecimal(0));
+		if(f.sds==null)f.sds=(new BigDecimal(0));
+		if(f.zbhj==null)f.zbhj=(new BigDecimal(0));
 		
 		
 		return f;
@@ -1068,18 +1077,23 @@ public class FymxbDao extends BaseDAO {
 	
 	
 	
+//	//保留小数点后两位小数 
+//	public   double   number2(double   pDouble) 
+//	{ 
+//	    BigDecimal     bd=new     BigDecimal(pDouble); 
+//	    BigDecimal     bd1=bd.setScale(2,bd.ROUND_HALF_UP); 
+//	    pDouble=bd1.doubleValue(); 
+//	    long     ll   =   Double.doubleToLongBits(pDouble); 
+//	    
+//	    return   pDouble; 
+//	} 
+
 	//保留小数点后两位小数 
-	public   double   number2(double   pDouble) 
+	public   BigDecimal   number2(BigDecimal   f) 
 	{ 
-	    BigDecimal     bd=new     BigDecimal(pDouble); 
-	    BigDecimal     bd1=bd.setScale(2,bd.ROUND_HALF_UP); 
-	    pDouble=bd1.doubleValue(); 
-	    long     ll   =   Double.doubleToLongBits(pDouble); 
 	    
-	    return   pDouble; 
+	    return   f; 
 	} 
-
-
 	
 	
 	

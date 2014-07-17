@@ -1,5 +1,6 @@
 package cn.qtone.eims.khmx.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -24,10 +25,10 @@ public class Gjts {
 	private String bgdh; //报关单号
 	private String zzsl="17%"; //增值税率
 	private String tsl="15%"; //退税率
-	private Float tsje = 0f; //退税金额
+	private BigDecimal tsje = new BigDecimal(0); //退税金额
 	private Date tsrq; //收退税日期
-	private Float ysje = 0f; //已收金额
-	private Float wsje = 0f; //未收金额
+	private BigDecimal ysje = new BigDecimal(0); //已收金额
+	private BigDecimal wsje = new BigDecimal(0); //未收金额
 	
 	private Date lrsj;	    //录入时间
 
@@ -81,11 +82,11 @@ public class Gjts {
 		this.tsl = tsl;
 	}
 
-	public Float getTsje() {
+	public BigDecimal getTsje() {
 		return tsje;
 	}
 
-	public void setTsje(Float tsje) {
+	public void setTsje(BigDecimal tsje) {
 		this.tsje = tsje;
 	}
 
@@ -97,19 +98,19 @@ public class Gjts {
 		this.tsrq = tsrq;
 	}
 
-	public Float getYsje() {
+	public BigDecimal getYsje() {
 		return ysje;
 	}
 
-	public void setYsje(Float ysje) {
+	public void setYsje(BigDecimal ysje) {
 		this.ysje = ysje;
 	}
 
-	public Float getWsje() {
+	public BigDecimal getWsje() {
 		return wsje;
 	}
 
-	public void setWsje(Float wsje) {
+	public void setWsje(BigDecimal wsje) {
 		this.wsje = wsje;
 	}
 

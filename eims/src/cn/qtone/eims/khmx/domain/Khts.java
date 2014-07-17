@@ -1,5 +1,6 @@
 package cn.qtone.eims.khmx.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -23,13 +24,13 @@ public class Khts {
 	private String dh; //单号
 	private String khmc; //客户名称
 	private Date bgrq; //报关日期	
-	private Float bgje = 0f; //报关金额
-	private Float fpje = 0f; //发票金额
+	private BigDecimal bgje = new BigDecimal(0); //报关金额
+	private BigDecimal fpje = new BigDecimal(0); //发票金额
 	private String sfprq; //收发票日期
-	private Float tsje = 0f; //退税金额
+	private BigDecimal tsje = new BigDecimal(0); //退税金额
 	private String zftsrq; //支付退税日期
-	private Float yfje = 0f; //已付金额
-	private Float wfje = 0f; //未付金额
+	private BigDecimal yfje = new BigDecimal(0); //已付金额
+	private BigDecimal wfje = new BigDecimal(0); //未付金额
 	private String fkdh; //付款单号
 	private String ywy; //业务员
 	private String dlfbz; //代理费标准
@@ -78,19 +79,19 @@ public class Khts {
 		this.bgdh = bgdh;
 	}
 
-	public Float getBgje() {
+	public BigDecimal getBgje() {
 		return bgje;
 	}
 
-	public void setBgje(Float bgje) {
+	public void setBgje(BigDecimal bgje) {
 		this.bgje = bgje;
 	}
 
-	public Float getFpje() {
+	public BigDecimal getFpje() {
 		return fpje;
 	}
 
-	public void setFpje(Float fpje) {
+	public void setFpje(BigDecimal fpje) {
 		this.fpje = fpje;
 	}
 
@@ -102,11 +103,11 @@ public class Khts {
 		this.sfprq = sfprq;
 	}
 
-	public Float getTsje() {
+	public BigDecimal getTsje() {
 		return tsje;
 	}
 
-	public void setTsje(Float tsje) {
+	public void setTsje(BigDecimal tsje) {
 		this.tsje = tsje;
 	}
 
@@ -118,19 +119,19 @@ public class Khts {
 		this.zftsrq = zftsrq;
 	}
 
-	public Float getYfje() {
+	public BigDecimal getYfje() {
 		return yfje;
 	}
 
-	public void setYfje(Float yfje) {
+	public void setYfje(BigDecimal yfje) {
 		this.yfje = yfje;
 	}
 
-	public Float getWfje() {
+	public BigDecimal getWfje() {
 		return wfje;
 	}
 
-	public void setWfje(Float wfje) {
+	public void setWfje(BigDecimal wfje) {
 		this.wfje = wfje;
 	}
 

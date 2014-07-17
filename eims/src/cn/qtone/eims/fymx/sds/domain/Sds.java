@@ -1,5 +1,6 @@
 package cn.qtone.eims.fymx.sds.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -19,11 +20,11 @@ public class Sds {
 	private Integer id;	
 	
 	private String fyrq;	//费用日期
-	private Double dybgje;	//当月报关金额
-	private Double hl;		//汇率
-	private Double by1;		//备用1
-	private Double by2;		//备用2
-	private Double je;		//金额
+	private BigDecimal dybgje;	//当月报关金额
+	private BigDecimal hl;		//汇率
+	private BigDecimal by1;		//备用1
+	private BigDecimal by2;		//备用2
+	private BigDecimal je;		//金额
 	
 	private Date lrsj;	    //录入时间
 	
@@ -44,34 +45,34 @@ public class Sds {
 	public void setFyrq(String fyrq) {
 		this.fyrq = fyrq;
 	}
-	public Double getDybgje() {
+	public BigDecimal getDybgje() {
 		return dybgje;
 	}
-	public void setDybgje(Double dybgje) {
+	public void setDybgje(BigDecimal dybgje) {
 		this.dybgje = dybgje;
 	}
-	public Double getHl() {
+	public BigDecimal getHl() {
 		return hl;
 	}
-	public void setHl(Double hl) {
+	public void setHl(BigDecimal hl) {
 		this.hl = hl;
 	}
-	public Double getBy1() {
+	public BigDecimal getBy1() {
 		return by1;
 	}
-	public void setBy1(Double by1) {
+	public void setBy1(BigDecimal by1) {
 		this.by1 = by1;
 	}
-	public Double getBy2() {
+	public BigDecimal getBy2() {
 		return by2;
 	}
-	public void setBy2(Double by2) {
+	public void setBy2(BigDecimal by2) {
 		this.by2 = by2;
 	}
-	public Double getJe() {
+	public BigDecimal getJe() {
 		return je;
 	}
-	public void setJe(Double je) {
+	public void setJe(BigDecimal je) {
 		this.je = je;
 	}
 	public Date getLrsj() {

@@ -1,31 +1,28 @@
 package cn.qtone.eims.fymx.gdzc.controller;
 
 
-import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.web.servlet.ModelAndView;
 
+import cn.qtone.common.mvc.dao.Page;
 import cn.qtone.common.mvc.view.spring.AjaxView;
 import cn.qtone.common.mvc.view.spring.TextView;
 import cn.qtone.common.simplemvc.controller.SimpleManageController;
 import cn.qtone.common.utils.base.StringUtil;
 import cn.qtone.eims.fymx.gdzc.domain.Gdzc;
 import cn.qtone.eims.fymx.gdzc.service.GdzcService;
-import cn.qtone.eims.fymx.glfymx.service.GlfymxService;
-import cn.qtone.eims.fymx.yggz.domain.Yggz;
 import cn.qtone.eims.util.EimsUtil;
 import cn.qtone.qtoneframework.web.servlet.ServletUtil;
-import cn.qtone.common.mvc.dao.Page;
 
 /**
  * 固定资产
@@ -58,8 +55,10 @@ public class GdzcController extends SimpleManageController<Gdzc, GdzcService> {
 			if(idStr.length() > 0){
 				Gdzc o = this.getDomainService().get(Integer.valueOf(idStr));
 				o.setYzjyf(o.getYzjyf()+1);//已折旧月份加1				
-				o.setYzjje(o.getYzjyf()*o.getMyzjje());//已折旧金额=已折旧月份*每月折旧金额				
-				o.setYe(o.getZje()-o.getYzjje());//余额（净值）=总金额-已折旧金额
+				//o.setYzjje(o.getYzjyf()*o.getMyzjje());//已折旧金额=已折旧月份*每月折旧金额				
+				//o.setYe(o.getZje()-o.getYzjje());//余额（净值）=总金额-已折旧金额
+				o.setYzjje(o.getMyzjje().multiply(new BigDecimal(o.getYzjyf())));//已折旧金额=已折旧月份*每月折旧金额				
+				o.setYe(o.getZje().subtract(o.getYzjje()));//余额（净值）=总金额-已折旧金额
 				getDomainService().saveOrUpdate(o);
 			}
 		}
@@ -74,9 +73,11 @@ public class GdzcController extends SimpleManageController<Gdzc, GdzcService> {
 		
 		
 		//已折旧金额=已折旧月份*每月折旧金额
-		o.setYzjje(o.getYzjyf()*o.getMyzjje());
+		//o.setYzjje(o.getYzjyf()*o.getMyzjje());
+		o.setYzjje(o.getMyzjje().multiply(new BigDecimal(o.getYzjyf())));
 		//余额（净值）=总金额-已折旧金额
-		o.setYe(o.getZje()-o.getYzjje());
+		//o.setYe(o.getZje()-o.getYzjje());
+		o.setYe(o.getZje().subtract(o.getYzjje()));
 		
 		o.setLrsj(new Date());
 		if(isDomainIdBlank(request)){
@@ -123,10 +124,10 @@ public class GdzcController extends SimpleManageController<Gdzc, GdzcService> {
 				criteria2.add(Restrictions.leProperty("zjyf", "yzjyf"));
 			}
 		}
-		map.put("sum_zje",    (Double)criteria2.setProjection(Projections.sum("zje")).uniqueResult());
-		map.put("sum_myzjje", (Double)criteria2.setProjection(Projections.sum("myzjje")).uniqueResult());
-		map.put("sum_yzjje",  (Double)criteria2.setProjection(Projections.sum("yzjje")).uniqueResult());
-		map.put("sum_ye",     (Double)criteria2.setProjection(Projections.sum("ye")) .uniqueResult());
+		map.put("sum_zje",    (BigDecimal)criteria2.setProjection(Projections.sum("zje")).uniqueResult());
+		map.put("sum_myzjje", (BigDecimal)criteria2.setProjection(Projections.sum("myzjje")).uniqueResult());
+		map.put("sum_yzjje",  (BigDecimal)criteria2.setProjection(Projections.sum("yzjje")).uniqueResult());
+		map.put("sum_ye",     (BigDecimal)criteria2.setProjection(Projections.sum("ye")) .uniqueResult());
 		//是否为最后一页
 		map.put("ifLastPage",EimsUtil.ifLastPage(curPage, page));
 		

@@ -3,6 +3,7 @@ package cn.qtone.eims.fymx.cwfy.controller;
 /**
  * 财务费用明细或营业外支出
  */
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Map;
 
@@ -95,66 +96,87 @@ public class CwfyController extends SimpleManageController<Cwfy, CwfyService> {
 		Criteria criteria3013 = getDomainService().createCriteria(domainClass);setSqlExpression(request, criteria3013);
 		Criteria criteria3014 = getDomainService().createCriteria(domainClass);setSqlExpression(request, criteria3014);
 		
-		Double type_101_je = (Double) criteria101.add(Restrictions.eq("type", "101")).setProjection(Projections.sum("je")).uniqueResult();
-		Double type_102_je = (Double) criteria102.add(Restrictions.eq("type", "102")).setProjection(Projections.sum("je")).uniqueResult();
-		Double type_103_je = (Double) criteria103.add(Restrictions.eq("type", "103")).setProjection(Projections.sum("je")).uniqueResult();
-		Double type_104_je = (Double) criteria104.add(Restrictions.eq("type", "104")).setProjection(Projections.sum("je")).uniqueResult();
-		Double type_201_je = (Double) criteria201.add(Restrictions.eq("type", "201")).setProjection(Projections.sum("je")).uniqueResult();
-		Double type_3001_je = (Double) criteria3001.add(Restrictions.eq("type", "3001")).setProjection(Projections.sum("je")).uniqueResult();
-		Double type_3002_je = (Double) criteria3002.add(Restrictions.eq("type", "3002")).setProjection(Projections.sum("je")).uniqueResult();
-		Double type_3003_je = (Double) criteria3003.add(Restrictions.eq("type", "3003")).setProjection(Projections.sum("je")).uniqueResult();
-		Double type_3004_je = (Double) criteria3004.add(Restrictions.eq("type", "3004")).setProjection(Projections.sum("je")).uniqueResult();
-		Double type_3005_je = (Double) criteria3005.add(Restrictions.eq("type", "3005")).setProjection(Projections.sum("je")).uniqueResult();
-		Double type_3006_je = (Double) criteria3006.add(Restrictions.eq("type", "3006")).setProjection(Projections.sum("je")).uniqueResult();
-		Double type_3007_je = (Double) criteria3007.add(Restrictions.eq("type", "3007")).setProjection(Projections.sum("je")).uniqueResult();
-		Double type_3008_je = (Double) criteria3008.add(Restrictions.eq("type", "3008")).setProjection(Projections.sum("je")).uniqueResult();
-		Double type_3009_je = (Double) criteria3009.add(Restrictions.eq("type", "3009")).setProjection(Projections.sum("je")).uniqueResult();
-		Double type_3010_je = (Double) criteria3010.add(Restrictions.eq("type", "3010")).setProjection(Projections.sum("je")).uniqueResult();
-		Double type_3011_je = (Double) criteria3011.add(Restrictions.eq("type", "3011")).setProjection(Projections.sum("je")).uniqueResult();
-		Double type_3012_je = (Double) criteria3012.add(Restrictions.eq("type", "3012")).setProjection(Projections.sum("je")).uniqueResult();
-		Double type_3013_je = (Double) criteria3013.add(Restrictions.eq("type", "3013")).setProjection(Projections.sum("je")).uniqueResult();
-		Double type_3014_je = (Double) criteria3014.add(Restrictions.eq("type", "3014")).setProjection(Projections.sum("je")).uniqueResult();
+		BigDecimal type_101_je = (BigDecimal) criteria101.add(Restrictions.eq("type", "101")).setProjection(Projections.sum("je")).uniqueResult();
+		BigDecimal type_102_je = (BigDecimal) criteria102.add(Restrictions.eq("type", "102")).setProjection(Projections.sum("je")).uniqueResult();
+		BigDecimal type_103_je = (BigDecimal) criteria103.add(Restrictions.eq("type", "103")).setProjection(Projections.sum("je")).uniqueResult();
+		BigDecimal type_104_je = (BigDecimal) criteria104.add(Restrictions.eq("type", "104")).setProjection(Projections.sum("je")).uniqueResult();
+		BigDecimal type_201_je = (BigDecimal) criteria201.add(Restrictions.eq("type", "201")).setProjection(Projections.sum("je")).uniqueResult();
+		BigDecimal type_3001_je = (BigDecimal) criteria3001.add(Restrictions.eq("type", "3001")).setProjection(Projections.sum("je")).uniqueResult();
+		BigDecimal type_3002_je = (BigDecimal) criteria3002.add(Restrictions.eq("type", "3002")).setProjection(Projections.sum("je")).uniqueResult();
+		BigDecimal type_3003_je = (BigDecimal) criteria3003.add(Restrictions.eq("type", "3003")).setProjection(Projections.sum("je")).uniqueResult();
+		BigDecimal type_3004_je = (BigDecimal) criteria3004.add(Restrictions.eq("type", "3004")).setProjection(Projections.sum("je")).uniqueResult();
+		BigDecimal type_3005_je = (BigDecimal) criteria3005.add(Restrictions.eq("type", "3005")).setProjection(Projections.sum("je")).uniqueResult();
+		BigDecimal type_3006_je = (BigDecimal) criteria3006.add(Restrictions.eq("type", "3006")).setProjection(Projections.sum("je")).uniqueResult();
+		BigDecimal type_3007_je = (BigDecimal) criteria3007.add(Restrictions.eq("type", "3007")).setProjection(Projections.sum("je")).uniqueResult();
+		BigDecimal type_3008_je = (BigDecimal) criteria3008.add(Restrictions.eq("type", "3008")).setProjection(Projections.sum("je")).uniqueResult();
+		BigDecimal type_3009_je = (BigDecimal) criteria3009.add(Restrictions.eq("type", "3009")).setProjection(Projections.sum("je")).uniqueResult();
+		BigDecimal type_3010_je = (BigDecimal) criteria3010.add(Restrictions.eq("type", "3010")).setProjection(Projections.sum("je")).uniqueResult();
+		BigDecimal type_3011_je = (BigDecimal) criteria3011.add(Restrictions.eq("type", "3011")).setProjection(Projections.sum("je")).uniqueResult();
+		BigDecimal type_3012_je = (BigDecimal) criteria3012.add(Restrictions.eq("type", "3012")).setProjection(Projections.sum("je")).uniqueResult();
+		BigDecimal type_3013_je = (BigDecimal) criteria3013.add(Restrictions.eq("type", "3013")).setProjection(Projections.sum("je")).uniqueResult();
+		BigDecimal type_3014_je = (BigDecimal) criteria3014.add(Restrictions.eq("type", "3014")).setProjection(Projections.sum("je")).uniqueResult();
 		
-		type_101_je = type_101_je==null?0:type_101_je;
-		type_102_je = type_102_je==null?0:type_102_je;
-		type_103_je = type_103_je==null?0:type_103_je;
-		type_104_je = type_104_je==null?0:type_104_je;
-		type_201_je = type_201_je==null?0:type_201_je;		
-		type_3001_je = type_3001_je==null?0:type_3001_je;
-		type_3002_je = type_3002_je==null?0:type_3002_je;
-		type_3003_je = type_3003_je==null?0:type_3003_je;
-		type_3004_je = type_3004_je==null?0:type_3004_je;
-		type_3005_je = type_3005_je==null?0:type_3005_je;
-		type_3006_je = type_3006_je==null?0:type_3006_je;
-		type_3007_je = type_3007_je==null?0:type_3007_je;
-		type_3008_je = type_3008_je==null?0:type_3008_je;
-		type_3009_je = type_3009_je==null?0:type_3009_je;
-		type_3010_je = type_3010_je==null?0:type_3010_je;
-		type_3011_je = type_3011_je==null?0:type_3011_je;
-		type_3012_je = type_3012_je==null?0:type_3012_je;
-		type_3013_je = type_3013_je==null?0:type_3013_je;
-		type_3014_je = type_3014_je==null?0:type_3014_je;
+		type_101_je = type_101_je==null?(new BigDecimal(0)):type_101_je;
+		type_102_je = type_102_je==null?(new BigDecimal(0)):type_102_je;
+		type_103_je = type_103_je==null?(new BigDecimal(0)):type_103_je;
+		type_104_je = type_104_je==null?(new BigDecimal(0)):type_104_je;
+		type_201_je = type_201_je==null?(new BigDecimal(0)):type_201_je;		
+		type_3001_je = type_3001_je==null?(new BigDecimal(0)):type_3001_je;
+		type_3002_je = type_3002_je==null?(new BigDecimal(0)):type_3002_je;
+		type_3003_je = type_3003_je==null?(new BigDecimal(0)):type_3003_je;
+		type_3004_je = type_3004_je==null?(new BigDecimal(0)):type_3004_je;
+		type_3005_je = type_3005_je==null?(new BigDecimal(0)):type_3005_je;
+		type_3006_je = type_3006_je==null?(new BigDecimal(0)):type_3006_je;
+		type_3007_je = type_3007_je==null?(new BigDecimal(0)):type_3007_je;
+		type_3008_je = type_3008_je==null?(new BigDecimal(0)):type_3008_je;
+		type_3009_je = type_3009_je==null?(new BigDecimal(0)):type_3009_je;
+		type_3010_je = type_3010_je==null?(new BigDecimal(0)):type_3010_je;
+		type_3011_je = type_3011_je==null?(new BigDecimal(0)):type_3011_je;
+		type_3012_je = type_3012_je==null?(new BigDecimal(0)):type_3012_je;
+		type_3013_je = type_3013_je==null?(new BigDecimal(0)):type_3013_je;
+		type_3014_je = type_3014_je==null?(new BigDecimal(0)):type_3014_je;
 		
-		Double total = type_101_je
-						-type_102_je
-						+type_103_je
-						+type_104_je
-						+type_201_je
-						+type_3001_je
-						+type_3002_je
-						+type_3003_je
-						+type_3004_je
-						+type_3005_je
-						+type_3006_je
-						+type_3007_je
-						+type_3008_je
-						+type_3009_je
-						+type_3010_je
-						+type_3011_je
-						+type_3012_je
-						+type_3013_je	
-						+type_3014_je
-						;		
+//		BigDecimal total = type_101_je
+//						-type_102_je
+//						+type_103_je
+//						+type_104_je
+//						+type_201_je
+//						+type_3001_je
+//						+type_3002_je
+//						+type_3003_je
+//						+type_3004_je
+//						+type_3005_je
+//						+type_3006_je
+//						+type_3007_je
+//						+type_3008_je
+//						+type_3009_je
+//						+type_3010_je
+//						+type_3011_je
+//						+type_3012_je
+//						+type_3013_je	
+//						+type_3014_je
+//						;		
+		BigDecimal total = type_101_je
+				.subtract(type_102_je)
+				.add(type_103_je)
+				.add(type_104_je)
+				.add(type_201_je)
+				.add(type_3001_je)
+				.add(type_3002_je)
+				.add(type_3003_je)
+				.add(type_3004_je)
+				.add(type_3005_je)
+				.add(type_3006_je)
+				.add(type_3007_je)
+				.add(type_3008_je)
+				.add(type_3009_je)
+				.add(type_3010_je)
+				.add(type_3011_je)
+				.add(type_3012_je)
+				.add(type_3013_je)	
+				.add(type_3014_je)
+				;	
+		
 		
 		map.put("sum_je", total);
 		//是否为最后一页

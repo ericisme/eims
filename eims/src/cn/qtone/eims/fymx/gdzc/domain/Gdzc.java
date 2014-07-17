@@ -1,5 +1,6 @@
 package cn.qtone.eims.fymx.gdzc.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -21,13 +22,13 @@ public class Gdzc {
 	private String sbxmmc;	//设备项目名称
 	private String dw;		//单位
 	private Integer sl;		//数量
-	private Double dj;		//单价
-	private Double zje;		//总金额
+	private BigDecimal dj;		//单价
+	private BigDecimal zje;		//总金额
 	private Integer zjyf;	//折旧月份
-	private Double myzjje;	//每月折旧金额
+	private BigDecimal myzjje;	//每月折旧金额
 	private Integer yzjyf;	//已折旧月份
-	private Double yzjje;	//已折旧金额
-	private Double ye;		//余额
+	private BigDecimal yzjje;	//已折旧金额
+	private BigDecimal ye;		//余额
 	
 	private Date lrsj;	    //录入时间
 	
@@ -59,16 +60,16 @@ public class Gdzc {
 	public void setSl(Integer sl) {
 		this.sl = sl;
 	}
-	public Double getDj() {
+	public BigDecimal getDj() {
 		return dj;
 	}
-	public void setDj(Double dj) {
+	public void setDj(BigDecimal dj) {
 		this.dj = dj;
 	}
-	public Double getZje() {
+	public BigDecimal getZje() {
 		return zje;
 	}
-	public void setZje(Double zje) {
+	public void setZje(BigDecimal zje) {
 		this.zje = zje;
 	}
 	public Integer getZjyf() {
@@ -77,10 +78,10 @@ public class Gdzc {
 	public void setZjyf(Integer zjyf) {
 		this.zjyf = zjyf;
 	}
-	public Double getMyzjje() {
+	public BigDecimal getMyzjje() {
 		return myzjje;
 	}
-	public void setMyzjje(Double myzjje) {
+	public void setMyzjje(BigDecimal myzjje) {
 		this.myzjje = myzjje;
 	}
 	public Integer getYzjyf() {
@@ -89,16 +90,16 @@ public class Gdzc {
 	public void setYzjyf(Integer yzjyf) {
 		this.yzjyf = yzjyf;
 	}
-	public Double getYzjje() {
+	public BigDecimal getYzjje() {
 		return yzjje;
 	}
-	public void setYzjje(Double yzjje) {
+	public void setYzjje(BigDecimal yzjje) {
 		this.yzjje = yzjje;
 	}
-	public Double getYe() {
+	public BigDecimal getYe() {
 		return ye;
 	}
-	public void setYe(Double ye) {
+	public void setYe(BigDecimal ye) {
 		this.ye = ye;
 	}
 	public Date getLrsj() {

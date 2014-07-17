@@ -1,5 +1,6 @@
 package cn.qtone.eims.khmx.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -23,20 +24,20 @@ public class Tczc {
 	private String dh; //单号
 	private String khmc; //客户名称
 	private Date bgrq; //报关日期	
-	private Float bgje = 0f; //报关金额
+	private BigDecimal bgje = new BigDecimal(0); //报关金额
 	private String tcgsmc; //拖车公司名称
 	private String gh; //柜号
 	private String qyg; //起运港
-	private Float tcf = 0f; //拖车费
-	private Float ydtgf = 0f; //异地提柜费
-	private Float gpf = 0f; //过磅费
-	private Float ldzgf = 0f; //两地装柜费
-	private Float ddf = 0f; //打单费
-	private Float zgf = 0f; //重柜费
-	private Float fyjehj = 0f; //费用金额合计
+	private BigDecimal tcf = new BigDecimal(0); //拖车费
+	private BigDecimal ydtgf = new BigDecimal(0); //异地提柜费
+	private BigDecimal gpf = new BigDecimal(0); //过磅费
+	private BigDecimal ldzgf = new BigDecimal(0); //两地装柜费
+	private BigDecimal ddf = new BigDecimal(0); //打单费
+	private BigDecimal zgf = new BigDecimal(0); //重柜费
+	private BigDecimal fyjehj = new BigDecimal(0); //费用金额合计
 	private String zfrq; //支付日期
-	private Float zfje = 0f; //支付金额
-	private Float wfje = 0f; //未付金额
+	private BigDecimal zfje = new BigDecimal(0); //支付金额
+	private BigDecimal wfje = new BigDecimal(0); //未付金额
 	
 	private Date lrsj;	    //录入时间
 
@@ -72,10 +73,10 @@ public class Tczc {
 	public void setBgdh(String bgdh) {
 		this.bgdh = bgdh;
 	}
-	public Float getBgje() {
+	public BigDecimal getBgje() {
 		return bgje;
 	}
-	public void setBgje(Float bgje) {
+	public void setBgje(BigDecimal bgje) {
 		this.bgje = bgje;
 	}
 	public String getGh() {
@@ -90,46 +91,46 @@ public class Tczc {
 	public void setQyg(String qyg) {
 		this.qyg = qyg;
 	}
-	public Float getTcf() {
+	public BigDecimal getTcf() {
 		return tcf;
 	}
-	public void setTcf(Float tcf) {
+	public void setTcf(BigDecimal tcf) {
 		this.tcf = tcf;
 	}
-	public Float getYdtgf() {
+	public BigDecimal getYdtgf() {
 		return ydtgf;
 	}
-	public void setYdtgf(Float ydtgf) {
+	public void setYdtgf(BigDecimal ydtgf) {
 		this.ydtgf = ydtgf;
 	}
-	public Float getGpf() {
+	public BigDecimal getGpf() {
 		return gpf;
 	}
-	public void setGpf(Float gpf) {
+	public void setGpf(BigDecimal gpf) {
 		this.gpf = gpf;
 	}
-	public Float getLdzgf() {
+	public BigDecimal getLdzgf() {
 		return ldzgf;
 	}
-	public void setLdzgf(Float ldzgf) {
+	public void setLdzgf(BigDecimal ldzgf) {
 		this.ldzgf = ldzgf;
 	}
-	public Float getDdf() {
+	public BigDecimal getDdf() {
 		return ddf;
 	}
-	public void setDdf(Float ddf) {
+	public void setDdf(BigDecimal ddf) {
 		this.ddf = ddf;
 	}
-	public Float getZgf() {
+	public BigDecimal getZgf() {
 		return zgf;
 	}
-	public void setZgf(Float zgf) {
+	public void setZgf(BigDecimal zgf) {
 		this.zgf = zgf;
 	}
-	public Float getFyjehj() {
+	public BigDecimal getFyjehj() {
 		return fyjehj;
 	}
-	public void setFyjehj(Float fyjehj) {
+	public void setFyjehj(BigDecimal fyjehj) {
 		this.fyjehj = fyjehj;
 	}
 	public String getZfrq() {
@@ -138,16 +139,16 @@ public class Tczc {
 	public void setZfrq(String zfrq) {
 		this.zfrq = zfrq;
 	}
-	public Float getZfje() {
+	public BigDecimal getZfje() {
 		return zfje;
 	}
-	public void setZfje(Float zfje) {
+	public void setZfje(BigDecimal zfje) {
 		this.zfje = zfje;
 	}
-	public Float getWfje() {
+	public BigDecimal getWfje() {
 		return wfje;
 	}
-	public void setWfje(Float wfje) {
+	public void setWfje(BigDecimal wfje) {
 		this.wfje = wfje;
 	}
 	public Date getLrsj() {

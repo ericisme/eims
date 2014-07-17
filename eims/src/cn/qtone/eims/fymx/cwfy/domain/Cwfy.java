@@ -1,5 +1,6 @@
 package cn.qtone.eims.fymx.cwfy.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -23,7 +24,7 @@ public class Cwfy {
 	private String fyrq;	//费用日期（年-月-日）
 	private String dh;		//单号
 	private String zy;		//摘要
-	private Double je;		//金额
+	private BigDecimal je;		//金额
 	private Date lrsj;	    //录入时间
 	
 	
@@ -59,10 +60,10 @@ public class Cwfy {
 	public void setZy(String zy) {
 		this.zy = zy;
 	}
-	public Double getJe() {
+	public BigDecimal getJe() {
 		return je;
 	}
-	public void setJe(Double je) {
+	public void setJe(BigDecimal je) {
 		this.je = je;
 	}
 	public Date getLrsj() {

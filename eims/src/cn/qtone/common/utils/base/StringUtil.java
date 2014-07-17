@@ -1,5 +1,6 @@
 package cn.qtone.common.utils.base;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.Iterator;
 import java.util.Map;
@@ -407,7 +408,12 @@ public class StringUtil
 		DecimalFormat df = new DecimalFormat(".00");
 		return df.format(f);
 	}
-	
+	public final static String formatBigDecimal(BigDecimal bd){
+		if(bd==null){
+			return "0";
+		}
+		return bd.toString();
+	}
 	/**
 	 * 测试.
 	 * @param args

@@ -1,6 +1,7 @@
 package cn.qtone.eims.khmx.controller;
 
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -52,9 +53,9 @@ public class GjtsController extends SimpleManageController<Gjts, GjtsService>{
 			//统计总数行
 			Criteria criteria2 = getDomainService().createCriteria(domainClass);
 			setSqlExpression(request, criteria2);	
-			map.put("sum_tsje", (Float)criteria2.setProjection(Projections.sum("tsje")).uniqueResult());
-			map.put("sum_ysje", (Float)criteria2.setProjection(Projections.sum("ysje")).uniqueResult());
-			map.put("sum_wsje", (Float)criteria2.setProjection(Projections.sum("wsje")).uniqueResult());	
+			map.put("sum_tsje", (BigDecimal)criteria2.setProjection(Projections.sum("tsje")).uniqueResult());
+			map.put("sum_ysje", (BigDecimal)criteria2.setProjection(Projections.sum("ysje")).uniqueResult());
+			map.put("sum_wsje", (BigDecimal)criteria2.setProjection(Projections.sum("wsje")).uniqueResult());	
 		}
 		
 		return new ModelAndView(getListPage(), map);
@@ -62,7 +63,7 @@ public class GjtsController extends SimpleManageController<Gjts, GjtsService>{
 	
 	public ModelAndView save(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Gjts entity = (Gjts)getCommandObject(request, getDomainClass());
-//		float wsje = entity.getTsje() - entity.getYsje(); //未收金额=退税金额-已收金额
+//		BigDecimal wsje = entity.getTsje() - entity.getYsje(); //未收金额=退税金额-已收金额
 //		entity.setWsje(wsje);
 		entity.setTsrq(DateUtil.parseSimpleDate(request.getParameter("_tsrq"))); //转成为日期格式
 		
@@ -135,22 +136,22 @@ public class GjtsController extends SimpleManageController<Gjts, GjtsService>{
 			wsheet.addCell(new Label(2,i,gjts.getBgdh(), setCellFormat()));
 			wsheet.addCell(new Label(3,i,gjts.getZzsl(), setCellFormat()));
 			wsheet.addCell(new Label(4,i,gjts.getTsl(), setCellFormat()));
-			wsheet.addCell(new Label(5,i,StringUtil.formatFloat(gjts.getTsje()), setCellFormat()));
+			wsheet.addCell(new Label(5,i,StringUtil.formatBigDecimal(gjts.getTsje()), setCellFormat()));
 			wsheet.addCell(new Label(6,i,DateUtil.formatDate(gjts.getTsrq(), "yyyy-MM-dd"), setCellFormat()));
-			wsheet.addCell(new Label(7,i,StringUtil.formatFloat(gjts.getYsje()), setCellFormat()));
-			wsheet.addCell(new Label(8,i,StringUtil.formatFloat(gjts.getWsje()), setCellFormat()));			
+			wsheet.addCell(new Label(7,i,StringUtil.formatBigDecimal(gjts.getYsje()), setCellFormat()));
+			wsheet.addCell(new Label(8,i,StringUtil.formatBigDecimal(gjts.getWsje()), setCellFormat()));			
 			i++;
 		}
 		//统计总数行
-		Float sum_tsje = (Float)criteria.setProjection(Projections.sum("tsje")).uniqueResult();
-		Float sum_ysje = (Float)criteria.setProjection(Projections.sum("ysje")).uniqueResult();
-		Float sum_wsje = (Float)criteria.setProjection(Projections.sum("wsje")).uniqueResult();
+		BigDecimal sum_tsje = (BigDecimal)criteria.setProjection(Projections.sum("tsje")).uniqueResult();
+		BigDecimal sum_ysje = (BigDecimal)criteria.setProjection(Projections.sum("ysje")).uniqueResult();
+		BigDecimal sum_wsje = (BigDecimal)criteria.setProjection(Projections.sum("wsje")).uniqueResult();
 		wsheet.addCell(new Label(0,i,"合计", setCellFormat()));
 		wsheet.mergeCells(0, i, 4, i);
-		wsheet.addCell(new Label(5,i,StringUtil.formatFloat(sum_tsje), setCellFormat()));	
+		wsheet.addCell(new Label(5,i,StringUtil.formatBigDecimal(sum_tsje), setCellFormat()));	
 		wsheet.addCell(new Label(6,i,"", setCellFormat()));
-		wsheet.addCell(new Label(7,i,StringUtil.formatFloat(sum_ysje), setCellFormat()));	
-		wsheet.addCell(new Label(8,i,StringUtil.formatFloat(sum_wsje), setCellFormat()));	
+		wsheet.addCell(new Label(7,i,StringUtil.formatBigDecimal(sum_ysje), setCellFormat()));	
+		wsheet.addCell(new Label(8,i,StringUtil.formatBigDecimal(sum_wsje), setCellFormat()));	
 		
 		wwb.write();
 		wwb.close();		

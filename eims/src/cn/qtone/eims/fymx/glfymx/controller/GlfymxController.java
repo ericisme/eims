@@ -1,5 +1,6 @@
 package cn.qtone.eims.fymx.glfymx.controller;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,19 +35,19 @@ public class GlfymxController extends SimpleManageController<Glfymx, GlfymxServi
 		//统计总数行，12项金额。
 		Criteria criteria2 = getDomainService().createCriteria(domainClass);
 		setSqlExpression(request, criteria2);	
-		map.put("sum_sbf", (Double)criteria2.setProjection(Projections.sum("sbf")).uniqueResult());
-		map.put("sum_sdf", (Double)criteria2.setProjection(Projections.sum("sdf")).uniqueResult());
-		map.put("sum_dhf", (Double)criteria2.setProjection(Projections.sum("dhf")).uniqueResult());
-		map.put("sum_bgf", (Double)criteria2.setProjection(Projections.sum("bgf")).uniqueResult());
-		map.put("sum_clf", (Double)criteria2.setProjection(Projections.sum("clf")).uniqueResult());
-		map.put("sum_qyf", (Double)criteria2.setProjection(Projections.sum("qyf")).uniqueResult());
-		map.put("sum_twf", (Double)criteria2.setProjection(Projections.sum("twf")).uniqueResult());
-		map.put("sum_kdf", (Double)criteria2.setProjection(Projections.sum("kdf")).uniqueResult());
-		map.put("sum_yhs", (Double)criteria2.setProjection(Projections.sum("yhs")).uniqueResult());
-		map.put("sum_zj",  (Double)criteria2.setProjection(Projections.sum("zj")) .uniqueResult());
-		map.put("sum_zcf", (Double)criteria2.setProjection(Projections.sum("zcf")).uniqueResult());
-		map.put("sum_jzf", (Double)criteria2.setProjection(Projections.sum("jzf")).uniqueResult());
-		map.put("sum_qt",  (Double)criteria2.setProjection(Projections.sum("qt")) .uniqueResult());
+		map.put("sum_sbf", (BigDecimal)criteria2.setProjection(Projections.sum("sbf")).uniqueResult());
+		map.put("sum_sdf", (BigDecimal)criteria2.setProjection(Projections.sum("sdf")).uniqueResult());
+		map.put("sum_dhf", (BigDecimal)criteria2.setProjection(Projections.sum("dhf")).uniqueResult());
+		map.put("sum_bgf", (BigDecimal)criteria2.setProjection(Projections.sum("bgf")).uniqueResult());
+		map.put("sum_clf", (BigDecimal)criteria2.setProjection(Projections.sum("clf")).uniqueResult());
+		map.put("sum_qyf", (BigDecimal)criteria2.setProjection(Projections.sum("qyf")).uniqueResult());
+		map.put("sum_twf", (BigDecimal)criteria2.setProjection(Projections.sum("twf")).uniqueResult());
+		map.put("sum_kdf", (BigDecimal)criteria2.setProjection(Projections.sum("kdf")).uniqueResult());
+		map.put("sum_yhs", (BigDecimal)criteria2.setProjection(Projections.sum("yhs")).uniqueResult());
+		map.put("sum_zj",  (BigDecimal)criteria2.setProjection(Projections.sum("zj")) .uniqueResult());
+		map.put("sum_zcf", (BigDecimal)criteria2.setProjection(Projections.sum("zcf")).uniqueResult());
+		map.put("sum_jzf", (BigDecimal)criteria2.setProjection(Projections.sum("jzf")).uniqueResult());
+		map.put("sum_qt",  (BigDecimal)criteria2.setProjection(Projections.sum("qt")) .uniqueResult());
 		//是否为最后一页
 		map.put("ifLastPage",EimsUtil.ifLastPage(curPage, page));
 		

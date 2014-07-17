@@ -1,6 +1,7 @@
 package cn.qtone.eims.khmx.controller;
 
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -51,7 +52,7 @@ public class YywsrController extends SimpleManageController<Yywsr, YywsrService>
 			//统计各数总和
 			Criteria criteria2 = getDomainService().createCriteria(domainClass);
 			setSqlExpression(request, criteria2);
-			map.put("sum_je", (Float)criteria2.setProjection(Projections.sum("je")).uniqueResult());	
+			map.put("sum_je", (BigDecimal)criteria2.setProjection(Projections.sum("je")).uniqueResult());	
 		}
 		
 		return new ModelAndView(getListPage(), map);
@@ -106,15 +107,15 @@ public class YywsrController extends SimpleManageController<Yywsr, YywsrService>
 			wsheet.addCell(new Label(0,i,DateUtil.formatDate(yywsr.getNy(), "yyyy-MM-dd"), setCellFormat()));
 			wsheet.addCell(new Label(1,i,yywsr.getDh(), setCellFormat()));
 			wsheet.addCell(new Label(2,i,yywsr.getZy(), setCellFormat()));
-			wsheet.addCell(new Label(3,i,StringUtil.formatFloat(yywsr.getJe()), setCellFormat()));
+			wsheet.addCell(new Label(3,i,StringUtil.formatBigDecimal(yywsr.getJe()), setCellFormat()));
 			
 			i++;
 		}
 		//统计总数行(合计行)
-		Float sum_je = (Float)criteria.setProjection(Projections.sum("je")).uniqueResult();
+		BigDecimal sum_je = (BigDecimal)criteria.setProjection(Projections.sum("je")).uniqueResult();
 		wsheet.addCell(new Label(0,i,"合计", setCellFormat()));
 		wsheet.mergeCells(0, i, 2, i);
-		wsheet.addCell(new Label(3,i,StringUtil.formatFloat(sum_je), setCellFormat()));
+		wsheet.addCell(new Label(3,i,StringUtil.formatBigDecimal(sum_je), setCellFormat()));
 		
 		wwb.write();
 		wwb.close();		

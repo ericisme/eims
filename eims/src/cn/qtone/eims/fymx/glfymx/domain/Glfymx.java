@@ -1,5 +1,6 @@
 package cn.qtone.eims.fymx.glfymx.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -21,22 +22,22 @@ public class Glfymx {
 	
 	private String fyrq;	//费用日期（年-月-日）
 	
-	private Double gz;	//工资
-	private Double sbf;	//社保费
-	private Double zjf;	//折旧费
-	private Double sdf;	//水电费
-	private Double dhf;	//电话费
-	private Double bgf;	//办公费
-	private Double clf;	//差旅费
-	private Double qyf;	//汽油费
-	private Double twf;	//堤围费
-	private Double kdf;	//快递费
-	private Double yhs;	//印花税
-	private Double zj;	//租金
-	private Double zcf;	//租车费
-	private Double jzf;	//建账费
-	private Double qt;	//其他
-	private Double hj;	//合计
+	private BigDecimal gz;	//工资
+	private BigDecimal sbf;	//社保费
+	private BigDecimal zjf;	//折旧费
+	private BigDecimal sdf;	//水电费
+	private BigDecimal dhf;	//电话费
+	private BigDecimal bgf;	//办公费
+	private BigDecimal clf;	//差旅费
+	private BigDecimal qyf;	//汽油费
+	private BigDecimal twf;	//堤围费
+	private BigDecimal kdf;	//快递费
+	private BigDecimal yhs;	//印花税
+	private BigDecimal zj;	//租金
+	private BigDecimal zcf;	//租车费
+	private BigDecimal jzf;	//建账费
+	private BigDecimal qt;	//其他
+	private BigDecimal hj;	//合计
 	
 	private Date lrsj;	    //录入时间
 
@@ -58,100 +59,100 @@ public class Glfymx {
 	public void setFyrq(String fyrq) {
 		this.fyrq = fyrq;
 	}
-	public Double getGz() {
+	public BigDecimal getGz() {
 		return gz;
 	}
-	public void setGz(Double gz) {
+	public void setGz(BigDecimal gz) {
 		this.gz = gz;
 	}
-	public Double getSbf() {
+	public BigDecimal getSbf() {
 		return sbf;
 	}
-	public void setSbf(Double sbf) {
+	public void setSbf(BigDecimal sbf) {
 		this.sbf = sbf;
 	}
-	public Double getZjf() {
+	public BigDecimal getZjf() {
 		return zjf;
 	}
-	public void setZjf(Double zjf) {
+	public void setZjf(BigDecimal zjf) {
 		this.zjf = zjf;
 	}
-	public Double getSdf() {
+	public BigDecimal getSdf() {
 		return sdf;
 	}
-	public void setSdf(Double sdf) {
+	public void setSdf(BigDecimal sdf) {
 		this.sdf = sdf;
 	}
-	public Double getDhf() {
+	public BigDecimal getDhf() {
 		return dhf;
 	}
-	public void setDhf(Double dhf) {
+	public void setDhf(BigDecimal dhf) {
 		this.dhf = dhf;
 	}
-	public Double getBgf() {
+	public BigDecimal getBgf() {
 		return bgf;
 	}
-	public void setBgf(Double bgf) {
+	public void setBgf(BigDecimal bgf) {
 		this.bgf = bgf;
 	}
-	public Double getClf() {
+	public BigDecimal getClf() {
 		return clf;
 	}
-	public void setClf(Double clf) {
+	public void setClf(BigDecimal clf) {
 		this.clf = clf;
 	}
-	public Double getQyf() {
+	public BigDecimal getQyf() {
 		return qyf;
 	}
-	public void setQyf(Double qyf) {
+	public void setQyf(BigDecimal qyf) {
 		this.qyf = qyf;
 	}
-	public Double getTwf() {
+	public BigDecimal getTwf() {
 		return twf;
 	}
-	public void setTwf(Double twf) {
+	public void setTwf(BigDecimal twf) {
 		this.twf = twf;
 	}
-	public Double getKdf() {
+	public BigDecimal getKdf() {
 		return kdf;
 	}
-	public void setKdf(Double kdf) {
+	public void setKdf(BigDecimal kdf) {
 		this.kdf = kdf;
 	}
-	public Double getYhs() {
+	public BigDecimal getYhs() {
 		return yhs;
 	}
-	public void setYhs(Double yhs) {
+	public void setYhs(BigDecimal yhs) {
 		this.yhs = yhs;
 	}
-	public Double getZj() {
+	public BigDecimal getZj() {
 		return zj;
 	}
-	public void setZj(Double zj) {
+	public void setZj(BigDecimal zj) {
 		this.zj = zj;
 	}
-	public Double getZcf() {
+	public BigDecimal getZcf() {
 		return zcf;
 	}
-	public void setZcf(Double zcf) {
+	public void setZcf(BigDecimal zcf) {
 		this.zcf = zcf;
 	}
-	public Double getJzf() {
+	public BigDecimal getJzf() {
 		return jzf;
 	}
-	public void setJzf(Double jzf) {
+	public void setJzf(BigDecimal jzf) {
 		this.jzf = jzf;
 	}
-	public Double getQt() {
+	public BigDecimal getQt() {
 		return qt;
 	}
-	public void setQt(Double qt) {
+	public void setQt(BigDecimal qt) {
 		this.qt = qt;
 	}
-	public Double getHj() {
+	public BigDecimal getHj() {
 		return hj;
 	}
-	public void setHj(Double hj) {
+	public void setHj(BigDecimal hj) {
 		this.hj = hj;
 	}
 	public Date getLrsj() {

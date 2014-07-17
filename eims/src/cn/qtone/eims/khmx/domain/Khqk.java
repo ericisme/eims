@@ -1,5 +1,6 @@
 package cn.qtone.eims.khmx.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -23,34 +24,34 @@ public class Khqk {
 	private String dh; //单号
 	private String khmc; //客户名称
 	private Date bgrq; //报关日期	
-	private Float bgje = 0f; //报关金额
-	private Float dlf = 0f; //代理费
-	private Float bgf = 0f; //报关费
-	private Float gjf = 0f; //港建费
-	private Float sjf = 0f; //商检费
-	private Float gj = 0f; //国检
-	private Float xyf = 0f; //续页费
-	private Float lgf = 0f; //包柜费
-	private Float tcf = 0f; //拖车费
-	private Float smf = 0f; //扫描费
-	private Float cgf = 0f; //查柜费
-	private Float xzf = 0f; //熏蒸费
-	private Float jq = 0f; //加签
-	private Float qt = 0f; //其他
+	private BigDecimal bgje = new BigDecimal(0); //报关金额
+	private BigDecimal dlf = new BigDecimal(0); //代理费
+	private BigDecimal bgf = new BigDecimal(0); //报关费
+	private BigDecimal gjf = new BigDecimal(0); //港建费
+	private BigDecimal sjf = new BigDecimal(0); //商检费
+	private BigDecimal gj = new BigDecimal(0); //国检
+	private BigDecimal xyf = new BigDecimal(0); //续页费
+	private BigDecimal lgf = new BigDecimal(0); //包柜费
+	private BigDecimal tcf = new BigDecimal(0); //拖车费
+	private BigDecimal smf = new BigDecimal(0); //扫描费
+	private BigDecimal cgf = new BigDecimal(0); //查柜费
+	private BigDecimal xzf = new BigDecimal(0); //熏蒸费
+	private BigDecimal jq = new BigDecimal(0); //加签
+	private BigDecimal qt = new BigDecimal(0); //其他
 	private String skrq; //收款日期
-	private Float ysje = 0f; //已收金额
-	private Float wsje = 0f; //未收金额
-	private Float hj = 0f; //合计
+	private BigDecimal ysje = new BigDecimal(0); //已收金额
+	private BigDecimal wsje = new BigDecimal(0); //未收金额
+	private BigDecimal hj = new BigDecimal(0); //合计
 	
-	private Float xyzf = 0f; //信用证费
-	private Float cdzf = 0f; //产地证费
-	private Float kbdzf = 0f; //空白单证费
-	private Float kdf = 0f; //快递费
-	private Float bcf = 0f; //驳船费
-	private Float ftf = 0f; //封条费
-	private Float cdf = 0f; //仓单费
-	private Float gpf = 0f; //过磅费
-	private Float hzptf = 0f; //换证凭条费
+	private BigDecimal xyzf = new BigDecimal(0); //信用证费
+	private BigDecimal cdzf = new BigDecimal(0); //产地证费
+	private BigDecimal kbdzf = new BigDecimal(0); //空白单证费
+	private BigDecimal kdf = new BigDecimal(0); //快递费
+	private BigDecimal bcf = new BigDecimal(0); //驳船费
+	private BigDecimal ftf = new BigDecimal(0); //封条费
+	private BigDecimal cdf = new BigDecimal(0); //仓单费
+	private BigDecimal gpf = new BigDecimal(0); //过磅费
+	private BigDecimal hzptf = new BigDecimal(0); //换证凭条费
 	
 	private Date lrsj;	    //录入时间
 
@@ -88,107 +89,107 @@ public class Khqk {
 		this.bgdh = bgdh;
 	}
 
-	public Float getBgje() {
+	public BigDecimal getBgje() {
 		return bgje;
 	}
 
-	public void setBgje(Float bgje) {
+	public void setBgje(BigDecimal bgje) {
 		this.bgje = bgje;
 	}
 
-	public Float getDlf() {
+	public BigDecimal getDlf() {
 		return dlf;
 	}
 
-	public void setDlf(Float dlf) {
+	public void setDlf(BigDecimal dlf) {
 		this.dlf = dlf;
 	}
 
-	public Float getBgf() {
+	public BigDecimal getBgf() {
 		return bgf;
 	}
 
-	public void setBgf(Float bgf) {
+	public void setBgf(BigDecimal bgf) {
 		this.bgf = bgf;
 	}
 
-	public Float getGjf() {
+	public BigDecimal getGjf() {
 		return gjf;
 	}
 
-	public void setGjf(Float gjf) {
+	public void setGjf(BigDecimal gjf) {
 		this.gjf = gjf;
 	}
 
-	public Float getSjf() {
+	public BigDecimal getSjf() {
 		return sjf;
 	}
 
-	public void setSjf(Float sjf) {
+	public void setSjf(BigDecimal sjf) {
 		this.sjf = sjf;
 	}
 
-	public Float getXyf() {
+	public BigDecimal getXyf() {
 		return xyf;
 	}
 
-	public void setXyf(Float xyf) {
+	public void setXyf(BigDecimal xyf) {
 		this.xyf = xyf;
 	}
 
-	public Float getLgf() {
+	public BigDecimal getLgf() {
 		return lgf;
 	}
 
-	public void setLgf(Float lgf) {
+	public void setLgf(BigDecimal lgf) {
 		this.lgf = lgf;
 	}
 
-	public Float getTcf() {
+	public BigDecimal getTcf() {
 		return tcf;
 	}
 
-	public void setTcf(Float tcf) {
+	public void setTcf(BigDecimal tcf) {
 		this.tcf = tcf;
 	}
 
-	public Float getSmf() {
+	public BigDecimal getSmf() {
 		return smf;
 	}
 
-	public void setSmf(Float smf) {
+	public void setSmf(BigDecimal smf) {
 		this.smf = smf;
 	}
 
-	public Float getCgf() {
+	public BigDecimal getCgf() {
 		return cgf;
 	}
 
-	public void setCgf(Float cgf) {
+	public void setCgf(BigDecimal cgf) {
 		this.cgf = cgf;
 	}
 
-	public Float getXzf() {
+	public BigDecimal getXzf() {
 		return xzf;
 	}
 
-	public void setXzf(Float xzf) {
+	public void setXzf(BigDecimal xzf) {
 		this.xzf = xzf;
 	}
 
-	public Float getJq() {
+	public BigDecimal getJq() {
 		return jq;
 	}
 
-	public void setJq(Float jq) {
+	public void setJq(BigDecimal jq) {
 		this.jq = jq;
 	}
 
-	public Float getQt() {
+	public BigDecimal getQt() {
 		return qt;
 	}
 
-	public void setQt(Float qt) {
+	public void setQt(BigDecimal qt) {
 		this.qt = qt;
 	}
 
@@ -200,19 +201,19 @@ public class Khqk {
 		this.skrq = skrq;
 	}
 
-	public Float getYsje() {
+	public BigDecimal getYsje() {
 		return ysje;
 	}
 
-	public void setYsje(Float ysje) {
+	public void setYsje(BigDecimal ysje) {
 		this.ysje = ysje;
 	}
 
-	public Float getWsje() {
+	public BigDecimal getWsje() {
 		return wsje;
 	}
 
-	public void setWsje(Float wsje) {
+	public void setWsje(BigDecimal wsje) {
 		this.wsje = wsje;
 	}
 
@@ -224,11 +225,11 @@ public class Khqk {
 		this.lrsj = lrsj;
 	}
 
-	public Float getGj() {
+	public BigDecimal getGj() {
 		return gj;
 	}
 
-	public void setGj(Float gj) {
+	public void setGj(BigDecimal gj) {
 		this.gj = gj;
 	}
 
@@ -240,83 +241,83 @@ public class Khqk {
 		this.khmc = khmc;
 	}
 
-	public Float getHj() {
+	public BigDecimal getHj() {
 		return hj;
 	}
 
-	public void setHj(Float hj) {
+	public void setHj(BigDecimal hj) {
 		this.hj = hj;
 	}
 
-	public Float getXyzf() {
+	public BigDecimal getXyzf() {
 		return xyzf;
 	}
 
-	public void setXyzf(Float xyzf) {
+	public void setXyzf(BigDecimal xyzf) {
 		this.xyzf = xyzf;
 	}
 
-	public Float getCdzf() {
+	public BigDecimal getCdzf() {
 		return cdzf;
 	}
 
-	public void setCdzf(Float cdzf) {
+	public void setCdzf(BigDecimal cdzf) {
 		this.cdzf = cdzf;
 	}
 
-	public Float getKbdzf() {
+	public BigDecimal getKbdzf() {
 		return kbdzf;
 	}
 
-	public void setKbdzf(Float kbdzf) {
+	public void setKbdzf(BigDecimal kbdzf) {
 		this.kbdzf = kbdzf;
 	}
 
-	public Float getKdf() {
+	public BigDecimal getKdf() {
 		return kdf;
 	}
 
-	public void setKdf(Float kdf) {
+	public void setKdf(BigDecimal kdf) {
 		this.kdf = kdf;
 	}
 
-	public Float getBcf() {
+	public BigDecimal getBcf() {
 		return bcf;
 	}
 
-	public void setBcf(Float bcf) {
+	public void setBcf(BigDecimal bcf) {
 		this.bcf = bcf;
 	}
 
-	public Float getFtf() {
+	public BigDecimal getFtf() {
 		return ftf;
 	}
 
-	public void setFtf(Float ftf) {
+	public void setFtf(BigDecimal ftf) {
 		this.ftf = ftf;
 	}
 
-	public Float getCdf() {
+	public BigDecimal getCdf() {
 		return cdf;
 	}
 
-	public void setCdf(Float cdf) {
+	public void setCdf(BigDecimal cdf) {
 		this.cdf = cdf;
 	}
 
-	public Float getGpf() {
+	public BigDecimal getGpf() {
 		return gpf;
 	}
 
-	public void setGpf(Float gpf) {
+	public void setGpf(BigDecimal gpf) {
 		this.gpf = gpf;
 	}
 
-	public Float getHzptf() {
+	public BigDecimal getHzptf() {
 		return hzptf;
 	}
 
-	public void setHzptf(Float hzptf) {
+	public void setHzptf(BigDecimal hzptf) {
 		this.hzptf = hzptf;
 	}
 	

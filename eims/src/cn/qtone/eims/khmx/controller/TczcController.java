@@ -1,6 +1,7 @@
 package cn.qtone.eims.khmx.controller;
 
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -52,16 +53,16 @@ public class TczcController extends SimpleManageController<Tczc, TczcService>{
 			//统计各数总和
 			Criteria criteria2 = getDomainService().createCriteria(domainClass);
 			setSqlExpression(request, criteria2);
-			map.put("sum_bgje", (Float)criteria2.setProjection(Projections.sum("bgje")).uniqueResult());
-			map.put("sum_tcf", (Float)criteria2.setProjection(Projections.sum("tcf")).uniqueResult());
-			map.put("sum_ydtgf", (Float)criteria2.setProjection(Projections.sum("ydtgf")).uniqueResult());
-			map.put("sum_gpf", (Float)criteria2.setProjection(Projections.sum("gpf")).uniqueResult());	
-			map.put("sum_ldzgf", (Float)criteria2.setProjection(Projections.sum("ldzgf")).uniqueResult());
-			map.put("sum_ddf", (Float)criteria2.setProjection(Projections.sum("ddf")).uniqueResult());
-			map.put("sum_zgf", (Float)criteria2.setProjection(Projections.sum("zgf")).uniqueResult());
-			map.put("sum_fyjehj", (Float)criteria2.setProjection(Projections.sum("fyjehj")).uniqueResult());
-			map.put("sum_zfje", (Float)criteria2.setProjection(Projections.sum("zfje")).uniqueResult());
-			map.put("sum_wfje", (Float)criteria2.setProjection(Projections.sum("wfje")).uniqueResult());
+			map.put("sum_bgje", (BigDecimal)criteria2.setProjection(Projections.sum("bgje")).uniqueResult());
+			map.put("sum_tcf", (BigDecimal)criteria2.setProjection(Projections.sum("tcf")).uniqueResult());
+			map.put("sum_ydtgf", (BigDecimal)criteria2.setProjection(Projections.sum("ydtgf")).uniqueResult());
+			map.put("sum_gpf", (BigDecimal)criteria2.setProjection(Projections.sum("gpf")).uniqueResult());	
+			map.put("sum_ldzgf", (BigDecimal)criteria2.setProjection(Projections.sum("ldzgf")).uniqueResult());
+			map.put("sum_ddf", (BigDecimal)criteria2.setProjection(Projections.sum("ddf")).uniqueResult());
+			map.put("sum_zgf", (BigDecimal)criteria2.setProjection(Projections.sum("zgf")).uniqueResult());
+			map.put("sum_fyjehj", (BigDecimal)criteria2.setProjection(Projections.sum("fyjehj")).uniqueResult());
+			map.put("sum_zfje", (BigDecimal)criteria2.setProjection(Projections.sum("zfje")).uniqueResult());
+			map.put("sum_wfje", (BigDecimal)criteria2.setProjection(Projections.sum("wfje")).uniqueResult());
 		}
 		
 		return new ModelAndView(getListPage(), map);
@@ -69,7 +70,8 @@ public class TczcController extends SimpleManageController<Tczc, TczcService>{
 	
 	public ModelAndView save(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Tczc entity = (Tczc)getCommandObject(request, getDomainClass());
-		Float fyjehj = entity.getTcf() + entity.getYdtgf() + entity.getGpf() + entity.getLdzgf() + entity.getDdf() + entity.getZgf();
+		//BigDecimal fyjehj = entity.getTcf() + entity.getYdtgf() + entity.getGpf() + entity.getLdzgf() + entity.getDdf() + entity.getZgf();
+		BigDecimal fyjehj = entity.getTcf().add(entity.getYdtgf()).add(entity.getGpf()).add(entity.getLdzgf()).add(entity.getDdf()).add(entity.getZgf());
 		entity.setFyjehj(fyjehj);
 		entity.setBgrq(DateUtil.parseSimpleDate(request.getParameter("_bgrq"))); //转成为日期格式
 		
@@ -142,48 +144,48 @@ public class TczcController extends SimpleManageController<Tczc, TczcService>{
 			wsheet.addCell(new Label(1,i,tczc.getKhmc(), setCellFormat()));
 			wsheet.addCell(new Label(2,i,tczc.getBgdh(), setCellFormat()));
 			wsheet.addCell(new Label(3,i,DateUtil.formatDate(tczc.getBgrq(), "yyyy-MM-dd"), setCellFormat()));
-			wsheet.addCell(new Label(4,i,StringUtil.formatFloat(tczc.getBgje()), setCellFormat()));
+			wsheet.addCell(new Label(4,i,StringUtil.formatBigDecimal(tczc.getBgje()), setCellFormat()));
 			wsheet.addCell(new Label(5,i,tczc.getGh(), setCellFormat()));
 			wsheet.addCell(new Label(6,i,tczc.getQyg(), setCellFormat()));
-			wsheet.addCell(new Label(7,i,StringUtil.formatFloat(tczc.getTcf()), setCellFormat()));
-			wsheet.addCell(new Label(8,i,StringUtil.formatFloat(tczc.getYdtgf()), setCellFormat()));
-			wsheet.addCell(new Label(9,i,StringUtil.formatFloat(tczc.getGpf()), setCellFormat()));
-			wsheet.addCell(new Label(10,i,StringUtil.formatFloat(tczc.getLdzgf()), setCellFormat()));
-			wsheet.addCell(new Label(11,i,StringUtil.formatFloat(tczc.getDdf()), setCellFormat()));
-			wsheet.addCell(new Label(12,i,StringUtil.formatFloat(tczc.getZgf()), setCellFormat()));
-			wsheet.addCell(new Label(13,i,StringUtil.formatFloat(tczc.getFyjehj()), setCellFormat()));
+			wsheet.addCell(new Label(7,i,StringUtil.formatBigDecimal(tczc.getTcf()), setCellFormat()));
+			wsheet.addCell(new Label(8,i,StringUtil.formatBigDecimal(tczc.getYdtgf()), setCellFormat()));
+			wsheet.addCell(new Label(9,i,StringUtil.formatBigDecimal(tczc.getGpf()), setCellFormat()));
+			wsheet.addCell(new Label(10,i,StringUtil.formatBigDecimal(tczc.getLdzgf()), setCellFormat()));
+			wsheet.addCell(new Label(11,i,StringUtil.formatBigDecimal(tczc.getDdf()), setCellFormat()));
+			wsheet.addCell(new Label(12,i,StringUtil.formatBigDecimal(tczc.getZgf()), setCellFormat()));
+			wsheet.addCell(new Label(13,i,StringUtil.formatBigDecimal(tczc.getFyjehj()), setCellFormat()));
 			wsheet.addCell(new Label(14,i,tczc.getZfrq(), setCellFormat()));
-			wsheet.addCell(new Label(15,i,StringUtil.formatFloat(tczc.getZfje()), setCellFormat()));
-			wsheet.addCell(new Label(16,i,StringUtil.formatFloat(tczc.getWfje()), setCellFormat()));			
+			wsheet.addCell(new Label(15,i,StringUtil.formatBigDecimal(tczc.getZfje()), setCellFormat()));
+			wsheet.addCell(new Label(16,i,StringUtil.formatBigDecimal(tczc.getWfje()), setCellFormat()));			
 			i++;
 		}
 		
 		//统计各数总和
-		Float sum_bgje = (Float)criteria.setProjection(Projections.sum("bgje")).uniqueResult();
-		Float sum_tcf = (Float)criteria.setProjection(Projections.sum("tcf")).uniqueResult();
-		Float sum_ydtgf = (Float)criteria.setProjection(Projections.sum("ydtgf")).uniqueResult();
-		Float sum_gpf = (Float)criteria.setProjection(Projections.sum("gpf")).uniqueResult();
-		Float sum_ldzgf = (Float)criteria.setProjection(Projections.sum("ldzgf")).uniqueResult();
-		Float sum_ddf = (Float)criteria.setProjection(Projections.sum("ddf")).uniqueResult();
-		Float sum_zgf = (Float)criteria.setProjection(Projections.sum("zgf")).uniqueResult();
-		Float sum_fyjehj = (Float)criteria.setProjection(Projections.sum("fyjehj")).uniqueResult();
-		Float sum_zfje = (Float)criteria.setProjection(Projections.sum("zfje")).uniqueResult();
-		Float sum_wfje = (Float)criteria.setProjection(Projections.sum("wfje")).uniqueResult();
+		BigDecimal sum_bgje = (BigDecimal)criteria.setProjection(Projections.sum("bgje")).uniqueResult();
+		BigDecimal sum_tcf = (BigDecimal)criteria.setProjection(Projections.sum("tcf")).uniqueResult();
+		BigDecimal sum_ydtgf = (BigDecimal)criteria.setProjection(Projections.sum("ydtgf")).uniqueResult();
+		BigDecimal sum_gpf = (BigDecimal)criteria.setProjection(Projections.sum("gpf")).uniqueResult();
+		BigDecimal sum_ldzgf = (BigDecimal)criteria.setProjection(Projections.sum("ldzgf")).uniqueResult();
+		BigDecimal sum_ddf = (BigDecimal)criteria.setProjection(Projections.sum("ddf")).uniqueResult();
+		BigDecimal sum_zgf = (BigDecimal)criteria.setProjection(Projections.sum("zgf")).uniqueResult();
+		BigDecimal sum_fyjehj = (BigDecimal)criteria.setProjection(Projections.sum("fyjehj")).uniqueResult();
+		BigDecimal sum_zfje = (BigDecimal)criteria.setProjection(Projections.sum("zfje")).uniqueResult();
+		BigDecimal sum_wfje = (BigDecimal)criteria.setProjection(Projections.sum("wfje")).uniqueResult();
 		wsheet.addCell(new Label(0,i,"合计", setCellFormat()));
 		wsheet.mergeCells(0, i, 3, i);
-		wsheet.addCell(new Label(4,i,StringUtil.formatFloat(sum_bgje), setCellFormat()));
+		wsheet.addCell(new Label(4,i,StringUtil.formatBigDecimal(sum_bgje), setCellFormat()));
 		wsheet.addCell(new Label(5,i,"", setCellFormat()));
 		wsheet.addCell(new Label(6,i,"", setCellFormat()));
-		wsheet.addCell(new Label(7,i,StringUtil.formatFloat(sum_tcf), setCellFormat()));
-		wsheet.addCell(new Label(8,i,StringUtil.formatFloat(sum_ydtgf), setCellFormat()));
-		wsheet.addCell(new Label(9,i,StringUtil.formatFloat(sum_gpf), setCellFormat()));
-		wsheet.addCell(new Label(10,i,StringUtil.formatFloat(sum_ldzgf), setCellFormat()));
-		wsheet.addCell(new Label(11,i,StringUtil.formatFloat(sum_ddf), setCellFormat()));
-		wsheet.addCell(new Label(12,i,StringUtil.formatFloat(sum_zgf), setCellFormat()));
-		wsheet.addCell(new Label(13,i,StringUtil.formatFloat(sum_fyjehj), setCellFormat()));
+		wsheet.addCell(new Label(7,i,StringUtil.formatBigDecimal(sum_tcf), setCellFormat()));
+		wsheet.addCell(new Label(8,i,StringUtil.formatBigDecimal(sum_ydtgf), setCellFormat()));
+		wsheet.addCell(new Label(9,i,StringUtil.formatBigDecimal(sum_gpf), setCellFormat()));
+		wsheet.addCell(new Label(10,i,StringUtil.formatBigDecimal(sum_ldzgf), setCellFormat()));
+		wsheet.addCell(new Label(11,i,StringUtil.formatBigDecimal(sum_ddf), setCellFormat()));
+		wsheet.addCell(new Label(12,i,StringUtil.formatBigDecimal(sum_zgf), setCellFormat()));
+		wsheet.addCell(new Label(13,i,StringUtil.formatBigDecimal(sum_fyjehj), setCellFormat()));
 		wsheet.addCell(new Label(14,i,"", setCellFormat()));
-		wsheet.addCell(new Label(15,i,StringUtil.formatFloat(sum_zfje), setCellFormat()));
-		wsheet.addCell(new Label(16,i,StringUtil.formatFloat(sum_wfje), setCellFormat()));
+		wsheet.addCell(new Label(15,i,StringUtil.formatBigDecimal(sum_zfje), setCellFormat()));
+		wsheet.addCell(new Label(16,i,StringUtil.formatBigDecimal(sum_wfje), setCellFormat()));
 		
 		wwb.write();
 		wwb.close();		

@@ -8,15 +8,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.Transient;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.time.DateUtils;
-import org.hibernate.Session;
-import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
@@ -360,7 +356,7 @@ public class PzController extends SimpleManageController<Pz, PzService>{
 			Fl fl4 = new Fl();
 			Khqk khqk = khqkService.get(id);
 			String bgdh = khqk.getBgdh();
-			Float hj = khqk.getHj();
+			BigDecimal hj = khqk.getHj();
 			Gjts gjts = gjtsService.findUniqueBy("bgdh", bgdh);
 			Khts khts = khtsService.findUniqueBy("bgdh", bgdh);			
 			//fl1
@@ -375,7 +371,7 @@ public class PzController extends SimpleManageController<Pz, PzService>{
 				}else{
 					fl1.setKmgl(kmgl_blank);
 				}
-				fl1.setJfje(new BigDecimal(gjts.getTsje()));
+				fl1.setJfje(gjts.getTsje());
 			}			
 			//fl2
 			if(khts!=null){
@@ -389,7 +385,7 @@ public class PzController extends SimpleManageController<Pz, PzService>{
 				}else{
 					fl2.setKmgl(kmgl_blank);
 				}
-				fl2.setDfje(new BigDecimal(khts.getTsje()));
+				fl2.setDfje(khts.getTsje());
 			}
 			//fl3
 			fl3.setId(0);
@@ -402,13 +398,13 @@ public class PzController extends SimpleManageController<Pz, PzService>{
 			}else{
 				fl3.setKmgl(kmgl_blank);
 			}
-			fl3.setJfje(new BigDecimal(khqk.getHj()));
+			fl3.setJfje(khqk.getHj());
 			//fl4
 			fl4.setId(0);
 			//报关日期，客户名称，退税款及代理费收入
 			fl4.setZy(DateUtil.formatDate(khqk.getBgrq(), "yyyy-MM-dd")+","+khqk.getKhmc()+",退税款及代理费收入 ");
 			fl4.setKmgl(kmglService.findUniqueBy("kmdh", "501"));
-			fl4.setDfje(new BigDecimal(khqk.getHj()));
+			fl4.setDfje(khqk.getHj());
 			
 			//add入fls.
 			fls.add(fl1);

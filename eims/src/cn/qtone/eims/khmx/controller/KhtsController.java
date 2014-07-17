@@ -1,6 +1,7 @@
 package cn.qtone.eims.khmx.controller;
 
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -81,11 +82,11 @@ public class KhtsController extends SimpleManageController<Khts, KhtsService>{
 			//统计各数总和
 			Criteria criteria2 = getDomainService().createCriteria(domainClass);
 			setSqlExpression(request, criteria2);
-			map.put("sum_bgje", (Float)criteria2.setProjection(Projections.sum("bgje")).uniqueResult());
-			map.put("sum_fpje", (Float)criteria2.setProjection(Projections.sum("fpje")).uniqueResult());
-			map.put("sum_tsje", (Float)criteria2.setProjection(Projections.sum("tsje")).uniqueResult());	
-			map.put("sum_yfje", (Float)criteria2.setProjection(Projections.sum("yfje")).uniqueResult());	
-			map.put("sum_wfje", (Float)criteria2.setProjection(Projections.sum("wfje")).uniqueResult());	
+			map.put("sum_bgje", (BigDecimal)criteria2.setProjection(Projections.sum("bgje")).uniqueResult());
+			map.put("sum_fpje", (BigDecimal)criteria2.setProjection(Projections.sum("fpje")).uniqueResult());
+			map.put("sum_tsje", (BigDecimal)criteria2.setProjection(Projections.sum("tsje")).uniqueResult());	
+			map.put("sum_yfje", (BigDecimal)criteria2.setProjection(Projections.sum("yfje")).uniqueResult());	
+			map.put("sum_wfje", (BigDecimal)criteria2.setProjection(Projections.sum("wfje")).uniqueResult());	
 		}
 		
 		return new ModelAndView(getListPage(), map);
@@ -150,8 +151,8 @@ public class KhtsController extends SimpleManageController<Khts, KhtsService>{
 			map.put("dh", khts.getDh());
 			map.put("khmc", khts.getKhmc());
 			map.put("bgrq", DateUtil.formatDate(khts.getBgrq(), "yyyy-MM-dd"));
-			map.put("bgje", StringUtil.formatFloat(khts.getBgje()));
-			map.put("tsje", StringUtil.formatFloat(khts.getTsje()));
+			map.put("bgje", StringUtil.formatBigDecimal(khts.getBgje()));
+			map.put("tsje", StringUtil.formatBigDecimal(khts.getTsje()));
 		}
 				
 		AjaxView view = new AjaxView(flag);
@@ -191,32 +192,32 @@ public class KhtsController extends SimpleManageController<Khts, KhtsService>{
 			wsheet.addCell(new Label(1,i,khts.getKhmc(), setCellFormat()));
 			wsheet.addCell(new Label(2,i,khts.getBgdh(), setCellFormat()));
 			wsheet.addCell(new Label(3,i,DateUtil.formatDate(khts.getBgrq(), "yyyy-MM-dd"), setCellFormat()));
-			wsheet.addCell(new Label(4,i,StringUtil.formatFloat(khts.getBgje()), setCellFormat()));
-			wsheet.addCell(new Label(5,i,StringUtil.formatFloat(khts.getFpje()), setCellFormat()));
+			wsheet.addCell(new Label(4,i,StringUtil.formatBigDecimal(khts.getBgje()), setCellFormat()));
+			wsheet.addCell(new Label(5,i,StringUtil.formatBigDecimal(khts.getFpje()), setCellFormat()));
 			wsheet.addCell(new Label(6,i,khts.getSfprq(), setCellFormat()));
-			wsheet.addCell(new Label(7,i,StringUtil.formatFloat(khts.getTsje()), setCellFormat()));
+			wsheet.addCell(new Label(7,i,StringUtil.formatBigDecimal(khts.getTsje()), setCellFormat()));
 			wsheet.addCell(new Label(8,i,khts.getZftsrq(), setCellFormat()));
-			wsheet.addCell(new Label(9,i,StringUtil.formatFloat(khts.getYfje()), setCellFormat()));
-			wsheet.addCell(new Label(10,i,StringUtil.formatFloat(khts.getWfje()), setCellFormat()));
+			wsheet.addCell(new Label(9,i,StringUtil.formatBigDecimal(khts.getYfje()), setCellFormat()));
+			wsheet.addCell(new Label(10,i,StringUtil.formatBigDecimal(khts.getWfje()), setCellFormat()));
 			wsheet.addCell(new Label(11,i,khts.getFkdh(), setCellFormat()));		
 			i++;
 		}
 		
 		//统计总数行
-		Float sum_bgje = (Float)criteria.setProjection(Projections.sum("bgje")).uniqueResult();
-		Float sum_fpje = (Float)criteria.setProjection(Projections.sum("fpje")).uniqueResult();
-		Float sum_tsje = (Float)criteria.setProjection(Projections.sum("tsje")).uniqueResult();
-		Float sum_yfje = (Float)criteria.setProjection(Projections.sum("yfje")).uniqueResult();
-		Float sum_wfje = (Float)criteria.setProjection(Projections.sum("wfje")).uniqueResult();
+		BigDecimal sum_bgje = (BigDecimal)criteria.setProjection(Projections.sum("bgje")).uniqueResult();
+		BigDecimal sum_fpje = (BigDecimal)criteria.setProjection(Projections.sum("fpje")).uniqueResult();
+		BigDecimal sum_tsje = (BigDecimal)criteria.setProjection(Projections.sum("tsje")).uniqueResult();
+		BigDecimal sum_yfje = (BigDecimal)criteria.setProjection(Projections.sum("yfje")).uniqueResult();
+		BigDecimal sum_wfje = (BigDecimal)criteria.setProjection(Projections.sum("wfje")).uniqueResult();
 		wsheet.addCell(new Label(0,i,"合计", setCellFormat()));
 		wsheet.mergeCells(0, i, 3, i);
-		wsheet.addCell(new Label(4,i,StringUtil.formatFloat(sum_bgje), setCellFormat()));	
-		wsheet.addCell(new Label(5,i,StringUtil.formatFloat(sum_fpje), setCellFormat()));	
+		wsheet.addCell(new Label(4,i,StringUtil.formatBigDecimal(sum_bgje), setCellFormat()));	
+		wsheet.addCell(new Label(5,i,StringUtil.formatBigDecimal(sum_fpje), setCellFormat()));	
 		wsheet.addCell(new Label(6,i,"", setCellFormat()));
-		wsheet.addCell(new Label(7,i,StringUtil.formatFloat(sum_tsje), setCellFormat()));	
+		wsheet.addCell(new Label(7,i,StringUtil.formatBigDecimal(sum_tsje), setCellFormat()));	
 		wsheet.addCell(new Label(8,i,"", setCellFormat()));
-		wsheet.addCell(new Label(9,i,StringUtil.formatFloat(sum_yfje), setCellFormat()));	
-		wsheet.addCell(new Label(10,i,StringUtil.formatFloat(sum_wfje), setCellFormat()));
+		wsheet.addCell(new Label(9,i,StringUtil.formatBigDecimal(sum_yfje), setCellFormat()));	
+		wsheet.addCell(new Label(10,i,StringUtil.formatBigDecimal(sum_wfje), setCellFormat()));
 		wsheet.addCell(new Label(11,i,"", setCellFormat()));
 		
 		wwb.write();

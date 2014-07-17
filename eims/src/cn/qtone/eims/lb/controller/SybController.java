@@ -1,6 +1,7 @@
 package cn.qtone.eims.lb.controller;
 
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,6 +22,7 @@ import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Projections;
+import org.hibernate.type.BigDecimalType;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.qtone.common.mvc.dao.Page;
@@ -69,14 +71,15 @@ public class SybController extends SimpleManageController<Syb, SybService>{
 		for(Map<String, Object> row : rq_list){
 			String ny = (String)row.get("rq");
 			SybReport sybReport = getSybReportByRq(ny+"-01 00:00:00", ny+"-"+getLastDayByYearAndMonth(ny)+" 23:59:59");
-			sumSybReport.setZyywlr(nullToZero(sumSybReport.getZyywlr())+nullToZero(sybReport.getZyywlr()));
-			sumSybReport.setGlfy(nullToZero(sumSybReport.getGlfy())+nullToZero(sybReport.getGlfy()));
-			sumSybReport.setCwfy(nullToZero(sumSybReport.getCwfy())+nullToZero(sybReport.getGlfy()));
-			sumSybReport.setJyfy(nullToZero(sumSybReport.getJyfy())+nullToZero(sybReport.getJyfy()));
-			sumSybReport.setYywsr(nullToZero(sumSybReport.getYywsr())+nullToZero(sybReport.getYywsr()));
-			sumSybReport.setYywzc(nullToZero(sumSybReport.getYywzc())+nullToZero(sybReport.getYywzc()));
-			sumSybReport.setSds(nullToZero(sumSybReport.getSds())+nullToZero(sybReport.getSds()));
-			sumSybReport.setJlr(nullToZero(sumSybReport.getJlr())+nullToZero(sybReport.getJlr()));
+			sumSybReport.setZyywlr(nullToZero(sumSybReport.getZyywlr()).add(nullToZero(sybReport.getZyywlr())));
+			sumSybReport.setGlfy(nullToZero(sumSybReport.getGlfy()).add(nullToZero(sybReport.getGlfy())));
+			sumSybReport.setCwfy(nullToZero(sumSybReport.getCwfy()).add(nullToZero(sybReport.getCwfy())));
+			sumSybReport.setJyfy(nullToZero(sumSybReport.getJyfy()).add(nullToZero(sybReport.getJyfy())));
+			sumSybReport.setYywsr(nullToZero(sumSybReport.getYywsr()).add(nullToZero(sybReport.getYywsr())));
+			sumSybReport.setYywzc(nullToZero(sumSybReport.getYywzc()).add(nullToZero(sybReport.getYywzc())));
+			sumSybReport.setSds(nullToZero(sumSybReport.getSds()).add(nullToZero(sybReport.getSds())));
+			//sumSybReport.setJlr(nullToZero(sumSybReport.getJlr())+nullToZero(sybReport.getJlr()));
+			sumSybReport.setJlr(sumSybReport.getJlr().add(sybReport.getJlr()==null?(new BigDecimal(0)):sybReport.getJlr()));
 			sybReport.setNy(ny);
 			sybReport_list.add(sybReport);	
 		}
@@ -111,14 +114,15 @@ public class SybController extends SimpleManageController<Syb, SybService>{
 		for(Map<String, Object> row : rq_list){
 			String ny = (String)row.get("rq");
 			SybReport sybReport = getSybReportByRq(ny+"-01 00:00:00", ny+"-"+getLastDayByYearAndMonth(ny)+" 23:59:59");
-			sumSybReport.setZyywlr(nullToZero(sumSybReport.getZyywlr())+nullToZero(sybReport.getZyywlr()));
-			sumSybReport.setGlfy(nullToZero(sumSybReport.getGlfy())+nullToZero(sybReport.getGlfy()));
-			sumSybReport.setCwfy(nullToZero(sumSybReport.getCwfy())+nullToZero(sybReport.getGlfy()));
-			sumSybReport.setJyfy(nullToZero(sumSybReport.getJyfy())+nullToZero(sybReport.getJyfy()));
-			sumSybReport.setYywsr(nullToZero(sumSybReport.getYywsr())+nullToZero(sybReport.getYywsr()));
-			sumSybReport.setYywzc(nullToZero(sumSybReport.getYywzc())+nullToZero(sybReport.getYywzc()));
-			sumSybReport.setSds(nullToZero(sumSybReport.getSds())+nullToZero(sybReport.getSds()));
-			sumSybReport.setJlr(nullToZero(sumSybReport.getJlr())+nullToZero(sybReport.getJlr()));
+			sumSybReport.setZyywlr(nullToZero(sumSybReport.getZyywlr()).add(nullToZero(sybReport.getZyywlr())));
+			sumSybReport.setGlfy(nullToZero(sumSybReport.getGlfy()).add(nullToZero(sybReport.getGlfy())));
+			sumSybReport.setCwfy(nullToZero(sumSybReport.getCwfy()).add(nullToZero(sybReport.getGlfy())));
+			sumSybReport.setJyfy(nullToZero(sumSybReport.getJyfy()).add(nullToZero(sybReport.getJyfy())));
+			sumSybReport.setYywsr(nullToZero(sumSybReport.getYywsr()).add(nullToZero(sybReport.getYywsr())));
+			sumSybReport.setYywzc(nullToZero(sumSybReport.getYywzc()).add(nullToZero(sybReport.getYywzc())));
+			sumSybReport.setSds(nullToZero(sumSybReport.getSds()).add(nullToZero(sybReport.getSds())));
+			//sumSybReport.setJlr(nullToZero(sumSybReport.getJlr())+nullToZero(sybReport.getJlr()));
+			sumSybReport.setJlr(sumSybReport.getJlr().add(sybReport.getJlr()));
 			sybReport.setNy(ny);
 			sybReport_list.add(sybReport);	
 		}
@@ -147,27 +151,27 @@ public class SybController extends SimpleManageController<Syb, SybService>{
 		int i = 3;
 		for(SybReport syb : sybReport_list){
 			wsheet.addCell(new Label(0,i,syb.getNy(), setCellFormat()));
-			wsheet.addCell(new Label(1,i,StringUtil.formatFloat(syb.getZyywlr()), setCellFormat()));
-			wsheet.addCell(new Label(2,i,StringUtil.formatDouble(syb.getGlfy()), setCellFormat()));
-			wsheet.addCell(new Label(3,i,StringUtil.formatDouble(syb.getCwfy()), setCellFormat()));
-			wsheet.addCell(new Label(4,i,StringUtil.formatFloat(syb.getJyfy()), setCellFormat()));
-			wsheet.addCell(new Label(5,i,StringUtil.formatFloat(syb.getYywsr()), setCellFormat()));
-			wsheet.addCell(new Label(6,i,StringUtil.formatDouble(syb.getYywzc()), setCellFormat()));
-			wsheet.addCell(new Label(7,i,StringUtil.formatDouble(syb.getSds()), setCellFormat()));
-			wsheet.addCell(new Label(8,i,StringUtil.formatFloat(syb.getJlr()), setCellFormat()));
+			wsheet.addCell(new Label(1,i,StringUtil.formatBigDecimal(syb.getZyywlr()), setCellFormat()));
+			wsheet.addCell(new Label(2,i,StringUtil.formatBigDecimal(syb.getGlfy()), setCellFormat()));
+			wsheet.addCell(new Label(3,i,StringUtil.formatBigDecimal(syb.getCwfy()), setCellFormat()));
+			wsheet.addCell(new Label(4,i,StringUtil.formatBigDecimal(syb.getJyfy()), setCellFormat()));
+			wsheet.addCell(new Label(5,i,StringUtil.formatBigDecimal(syb.getYywsr()), setCellFormat()));
+			wsheet.addCell(new Label(6,i,StringUtil.formatBigDecimal(syb.getYywzc()), setCellFormat()));
+			wsheet.addCell(new Label(7,i,StringUtil.formatBigDecimal(syb.getSds()), setCellFormat()));
+			wsheet.addCell(new Label(8,i,syb.getJlr().toString(), setCellFormat()));
 			i++;
 		}
 		
 		//sum
 		wsheet.addCell(new Label(0,i,"合计", setCellFormat()));
-		wsheet.addCell(new Label(1,i,StringUtil.formatFloat(sumSybReport.getZyywlr()), setCellFormat()));
-		wsheet.addCell(new Label(2,i,StringUtil.formatDouble(sumSybReport.getGlfy()), setCellFormat()));
-		wsheet.addCell(new Label(3,i,StringUtil.formatDouble(sumSybReport.getCwfy()), setCellFormat()));
-		wsheet.addCell(new Label(4,i,StringUtil.formatFloat(sumSybReport.getJyfy()), setCellFormat()));
-		wsheet.addCell(new Label(5,i,StringUtil.formatFloat(sumSybReport.getYywsr()), setCellFormat()));
-		wsheet.addCell(new Label(6,i,StringUtil.formatDouble(sumSybReport.getYywzc()), setCellFormat()));
-		wsheet.addCell(new Label(7,i,StringUtil.formatDouble(sumSybReport.getSds()), setCellFormat()));
-		wsheet.addCell(new Label(8,i,StringUtil.formatFloat(sumSybReport.getJlr()), setCellFormat()));
+		wsheet.addCell(new Label(1,i,StringUtil.formatBigDecimal(sumSybReport.getZyywlr()), setCellFormat()));
+		wsheet.addCell(new Label(2,i,StringUtil.formatBigDecimal(sumSybReport.getGlfy()), setCellFormat()));
+		wsheet.addCell(new Label(3,i,StringUtil.formatBigDecimal(sumSybReport.getCwfy()), setCellFormat()));
+		wsheet.addCell(new Label(4,i,StringUtil.formatBigDecimal(sumSybReport.getJyfy()), setCellFormat()));
+		wsheet.addCell(new Label(5,i,StringUtil.formatBigDecimal(sumSybReport.getYywsr()), setCellFormat()));
+		wsheet.addCell(new Label(6,i,StringUtil.formatBigDecimal(sumSybReport.getYywzc()), setCellFormat()));
+		wsheet.addCell(new Label(7,i,StringUtil.formatBigDecimal(sumSybReport.getSds()), setCellFormat()));
+		wsheet.addCell(new Label(8,i,sumSybReport.getJlr().toString(), setCellFormat()));
 		
 		
 		wwb.write();
@@ -182,19 +186,19 @@ public class SybController extends SimpleManageController<Syb, SybService>{
 		System.out.println("_ksrq_str:"+_ksrq_str);
 		System.out.println("_jsrq_str:"+_jsrq_str);
 		//主营业务费用
-		Float zyywlr = (Float) getDomainService().createCriteria(Khqk.class)
+		BigDecimal zyywlr = (BigDecimal) getDomainService().createCriteria(Khqk.class)
 				.add(Expression.ge("bgrq", DateUtil.parseSimpleDateTime(_ksrq_str)))
 				.add(Expression.le("bgrq", DateUtil.parseSimpleDateTime(_jsrq_str)))
 				.setProjection(Projections.sum("hj")).uniqueResult();
 		System.out.println("zyywlr:"+zyywlr);
 		sybReport.setZyywlr(nullToZero(zyywlr));
 		//管理费用
-		Double glfymx = (Double) getDomainService().createCriteria(Cwfy.class)
+		BigDecimal glfymx = (BigDecimal) getDomainService().createCriteria(Cwfy.class)
 				.add(Expression.ge("fyrq", _ksrq_str.substring(0, 10)))
 				.add(Expression.le("fyrq", _jsrq_str.substring(0, 10)))
 				.add(Expression.like("type", "30%"))
 				.setProjection(Projections.sum("je")).uniqueResult();	
-		Double yggz = (Double) getDomainService().createCriteria(Yggz.class)
+		BigDecimal yggz = (BigDecimal) getDomainService().createCriteria(Yggz.class)
 				.add(Expression.ge("gzrq", _ksrq_str.substring(0, 10)))
 				.add(Expression.le("gzrq", _jsrq_str.substring(0, 10)))
 				.setProjection(Projections.sum("yfgz")).uniqueResult();	
@@ -202,25 +206,25 @@ public class SybController extends SimpleManageController<Syb, SybService>{
 		yggz = nullToZero(yggz);
 		//System.out.println("glfymx:"+glfymx);		 
 		//System.out.println("yggz:"+yggz);	
-		System.out.println("glfy:"+Float.parseFloat(StringUtil.formatDouble((glfymx+yggz))));
-		sybReport.setGlfy(glfymx+yggz);
+		System.out.println("glfy:"+(glfymx.add(yggz)));
+		sybReport.setGlfy(glfymx.add(yggz));
 		//财务费用
-		Double cwfy101 = (Double) getDomainService().createCriteria(Cwfy.class)
+		BigDecimal cwfy101 = (BigDecimal) getDomainService().createCriteria(Cwfy.class)
 				.add(Expression.ge("fyrq", _ksrq_str.substring(0, 10)))
 				.add(Expression.le("fyrq", _jsrq_str.substring(0, 10)))
 				.add(Expression.like("type", "101"))
 				.setProjection(Projections.sum("je")).uniqueResult();	
-		Double cwfy102 = (Double) getDomainService().createCriteria(Cwfy.class)
+		BigDecimal cwfy102 = (BigDecimal) getDomainService().createCriteria(Cwfy.class)
 				.add(Expression.ge("fyrq", _ksrq_str.substring(0, 10)))
 				.add(Expression.le("fyrq", _jsrq_str.substring(0, 10)))
 				.add(Expression.like("type", "102"))
 				.setProjection(Projections.sum("je")).uniqueResult();	
-		Double cwfy103 = (Double) getDomainService().createCriteria(Cwfy.class)
+		BigDecimal cwfy103 = (BigDecimal) getDomainService().createCriteria(Cwfy.class)
 				.add(Expression.ge("fyrq", _ksrq_str.substring(0, 10)))
 				.add(Expression.le("fyrq", _jsrq_str.substring(0, 10)))
 				.add(Expression.like("type", "103"))
 				.setProjection(Projections.sum("je")).uniqueResult();	
-		Double cwfy104 = (Double) getDomainService().createCriteria(Cwfy.class)
+		BigDecimal cwfy104 = (BigDecimal) getDomainService().createCriteria(Cwfy.class)
 				.add(Expression.ge("fyrq", _ksrq_str.substring(0, 10)))
 				.add(Expression.le("fyrq", _jsrq_str.substring(0, 10)))
 				.add(Expression.like("type", "104"))
@@ -229,25 +233,28 @@ public class SybController extends SimpleManageController<Syb, SybService>{
 		cwfy102 = nullToZero(cwfy102);
 		cwfy103 = nullToZero(cwfy103);
 		cwfy104 = nullToZero(cwfy104);
-		System.out.println("cwfy:"+Float.parseFloat(StringUtil.formatDouble((cwfy101-cwfy102+cwfy103+cwfy104))));
-		sybReport.setCwfy(cwfy101-cwfy102+cwfy103+cwfy104);
+		//System.out.println("cwfy:"+(cwfy101-cwfy102+cwfy103+cwfy104));
+		System.out.println("cwfy:"+(cwfy101.add(cwfy103).add(cwfy104).subtract(cwfy102)));
+		//sybReport.setCwfy(cwfy101-cwfy102+cwfy103+cwfy104);
+		sybReport.setCwfy(cwfy101.add(cwfy103).add(cwfy104).subtract(cwfy102));
 		//经营费用
-		Float fkzf = (Float) getDomainService().createCriteria(Fkzf.class)
+		BigDecimal fkzf = (BigDecimal) getDomainService().createCriteria(Fkzf.class)
 				.add(Expression.ge("bgrq", DateUtil.parseSimpleDateTime(_ksrq_str)))
 				.add(Expression.le("bgrq", DateUtil.parseSimpleDateTime(_jsrq_str)))
 				.setProjection(Projections.sum("hj")).uniqueResult();
-		System.out.println("fkzf:"+fkzf);
-		Float tczc = (Float) getDomainService().createCriteria(Tczc.class)
+		BigDecimal tczc = (BigDecimal) getDomainService().createCriteria(Tczc.class)
 				.add(Expression.ge("bgrq", DateUtil.parseSimpleDateTime(_ksrq_str)))
 				.add(Expression.le("bgrq", DateUtil.parseSimpleDateTime(_jsrq_str)))
 				.setProjection(Projections.sum("fyjehj")).uniqueResult();
 		fkzf = nullToZero(fkzf);
 		tczc = nullToZero(tczc);
-		System.out.println("fkzf:"+fkzf);
-		System.out.println("tczc:"+tczc);
-		sybReport.setJyfy(fkzf+tczc);
+		//System.out.println("fkzf:"+fkzf);
+		//System.out.println("tczc:"+tczc);
+		//System.out.println("jyfy:"+(fkzf+tczc));
+		System.out.println("jyfy:"+(fkzf.add(tczc)));
+		sybReport.setJyfy(fkzf.add(tczc));
 		//营业外收入
-		Float yywsr = (Float) getDomainService().createCriteria(Yywsr.class)
+		BigDecimal yywsr = (BigDecimal) getDomainService().createCriteria(Yywsr.class)
 				.add(Expression.ge("ny", DateUtil.parseSimpleDateTime(_ksrq_str)))
 				.add(Expression.le("ny", DateUtil.parseSimpleDateTime(_jsrq_str)))
 				.setProjection(Projections.sum("je")).uniqueResult();
@@ -255,25 +262,67 @@ public class SybController extends SimpleManageController<Syb, SybService>{
 		System.out.println("yywsr:"+yywsr);		
 		sybReport.setYywsr(yywsr);
 		//营业外支出
-		Double yywzc = (Double) getDomainService().createCriteria(Cwfy.class)
+		BigDecimal yywzc = (BigDecimal) getDomainService().createCriteria(Cwfy.class)
 				.add(Expression.ge("fyrq", _ksrq_str.substring(0, 10)))
 				.add(Expression.le("fyrq", _jsrq_str.substring(0, 10)))
 				.add(Expression.like("type", "20%"))
 				.setProjection(Projections.sum("je")).uniqueResult();	
 		yywzc = nullToZero(yywzc);
-		System.out.println("yywzc:"+Float.parseFloat(StringUtil.formatDouble(yywzc)));
+		System.out.println("yywzc:"+yywzc);
 		sybReport.setYywzc(yywzc);
 		//所得税
-		Double sds = (Double) getDomainService().createCriteria(Sds.class)
+		BigDecimal sds = (BigDecimal) getDomainService().createCriteria(Sds.class)
 				.add(Expression.ge("fyrq", _ksrq_str.substring(0, 10)))
 				.add(Expression.le("fyrq", _jsrq_str.substring(0, 10)))
 				.setProjection(Projections.sum("je")).uniqueResult();	
 		sds = nullToZero(sds);
-		System.out.println("sds:"+Float.parseFloat(StringUtil.formatDouble(sds)));
+		System.out.println("sds:"+sds);
 		sybReport.setSds(sds);
 		//净利润
 		//主营业务利润-管理费用-财务费用-经营费用+营业外收入-营业外支出-所得税=净利润
-		sybReport.setJlr(sybReport.getZyywlr()-Float.parseFloat(StringUtil.formatDouble(sybReport.getGlfy()))-Float.parseFloat(StringUtil.formatDouble(sybReport.getCwfy()))-sybReport.getJyfy()+sybReport.getYywsr()-Float.parseFloat(StringUtil.formatDouble(sybReport.getYywzc()))-Float.parseFloat(StringUtil.formatDouble(sybReport.getSds())));
+		
+		BigDecimal bd_zyywlr = new BigDecimal(StringUtil.formatBigDecimal(sybReport.getZyywlr()));
+		BigDecimal bd_glfy = new BigDecimal(StringUtil.formatBigDecimal(sybReport.getGlfy()));
+		BigDecimal bd_cwfy = new BigDecimal(StringUtil.formatBigDecimal(sybReport.getCwfy()));
+		BigDecimal bd_jyfy = new BigDecimal(StringUtil.formatBigDecimal(sybReport.getJyfy()));
+		BigDecimal bd_yywsr = new BigDecimal(StringUtil.formatBigDecimal(sybReport.getYywsr()));
+		BigDecimal bd_yywzc = new BigDecimal(StringUtil.formatBigDecimal(sybReport.getYywzc()));
+		BigDecimal bd_sds = new BigDecimal(StringUtil.formatBigDecimal(sybReport.getSds()));
+		
+		BigDecimal bd_jlr = bd_zyywlr.subtract(bd_glfy).subtract(bd_cwfy).subtract(bd_jyfy).add(bd_yywsr).subtract(bd_yywzc).subtract(bd_sds);
+		System.out.println("bd_jlr:"+bd_jlr);
+		System.out.println("bd_jlr.toString():"+bd_jlr.toString());
+		//System.out.println("BigDecimal.parseBigDecimal(bd_jlr.toString()):"+BigDecimal.parseBigDecimal(bd_jlr.toString()));
+		//sybReport.setJlr(sybReport.getZyywlr()-sybReport.getGlfy()-sybReport.getCwfy()-sybReport.getJyfy()+sybReport.getYywsr()-sybReport.getYywzc()-sybReport.getSds());
+		sybReport.setJlr(bd_jlr);
+		
+		//System.out.println("sybReport.getZyywlr()");
+		//System.out.println(StringUtil.formatBigDecimal(sybReport.getZyywlr()));
+		//System.out.println("sybReport.getGlfy()");
+		//System.out.println(StringUtil.formatBigDecimal(sybReport.getGlfy()));
+		//System.out.println("sybReport.getCwfy()");
+		//System.out.println(StringUtil.formatBigDecimal(sybReport.getCwfy()));
+		//System.out.println("sybReport.getJyfy()");
+		//System.out.println(StringUtil.formatBigDecimal(sybReport.getJyfy()));
+		//System.out.println("sybReport.getYywsr()");
+		//System.out.println(StringUtil.formatBigDecimal(sybReport.getYywsr()));
+		//System.out.println("sybReport.getYywzc()");
+		//System.out.println(StringUtil.formatBigDecimal(sybReport.getYywzc()));
+		//System.out.println("sybReport.getSds()");
+		//System.out.println(StringUtil.formatBigDecimal(sybReport.getSds()));
+		
+		//System.out.println("sybReport.getZyywlr()-sybReport.getGlfy()");
+		//System.out.println(sybReport.getZyywlr()-sybReport.getGlfy());
+		//System.out.println("sybReport.getZyywlr()-sybReport.getGlfy()-sybReport.getCwfy()");
+		//System.out.println(sybReport.getZyywlr()-sybReport.getGlfy()-sybReport.getCwfy());
+		//System.out.println("sybReport.getZyywlr()-sybReport.getGlfy()-sybReport.getCwfy()-sybReport.getJyfy()");
+		//System.out.println(sybReport.getZyywlr()-sybReport.getGlfy()-sybReport.getCwfy()-sybReport.getJyfy());
+		//System.out.println("sybReport.getZyywlr()-sybReport.getGlfy()-sybReport.getCwfy()-sybReport.getJyfy()+sybReport.getYywsr()");
+		//System.out.println(sybReport.getZyywlr()-sybReport.getGlfy()-sybReport.getCwfy()-sybReport.getJyfy()+sybReport.getYywsr());
+		//System.out.println("sybReport.getZyywlr()-sybReport.getGlfy()-sybReport.getCwfy()-sybReport.getJyfy()+sybReport.getYywsr()-sybReport.getYywzc()");
+		//System.out.println(sybReport.getZyywlr()-sybReport.getGlfy()-sybReport.getCwfy()-sybReport.getJyfy()+sybReport.getYywsr()-sybReport.getYywzc());
+		//System.out.println("sybReport.getZyywlr()-sybReport.getGlfy()-sybReport.getCwfy()-sybReport.getJyfy()+sybReport.getYywsr()-sybReport.getYywzc()-sybReport.getSds()");
+		//System.out.println(sybReport.getZyywlr()-sybReport.getGlfy()-sybReport.getCwfy()-sybReport.getJyfy()+sybReport.getYywsr()-sybReport.getYywzc()-sybReport.getSds());
 		//return
 		return sybReport;
 	}
@@ -296,14 +345,14 @@ public class SybController extends SimpleManageController<Syb, SybService>{
 			//统计各数总和
 			Criteria criteria2 = getDomainService().createCriteria(domainClass);
 			setSqlExpression(request, criteria2);
-			map.put("sum_zyywlr", (Float)criteria.setProjection(Projections.sum("zyywlr")).uniqueResult());
-			map.put("sum_glfy", (Float)criteria.setProjection(Projections.sum("glfy")).uniqueResult());
-			map.put("sum_cwfy", (Float)criteria.setProjection(Projections.sum("cwfy")).uniqueResult());		
-			map.put("sum_jyfy", (Float)criteria.setProjection(Projections.sum("jyfy")).uniqueResult());	
-			map.put("sum_yywsr", (Float)criteria.setProjection(Projections.sum("yywsr")).uniqueResult());	
-			map.put("sum_yywzc", (Float)criteria.setProjection(Projections.sum("yywzc")).uniqueResult());	
-			map.put("sum_sds", (Float)criteria.setProjection(Projections.sum("sds")).uniqueResult());	
-			map.put("sum_jlr", (Float)criteria.setProjection(Projections.sum("jlr")).uniqueResult());
+			map.put("sum_zyywlr", (BigDecimal)criteria.setProjection(Projections.sum("zyywlr")).uniqueResult());
+			map.put("sum_glfy", (BigDecimal)criteria.setProjection(Projections.sum("glfy")).uniqueResult());
+			map.put("sum_cwfy", (BigDecimal)criteria.setProjection(Projections.sum("cwfy")).uniqueResult());		
+			map.put("sum_jyfy", (BigDecimal)criteria.setProjection(Projections.sum("jyfy")).uniqueResult());	
+			map.put("sum_yywsr", (BigDecimal)criteria.setProjection(Projections.sum("yywsr")).uniqueResult());	
+			map.put("sum_yywzc", (BigDecimal)criteria.setProjection(Projections.sum("yywzc")).uniqueResult());	
+			map.put("sum_sds", (BigDecimal)criteria.setProjection(Projections.sum("sds")).uniqueResult());	
+			map.put("sum_jlr", (BigDecimal)criteria.setProjection(Projections.sum("jlr")).uniqueResult());
 		}
 		
 		return new ModelAndView(getListPage(), map);
@@ -313,7 +362,7 @@ public class SybController extends SimpleManageController<Syb, SybService>{
 		Syb entity = (Syb)getCommandObject(request, getDomainClass());
 		
 		//净利润=主营业务利润-经营费用-管理费用-财务费用+营业外收入-营业外支出-所得税
-		float jlr = entity.getZyywlr() - entity.getJyfy() - entity.getGlfy() - entity.getCwfy() + entity.getYywsr() - entity.getYywzc() - entity.getSds();
+		Float jlr = entity.getZyywlr() - entity.getJyfy() - entity.getGlfy() - entity.getCwfy() + entity.getYywsr() - entity.getYywzc() - entity.getSds();
 		entity.setJlr(jlr);
 		entity.setNy(DateUtil.parseSimpleDate(request.getParameter("_ny"))); //转成为日期格式
 		
@@ -376,23 +425,23 @@ public class SybController extends SimpleManageController<Syb, SybService>{
 		}
 		
 		//统计各数总和(合计行)
-		Float sum_zyywlr = (Float)criteria.setProjection(Projections.sum("zyywlr")).uniqueResult();
-		Float sum_glfy = (Float)criteria.setProjection(Projections.sum("glfy")).uniqueResult();
-		Float sum_cwfy = (Float)criteria.setProjection(Projections.sum("cwfy")).uniqueResult();
-		Float sum_jyfy = (Float)criteria.setProjection(Projections.sum("jyfy")).uniqueResult();
-		Float sum_yywsr = (Float)criteria.setProjection(Projections.sum("yywsr")).uniqueResult();
-		Float sum_yywzc = (Float)criteria.setProjection(Projections.sum("yywzc")).uniqueResult();
-		Float sum_sds = (Float)criteria.setProjection(Projections.sum("sds")).uniqueResult();
-		Float sum_jlr = (Float)criteria.setProjection(Projections.sum("jlr")).uniqueResult();
+		BigDecimal sum_zyywlr = (BigDecimal)criteria.setProjection(Projections.sum("zyywlr")).uniqueResult();
+		BigDecimal sum_glfy = (BigDecimal)criteria.setProjection(Projections.sum("glfy")).uniqueResult();
+		BigDecimal sum_cwfy = (BigDecimal)criteria.setProjection(Projections.sum("cwfy")).uniqueResult();
+		BigDecimal sum_jyfy = (BigDecimal)criteria.setProjection(Projections.sum("jyfy")).uniqueResult();
+		BigDecimal sum_yywsr = (BigDecimal)criteria.setProjection(Projections.sum("yywsr")).uniqueResult();
+		BigDecimal sum_yywzc = (BigDecimal)criteria.setProjection(Projections.sum("yywzc")).uniqueResult();
+		BigDecimal sum_sds = (BigDecimal)criteria.setProjection(Projections.sum("sds")).uniqueResult();
+		BigDecimal sum_jlr = (BigDecimal)criteria.setProjection(Projections.sum("jlr")).uniqueResult();
 		wsheet.addCell(new Label(0,i,"合计", setCellFormat()));
-		wsheet.addCell(new Label(1,i,StringUtil.formatFloat(sum_zyywlr), setCellFormat()));
-		wsheet.addCell(new Label(2,i,StringUtil.formatFloat(sum_glfy), setCellFormat()));
-		wsheet.addCell(new Label(3,i,StringUtil.formatFloat(sum_cwfy), setCellFormat()));
-		wsheet.addCell(new Label(4,i,StringUtil.formatFloat(sum_jyfy), setCellFormat()));
-		wsheet.addCell(new Label(5,i,StringUtil.formatFloat(sum_yywsr), setCellFormat()));
-		wsheet.addCell(new Label(6,i,StringUtil.formatFloat(sum_yywzc), setCellFormat()));
-		wsheet.addCell(new Label(7,i,StringUtil.formatFloat(sum_sds), setCellFormat()));
-		wsheet.addCell(new Label(8,i,StringUtil.formatFloat(sum_jlr), setCellFormat()));
+		wsheet.addCell(new Label(1,i,StringUtil.formatBigDecimal(sum_zyywlr), setCellFormat()));
+		wsheet.addCell(new Label(2,i,StringUtil.formatBigDecimal(sum_glfy), setCellFormat()));
+		wsheet.addCell(new Label(3,i,StringUtil.formatBigDecimal(sum_cwfy), setCellFormat()));
+		wsheet.addCell(new Label(4,i,StringUtil.formatBigDecimal(sum_jyfy), setCellFormat()));
+		wsheet.addCell(new Label(5,i,StringUtil.formatBigDecimal(sum_yywsr), setCellFormat()));
+		wsheet.addCell(new Label(6,i,StringUtil.formatBigDecimal(sum_yywzc), setCellFormat()));
+		wsheet.addCell(new Label(7,i,StringUtil.formatBigDecimal(sum_sds), setCellFormat()));
+		wsheet.addCell(new Label(8,i,StringUtil.formatBigDecimal(sum_jlr), setCellFormat()));
 		
 		wwb.write();
 		wwb.close();		
@@ -421,10 +470,10 @@ public class SybController extends SimpleManageController<Syb, SybService>{
 			return 0d;
 		return d;
 	}
-	public Float nullToZero(Float f){
-		if(f==null)
-			return 0f;
-		return f;
+	public BigDecimal nullToZero(BigDecimal bd){
+		if(bd==null)
+			return (new BigDecimal(0));
+		return bd;
 	}
 
 	public FymxbDao getFymxbDao() {

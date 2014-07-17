@@ -1,5 +1,6 @@
 package cn.qtone.eims.khmx.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -21,7 +22,7 @@ public class Yywsr {
 	private Date ny; //年月
 	private String dh; //单号
 	private String zy; //摘要
-	private Float je = 0f; //金额
+	private BigDecimal je = new BigDecimal(0); //金额
 	
 	private Date lrsj;	    //录入时间
 	
@@ -51,10 +52,10 @@ public class Yywsr {
 	public void setZy(String zy) {
 		this.zy = zy;
 	}
-	public Float getJe() {
+	public BigDecimal getJe() {
 		return je;
 	}
-	public void setJe(Float je) {
+	public void setJe(BigDecimal je) {
 		this.je = je;
 	}
 	public Date getLrsj() {

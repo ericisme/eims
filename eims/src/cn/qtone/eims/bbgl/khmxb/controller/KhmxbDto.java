@@ -1,5 +1,7 @@
 package cn.qtone.eims.bbgl.khmxb.controller;
 
+import java.math.BigDecimal;
+
 
 /**
  * 
@@ -32,12 +34,12 @@ public class KhmxbDto {
 	/**
 	 * 报关金额
 	 */	
-	private Float bgje = 0F;//
+	private BigDecimal bgje = new BigDecimal(0);//
 	
 	/**
 	 * 发票金额
 	 */	
-	private Float fpje= 0F;//
+	private BigDecimal fpje= new BigDecimal(0);//
 	
 	/**
 	 * 收发票日期
@@ -47,7 +49,7 @@ public class KhmxbDto {
 	/**
 	 * 退税金额
 	 */	
-	private Float tsje= 0F;//
+	private BigDecimal tsje= new BigDecimal(0);//
 	
 	/**
 	 * 支付退税日期
@@ -62,225 +64,225 @@ public class KhmxbDto {
 	/**
 	 * 代理费
 	 */	
-	private Float dlf= 0F;//
+	private BigDecimal dlf= new BigDecimal(0);//
 	
 	
 	/**
 	 * 报关费 收入
 	 */	
-	private Float bgf_sr= 0F;//
+	private BigDecimal bgf_sr= new BigDecimal(0);//
 	
 	/**
 	 * 报关费 成本
 	 */
-	private Float bgf_cb= 0F;//
+	private BigDecimal bgf_cb= new BigDecimal(0);//
 	
 	/**
 	 * 广建费 收入
 	 */	
-	private Float guangjf_sr= 0F;//
+	private BigDecimal guangjf_sr= new BigDecimal(0);//
 	/**
 	 * 广建费 成本
 	 */
-	private Float guangjf_cb= 0F;//
+	private BigDecimal guangjf_cb= new BigDecimal(0);//
 	
 	/**
 	 * 国检费 收入
 	 */	
-	private Float goujf_sr= 0F;//
+	private BigDecimal goujf_sr= new BigDecimal(0);//
 	/**
 	 * 国检费 成本
 	 */
-	private Float goujf_cb= 0F;//
+	private BigDecimal goujf_cb= new BigDecimal(0);//
 	
 	/**
 	 * 商检费 收入
 	 */	
-	private Float sjf_sr= 0F;//
+	private BigDecimal sjf_sr= new BigDecimal(0);//
 	/**
 	 * 商检费 成本
 	 */
-	private Float sjf_cb= 0F;//
+	private BigDecimal sjf_cb= new BigDecimal(0);//
 	
 	/**
 	 * 续页费 收入
 	 */	
-	private Float xyf_sr= 0F;//
+	private BigDecimal xyf_sr= new BigDecimal(0);//
 	/**
 	 * 续页费 成本
 	 */
-	private Float xyf_cb= 0F;//
+	private BigDecimal xyf_cb= new BigDecimal(0);//
 	
 	/**
 	 * 连柜费 收入
 	 */	
-	private Float lgf_sr= 0F;//
+	private BigDecimal lgf_sr= new BigDecimal(0);//
 	/**
 	 * 连柜费 成本
 	 */
-	private Float lgf_cb= 0F;//
+	private BigDecimal lgf_cb= new BigDecimal(0);//
 	
 	/**
 	 * 拖车费 收入
 	 */	
-	private Float tcf_sr= 0F;//
+	private BigDecimal tcf_sr= new BigDecimal(0);//
 	/**
 	 * 拖车费 成本
 	 */
-	private Float tcf_cb= 0F;//
+	private BigDecimal tcf_cb= new BigDecimal(0);//
 	
 	/**
 	 * 扫描费 收入
 	 */	
-	private Float smf_sr= 0F;//
+	private BigDecimal smf_sr= new BigDecimal(0);//
 	/**
 	 * 扫描费 成本
 	 */
-	private Float smf_cb= 0F;//
+	private BigDecimal smf_cb= new BigDecimal(0);//
 	
 	/**
 	 * 查柜费 收入
 	 */	
-	private Float cgf_sr= 0F;//
+	private BigDecimal cgf_sr= new BigDecimal(0);//
 	/**
 	 * 查柜费 成本
 	 */
-	private Float cgf_cb= 0F;//
+	private BigDecimal cgf_cb= new BigDecimal(0);//
 	
 	/**
 	 * 熏蒸费 收入
 	 */	
-	private Float xzf_sr= 0F;//
+	private BigDecimal xzf_sr= new BigDecimal(0);//
 	/**
 	 * 熏蒸费 成本
 	 */
-	private Float xzf_cb= 0F;//
+	private BigDecimal xzf_cb= new BigDecimal(0);//
 	
 	/**
 	 * 加签 收入
 	 */	
-	private Float jq_sr= 0F;//
+	private BigDecimal jq_sr= new BigDecimal(0);//
 	/**
 	 * 加签 成本
 	 */
-	private Float jq_cb= 0F;//
+	private BigDecimal jq_cb= new BigDecimal(0);//
 	
 	/**
 	 * 信用证费 收入
 	 */	
-	private Float xyzf_sr= 0F;//
+	private BigDecimal xyzf_sr= new BigDecimal(0);//
 	/**
 	 * 信用证费 成本
 	 */
-	private Float xyzf_cb= 0F;//
+	private BigDecimal xyzf_cb= new BigDecimal(0);//
 	
 	/**
 	 * 产地证费 收入
 	 */	
-	private Float cdzf_sr= 0F;//
+	private BigDecimal cdzf_sr= new BigDecimal(0);//
 	/**
 	 * 产地证费 成本
 	 */
-	private Float cdzf_cb= 0F;//
+	private BigDecimal cdzf_cb= new BigDecimal(0);//
 	
 	/**
 	 * 空白单证费 收入
 	 */	
-	private Float kbdzf_sr= 0F;//
+	private BigDecimal kbdzf_sr= new BigDecimal(0);//
 	/**
 	 * 空白单证费 成本
 	 */
-	private Float kbdzf_cb= 0F;//
+	private BigDecimal kbdzf_cb= new BigDecimal(0);//
 	
 	/**
 	 * 快递费 收入
 	 */	
-	private Float kdf_sr= 0F;//
+	private BigDecimal kdf_sr= new BigDecimal(0);//
 	/**
 	 * 快递费 成本
 	 */
-	private Float kdf_cb= 0F;//
+	private BigDecimal kdf_cb= new BigDecimal(0);//
 	
 	/**
 	 * 驳船费 收入
 	 */	
-	private Float bcf_sr= 0F;//
+	private BigDecimal bcf_sr= new BigDecimal(0);//
 	/**
 	 * 驳船费 成本
 	 */
-	private Float bcf_cb= 0F;//
+	private BigDecimal bcf_cb= new BigDecimal(0);//
 	
 	/**
 	 * 封条费 收入
 	 */	
-	private Float ftf_sr= 0F;//
+	private BigDecimal ftf_sr= new BigDecimal(0);//
 	/**
 	 * 封条费 成本
 	 */
-	private Float ftf_cb= 0F;//
+	private BigDecimal ftf_cb= new BigDecimal(0);//
 	
 	/**
 	 * 仓单费 收入
 	 */	
-	private Float cdf_sr= 0F;//
+	private BigDecimal cdf_sr= new BigDecimal(0);//
 	/**
 	 * 仓单费 成本
 	 */
-	private Float cdf_cb= 0F;//
+	private BigDecimal cdf_cb= new BigDecimal(0);//
 	
 	/**
 	 * 过磅费 收入
 	 */	
-	private Float gpf_sr= 0F;//
+	private BigDecimal gpf_sr= new BigDecimal(0);//
 	/**
 	 * 过磅费 成本
 	 */
-	private Float gpf_cb= 0F;//
+	private BigDecimal gpf_cb= new BigDecimal(0);//
 	
 	/**
 	 * 换证凭条费 收入
 	 */	
-	private Float hzptf_sr= 0F;//
+	private BigDecimal hzptf_sr= new BigDecimal(0);//
 	/**
 	 * 换证凭条费 成本
 	 */
-	private Float hzptf_cb= 0F;//
+	private BigDecimal hzptf_cb= new BigDecimal(0);//
 	
 	/**
 	 * 其他 收入
 	 */	
-	private Float qt_sr= 0F;//
+	private BigDecimal qt_sr= new BigDecimal(0);//
 	/**
 	 * 其他 成本
 	 */
-	private Float qt_cb= 0F;//
+	private BigDecimal qt_cb= new BigDecimal(0);//
 	
 	
 	/**
 	 * 拖车费用 成本
 	 */
-	private Float tczc_fyje = 0F;	
-	public Float getTczc_fyje() {return tczc_fyje;}
-	public void setTczc_fyje(Float tczc_fyje) {this.tczc_fyje = tczc_fyje;}
+	private BigDecimal tczc_fyje = new BigDecimal(0);	
+	public BigDecimal getTczc_fyje() {return tczc_fyje;}
+	public void setTczc_fyje(BigDecimal tczc_fyje) {this.tczc_fyje = tczc_fyje;}
 
 	/**
 	 * 合计 收入
 	 */	
-	private Float hj_sr= 0F;//
+	private BigDecimal hj_sr= new BigDecimal(0);//
 	/**
 	 * 合计 成本
 	 */
-	private Float hj_cb= 0F;//
+	private BigDecimal hj_cb= new BigDecimal(0);//
 	
 	/**
 	 * 毛利
 	 */
-	private Float ml= 0F;//
+	private BigDecimal ml= new BigDecimal(0);//
 	
 	/**
 	 * 利润
 	 */
-	private Float lr= 0F;//
+	private BigDecimal lr= new BigDecimal(0);//
 	
 	/**
 	 * 业务员
@@ -326,19 +328,19 @@ public class KhmxbDto {
 		this.bgdh = bgdh;
 	}
 
-	public Float getBgje() {
+	public BigDecimal getBgje() {
 		return bgje;
 	}
 
-	public void setBgje(Float bgje) {
+	public void setBgje(BigDecimal bgje) {
 		this.bgje = bgje;
 	}
 
-	public Float getFpje() {
+	public BigDecimal getFpje() {
 		return fpje;
 	}
 
-	public void setFpje(Float fpje) {
+	public void setFpje(BigDecimal fpje) {
 		this.fpje = fpje;
 	}
 
@@ -350,11 +352,11 @@ public class KhmxbDto {
 		this.sfprq = sfprq;
 	}
 
-	public Float getTsje() {
+	public BigDecimal getTsje() {
 		return tsje;
 	}
 
-	public void setTsje(Float tsje) {
+	public void setTsje(BigDecimal tsje) {
 		this.tsje = tsje;
 	}
 
@@ -374,385 +376,385 @@ public class KhmxbDto {
 		this.sdgstsrq = sdgstsrq;
 	}
 
-	public Float getDlf() {
+	public BigDecimal getDlf() {
 		return dlf;
 	}
 
-	public void setDlf(Float dlf) {
+	public void setDlf(BigDecimal dlf) {
 		this.dlf = dlf;
 	}
 
-	public Float getBgf_sr() {
+	public BigDecimal getBgf_sr() {
 		return bgf_sr;
 	}
 
-	public void setBgf_sr(Float bgf_sr) {
+	public void setBgf_sr(BigDecimal bgf_sr) {
 		this.bgf_sr = bgf_sr;
 	}
 
-	public Float getBgf_cb() {
+	public BigDecimal getBgf_cb() {
 		return bgf_cb;
 	}
 
-	public void setBgf_cb(Float bgf_cb) {
+	public void setBgf_cb(BigDecimal bgf_cb) {
 		this.bgf_cb = bgf_cb;
 	}
 
-	public Float getGuangjf_sr() {
+	public BigDecimal getGuangjf_sr() {
 		return guangjf_sr;
 	}
 
-	public void setGuangjf_sr(Float guangjf_sr) {
+	public void setGuangjf_sr(BigDecimal guangjf_sr) {
 		this.guangjf_sr = guangjf_sr;
 	}
 
-	public Float getGuangjf_cb() {
+	public BigDecimal getGuangjf_cb() {
 		return guangjf_cb;
 	}
 
-	public void setGuangjf_cb(Float guangjf_cb) {
+	public void setGuangjf_cb(BigDecimal guangjf_cb) {
 		this.guangjf_cb = guangjf_cb;
 	}
 
-	public Float getGoujf_sr() {
+	public BigDecimal getGoujf_sr() {
 		return goujf_sr;
 	}
 
-	public void setGoujf_sr(Float goujf_sr) {
+	public void setGoujf_sr(BigDecimal goujf_sr) {
 		this.goujf_sr = goujf_sr;
 	}
 
-	public Float getGoujf_cb() {
+	public BigDecimal getGoujf_cb() {
 		return goujf_cb;
 	}
 
-	public void setGoujf_cb(Float goujf_cb) {
+	public void setGoujf_cb(BigDecimal goujf_cb) {
 		this.goujf_cb = goujf_cb;
 	}
 
-	public Float getSjf_sr() {
+	public BigDecimal getSjf_sr() {
 		return sjf_sr;
 	}
 
-	public void setSjf_sr(Float sjf_sr) {
+	public void setSjf_sr(BigDecimal sjf_sr) {
 		this.sjf_sr = sjf_sr;
 	}
 
-	public Float getSjf_cb() {
+	public BigDecimal getSjf_cb() {
 		return sjf_cb;
 	}
 
-	public void setSjf_cb(Float sjf_cb) {
+	public void setSjf_cb(BigDecimal sjf_cb) {
 		this.sjf_cb = sjf_cb;
 	}
 
-	public Float getXyf_sr() {
+	public BigDecimal getXyf_sr() {
 		return xyf_sr;
 	}
 
-	public void setXyf_sr(Float xyf_sr) {
+	public void setXyf_sr(BigDecimal xyf_sr) {
 		this.xyf_sr = xyf_sr;
 	}
 
-	public Float getXyf_cb() {
+	public BigDecimal getXyf_cb() {
 		return xyf_cb;
 	}
 
-	public void setXyf_cb(Float xyf_cb) {
+	public void setXyf_cb(BigDecimal xyf_cb) {
 		this.xyf_cb = xyf_cb;
 	}
 
-	public Float getLgf_sr() {
+	public BigDecimal getLgf_sr() {
 		return lgf_sr;
 	}
 
-	public void setLgf_sr(Float lgf_sr) {
+	public void setLgf_sr(BigDecimal lgf_sr) {
 		this.lgf_sr = lgf_sr;
 	}
 
-	public Float getLgf_cb() {
+	public BigDecimal getLgf_cb() {
 		return lgf_cb;
 	}
 
-	public void setLgf_cb(Float lgf_cb) {
+	public void setLgf_cb(BigDecimal lgf_cb) {
 		this.lgf_cb = lgf_cb;
 	}
 
-	public Float getTcf_sr() {
+	public BigDecimal getTcf_sr() {
 		return tcf_sr;
 	}
 
-	public void setTcf_sr(Float tcf_sr) {
+	public void setTcf_sr(BigDecimal tcf_sr) {
 		this.tcf_sr = tcf_sr;
 	}
 
-	public Float getTcf_cb() {
+	public BigDecimal getTcf_cb() {
 		return tcf_cb;
 	}
 
-	public void setTcf_cb(Float tcf_cb) {
+	public void setTcf_cb(BigDecimal tcf_cb) {
 		this.tcf_cb = tcf_cb;
 	}
 
-	public Float getSmf_sr() {
+	public BigDecimal getSmf_sr() {
 		return smf_sr;
 	}
 
-	public void setSmf_sr(Float smf_sr) {
+	public void setSmf_sr(BigDecimal smf_sr) {
 		this.smf_sr = smf_sr;
 	}
 
-	public Float getSmf_cb() {
+	public BigDecimal getSmf_cb() {
 		return smf_cb;
 	}
 
-	public void setSmf_cb(Float smf_cb) {
+	public void setSmf_cb(BigDecimal smf_cb) {
 		this.smf_cb = smf_cb;
 	}
 
-	public Float getCgf_sr() {
+	public BigDecimal getCgf_sr() {
 		return cgf_sr;
 	}
 
-	public void setCgf_sr(Float cgf_sr) {
+	public void setCgf_sr(BigDecimal cgf_sr) {
 		this.cgf_sr = cgf_sr;
 	}
 
-	public Float getCgf_cb() {
+	public BigDecimal getCgf_cb() {
 		return cgf_cb;
 	}
 
-	public void setCgf_cb(Float cgf_cb) {
+	public void setCgf_cb(BigDecimal cgf_cb) {
 		this.cgf_cb = cgf_cb;
 	}
 
-	public Float getXzf_sr() {
+	public BigDecimal getXzf_sr() {
 		return xzf_sr;
 	}
 
-	public void setXzf_sr(Float xzf_sr) {
+	public void setXzf_sr(BigDecimal xzf_sr) {
 		this.xzf_sr = xzf_sr;
 	}
 
-	public Float getXzf_cb() {
+	public BigDecimal getXzf_cb() {
 		return xzf_cb;
 	}
 
-	public void setXzf_cb(Float xzf_cb) {
+	public void setXzf_cb(BigDecimal xzf_cb) {
 		this.xzf_cb = xzf_cb;
 	}
 
-	public Float getJq_sr() {
+	public BigDecimal getJq_sr() {
 		return jq_sr;
 	}
 
-	public void setJq_sr(Float jq_sr) {
+	public void setJq_sr(BigDecimal jq_sr) {
 		this.jq_sr = jq_sr;
 	}
 
-	public Float getJq_cb() {
+	public BigDecimal getJq_cb() {
 		return jq_cb;
 	}
 
-	public void setJq_cb(Float jq_cb) {
+	public void setJq_cb(BigDecimal jq_cb) {
 		this.jq_cb = jq_cb;
 	}
 
-	public Float getXyzf_sr() {
+	public BigDecimal getXyzf_sr() {
 		return xyzf_sr;
 	}
 
-	public void setXyzf_sr(Float xyzf_sr) {
+	public void setXyzf_sr(BigDecimal xyzf_sr) {
 		this.xyzf_sr = xyzf_sr;
 	}
 
-	public Float getXyzf_cb() {
+	public BigDecimal getXyzf_cb() {
 		return xyzf_cb;
 	}
 
-	public void setXyzf_cb(Float xyzf_cb) {
+	public void setXyzf_cb(BigDecimal xyzf_cb) {
 		this.xyzf_cb = xyzf_cb;
 	}
 
-	public Float getCdzf_sr() {
+	public BigDecimal getCdzf_sr() {
 		return cdzf_sr;
 	}
 
-	public void setCdzf_sr(Float cdzf_sr) {
+	public void setCdzf_sr(BigDecimal cdzf_sr) {
 		this.cdzf_sr = cdzf_sr;
 	}
 
-	public Float getCdzf_cb() {
+	public BigDecimal getCdzf_cb() {
 		return cdzf_cb;
 	}
 
-	public void setCdzf_cb(Float cdzf_cb) {
+	public void setCdzf_cb(BigDecimal cdzf_cb) {
 		this.cdzf_cb = cdzf_cb;
 	}
 
-	public Float getKbdzf_sr() {
+	public BigDecimal getKbdzf_sr() {
 		return kbdzf_sr;
 	}
 
-	public void setKbdzf_sr(Float kbdzf_sr) {
+	public void setKbdzf_sr(BigDecimal kbdzf_sr) {
 		this.kbdzf_sr = kbdzf_sr;
 	}
 
-	public Float getKbdzf_cb() {
+	public BigDecimal getKbdzf_cb() {
 		return kbdzf_cb;
 	}
 
-	public void setKbdzf_cb(Float kbdzf_cb) {
+	public void setKbdzf_cb(BigDecimal kbdzf_cb) {
 		this.kbdzf_cb = kbdzf_cb;
 	}
 
-	public Float getKdf_sr() {
+	public BigDecimal getKdf_sr() {
 		return kdf_sr;
 	}
 
-	public void setKdf_sr(Float kdf_sr) {
+	public void setKdf_sr(BigDecimal kdf_sr) {
 		this.kdf_sr = kdf_sr;
 	}
 
-	public Float getKdf_cb() {
+	public BigDecimal getKdf_cb() {
 		return kdf_cb;
 	}
 
-	public void setKdf_cb(Float kdf_cb) {
+	public void setKdf_cb(BigDecimal kdf_cb) {
 		this.kdf_cb = kdf_cb;
 	}
 
-	public Float getBcf_sr() {
+	public BigDecimal getBcf_sr() {
 		return bcf_sr;
 	}
 
-	public void setBcf_sr(Float bcf_sr) {
+	public void setBcf_sr(BigDecimal bcf_sr) {
 		this.bcf_sr = bcf_sr;
 	}
 
-	public Float getBcf_cb() {
+	public BigDecimal getBcf_cb() {
 		return bcf_cb;
 	}
 
-	public void setBcf_cb(Float bcf_cb) {
+	public void setBcf_cb(BigDecimal bcf_cb) {
 		this.bcf_cb = bcf_cb;
 	}
 
-	public Float getFtf_sr() {
+	public BigDecimal getFtf_sr() {
 		return ftf_sr;
 	}
 
-	public void setFtf_sr(Float ftf_sr) {
+	public void setFtf_sr(BigDecimal ftf_sr) {
 		this.ftf_sr = ftf_sr;
 	}
 
-	public Float getFtf_cb() {
+	public BigDecimal getFtf_cb() {
 		return ftf_cb;
 	}
 
-	public void setFtf_cb(Float ftf_cb) {
+	public void setFtf_cb(BigDecimal ftf_cb) {
 		this.ftf_cb = ftf_cb;
 	}
 
-	public Float getCdf_sr() {
+	public BigDecimal getCdf_sr() {
 		return cdf_sr;
 	}
 
-	public void setCdf_sr(Float cdf_sr) {
+	public void setCdf_sr(BigDecimal cdf_sr) {
 		this.cdf_sr = cdf_sr;
 	}
 
-	public Float getCdf_cb() {
+	public BigDecimal getCdf_cb() {
 		return cdf_cb;
 	}
 
-	public void setCdf_cb(Float cdf_cb) {
+	public void setCdf_cb(BigDecimal cdf_cb) {
 		this.cdf_cb = cdf_cb;
 	}
 
 
 
 
-	public Float getGpf_sr() {
+	public BigDecimal getGpf_sr() {
 		return gpf_sr;
 	}
 
-	public void setGpf_sr(Float gpf_sr) {
+	public void setGpf_sr(BigDecimal gpf_sr) {
 		this.gpf_sr = gpf_sr;
 	}
 
-	public Float getGpf_cb() {
+	public BigDecimal getGpf_cb() {
 		return gpf_cb;
 	}
 
-	public void setGpf_cb(Float gpf_cb) {
+	public void setGpf_cb(BigDecimal gpf_cb) {
 		this.gpf_cb = gpf_cb;
 	}
 
-	public Float getHzptf_sr() {
+	public BigDecimal getHzptf_sr() {
 		return hzptf_sr;
 	}
 
-	public void setHzptf_sr(Float hzptf_sr) {
+	public void setHzptf_sr(BigDecimal hzptf_sr) {
 		this.hzptf_sr = hzptf_sr;
 	}
 
-	public Float getHzptf_cb() {
+	public BigDecimal getHzptf_cb() {
 		return hzptf_cb;
 	}
 
-	public void setHzptf_cb(Float hzptf_cb) {
+	public void setHzptf_cb(BigDecimal hzptf_cb) {
 		this.hzptf_cb = hzptf_cb;
 	}
 
-	public Float getQt_sr() {
+	public BigDecimal getQt_sr() {
 		return qt_sr;
 	}
 
-	public void setQt_sr(Float qt_sr) {
+	public void setQt_sr(BigDecimal qt_sr) {
 		this.qt_sr = qt_sr;
 	}
 
-	public Float getQt_cb() {
+	public BigDecimal getQt_cb() {
 		return qt_cb;
 	}
 
-	public void setQt_cb(Float qt_cb) {
+	public void setQt_cb(BigDecimal qt_cb) {
 		this.qt_cb = qt_cb;
 	}
 
-	public Float getHj_sr() {
+	public BigDecimal getHj_sr() {
 		return hj_sr;
 	}
 
-	public void setHj_sr(Float hj_sr) {
+	public void setHj_sr(BigDecimal hj_sr) {
 		this.hj_sr = hj_sr;
 	}
 
-	public Float getHj_cb() {
+	public BigDecimal getHj_cb() {
 		return hj_cb;
 	}
 
-	public void setHj_cb(Float hj_cb) {
+	public void setHj_cb(BigDecimal hj_cb) {
 		this.hj_cb = hj_cb;
 	}
 
-	public Float getMl() {
+	public BigDecimal getMl() {
 		return ml;
 	}
 
-	public void setMl(Float ml) {
+	public void setMl(BigDecimal ml) {
 		this.ml = ml;
 	}
 
 
 
 
-	public Float getLr() {
+	public BigDecimal getLr() {
 		return lr;
 	}
 
-	public void setLr(Float lr) {
+	public void setLr(BigDecimal lr) {
 		this.lr = lr;
 	}
 

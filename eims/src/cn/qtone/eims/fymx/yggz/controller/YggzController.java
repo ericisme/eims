@@ -1,5 +1,6 @@
 package cn.qtone.eims.fymx.yggz.controller;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -34,9 +35,11 @@ public class YggzController extends SimpleManageController<Yggz, YggzService> {
 	public ModelAndView save(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Yggz o = (Yggz)getCommandObject(request, getDomainClass());
 		//应付工资=基本工资+提成+补贴
-		o.setYfgz(o.getJbgz()+o.getTc()+o.getBt());
+		//o.setYfgz(o.getJbgz()+o.getTc()+o.getBt());
+		o.setYfgz(o.getJbgz().add(o.getTc()).subtract(o.getBt()));
 		//实发工资=应付工资-社保费-扣回工资
-		o.setSfgz(o.getYfgz()-o.getSbf()-o.getKhgz());
+		//o.setSfgz(o.getYfgz()-o.getSbf()-o.getKhgz());
+		o.setSfgz(o.getYfgz().subtract(o.getSbf()).subtract(o.getKhgz()));
 		
 		o.setLrsj(new Date());
 		System.out.println("--------------------------");
@@ -65,13 +68,13 @@ public class YggzController extends SimpleManageController<Yggz, YggzService> {
 		//统计总数行，6项金额。
 		Criteria criteria2 = getDomainService().createCriteria(domainClass);
 		setSqlExpression(request, criteria2);		
-		map.put("sum_jbgz", (Double)criteria2.setProjection(Projections.sum("jbgz")).uniqueResult());
-		map.put("sum_tc",   (Double)criteria2.setProjection(Projections.sum("tc")).uniqueResult());
-		map.put("sum_bt",   (Double)criteria2.setProjection(Projections.sum("bt")).uniqueResult());
-		map.put("sum_yfgz", (Double)criteria2.setProjection(Projections.sum("yfgz")).uniqueResult());
-		map.put("sum_sbf",  (Double)criteria2.setProjection(Projections.sum("sbf")).uniqueResult());
-		map.put("sum_khgz", (Double)criteria2.setProjection(Projections.sum("khgz")).uniqueResult());
-		map.put("sum_sfgz", (Double)criteria2.setProjection(Projections.sum("sfgz")).uniqueResult());		
+		map.put("sum_jbgz", (BigDecimal)criteria2.setProjection(Projections.sum("jbgz")).uniqueResult());
+		map.put("sum_tc",   (BigDecimal)criteria2.setProjection(Projections.sum("tc")).uniqueResult());
+		map.put("sum_bt",   (BigDecimal)criteria2.setProjection(Projections.sum("bt")).uniqueResult());
+		map.put("sum_yfgz", (BigDecimal)criteria2.setProjection(Projections.sum("yfgz")).uniqueResult());
+		map.put("sum_sbf",  (BigDecimal)criteria2.setProjection(Projections.sum("sbf")).uniqueResult());
+		map.put("sum_khgz", (BigDecimal)criteria2.setProjection(Projections.sum("khgz")).uniqueResult());
+		map.put("sum_sfgz", (BigDecimal)criteria2.setProjection(Projections.sum("sfgz")).uniqueResult());		
 		//是否为最后一页
 		map.put("ifLastPage",EimsUtil.ifLastPage(curPage, page));
 		
